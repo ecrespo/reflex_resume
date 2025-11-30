@@ -176,7 +176,7 @@ def certifications_section() -> rx.Component:
         section_heading("Certifications"),
         rx.el.iframe(
             src="/timeline.html",
-            class_name="w-full border-0 rounded-lg shadow-md h-[400px] md:h-[600px]",
+            class_name="w-full border-0 rounded-lg shadow-md h-[400px] md:h-[700px] lg:h-[800px]",
             style={"background": "white"},
         ),
         id="certifications",

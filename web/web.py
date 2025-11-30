@@ -19,6 +19,7 @@ def index() -> rx.Component:
         rx.el.div(
             navbar(),
             rx.el.main(
+                # Regular sections with max width
                 rx.el.div(
                     education_section(),
                     work_experience_section(),
@@ -26,10 +27,14 @@ def index() -> rx.Component:
                     skills_list_section(),
                     skills_chart_section(),
                     social_media_section(),
-                    certifications_section(),
                     class_name="container mx-auto",
                 ),
-                class_name="p-4 md:p-8 lg:p-16 w-full max-w-5xl",
+                # Certifications section - full width on desktop
+                rx.el.div(
+                    certifications_section(),
+                    class_name="container mx-auto px-4 md:px-8 lg:px-16",
+                ),
+                class_name="p-4 md:p-8 lg:p-16 w-full",
             ),
             class_name="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96",
         ),
