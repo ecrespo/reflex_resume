@@ -57,24 +57,35 @@ def sidebar_content() -> rx.Component:
             ),
             class_name="w-full flex flex-col mb-6",
         ),
-        # LinkedIn Badge
+        # LinkedIn Profile Link
         rx.el.div(
-            rx.el.script(
-                src="https://platform.linkedin.com/badges/js/profile.js",
-                type_="text/javascript",
-                async_=True,
-                defer=True,
+            rx.el.a(
+                rx.el.div(
+                    # LinkedIn Logo SVG
+                    rx.html("""
+                        <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    """),
+                    rx.el.div(
+                        rx.el.p(
+                            "Ernesto Crespo",
+                            class_name="font-bold text-gray-900 text-base mb-0",
+                        ),
+                        rx.el.p(
+                            "View LinkedIn Profile",
+                            class_name="text-sm text-gray-600 mb-0",
+                        ),
+                        class_name="flex-1",
+                    ),
+                    class_name="flex items-center gap-3",
+                ),
+                href="https://www.linkedin.com/in/ernestocrespo/",
+                target="_blank",
+                rel="noopener noreferrer",
+                class_name="block w-full",
             ),
-            rx.el.div(
-                class_name="badge-base LI-profile-badge",
-                data_locale="en_US",
-                data_size="medium",
-                data_theme="light",
-                data_type="VERTICAL",
-                data_vanity="ernestocrespo",
-                data_version="v1",
-            ),
-            class_name="w-full flex justify-center mb-6",
+            class_name="w-full bg-white rounded-lg p-4 mb-6 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200",
         ),
         # Contact section
         rx.el.div(

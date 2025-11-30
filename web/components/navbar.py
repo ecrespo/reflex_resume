@@ -32,6 +32,31 @@ def navbar() -> rx.Component:
             navbar_link("Skills", url="#skills"),
             navbar_link("Social Media", url="#social-media"),
             navbar_link("Certifications", url="#certifications"),
+            navbar_link("Blog", url="/blog"),
+            class_name="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar",
+        ),
+        class_name="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0",
+    )
+
+
+def navbar_blog() -> rx.Component:
+    """Simplified navigation bar for blog page."""
+    return rx.el.nav(
+        rx.el.div(
+            # Hamburger menu button for mobile
+            rx.el.button(
+                rx.el.div(
+                    rx.el.span(class_name="block w-6 h-0.5 bg-white mb-1.5"),
+                    rx.el.span(class_name="block w-6 h-0.5 bg-white mb-1.5"),
+                    rx.el.span(class_name="block w-6 h-0.5 bg-white"),
+                    class_name="flex flex-col",
+                ),
+                on_click=ResumeState.toggle_mobile_menu,
+                class_name="md:hidden p-2 hover:bg-white/10 rounded",
+            ),
+            # Navigation links
+            navbar_link("Home Page", url="/"),
+            navbar_link("Blog", url="/blog"),
             class_name="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar",
         ),
         class_name="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0",
