@@ -168,3 +168,17 @@ def social_media_section() -> rx.Component:
         id="social-media",
         class_name="mb-12 scroll-mt-24",
     )
+
+
+def certifications_section() -> rx.Component:
+    """Certifications timeline section using iframe embed."""
+    return rx.el.section(
+        section_heading("Certifications"),
+        rx.el.iframe(
+            src="/timeline.html",
+            class_name="w-full border-0 rounded-lg shadow-md",
+            style={"height": "600px", "background": "white"},
+        ),
+        id="certifications",
+        class_name="mb-12 scroll-mt-24",
+    )

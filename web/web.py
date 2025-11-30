@@ -7,6 +7,7 @@ from web.components.resume_sections import (
     portfolio_section,
     skills_list_section,
     social_media_section,
+    certifications_section,
 )
 from web.components.skills_chart import skills_chart_section
 from web.states.resume_state import ResumeState
@@ -25,6 +26,7 @@ def index() -> rx.Component:
                     skills_list_section(),
                     skills_chart_section(),
                     social_media_section(),
+                    certifications_section(),
                     class_name="container mx-auto",
                 ),
                 class_name="p-8 md:p-16 w-full max-w-5xl",
