@@ -176,8 +176,8 @@ def certifications_section() -> rx.Component:
         section_heading("Certifications"),
         rx.el.iframe(
             src="/timeline.html",
-            class_name="w-full border-0 rounded-lg shadow-md",
-            style={"height": "600px", "background": "white"},
+            class_name="w-full border-0 rounded-lg shadow-md h-[400px] md:h-[600px]",
+            style={"background": "white"},
         ),
         id="certifications",
         class_name="mb-12 scroll-mt-24",

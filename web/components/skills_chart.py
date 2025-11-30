@@ -23,20 +23,26 @@ def skills_chart_section() -> rx.Component:
             ),
             class_name="mb-8",
         ),
-        # Individual skill chart
-        rx.plotly(
-            data=ResumeState.individual_chart,
-            class_name="mb-12",
+        # Individual skill chart with responsive container
+        rx.el.div(
+            rx.plotly(
+                data=ResumeState.individual_chart,
+                class_name="w-full",
+            ),
+            class_name="mb-12 w-full overflow-x-auto",
         ),
         # Comparative chart title
         rx.el.h3(
             "Comparative View",
             class_name="text-2xl font-bold text-gray-700 mb-4 mt-8",
         ),
-        # Comparative chart - all skills
-        rx.plotly(
-            data=ResumeState.comparative_chart,
-            class_name="mb-12",
+        # Comparative chart with responsive container
+        rx.el.div(
+            rx.plotly(
+                data=ResumeState.comparative_chart,
+                class_name="w-full",
+            ),
+            class_name="mb-12 w-full overflow-x-auto",
         ),
         id="skills",
         class_name="mb-12 scroll-mt-24",

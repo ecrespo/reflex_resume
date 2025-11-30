@@ -3,7 +3,18 @@ import plotly.graph_objects as go
 
 
 class ResumeState(rx.State):
-    """State for managing resume page interactions."""
+    """Resume state with skills data and mobile menu control."""
+    
+    # Mobile menu state
+    mobile_menu_open: bool = False
+    
+    def toggle_mobile_menu(self):
+        """Toggle mobile menu state."""
+        self.mobile_menu_open = not self.mobile_menu_open
+    
+    def close_mobile_menu(self):
+        """Close mobile menu."""
+        self.mobile_menu_open = False
     
     # Skills data structure for radar charts
     skills_data = {
@@ -59,8 +70,9 @@ class ResumeState(rx.State):
             ),
             showlegend=False,
             title=self.selected_skill,
-            height=500,
-            margin=dict(l=80, r=80, t=100, b=80)
+            autosize=True,
+            height=400,  # Smaller height for mobile
+            margin=dict(l=40, r=40, t=80, b=40)  # Reduced margins for mobile
         )
         
         return fig
@@ -87,8 +99,17 @@ class ResumeState(rx.State):
             ),
             showlegend=True,
             title="All Skills Comparison",
-            height=600,
-            margin=dict(l=80, r=80, t=100, b=80)
+            autosize=True,
+            height=700,  # Increased height even more
+            margin=dict(l=40, r=40, t=80, b=240),  # Significantly increased bottom margin
+            legend=dict(
+                orientation="h",  # Horizontal legend
+                yanchor="bottom",
+                y=-0.55,  # Position much further below the chart
+                xanchor="center",
+                x=0.5,
+                font=dict(size=9)  # Smaller font for mobile
+            )
         )
         
         return fig

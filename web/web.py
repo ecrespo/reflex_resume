@@ -29,7 +29,7 @@ def index() -> rx.Component:
                     certifications_section(),
                     class_name="container mx-auto",
                 ),
-                class_name="p-8 md:p-16 w-full max-w-5xl",
+                class_name="p-4 md:p-8 lg:p-16 w-full max-w-5xl",
             ),
             class_name="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96",
         ),
