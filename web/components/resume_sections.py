@@ -38,12 +38,16 @@ def experience_item(item: list) -> rx.Component:
             rx.el.span(item[2], class_name="text-gray-600 font-medium whitespace-nowrap"),
             class_name="flex flex-col md:flex-row justify-between items-start md:items-baseline mb-3",
         ),
-        rx.el.ul(
-            rx.foreach(
-                item[3],
-                lambda r: rx.el.li(r, class_name="mb-1 leading-relaxed"),
+        rx.cond(
+            item[3] is not None,
+            rx.el.ul(
+                rx.foreach(
+                    item[3],
+                    lambda r: rx.el.li(r, class_name="mb-1 leading-relaxed"),
+                ),
+                class_name="list-disc list-outside ml-5 text-gray-700 mb-4 space-y-1",
             ),
-            class_name="list-disc list-outside ml-5 text-gray-700 mb-4 space-y-1",
+            rx.fragment(),
         ),
         rx.cond(
             item[4] is not None,
