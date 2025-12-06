@@ -38,7 +38,6 @@ COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv
 
 # Copy application code
 COPY --chown=appuser:appuser . .
-COPY --chown=appuser:appuser .states .
 COPY --chown=appuser:appuser .python-version .
 # Switch to non-root user
 
