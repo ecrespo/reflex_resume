@@ -5,6 +5,8 @@ description = "Add your description here"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
+    "fastapi>=0.123.0",
+    "markdown>=3.10",
     "plotly>=6.5.0",
     "reflex>=0.8.21",
 ]

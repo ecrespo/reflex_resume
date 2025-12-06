@@ -42,28 +42,6 @@ def index() -> rx.Component:
     )
 
 
-def blog() -> rx.Component:
-    """Blog page with posts."""
-    from web.components.blog_section import blog_section
-    from web.components.navbar import navbar_blog
-    
-    return rx.el.div(
-        sidebar(),
-        rx.el.div(
-            navbar_blog(),
-            rx.el.main(
-                rx.el.div(
-                    blog_section(),
-                    class_name="container mx-auto px-4 md:px-8 lg:px-16",
-                ),
-                class_name="p-4 md:p-8 lg:p-16 w-full",
-            ),
-            class_name="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96",
-        ),
-        class_name="flex min-h-screen font-['Inter'] bg-[#f5f5dc]",
-    )
-
-
 app = rx.App(
     theme=rx.theme(appearance="light"),
     head_components=[
@@ -81,4 +59,3 @@ app = rx.App(
     ],
 )
 app.add_page(index, route="/")
-app.add_page(blog, route="/blog")
