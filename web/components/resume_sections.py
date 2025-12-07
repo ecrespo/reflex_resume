@@ -127,6 +127,7 @@ def portfolio_section() -> rx.Component:
 
 def skills_list_section() -> rx.Component:
     """Skills list section (text-based)."""
+
     return rx.el.section(
         section_heading("Skills List"),
         rx.el.div(
@@ -134,7 +135,7 @@ def skills_list_section() -> rx.Component:
                 skills_data,
                 lambda item: rx.el.div(
                     rx.el.span(f"{item[0]}: ", class_name="font-bold text-gray-800"),
-                    rx.el.code(f"`{item[1]}`", class_name="text-sm text-gray-700"),
+                    rx.el.code(f"{item[1]}", class_name="text-sm text-gray-700"),
                     class_name="mb-3",
                 )
             ),

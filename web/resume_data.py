@@ -222,18 +222,19 @@ portfolio_data = {
 
 skills_data = [
     ["Programming", "Python, R, Golang, Javascript, Julia, Nestjs"],
-    ["Data processing/wrangling", "SQL, Pandas, Numpy"],
+    ["Data processing/wrangling", "SQL, Pandas, Numpy, Polars, Pyspark"],
     ["Data visualization", "Matplotlib, Seaborn, Plotly, Bokeh"],
     ["Dashboard", "Streamlit, Taipy, Dash, Reflex"],
     ["Machine Learning", "scikit-learn"],
-    ["Deep Learning", "TensorFlow, Keras"],
+    ["Deep Learning", "TensorFlow, Keras, PyTorch"],
+    ["IA", "Langchain, LangGraph, CrewAI, AutoGen, BeeAI"],
     ["Web development", "Django, FastAPI, HTML, CSS"],
     ["Model deployment", "Heroku, AWS, Digital Ocean"],
     ["Operating System", "Linux, Window, MacOs"],
-    ["Low code tools", "Knime, Tableu, Power BI"],
+    ["Low code tools", "Knime, Tableu, Power BI, N8N"],
     ["Containers", "Docker, Docker-compose, Kubernetes"],
     ["Serverless Development", "AWS Cloudformation, AWS SAM, Serverless"],
-    ["Database Engine", "PostgreSQL, MySQLdb, MongoDB"],
+    ["Database Engine", "PostgreSQL, MySQLdb, MongoDB","DuckDB"],
 ]
 
 social_media_data = [
