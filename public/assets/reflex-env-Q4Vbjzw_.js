@@ -1,0 +1,1 @@
+var e={PING:`https://api.seraph.to/ping`,EVENT:`wss://api.seraph.to/_event`,UPLOAD:`https://api.seraph.to/_upload`,AUTH_CODESPACE:`https://api.seraph.to/auth-codespace`,HEALTH:`https://api.seraph.to/_health`,ALL_ROUTES:`https://api.seraph.to/_all_routes`,TRANSPORT:`websocket`,TEST_MODE:!1};export{e as t};
