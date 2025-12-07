@@ -7,5 +7,11 @@ config = rx.Config(
     plugins=[
         rx.plugins.SitemapPlugin(),
         rx.plugins.TailwindV4Plugin(),
-    ]
+    ],
+    cookie_secure=True,
+    cors_allow_origins=[
+        "http://localhost:3000",
+        "https://seraph.to",
+        "https://www.seraph.to"
+    ],
 )

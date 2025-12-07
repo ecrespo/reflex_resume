@@ -1,5 +1,5 @@
 #!/bin/bash
-
+python3 -m venv .venv
 source .venv/bin/activate
 pip install --upgrade pip 
 pip install -r requirements.txt
@@ -10,8 +10,8 @@ fi
 if [ -d "public" ]; then
     rm -rf public
 fi
-#API_URL=https://api.seraph.to reflex export --frontend-only
-API_URL=https://reflexresume-production.up.railway.app reflex export --frontend-only
+API_URL=https://api.seraph.to reflex export --frontend-only
+
 unzip frontend.zip -d public
 if [ -f "frontend.zip" ]; then
     rm frontend.zip

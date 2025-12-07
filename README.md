@@ -91,8 +91,8 @@ This starts the Reflex backend (command: `uv run reflex run --backend-only`). Fo
 The `build.sh` script demonstrates exporting a static frontend that communicates with an API URL:
 
 ```bash
-# Optionally adjust API_URL inside build.sh or provide it in the environment
-./build.sh
+# Optionally adjust API_URL inside remote_build.sh or provide it in the environment
+./remote_build.sh
 ```
 
 What it does:
