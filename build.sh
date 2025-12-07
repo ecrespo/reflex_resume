@@ -10,7 +10,8 @@ fi
 if [ -d "public" ]; then
     rm -rf public
 fi
-reflex export --frontend-only  
+#API_URL=https://api.seraph.to reflex export --frontend-only
+API_URL=https://reflexresume-production.up.railway.app reflex export --frontend-only
 unzip frontend.zip -d public
 if [ -f "frontend.zip" ]; then
     rm frontend.zip
