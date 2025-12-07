@@ -2,6 +2,7 @@ import reflex as rx
 
 config = rx.Config(
     app_name="web",
+    api_url="https://api.seraph.to",
     favicon="👨‍🔬",
     state_manager_mode="memory",  # Use in-memory state manager for Vercel deployment
     plugins=[
