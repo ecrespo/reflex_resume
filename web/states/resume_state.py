@@ -1,4 +1,5 @@
 import reflex as rx
+import plotly.graph_objects as go
 
 
 class ResumeState(rx.State):
@@ -49,37 +50,67 @@ class ResumeState(rx.State):
         return self.skills_data.get(self.selected_skill, {})
     
     @rx.var
-    def individual_chart_data(self) -> list[dict]:
-        """Generate individual skill radar chart data for selected category."""
+    def individual_chart(self) -> go.Figure:
+        """Generate individual skill radar chart for selected category."""
         data = self.skills_data.get(self.selected_skill, {})
-        return [{"subject": skill, "value": level} for skill, level in data.items()]
-    
-    @rx.var
-    def comparative_chart_data(self) -> list[dict]:
-        """Generate comparative radar chart data with all skill categories."""
-        # Get all unique skills across all categories
-        all_skills: set[str] = set()
-        for skills in self.skills_data.values():
-            all_skills.update(skills.keys())
         
-        # Create data with each skill as a row
-        result = []
-        for skill in sorted(all_skills):
-            row: dict = {"subject": skill}
-            for category, skills in self.skills_data.items():
-                row[category] = skills.get(skill, 0)
-            result.append(row)
-        return result
+        fig = go.Figure()
+        fig.add_trace(go.Scatterpolar(
+            r=list(data.values()),
+            theta=list(data.keys()),
+            fill='toself',
+            name=self.selected_skill
+        ))
+        
+        fig.update_layout(
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[0, 5]
+                )
+            ),
+            showlegend=False,
+            title=self.selected_skill,
+            autosize=True,
+            height=400,  # Smaller height for mobile
+            margin=dict(l=40, r=40, t=80, b=40)  # Reduced margins for mobile
+        )
+        
+        return fig
     
     @rx.var
-    def category_colors(self) -> list[dict]:
-        """Return list of category info with colors for the comparative chart."""
-        colors = [
-            "#636efa", "#EF553B", "#00cc96", "#ab63fa", 
-            "#FFA15A", "#19d3f3", "#FF6692", "#B6E880",
-            "#FF97FF", "#FECB52", "#8dd3c7", "#bebada"
-        ]
-        return [
-            {"name": cat, "color": colors[i % len(colors)]}
-            for i, cat in enumerate(self.skills_data.keys())
-        ]
+    def comparative_chart(self) -> go.Figure:
+        """Generate comparative radar chart with all skill categories."""
+        fig = go.Figure()
+        
+        for category, skills in self.skills_data.items():
+            fig.add_trace(go.Scatterpolar(
+                r=list(skills.values()),
+                theta=list(skills.keys()),
+                fill='toself',
+                name=category
+            ))
+        
+        fig.update_layout(
+            polar=dict(
+                radialaxis=dict(
+                    visible=True,
+                    range=[0, 5]
+                )
+            ),
+            showlegend=True,
+            title="All Skills Comparison",
+            autosize=True,
+            height=700,  # Increased height even more
+            margin=dict(l=40, r=40, t=80, b=240),  # Significantly increased bottom margin
+            legend=dict(
+                orientation="h",  # Horizontal legend
+                yanchor="bottom",
+                y=-0.55,  # Position much further below the chart
+                xanchor="center",
+                x=0.5,
+                font=dict(size=9)  # Smaller font for mobile
+            )
+        )
+        
+        return fig
