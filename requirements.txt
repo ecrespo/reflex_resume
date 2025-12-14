@@ -11,15 +11,20 @@ anyio==4.12.0
     #   watchfiles
 bidict==0.23.1
     # via python-socketio
+black==25.12.0
+    # via flexdown
 certifi==2025.11.12
     # via
     #   httpcore
     #   httpx
 click==8.3.1
     # via
+    #   black
     #   granian
     #   reflex
     #   reflex-hosting-cli
+flexdown==0.2.5
+    # via reflex-resume (pyproject.toml)
 granian==2.6.0
     # via reflex
 greenlet==3.3.0
@@ -46,15 +51,23 @@ markupsafe==3.0.3
     # via mako
 mdurl==0.1.2
     # via markdown-it-py
+mistletoe==1.5.1
+    # via flexdown
+mypy-extensions==1.1.0
+    # via black
 narwhals==2.13.0
     # via plotly
 packaging==25.0
     # via
+    #   black
     #   plotly
     #   reflex
     #   reflex-hosting-cli
+pathspec==0.12.1
+    # via black
 platformdirs==4.5.1
     # via
+    #   black
     #   reflex
     #   reflex-hosting-cli
 plotly==6.5.0
@@ -73,10 +86,16 @@ python-multipart==0.0.20
     # via reflex
 python-socketio==5.15.0
     # via reflex
+pytokens==0.3.0
+    # via black
+pyyaml==6.0.3
+    # via flexdown
 redis==7.1.0
     # via reflex
-reflex==0.8.21
-    # via reflex-resume (pyproject.toml)
+reflex==0.8.22
+    # via
+    #   reflex-resume (pyproject.toml)
+    #   flexdown
 reflex-hosting-cli==0.1.59
     # via reflex
 rich==14.2.0
@@ -96,12 +115,10 @@ starlette==0.50.0
 typing-extensions==4.15.0
     # via
     #   alembic
-    #   anyio
     #   pydantic
     #   pydantic-core
     #   reflex
     #   sqlalchemy
-    #   starlette
     #   typing-inspection
 typing-inspection==0.4.2
     # via pydantic
