@@ -1,0 +1,457 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/restfulapicondjangotastypieydjangocelery-1.png"/><link rel="preload" as="image" href="/blog/images/restfulapicondjangotastypieydjangocelery-2.png"/><link rel="preload" as="image" href="/blog/images/restfulapicondjangotastypieydjangocelery-3.png"/><link rel="preload" as="image" href="/blog/images/restfulapicondjangotastypieydjangocelery-4.png"/><link rel="preload" as="image" href="/blog/images/restfulapicondjangotastypieydjangocelery-5.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | Restful API con Django-tastypie y Django-Celery</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-51368191.js"/><link rel="modulepreload" href="/assets/entry.client-Dv70GDZP.js"/><link rel="modulepreload" href="/assets/react-dom-DX0clM9j.js"/><link rel="modulepreload" href="/assets/chunk-WWGJGFF6-D2pN2XHm.js"/><link rel="modulepreload" href="/assets/react-DtDMbhE7.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-BDpGGt_t.js"/><link rel="modulepreload" href="/assets/root-zD6cxJWt.js"/><link rel="modulepreload" href="/assets/preload-helper-ogMfbiXo.js"/><link rel="modulepreload" href="/assets/reflex-env-BNCxk_2_.js"/><link rel="modulepreload" href="/assets/one-dark-v9h4L60p.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-BYkyYPI_.js"/><link rel="modulepreload" href="/assets/esm-DZDdZhc0.js"/><link rel="modulepreload" href="/assets/character-entities-legacy-iZb7EYKq.js"/><link rel="modulepreload" href="/assets/index.dom-CMcpImPJ.js"/><link rel="modulepreload" href="/assets/prop-types-4LQ6TUfN.js"/><link rel="modulepreload" href="/assets/_blog_._restfulapicondjangotastypieydjangocelery_._index-D5Fmg1fW.js"/><link rel="modulepreload" href="/assets/stateful_components-CKKPf-BG.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .prose {
+                max-width: none;
+            }
+            .prose h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a202c;
+            }
+            .prose h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #2d3748;
+            }
+            .prose h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #4a5568;
+            }
+            .prose p {
+                margin-bottom: 1rem;
+                line-height: 1.75;
+                color: #4a5568;
+            }
+            .prose code {
+                background-color: #f7fafc;
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            .prose pre {
+                background-color: #2d3748;
+                color: #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            .prose pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+            }
+            .prose ul, .prose ol {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+            }
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+            .prose a {
+                color: #4a9bba;
+                text-decoration: underline;
+            }
+            .prose a:hover {
+                color: #3a8baa;
+            }
+            .prose img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+            .prose blockquote {
+                border-left: 4px solid #4a9bba;
+                padding-left: 1rem;
+                margin: 1rem 0;
+                color: #718096;
+                font-style: italic;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CjirM0bN.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/one-dark-DWfq818h.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen font-[&#x27;Inter&#x27;] bg-[#f5f5dc]"><aside class="md:hidden w-80 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10 z-50 transition-transform duration-300 ease-in-out transform -translate-x-full"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><aside class="hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"><nav class="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><button class="md:hidden p-2 hover:bg-white/10 rounded"><div class="flex flex-col"><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white"></span></div></button><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/" data-discover="true">HOME</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog" data-discover="true">BLOG</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/archives" data-discover="true">ARCHIVES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/categories" data-discover="true">CATEGORIES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/tags" data-discover="true">TAGS</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/feed.xml" data-discover="true">ATOM</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts" href="/blog" data-discover="true"><span class="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6">← Volver al Blog</span></a><header class="mb-8 pb-6 border-b border-gray-200"><h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Restful API con Django-tastypie y Django-Celery</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-gray-500">July 19, 2014</span><span class="text-gray-400 mx-2"> • </span><span class="text-[#4a9bba] font-medium">Tutorial Python</span><span class="text-gray-400 mx-2"> • </span><span class="text-gray-600">Por </span><span class="text-gray-800 font-medium">Unknown</span></div></header><article class="post-content"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Continuando con los artículos sobre django, en este caso se usará <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">django-celery</code> para envío de mensajes a un servidor kannel (servidor sms) y django-tastypie para mostrar el resultado por medio de API rest full con json.
+En los dos artículos anteriores <a data-accent-color="" href="/blog/manejodecolasderabbitmqendjangocondjangocelery" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Manejo de colas de RabbitMQ en django con django-celery</a> y
+<a data-accent-color="" href="/blog/restfulapicondjangotastypie" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Restfult API con django tastypie</a> se tiene la base de este artículo. Este artículo se basa en el ejemplo de la mensajería sms del artículo de <a data-accent-color="" href="/blog/restfulapicondjangotastypie" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Restfult API con django tastypie</a> (todo el proceso de creación del proyecto y de la aplicación sms fue explicada en ese artículo).</p>
+<p class="rt-Text css-56tzch">La idea ahora es poder mostrar los sms listados por evento, no es necesario estar creando una tabla que herede de las otras dos, esto será posible gracias a tastypie en una consulta del json.</p>
+<p class="rt-Text css-56tzch">Se usará como base de datos sqlite3. A continuación se muestra el archivo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">settings.py</code>:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Archivo settings.py:
+#Configuración de la base de datos sqlite3
+DATABASES = {
+    &#x27;default&#x27;: {
+        &#x27;ENGINE&#x27;: &#x27;django.db.backends.sqlite3&#x27;, # Add &#x27;postgresql_psycopg2&#x27;, &#x27;mysql&#x27;, &#x27;sqlite3&#x27; or &#x27;oracle&#x27;.
+        &#x27;NAME&#x27;: &#x27;sms.db&#x27;,                      # Or path to database file if using sqlite3.
+        &#x27;USER&#x27;: &#x27;&#x27;,                      # Not used with sqlite3.
+        &#x27;PASSWORD&#x27;: &#x27;&#x27;,                  # Not used with sqlite3.
+        &#x27;HOST&#x27;: &#x27;&#x27;,                      # Set to empty string for localhost. Not used with sqlite3.
+        &#x27;PORT&#x27;: &#x27;&#x27;,                      # Set to empty string for default. Not used with sqlite3.
+    }
+}
+
+
+
+
+
+#Zona horaria y localización
+
+
+TIME_ZONE = &#x27;America/Caracas&#x27;
+
+LANGUAGE_CODE = &#x27;es-ve&#x27; 
+
+#Aplicaciones instaladas (djcelery,pasarela.apps.sms,tastypie y south)
+INSTALLED_APPS = (
+    &#x27;django.contrib.auth&#x27;,
+    &#x27;django.contrib.contenttypes&#x27;,
+    &#x27;django.contrib.sessions&#x27;,
+    &#x27;django.contrib.sites&#x27;,
+    &#x27;django.contrib.messages&#x27;,
+    &#x27;django.contrib.staticfiles&#x27;,
+    # Uncomment the next line to enable the admin:
+    &#x27;django.contrib.admin&#x27;,
+    &#x27;djcelery&#x27;,
+    &#x27;pasarela.apps.sms&#x27;,
+    &#x27;tastypie&#x27;,
+    &#x27;south&#x27;,
+    # Uncomment the next line to enable admin documentation:
+    # &#x27;django.contrib.admindocs&#x27;,
+)
+
+
+#Conexión al servidor kannel 
+direccion = &quot;127.0.0.1&quot;
+portsms = &quot;13013&quot;
+portadmin  = &quot;13000&quot;
+usuario = &quot;kannel&quot;
+clave = &quot;kannel&quot;
+----------------------
+</code></pre></pre>
+<p class="rt-Text css-56tzch">El archivo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">pasarela/apps/sms/models.py</code>:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Archivo pasarela/apps/sms/models.py
+from django.db import models
+
+#Se crea la tabla Evento que contiene los campos evento (número del evento), el estatus del mismo (si se #termino el evento o no y si no termino fue por falla o no.
+class Evento(models.Model):
+    evento = models.IntegerField(primary_key=True)
+    estatus = models.BooleanField(default=False)
+
+    def __unicode__(self):
+       evento = &quot;Evento: %s, Estatus: %s , Falla: %s&quot; %(self.evento,self.estatus,self.falla)
+       return evento
+
+#Se crea la tabla HistoricoSMS donde se tiene un campo
+#foreignkey de la tablla evento, el mensaje, el número de celular, el estatus si se envío o no o si fallo.
+class HistoricoSMS(models.Model):
+    evento = models.ForeignKey(Evento)
+    mensaje = models.CharField(max_length=150)
+    numcel = models.CharField(max_length=11)
+    estatus = models.BooleanField(default=False)
+
+    def __unicode__(self):
+        mensaje = &quot;%s, %s, %s, %s, %s&quot;  %(self.evento.evento,self.numcel,self.estatus, self.mensaje,self.falla)
+        return mensaje
+--------------------
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Archivo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">pasarela/apps/sms/admin.py</code>:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Archivo pasarela/apps/sms/admin.py
+#En este archivo se define que las tablas Evento e HistoricoSMS se puedan visualizar desde la #administración de django.
+from django.contrib  import admin
+from pasarela.apps.sms.models import HistoricoSMS,Evento
+
+
+admin.site.register(HistoricoSMS)
+admin.site.register(Evento)
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Archivo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">pasarela/apps/sms/api.py</code> (archivo para crear el api restful de django-tastypie), en este caso tiene varias modificaciones con respecto al artículo anterior sobre tastypie, ahora se agrega la variable filtering(más información sobre filtering en el siguiente <a data-accent-color="" href="https://django-tastypie.readthedocs.io/en/latest/resources.html" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">enlace</a>) que es un diccionario en cada recurso:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se importa de tastypie.resources ModelResource, ALL y ALL_WITH_RELATIONS
+from tastypie.resources import ModelResource, ALL, ALL_WITH_RELATIONS
+#Se importa del modelo HistoricoSMS y Evento
+from .models import HistoricoSMS,Evento
+#Se importa fields de tastypie
+from tastypie import fields
+
+
+class EventoResource(ModelResource):
+    class Meta:
+        queryset =Evento.objects.all()
+        resource_name = &#x27;evento&#x27;
+#Se muestra todos los eventos
+        filtering = {
+            &#x27;evento&#x27;: ALL,
+        }
+
+
+class SMSResource(ModelResource):
+    evento = fields.ForeignKey(EventoResource, &#x27;evento&#x27;)
+    class Meta:
+        queryset = HistoricoSMS.objects.all()
+        resource_name = &#x27;sms&#x27;
+#De evento se muestra todo con relación a el. de estatus se muestra exactamente lo que se necesita,
+#acá también se puede usar para las consultas: [&#x27;exact&#x27;, &#x27;range&#x27;, &#x27;gt&#x27;, &#x27;gte&#x27;, &#x27;lt&#x27;, &#x27;lte&#x27;].
+        filtering = {
+            &#x27;evento&#x27;: ALL_WITH_RELATIONS,
+            &#x27;estatus&#x27;:[&#x27;exact&#x27;],
+        }
+------------------------
+</code></pre></pre>
+<p class="rt-Text css-56tzch">El archivo que permite manejar las tareas de celery <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">pasarela/apps/sms/tasks.py</code>:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Archivo pasarela/apps/sms/tasks.py
+from celery import Celery
+app = Celery(&#x27;tasks&#x27;, broker=&#x27;amqp://&#x27;,backend=&#x27;amqp&#x27;)
+from urllib2 import urlopen
+from urllib import urlencode
+import urllib2
+import json
+from time import sleep
+from django.conf import settings
+from pasarela.apps.sms.models import HistoricoSMS,Evento
+
+
+
+#Conexión al servidor kannel (está configuración se puede pasar al archivo settings.py y usarla desde allí
+direccion = settings.direccion
+portsms = settings.portsms
+portadmin  = settings.portadmin
+usuario = settings.usuario
+clave = settings.clave
+
+#Se define una tarea para celery por medio del decorador @task, se recibe un json para luego sea
+# procesado.
+@app.task
+def RecNums(datos):
+    #Se toma el json y se convierte en un diccionario
+    diccionario = json.loads(datos)
+    #Se instancia la clave Evento(tabla Evento).
+    evento = Evento()
+    #Se asigna cada variable del diccionario para trabajarlos directamente
+    for clave in diccionario.keys():
+        if clave == &#x27;mensaje&#x27;:
+            mensaje = diccionario[clave]
+        elif clave == &#x27;numeros&#x27;:
+            numeros = diccionario[clave]
+        elif clave == &#x27;cantnumeros&#x27;:
+            cantnum = int(diccionario[clave])
+        elif clave == &#x27;evento&#x27;:
+            eventoid = int(diccionario[clave])
+    #Se crea una lista para agregar todos los números de celular a dicha lista
+    lista = []
+    for num in numeros: lista.append(str(num))
+    #A evento.evento se le asigna el id del evento.
+    evento.evento = eventoid
+    #Si la lista es distinta a la variable cantnum se envía un mensaje de error, si no se procesa la lista
+    if len(lista) == cantnum:
+        #Se envía al proceso Enviar (de celery) cada mensaje con su número celular, esperando un segundo 
+        #para procesar el siguiente.
+        for i in range(len(lista)):
+            #Se Envía el mensaje pasando el evento, el número celular de la lista y el mensaje
+            resultado = Enviar.delay(evento,lista[i],mensaje)
+            sleep(1)
+        #Se asigna True al estatus del evento al terminar de procesar los mensajes.
+        evento.estatus = True
+        #Se salva los valores en la tabla Evento.
+        evento.save()
+        return &quot;Se enviaron: %s&quot; %cantnum
+    else:
+        evento.estatus = False
+        evento.save()
+        return &quot;Error en la recepcion de los datos&quot;
+
+
+#Se crea la tarea de celery Enviar donde recibe el número del evento, el número de celular y la cantidad de 
+#intentos para enviar el sms el valor por defecto es 5.
+@app.task
+def Enviar(evento,numcel,mensaje,intentos=5):
+    #Se instancia la clase HistoricoSMS que maneja dicha table de models.py
+    historico = HistoricoSMS()
+    #Se le da forma de códificación url al mensaje para eliminar los espacios en blanco del mismo.
+    form = urlencode({&#x27;text&#x27;: mensaje})
+    #se define la variable Url donde se tiene el url del servidor kannel donde se le pasa al texto
+    #el usuario, la clave, el número celular y el mensaje a enviar.
+    Url = &quot;http://%s:%s/cgi-bin/sendsms?username=%s&amp;password=%s&amp;to=%s&amp;text=%s&quot; % (direccion,portsms,usuario,clave,numcel,form)
+    #Se maneja una excepción si hay un error de comunicación http.
+    try: 
+        #Se abre el Url
+        f = urlopen(Url,timeout=10)
+        #Se asigna los valores numcel, mensaje y evento al objeto historico.
+        historico.numcel = numcel
+        historico.mensaje = mensaje
+        historico.evento = evento
+        #Se lee el resultado de abrir el url, si se tiene el mensaje  de encolado para enviar más tarde
+        #se asigna el estatus False y se salva devolviendo el mensaje de no enviado 
+        if f.read() &lt;&gt; &#x27;3: Queued for later delivery&#x27;:
+            historico.estatus = False
+            historico.save()
+            return &#x27;Mensaje no enviado a: %s&#x27; %numcel
+        else:
+            #Se envío el mensaje se coloca el estatus en True y se salva en la tabla
+            historico.estatus = True
+            historico.save()
+            #Se devuelve el mensaje de mensaje enviado.
+            return &#x27;Mensaje enviado a: %s&#x27; %numcel
+    except (urllib2.URLError,urllib2.HTTPError),exc:
+    #Si hay una excepción de error http se reintenta el envío llamando de forma 
+    #concurrente a esta misma función reduciendo el valor de los intentos, 
+    #cuando llegue a cero el número de intentos se devuelve un mensaje de no enviado 
+        if intentos &lt;&gt; 0:
+            Enviar(evento,numcel,mensaje,intentos-1)
+        else:
+            #Se salva los valores en la tabla y devuelve el mensaje de sms no enviado
+            historico.numcel = numcel
+            historico.mensaje = mensaje
+            historico.evento = evento
+            historico.estatus = False
+            historico.save()
+            return&#x27;No hay conexion al kannel por puerto o IP, el numero que no se procesaron es: %s&#x27; %numcel
+----------------------------
+</code></pre></pre>
+<p class="rt-Text css-56tzch">A continuación se muestra el contenido del archivo pasarela/urls.py el cual contiene el acceso al API como se explico en el artículo anterior y ahora tiene el acceso a la función que permite recibir los datos para enviar (estos datos se pasan por un json):</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Archivo pasarela/urls.py
+from django.conf.urls import patterns, include, url
+
+from djcelery import views as celery_views
+from pasarela.apps.sms import tasks
+
+# Uncomment the next two lines to enable the admin:
+from django.contrib import admin
+admin.autodiscover()
+
+#Se importa Api de tastypie.api
+from tastypie.api import Api
+from apps.sms.api import SMSResource,EventoResource
+
+v1_api = Api(api_name=&#x27;v1&#x27;)
+#Se registra los recursos en la instancia del api.
+v1_api.register(SMSResource())
+v1_api.register(EventoResource())
+
+urlpatterns = patterns(&#x27;&#x27;,
+    # Uncomment the next line to enable the admin:
+    url(r&#x27;^admin/&#x27;, include(admin.site.urls)),
+    #Acceso al API
+    url(r&#x27;^api/&#x27;, include(v1_api.urls)),
+    #se define enviar que usa la vista de tareas de celery para ejecutar tasks.RecNums
+    url(r&#x27;^enviar/&#x27;, celery_views.task_view(tasks.RecNums)),
+    #Consulta a celery si la tarea se ejecuto sin problemas
+    url(r&#x27;^(?P&lt;task_id&gt;[\w\d\-]+)/done/?$&#x27;, celery_views.is_task_successful,
+        name=&quot;celery-is_task_successful&quot;),
+    #Consulta de celery para ver el estatus de la tarea
+    url(r&#x27;^(?P&lt;task_id&gt;[\w\d\-]+)/status/?$&#x27;, celery_views.task_status,
+        name=&quot;celery-task_status&quot;),
+)
+-----------------------
+</code></pre></pre>
+<p class="rt-Text css-56tzch">La base de datos se sincroniza como se explicó en los artículos anteriores, ahora toca ejecutar en modo pruba django-celery, django como tal y abrir un interprete de comandos para django.</p>
+<p class="rt-Text css-56tzch">Ejecución de django-celery con dos colas de rabbitMQ y en modo info:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">python manage.py celeryd -E -l info -c 2
+</code></pre></pre>
+<p class="rt-Text css-56tzch">A continuación captura de pantalla de la ejecución:</p>
+<img src="/blog/images/restfulapicondjangotastypieydjangocelery-1.png" alt=""/>
+<p class="rt-Text css-56tzch">Note que se tienen 2 tareas en el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">celery</code>:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><li class="css-jzlc08">pasarela.apps.sms.tasks.Enviar</li>
+<li class="css-jzlc08">pasarela.apps.sms.tasks.RecNums
+Ahora se ejecuta django en el 127.0.0.1 y puerto 8080:
+python manage.py runserver 127.0.0.1:8080
+A continuación una captura de pantalla de la ejecución del comando:</li>
+</ul>
+<img src="/blog/images/restfulapicondjangotastypieydjangocelery-2.png" alt=""/>
+<p class="rt-Text css-56tzch">Y por último se ejecuta el comando para tener un shell interfactivo de django:
+python manage.py shell
+A continuación la captura de pantalla:</p>
+<img src="/blog/images/restfulapicondjangotastypieydjangocelery-3.png" alt=""/>
+<p class="rt-Text css-56tzch">Ahora se ejecutará en el shell una prueba que simula la recepción por parte de la tarea del json que recibe de una aplicación externa para enviar los sms:
+Hay que acotar que los números de celular de la prueba no corresponden a números  reales o de proveedores de teléfonía celular.</p>
+<img src="/blog/images/restfulapicondjangotastypieydjangocelery-4.png" alt=""/>
+<p class="rt-Text css-56tzch">Ahora para complementar la idea de consulta API restful por json del artículo anterior la idea es listar los números celulares que se enviaron del evento 6, en este caso se usará el programa curl:
+curl <a data-accent-color="" href="http://127.0.0.1:8080/api/v1/sms/?evento=6" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">http://127.0.0.1:8080/api/v1/sms/?evento=6</a>
+El resultado es:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">{&quot;meta&quot;: {&quot;limit&quot;: 20, &quot;next&quot;: null, &quot;offset&quot;: 0, &quot;previous&quot;: null, &quot;total_count&quot;: 5}, &quot;objects&quot;: [{&quot;estatus&quot;:true, &quot;evento&quot;: &quot;/api/v1/evento/6/&quot;, &quot;id&quot;: &quot;21&quot;, &quot;mensaje&quot;: &quot;Esta es una prueba de sms&quot;, &quot;numcel&quot;: &quot;14225673531&quot;, &quot;resource_uri&quot;: &quot;/api/v1/sms/21/&quot;}, {&quot;estatus&quot;:true, &quot;evento&quot;: &quot;/api/v1/evento/6/&quot;,&quot;id&quot;: &quot;22&quot;, &quot;mensaje&quot;: &quot;Esta es una prueba de sms&quot;, &quot;numcel&quot;: &quot;142165673531&quot;, &quot;resource_uri&quot;: &quot;/api/v1/sms/22/&quot;}, {&quot;estatus&quot;: true, &quot;evento&quot;: &quot;/api/v1/evento/6/&quot;,&quot;id&quot;: &quot;23&quot;, &quot;mensaje&quot;: &quot;Esta es una prueba de sms&quot;, &quot;numcel&quot;: &quot;14265673531&quot;, &quot;resource_uri&quot;: &quot;/api/v1/sms/23/&quot;}, {&quot;estatus&quot;: true, &quot;evento&quot;: &quot;/api/v1/evento/6/&quot;, &quot;id&quot;: &quot;24&quot;, &quot;mensaje&quot;: &quot;Esta es una prueba de sms&quot;, &quot;numcel&quot;: &quot;14145673531&quot;, &quot;resource_uri&quot;: &quot;/api/v1/sms/24/&quot;}, {&quot;estatus&quot;: true, &quot;evento&quot;: &quot;/api/v1/evento/6/&quot;,&quot;id&quot;: &quot;25&quot;, &quot;mensaje&quot;: &quot;Esta es una prueba de sms&quot;, &quot;numcel&quot;: &quot;14245673531&quot;, &quot;resource_uri&quot;: &quot;/api/v1/sms/25/&quot;}]}
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Por último se muestra la captura de pantalla de lo que se genera en el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">djcelery</code>:</p>
+<img src="/blog/images/restfulapicondjangotastypieydjangocelery-5.png" alt=""/>
+<p class="rt-Text css-56tzch">En el próximo artículo se mostrará el acceso a las tareas de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">celery</code> desde el URL definido en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">urls.py</code>.</p>
+<h2 level="2" class="rt-Heading rt-r-size-5 css-jzlc08"></h2>
+<p class="rt-Text css-56tzch">¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
+<p class="rt-Text css-56tzch">O Escaneando el código QR desde la billetera:</p>
+<img src="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png" alt="17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV"/></div></article></div></main></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="rt-Box css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><p class="rt-Text css-vq6poo">Built with Reflex</p></div></a></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"unstable_subResourceIntegrity":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-51368191.js";
+import * as route0 from "/assets/root-zD6cxJWt.js";
+import * as route1 from "/assets/_blog_._restfulapicondjangotastypieydjangocelery_._index-D5Fmg1fW.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[restfulapicondjangotastypieydjangocelery]._index":route1};
+
+import("/assets/entry.client-Dv70GDZP.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

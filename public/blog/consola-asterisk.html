@@ -1,0 +1,652 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | La consola de asterisk</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-51368191.js"/><link rel="modulepreload" href="/assets/entry.client-Dv70GDZP.js"/><link rel="modulepreload" href="/assets/react-dom-DX0clM9j.js"/><link rel="modulepreload" href="/assets/chunk-WWGJGFF6-D2pN2XHm.js"/><link rel="modulepreload" href="/assets/react-DtDMbhE7.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-BDpGGt_t.js"/><link rel="modulepreload" href="/assets/root-zD6cxJWt.js"/><link rel="modulepreload" href="/assets/preload-helper-ogMfbiXo.js"/><link rel="modulepreload" href="/assets/reflex-env-BNCxk_2_.js"/><link rel="modulepreload" href="/assets/one-dark-v9h4L60p.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-BYkyYPI_.js"/><link rel="modulepreload" href="/assets/esm-DZDdZhc0.js"/><link rel="modulepreload" href="/assets/character-entities-legacy-iZb7EYKq.js"/><link rel="modulepreload" href="/assets/index.dom-CMcpImPJ.js"/><link rel="modulepreload" href="/assets/prop-types-4LQ6TUfN.js"/><link rel="modulepreload" href="/assets/_blog_._consola-asterisk_._index-Br3PEPBw.js"/><link rel="modulepreload" href="/assets/stateful_components-CKKPf-BG.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .prose {
+                max-width: none;
+            }
+            .prose h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a202c;
+            }
+            .prose h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #2d3748;
+            }
+            .prose h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #4a5568;
+            }
+            .prose p {
+                margin-bottom: 1rem;
+                line-height: 1.75;
+                color: #4a5568;
+            }
+            .prose code {
+                background-color: #f7fafc;
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            .prose pre {
+                background-color: #2d3748;
+                color: #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            .prose pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+            }
+            .prose ul, .prose ol {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+            }
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+            .prose a {
+                color: #4a9bba;
+                text-decoration: underline;
+            }
+            .prose a:hover {
+                color: #3a8baa;
+            }
+            .prose img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+            .prose blockquote {
+                border-left: 4px solid #4a9bba;
+                padding-left: 1rem;
+                margin: 1rem 0;
+                color: #718096;
+                font-style: italic;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CjirM0bN.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/one-dark-DWfq818h.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen font-[&#x27;Inter&#x27;] bg-[#f5f5dc]"><aside class="md:hidden w-80 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10 z-50 transition-transform duration-300 ease-in-out transform -translate-x-full"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><aside class="hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"><nav class="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><button class="md:hidden p-2 hover:bg-white/10 rounded"><div class="flex flex-col"><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white"></span></div></button><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/" data-discover="true">HOME</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog" data-discover="true">BLOG</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/archives" data-discover="true">ARCHIVES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/categories" data-discover="true">CATEGORIES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/tags" data-discover="true">TAGS</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/feed.xml" data-discover="true">ATOM</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts" href="/blog" data-discover="true"><span class="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6">← Volver al Blog</span></a><header class="mb-8 pb-6 border-b border-gray-200"><h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">La consola de asterisk</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-gray-500">April 13, 2008</span><span class="text-gray-400 mx-2"> • </span><span class="text-[#4a9bba] font-medium">Asterisk, Debian, Linux</span><span class="text-gray-400 mx-2"> • </span><span class="text-gray-600">Por </span><span class="text-gray-800 font-medium">Unknown</span></div></header><article class="post-content"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Ya se tiene el asterisk funcionando, solo queda probar entrar a la consola.</p>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h3 level="3" class="rt-Heading rt-r-size-4 css-jzlc08">Consola de asterisk</h3>
+<p class="rt-Text css-56tzch">Desde root ejecutar asterisk -r.</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">jewel:~# asterisk -r
+Asterisk 1.6.0-beta7.1, Copyright (C) 1999 - 2008 Digium, Inc. and others.
+Created by Mark Spencer 
+Asterisk comes with ABSOLUTELY NO WARRANTY; type &#x27;core show warranty&#x27; for details.
+This is free software, with components licensed under the GNU General Public
+License version 2 and other licenses; you are welcome to redistribute it under
+certain conditions. Type &#x27;core show license&#x27; for details.
+=========================================================================
+Connected to Asterisk 1.6.0-beta7.1 currently running on jewel (pid = 3138)
+jewel*CLI&gt;
+
+Se muestra la versión de asterisk que se está usando (en el ejemplo la versión beta7.1 de la 1.6.0). Luego el creador de asterisk y la licencia que usa; al final muestra el nombre del equipo y cli.
+
+Para ver la lista de comandos se ejecuta help:
+jewel*CLI&gt; help
+ael reload Reload AEL configuration
+ael set debug {read|tokens|mac Enable AEL debugging flags
+agent logoff Sets an agent offline
+agent show Show status of agents
+agent show online Show all online agents
+agi dump html Dumps a list of AGI commands in HTML format
+agi exec Add AGI command to a channel in Async AGI
+agi set debug [on|off] Enable/Disable AGI debugging
+agi show List AGI commands or specific help
+cdr show status Display the CDR status
+console active Sets/displays active console
+console answer Answer an incoming console call
+console autoanswer [on|off] Sets/displays autoanswer
+console boost Sets/displays mic boost in dB
+console dial Dial an extension on the console
+console flash Flash a call on the console
+console hangup Hangup a call on the console
+console {mute|unmute} Disable/Enable mic input
+console send text Send text to the remote device
+console transfer Transfer a call to a different extension
+console {device} Generic console command
+core abort shutdown Cancel a running shutdown
+core clear profile Clear profiling info
+core restart gracefully Restart Asterisk gracefully
+core restart now Restart Asterisk immediately
+core restart when convenient Restart Asterisk at empty call volume
+core set chanvar Set a channel variable
+core set debug channel Enable/disable debugging on a channel
+core set {debug|verbose} [off| Set level of debug/verbose chattiness
+core set global Set global dialplan variable
+core show applications [like|d Shows registered dialplan applications
+core show application Describe a specific dialplan application
+core show calls [uptime] Display information on calls
+core show channels [concise|ve Display information on channels
+core show channel Display information on a specific channel
+core show channeltypes List available channel types
+core show channeltype Give more details on that channel type
+core show codecs [audio|video| Displays a list of codecs
+core show codec Shows a specific codec
+core show config mappings Display config mappings (file names to config engines)
+core show file formats Displays file formats
+core show file version [like] List versions of files used to build Asterisk
+core show functions [like] Shows registered dialplan functions
+core show function Describe a specific dialplan function
+core show globals Show global dialplan variables
+core show hints Show dialplan hints
+core show hint Show dialplan hint
+core show image formats Displays image formats
+core show license Show the license(s) for this copy of Asterisk
+core show profile Display profiling info
+core show settings Show some core settings
+core show switches Show alternative switches
+core show sysinfo Show System Information
+core show threads Show running threads
+core show translation [recalc] Display translation matrix
+core show uptime [seconds] Show uptime information
+core show version Display version info
+core show warranty Show the warranty (if any) for this copy of Asterisk
+core stop gracefully Gracefully shut down Asterisk
+core stop now Shut down Asterisk immediately
+core stop when convenient Shut down Asterisk at empty call volume
+database del Removes database key/value
+database deltree Removes database keytree/values
+database get Gets database value
+database put Adds/updates database value
+database show Shows database contents
+database showkey Shows database contents
+devstate change Change a custom device state
+devstate list List currently known custom device states
+dialplan add extension Add new extension into context
+dialplan add ignorepat Add new ignore pattern
+dialplan add include Include context in other context
+dialplan reload Reload extensions and *only* extensions
+dialplan remove extension Remove a specified extension
+dialplan remove ignorepat Remove ignore pattern from context
+dialplan remove include Remove a specified include from context
+dialplan save Save dialplan
+dialplan set extenpatternmatch Use the Old extension pattern matching algorithm.
+dialplan set extenpatternmatch Use the New extension pattern matching algorithm.
+dialplan show Show dialplan
+dnsmgr refresh Performs an immediate refresh
+dnsmgr reload Reloads the DNS manager configuration
+dnsmgr status Display the DNS manager status
+dundi flush [stats] Flush DUNDi cache
+dundi lookup Lookup a number in DUNDi
+dundi precache Precache a number in DUNDi
+dundi query Query a DUNDi EID
+dundi set debug {on|off} Enable/Disable DUNDi debugging
+dundi show entityid Display Global Entity ID
+dundi show mappings Show DUNDi mappings
+dundi show peers [registered|i Show defined DUNDi peers
+dundi show peer Show info on a specific DUNDi peer
+dundi show precache Show DUNDi precache
+dundi show requests Show DUNDi requests
+dundi show trans Show active DUNDi transactions
+dundi store history {on|off} Enable/Disable DUNDi historic records
+feature show channels List status of feature channels
+features reload Reloads configured features
+features show Lists configured features
+file convert Convert audio file
+group show channels Display active channels with group(s)
+help Display help list, or specific help on a command
+http show status Display HTTP server status
+iax2 provision Provision an IAX device
+iax2 prune realtime Prune a cached realtime lookup
+iax2 reload Reload IAX configuration
+iax2 set debug {on|off} Enable/Disable IAX debugging
+iax2 set debug jb {on|off} Enable/Disable IAX jitterbuffer debugging
+iax2 set debug trunk {on|off} Enable/Disable IAX trunk debugging
+iax2 set mtu Set the IAX systemwide trunking MTU
+iax2 show cache Display IAX cached dialplan
+iax2 show channels List active IAX channels
+iax2 show firmware List available IAX firmware
+iax2 show netstats List active IAX channel netstats
+iax2 show peer Show details on specific IAX peer
+iax2 show peers List defined IAX peers
+iax2 show provisioning Display iax provisioning
+iax2 show registry Display IAX registration status
+iax2 show stats Display IAX statistics
+iax2 show threads Display IAX helper thread info
+iax2 show users [like] List defined IAX users
+iax2 test losspct Set IAX2 incoming frame loss percentage
+iax2 unregister Unregister (force expiration) an IAX2 peer from the registry
+indication add Add the given indication to the country
+indication remove Remove the given indication from the country
+indication show Display a list of all countries/indications
+jabber reload Reload Jabber configuration
+jabber set debug {on|off} Enable/Disable Jabber debug
+jabber show buddies Show buddy lists of our clients
+jabber show connected Show state of clients and components
+jabber test Shows roster, but is generally used for mog&#x27;s debugging.
+keys init Initialize RSA key passcodes
+keys show Displays RSA key information
+local show channels List status of local channels
+logger mute Toggle logging output to a console
+logger reload Reopens the log files
+logger rotate Rotates and reopens the log files
+logger show channels List configured log channels
+manager debug [on|off] Show, enable, disable debugging of the manager code
+manager reload Reload manager configurations
+manager show command Show a manager interface command
+manager show commands List manager interface commands
+manager show connected List connected manager interface users
+manager show eventq List manager interface queued events
+manager show users List configured manager users
+manager show user Display information on a specific manager user
+meetme Execute a command on a conference or conferee
+mgcp audit endpoint Audit specified MGCP endpoint
+mgcp reload Reload MGCP configuration
+mgcp set debug {on|off} Enable/Disable MGCP debugging
+mgcp show endpoints List defined MGCP endpoints
+minivm list accounts List defined mini-voicemail boxes
+minivm list templates List message templates
+minivm list zones List zone message formats
+minivm reload Reload Mini-voicemail configuration
+minivm show settings Show mini-voicemail general settings
+minivm show stats Show some mini-voicemail statistics
+mixmonitor [start|stop] Execute a MixMonitor command
+mobile rfcomm Send commands to the rfcomm port for debugging
+mobile search Search for Bluetooth Cell / Mobile devices
+mobile show devices Show Bluetooth Cell / Mobile devices
+module load Load a module by name
+module reload Reload configuration
+module show [like] List modules and info
+module unload Unload a module by name
+moh reload Reload MusicOnHold
+moh show classes List MusicOnHold classes
+moh show files List MusicOnHold file-based classes
+no debug channel Disable debugging on channel(s)
+ooh323 set debug [off] Enable/Disable OOH323 debugging
+ooh323 show config Show details on global configuration of H.323 channel driver
+ooh323 show peer Show details on specific OOH323 peer
+ooh323 show peers Show defined OOH323 peers
+ooh323 show user Show details on specific OOH323 user
+ooh323 show users Show defined OOH323 users
+originate Originate a call
+parkedcalls show List currently parked calls
+phoneprov show routes Show registered phoneprov http routes
+pri debug span Enables PRI debugging on a span
+pri intensive debug span Enables REALLY INTENSE PRI debugging
+pri no debug span Disables PRI debugging on a span
+pri set debug file Sends PRI debug output to the specified file
+pri show debug Displays current PRI debug settings
+pri show spans Displays PRI Information
+pri show span Displays PRI Information
+pri unset debug file Ends PRI debug output to file
+queue add member Add a channel to a specified queue
+queue remove member Removes a channel from a specified queue
+queue rules reload Reload the rules defined in queuerules.conf
+queue rules show Show the rules defined in queuerules.conf
+queue set penalty Set penalty for a channel of a specified queue
+queue show Show status of a specified queue
+queue {pause|unpause} member Pause or unpause a queue member
+realtime load Used to print out RealTime variables.
+realtime mysql status Shows connection information for the MySQL RealTime driver
+realtime update Used to update RealTime variables.
+rpt debug level Enable app_rpt debuggin
+rpt dump Dump app_rpt structs for debugging
+rpt lstats Dump link statistics
+rpt reload Reload app_rpt config
+rpt restart Restart app_rpt
+rpt stats Dump node statistics
+rtcp set debug {on|off|ip} Enable/Disable RTCP debugging
+rtcp set stats {on|off} Enable/Disable RTCP stats
+rtp set debug {on|off|ip} Enable/Disable RTP debugging
+say load [new|old] Set or show the say mode
+sip notify Send a notify packet to a SIP peer
+sip prune realtime [peer|user| Prune cached Realtime users/peers
+sip reload Reload SIP configuration
+sip set debug {on|off|ip|peer} Enable/Disable SIP debugging
+sip set history {on|off} Enable/Disable SIP history
+sip show {channels|subscriptio List active SIP channels/subscriptions
+sip show channel Show detailed SIP channel info
+sip show domains List our local SIP domains.
+sip show history Show SIP dialog history
+sip show inuse List all inuse/limits
+sip show objects List all SIP object allocations
+sip show peers List defined SIP peers
+sip show peer Show details on specific SIP peer
+sip show registry List SIP registration status
+sip show settings Show SIP global settings
+sip show tcp List TCP Connections
+sip show users List defined SIP users
+sip show user Show details on specific SIP user
+sip unregister Unregister (force expiration) a SIP peer from the registery
+
+skinny reset Reset Skinny device(s)
+skinny set debug {on|off} Enable/Disable Skinny debugging
+skinny show devices List defined Skinny devices
+skinny show device List Skinny device information
+skinny show lines List defined Skinny lines per device
+skinny show line List Skinny line information
+skinny show settings List global Skinny settings
+sla show stations Show SLA Stations
+sla show trunks Show SLA Trunks
+soft hangup Request a hangup on a given channel
+stun set debug {on|off} Enable/Disable STUN debugging
+transcoder show Display Zaptel transcoder utilization.
+udptl set debug {on|off|ip} Enable/Disable UDPTL debugging
+ulimit Set or show process resource limits
+unistim info Show UNISTIM info
+unistim reload Reload UNISTIM configuration
+unistim set debug {on|off} Toggle UNITSTIM debugging
+unistim sp Send packet (for reverse engineering)
+voicemail reload Reload voicemail configuration
+voicemail show users List defined voicemail boxes
+voicemail show zones List zone message formats
+zap destroy channel Destroy a channel
+zap restart Fully restart Zaptel channels
+zap set dnd Set software gain on a channel
+zap set hwgain Set hardware gain on a channel
+zap set swgain Set software gain on a channel
+zap show cadences List cadences
+zap show channels [trunkgroup| Show active zapata channels
+zap show channel Show information on a channel
+zap show status Show all Zaptel cards status
+zap show version Show the Zaptel version in use
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Para ver los módulos instalados de asterisk se ejecuta module show:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">jewel*CLI&gt; module show
+Module Description Use Count 
+res_speech Generic Speech Recognition API 0 
+res_smdi Simplified Message Desk Interface (SMDI) 0 
+res_realtime Realtime Data Lookup/Rewrite 0 
+res_phoneprov HTTP Phone Provisioning 0 
+res_musiconhold Music On Hold Resource 0 
+res_monitor Call Monitoring Resource 0 
+res_limit Resource limits 0 
+res_jabber AJI - Asterisk Jabber Interface 0 
+res_indications Region-specific tones 0 
+res_crypto Cryptographic Digital Signatures 0 
+res_convert File format conversion CLI command 0 
+res_config_sqlite Realtime SQLite configuration 0 
+res_config_ldap LDAP realtime interface 0 
+res_clioriginate Call origination from the CLI 0 
+res_agi Asterisk Gateway Interface (AGI) 0 
+res_ael_share share-able code for AEL 0 
+res_adsi ADSI Resource 0 
+pbx_spool Outgoing Spool Support 0 
+pbx_realtime Realtime Switch 0 
+pbx_lua Lua PBX Switch 0 
+pbx_loopback Loopback Switch 0 
+pbx_dundi Distributed Universal Number Discovery ( 0 
+pbx_config Text Extension Configuration 0 
+pbx_ael Asterisk Extension Language Compiler 0 
+func_volume Technology independent volume control 0 
+func_vmcount Indicator for whether a voice mailbox ha 0 
+func_version Get Asterisk Version/Build Info 0 
+func_uri URI encode/decode dialplan functions 0 
+func_timeout Channel timeout dialplan functions 0 
+func_sysinfo System information related functions 0 
+func_strings String handling dialplan functions 0 
+func_shell Returns the output of a shell command 0 
+func_sha1 SHA-1 computation dialplan function 0 
+func_realtime Read/Write/Store/Destroy values from a R 0 
+func_rand Random number dialplan function 0 
+func_module Checks if Asterisk module is loaded in m 0 
+func_md5 MD5 digest dialplan functions 0 
+func_math Mathematical dialplan function 0 
+func_logic Logical dialplan functions 0 
+func_lock Dialplan mutexes 0 
+func_iconv Charset conversions 0 
+func_groupcount Channel group dialplan functions 0 
+func_global Variable dialplan functions 0 
+func_extstate Gets an extension&#x27;s state in the dialpla 0 
+func_env Environment/filesystem dialplan function 0 
+func_enum ENUM related dialplan functions 0 
+func_dialplan Dialplan Context/Extension/Priority Chec 0 
+func_dialgroup Dialgroup dialplan function 0 
+func_devstate Gets or sets a device state in the dialp 0 
+func_db Database (astdb) related dialplan functi 0 
+func_cut Cut out information from a string 0 
+func_channel Channel information dialplan function 0 
+func_cdr Call Detail Record (CDR) dialplan functi 0 
+func_callerid Caller ID related dialplan functions 0 
+func_blacklist Look up Caller*ID name/number from black 0 
+func_base64 base64 encode/decode dialplan functions 0 
+format_wav_gsm Microsoft WAV format (Proprietary GSM) 0 
+format_wav Microsoft WAV format (8000Hz Signed Line 0 
+format_vox Dialogic VOX (ADPCM) File Format 0 
+format_sln Raw Signed Linear Audio support (SLN) 0 
+format_sln16 Raw Signed Linear 16KHz Audio support (S 0 
+format_pcm Raw/Sun uLaw/ALaw 8KHz (PCM,PCMA,AU), G. 0 
+format_ogg_vorbis OGG/Vorbis audio 0 
+format_jpeg JPEG (Joint Picture Experts Group) Image 0 
+format_ilbc Raw iLBC data 0 
+format_h264 Raw H.264 data 0 
+format_h263 Raw H.263 data 0 
+format_gsm Raw GSM data 0 
+format_g729 Raw G729 data 0 
+format_g726 Raw G.726 (16/24/32/40kbps) data 0 
+format_g723 G.723.1 Simple Timestamp File Format 0 
+codec_zap Generic Zaptel Transcoder Codec Translat 0 
+codec_ulaw mu-Law Coder/Decoder 0 
+codec_speex Speex Coder/Decoder 0 
+codec_resample SLIN Resampling Codec 0 
+codec_lpc10 LPC10 2.4kbps Coder/Decoder 0 
+codec_gsm GSM Coder/Decoder 0 
+codec_g726 ITU G.726-32kbps G726 Transcoder 0 
+codec_g722 ITU G.722-64kbps G722 Transcoder 0 
+codec_a_mu A-law and Mulaw direct Coder/Decoder 0 
+codec_alaw A-law Coder/Decoder 0 
+codec_adpcm Adaptive Differential PCM Coder/Decoder 0 
+chan_zap Zapata Telephony 0 
+chan_unistim UNISTIM Protocol (USTM) 0 
+chan_skinny Skinny Client Control Protocol (Skinny) 0 
+chan_sip Session Initiation Protocol (SIP) 0 
+chan_phone Linux Telephony API Support 0 
+chan_oss OSS Console Channel Driver 0 
+chan_mgcp Media Gateway Control Protocol (MGCP) 0 
+chan_local Local Proxy Channel (Note: used internal 0 
+chan_jingle Jingle Channel Driver 0 
+chan_iax2 Inter Asterisk eXchange (Ver 2) 0 
+chan_gtalk Gtalk Channel Driver 0 
+chan_features Feature Proxy Channel 0 
+chan_console Console Channel Driver 0 
+chan_alsa ALSA Console Channel Driver 0 
+chan_agent Agent Proxy Channel 0 
+cdr_sqlite SQLite CDR Backend 0 
+cdr_sqlite3_custom SQLite3 Custom CDR Module 0 
+cdr_manager Asterisk Manager Interface CDR Backend 0 
+cdr_custom Customizable Comma Separated Values CDR 0 
+cdr_csv Comma Separated Values CDR Backend 0 
+app_zapscan Scan Zap channels application 0 
+app_zapras Zaptel ISDN Remote Access Server 0 
+app_zapbarge Barge in on Zap channel application 0 
+app_zapateller Block Telemarketers with Special Informa 0 
+app_while While Loops and Conditional Execution 0 
+app_waituntil Wait until specified time 0 
+app_waitforsilence Wait For Silence 0 
+app_waitforring Waits until first ring after time 0 
+app_voicemail Comedian Mail (Voicemail System) 0 
+app_verbose Send verbose output 0 
+app_userevent Custom User Event Application 0 
+app_url Send URL Applications 0 
+app_transfer Transfers a caller to another extension 0 
+app_test Interface Test Application 0 
+app_talkdetect Playback with Talk Detection 0 
+app_system Generic System() application 0 
+app_stack Dialplan subroutines (Gosub, Return, etc 0 
+app_speech_utils Dialplan Speech Applications 0 
+app_softhangup Hangs up the requested channel 0 
+app_sms SMS/PSTN handler 0 
+app_skel Skeleton (sample) Application 0 
+app_setcallerid Set CallerID Presentation Application 0 
+app_sendtext Send Text Applications 0 
+app_senddtmf Send DTMF digits Application 0 
+app_sayunixtime Say time 0 
+app_rpt Radio Repeater / Remote Base 0 
+app_record Trivial Record Application 0 
+app_readfile Stores output of file into a variable 0 
+app_readexten Read and evaluate extension validity 0 
+app_read Read Variable Application 0 
+app_queue True Call Queueing 0 
+app_privacy Require phone number to be entered, if n 0 
+app_playback Sound File Playback Application 0 
+app_pickupchan Channel Pickup Application 0 
+app_parkandannounce Call Parking and Announce Application 0 
+app_page Page Multiple Phones 0 
+app_nbscat Silly NBS Stream Application 0 
+app_mp3 Silly MP3 Application 0 
+app_morsecode Morse code 0 
+app_mixmonitor Mixed Audio Monitoring Application 0 
+app_minivm Mini VoiceMail (A minimal Voicemail e-ma 0 
+app_milliwatt Digital Milliwatt (mu-law) Test Applicat 0 
+app_meetme MeetMe conference bridge 0 
+app_macro Extension Macros 0 
+app_jack JACK Interface 0 
+app_ivrdemo IVR Demo Application 0 
+app_image Image Transmission Application 0 
+app_ices Encode and Stream via icecast and ices 0 
+app_getcpeid Get ADSI CPE ID 0 
+app_forkcdr Fork The CDR into 2 separate entities 0 
+app_followme Find-Me/Follow-Me Application 0 
+app_flash Flash channel application 0 
+app_festival Simple Festival Interface 0 
+app_externalivr External IVR Interface Application 0 
+app_exec Executes dialplan applications 0 
+app_echo Simple Echo Application 0 
+app_dumpchan Dump Info About The Calling Channel 0 
+app_disa DISA (Direct Inward System Access) Appli 0 
+app_directory Extension Directory 0 
+app_directed_pickup Directed Call Pickup Application 0 
+app_dictate Virtual Dictation Machine 0 
+app_dial Dialing Application 0 
+app_db Database Access Functions 0 
+app_controlplayback Control Playback Application 0 
+app_chanspy Listen to the audio of an active channel 0 
+app_channelredirect Redirects a given channel to a dialplan 0 
+app_chanisavail Check channel availability 0 
+app_cdr Tell Asterisk to not maintain a CDR for 0 
+app_authenticate Authentication Application 0 
+app_amd Answering Machine Detection Application 0 
+app_alarmreceiver Alarm Receiver for Asterisk 0 
+app_adsiprog Asterisk ADSI Programming Application 0 
+res_config_mysql.so MySQL RealTime Configuration Driver 0 
+chan_mobile.so Bluetooth Mobile Device Channel Driver 0 
+format_mp3.so MP3 format [Any rate but 8000hz mono is 0 
+test_skel.so Skeleton (sample) Test 0 
+app_addon_sql_mysql.so Simple Mysql Interface 0 
+chan_ooh323.so Objective Systems H323 Channel 0 
+cdr_addon_mysql.so MySQL CDR Backend 0 
+app_saycountpl.so Say polish counting words 0 
+182 modules loaded
+jewel*CLI&gt; 
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Al final se muestra la cantidad de módulos cargados.</p>
+<p class="rt-Text css-56tzch">Para ver los canales que se están usando se ejecuta:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">jewel*CLI&gt; sip show channels
+Peer User/ANR Call ID Format Hold Last Message 
+0 active SIP dialogs
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Actualmente como no se tiene configurado completamente el asterisk no se muestra canal alguno.</p>
+<p class="rt-Text css-56tzch">Para listar los usuarios sip definidos se tiene el comando sip show users:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">jewel*CLI&gt; sip show users
+Username Secret Accountcode Def.Context ACL NAT 
+jewel*CLI&gt;
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Devuelve el nombre de usuario la clave, el cual contexto se encuentra, la lista de acceso y si usa NAT</p>
+<p class="rt-Text css-56tzch">Muestra el estatus de la interfaz zapata</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">jewel*CLI&gt; zap show status
+Description Alarms IRQ bpviol CRC4 Fra Codi Options LBO
+ZTDUMMY/1 (source: HRtimer) 1 UNCONFI 0 0 0 CAS Unk YEL 0 db (CSU)/0-133 feet (DSX-1)
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Para ver los buzones de voz:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">jewel*CLI&gt; voicemail show users
+Context Mbox User Zone NewMsg
+default general New User 0
+default 1234 Example Mailbox 0
+other 1234 Company2 User 0
+3 voicemail users configured.
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Para buscar dispositivos moviles se ejecuta:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">jewel*CLI&gt; mobile search
+Address Name Usable Type Port
+00:19:2C:2C:29:33 Motorola A1200 No Headset 0
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Hay muchos comandos para la consola de asterisk y en futuros post se mostrarán</p>
+<p class="rt-Text css-56tzch">===</p>
+<p class="rt-Text css-56tzch">¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
+<p class="rt-Text css-56tzch">O Escaneando el código QR desde billetera:</p>
+<img src="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png" alt="17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV"/></div></article></div></main></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="rt-Box css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><p class="rt-Text css-vq6poo">Built with Reflex</p></div></a></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"unstable_subResourceIntegrity":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-51368191.js";
+import * as route0 from "/assets/root-zD6cxJWt.js";
+import * as route1 from "/assets/_blog_._consola-asterisk_._index-Br3PEPBw.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[consola-asterisk]._index":route1};
+
+import("/assets/entry.client-Dv70GDZP.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

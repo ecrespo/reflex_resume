@@ -1,0 +1,724 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | Manteniendo un paquete Debian con mercurial</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-51368191.js"/><link rel="modulepreload" href="/assets/entry.client-Dv70GDZP.js"/><link rel="modulepreload" href="/assets/react-dom-DX0clM9j.js"/><link rel="modulepreload" href="/assets/chunk-WWGJGFF6-D2pN2XHm.js"/><link rel="modulepreload" href="/assets/react-DtDMbhE7.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-BDpGGt_t.js"/><link rel="modulepreload" href="/assets/root-zD6cxJWt.js"/><link rel="modulepreload" href="/assets/preload-helper-ogMfbiXo.js"/><link rel="modulepreload" href="/assets/reflex-env-BNCxk_2_.js"/><link rel="modulepreload" href="/assets/one-dark-v9h4L60p.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-BYkyYPI_.js"/><link rel="modulepreload" href="/assets/esm-DZDdZhc0.js"/><link rel="modulepreload" href="/assets/character-entities-legacy-iZb7EYKq.js"/><link rel="modulepreload" href="/assets/index.dom-CMcpImPJ.js"/><link rel="modulepreload" href="/assets/prop-types-4LQ6TUfN.js"/><link rel="modulepreload" href="/assets/_blog_._paquetedebianconmercurial_._index-DN_Aqc-D.js"/><link rel="modulepreload" href="/assets/stateful_components-CKKPf-BG.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .prose {
+                max-width: none;
+            }
+            .prose h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a202c;
+            }
+            .prose h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #2d3748;
+            }
+            .prose h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #4a5568;
+            }
+            .prose p {
+                margin-bottom: 1rem;
+                line-height: 1.75;
+                color: #4a5568;
+            }
+            .prose code {
+                background-color: #f7fafc;
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            .prose pre {
+                background-color: #2d3748;
+                color: #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            .prose pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+            }
+            .prose ul, .prose ol {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+            }
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+            .prose a {
+                color: #4a9bba;
+                text-decoration: underline;
+            }
+            .prose a:hover {
+                color: #3a8baa;
+            }
+            .prose img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+            .prose blockquote {
+                border-left: 4px solid #4a9bba;
+                padding-left: 1rem;
+                margin: 1rem 0;
+                color: #718096;
+                font-style: italic;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CjirM0bN.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/one-dark-DWfq818h.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen font-[&#x27;Inter&#x27;] bg-[#f5f5dc]"><aside class="md:hidden w-80 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10 z-50 transition-transform duration-300 ease-in-out transform -translate-x-full"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><aside class="hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"><nav class="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><button class="md:hidden p-2 hover:bg-white/10 rounded"><div class="flex flex-col"><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white"></span></div></button><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/" data-discover="true">HOME</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog" data-discover="true">BLOG</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/archives" data-discover="true">ARCHIVES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/categories" data-discover="true">CATEGORIES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/tags" data-discover="true">TAGS</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/feed.xml" data-discover="true">ATOM</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts" href="/blog" data-discover="true"><span class="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6">← Volver al Blog</span></a><header class="mb-8 pb-6 border-b border-gray-200"><h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Manteniendo un paquete Debian con mercurial</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-gray-500">April 11, 2009</span><span class="text-gray-400 mx-2"> • </span><span class="text-[#4a9bba] font-medium">Linux</span><span class="text-gray-400 mx-2"> • </span><span class="text-gray-600">Por </span><span class="text-gray-800 font-medium">Unknown</span></div></header><article class="post-content"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Para mantener un paquete Debian con mercurial es necesario tener un repositorio
+mercurial, este se crea con el comando hg init.</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">hg init repositorio
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Luego es necesario crear 2 directorios, uno es del paquete fuente de debian y el otro
+del paquete fuente del upstream.</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">cd repositorio
+hg init sshguard
+hg init sshguard.upstream
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Luego se importa las fuentes de Debian:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">hg-importdsc /home/ecrespo/paquetes/sshguard/sshguard_1.3-1.dsc
+ecrespo@canaima:~/repositorio/repositorio/sshguard$ hg-importdsc /home/ecrespo/paquetes/sshguard/sshguard_1.3-1.dsc
+*** Processing upstream file /home/ecrespo/paquetes/sshguard/sshguard_1.3.orig.tar.gz
+VCSCMD: hg
+LOGTEXT Imported sshguard_1.3.orig.tar.gz
+into Mercurial repository
+
+
+
+adding Changes
+adding Makefile.am
+adding Makefile.in
+adding README
+adding aclocal.m4
+adding config.h.in
+adding configure
+adding configure.ac
+adding depcomp
+adding examples/whitelistfile.example
+adding install-sh
+adding man/Makefile.am
+adding man/Makefile.in
+adding man/sshguard.8
+adding missing
+adding mkinstalldirs
+adding scripts/sshguard_backendgen.sh
+adding src/Makefile.am
+adding src/Makefile.in
+adding src/attack_parser.c
+adding src/attack_parser.h
+adding src/attack_parser.y
+adding src/attack_scanner.c
+adding src/attack_scanner.l
+adding src/config.h.in
+adding src/fwalls/Makefile.am
+adding src/fwalls/Makefile.in
+adding src/fwalls/command.c
+adding src/fwalls/command_aix.h
+adding src/fwalls/command_ipfilter.h
+adding src/fwalls/command_iptables.h
+adding src/fwalls/command_null.h
+adding src/fwalls/command_pf.h
+adding src/fwalls/hosts.c
+adding src/fwalls/ipfw.c
+adding src/parser.h
+adding src/simclist.c
+adding src/simclist.h
+adding src/sshguard.c
+adding src/sshguard.h
+adding src/sshguard_addresskind.h
+adding src/sshguard_fw.h
+adding src/sshguard_log.c
+adding src/sshguard_log.h
+adding src/sshguard_procauth.c
+adding src/sshguard_procauth.h
+adding src/sshguard_services.h
+adding src/sshguard_whitelist.c
+adding src/sshguard_whitelist.h
+adding stamp-h1
+adding ylwrap
+No username found, using &#x27;ecrespo@canaima&#x27; instead
+No username found, using &#x27;ecrespo@canaima&#x27; instead
+No username found, using &#x27;ecrespo@canaima&#x27; instead
+
+/home/ecrespo/paquetes/sshguard/sshguard_1.3.orig.tar.gz imported into /home/ecrespo/repositorio/repositorio/sshguard.upstream
+Remember to run hg fetch /home/ecrespo/repositorio/repositorio/sshguard.upstream
+*** Done processing upstream file /home/ecrespo/paquetes/sshguard/sshguard_1.3.orig.tar.gz
+*** Processing Debian source tree for /home/ecrespo/paquetes/sshguard/sshguard_1.3-1.dsc
+0:b438c8517fe7
+1:f61bc4db3564
+2:85a24e090d85
+pulling from /home/ecrespo/repositorio/repositorio/sshguard.upstream
+requesting all changes
+adding changesets
+adding manifests
+adding file changes
+added 3 changesets with 53 changes to 52 files
+(run &#x27;hg update&#x27; to get a working copy)
+52 files updated, 0 files merged, 0 files removed, 0 files unresolved
+dpkg-source: extracting sshguard in sshguard-1.3
+dpkg-source: info: unpacking sshguard_1.3.orig.tar.gz
+dpkg-source: info: applying sshguard_1.3-1.diff.gz
+VCSCMD: hg
+LOGTEXT Imported sshguard-1.3
+into Mercurial repository
+
+
+
+adding debian/changelog
+adding debian/compat
+adding debian/control
+adding debian/copyright
+adding debian/dirs
+adding debian/docs
+adding debian/rules
+adding src/fwalls/command.h
+No username found, using &#x27;ecrespo@canaima&#x27; instead
+No username found, using &#x27;ecrespo@canaima&#x27; instead
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Ahora se tienen los directorios sshguard y sshguard.upstream con archivos y directorios.</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">ecrespo@canaima:~/repositorio/repositorio/sshguard$ ls
+aclocal.m4 config.h.in configure.ac depcomp install-sh Makefile.in missing README src ylwrap
+Changes configure debian examples Makefile.am man mkinstalldirs scripts stamp-h1
+
+ecrespo@canaima:~/repositorio/repositorio/sshguard.upstream$ ls
+aclocal.m4 config.h.in configure.ac examples Makefile.am man mkinstalldirs scripts stamp-h1
+Changes configure depcomp install-sh Makefile.in missing README src ylwrap
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se nota que el primer directorio es del paquete fuente de Debian por que tiene dentro un directorio debian y sshguard.upstream es el paquete fuente.
+Ahora se harán cambios en los archivos del directorio debian. Se va a cambiar el archivo
+rules en el configure que en vez de sorportar iptables use hosts; y en el archivo control
+quitarla dependencia de iptables en build-depends y colocar en las dependencias tcpd ya
+que ese es el paquete para usar hosts.allow y hosts.deny.</p>
+<p class="rt-Text css-56tzch">Archivo debian/rules:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">./configure $(CROSS) --prefix=/usr --mandir=\$${prefix}/share/man --with-firewall=hosts --infodir=\$${prefix}/share/info CFLAGS=&quot;$(CFLAGS)&quot; LDFLAGS=&quot;-Wl,-z,defs&quot;
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Archivo debian/control:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">Source: sshguard
+Section: net
+Priority: optional
+Maintainer: Ernesto Nadir Crespo Avila
+Build-Depends: debhelper (&gt;= 7), autotools-dev
+Standards-Version: 3.8.0
+Homepage: http://sshguard.sourceforge.net/
+
+Package: sshguard
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}, tcpd
+Description: Protects from brute force attacks against ssh
+Protects networked hosts from the today&#x27;s widespread
+brute force attacks against ssh servers. It detects such attacks
+and blocks the author&#x27;s address with a firewall rule.
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se exportan las variables de ambiente DEBFULLNAME y DEBEMAIL:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">export DEBFULLNAME=&quot;Ernesto Nadir Crespo Avila&quot;
+export DEBEMAIL=&quot;ecrespo@debianvenezuela.org&quot;
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Cambiar el archivo debian/changelo agregando los cambios que se realizaron:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">dch -i
+
+sshguard (1.3-2) unstable; urgency=low
+
+* Remove iptables depend in build-depends in debian/control file.
+* Add tcpd depend in depends in debian/control file.
+* Change configure option in debian/rules to hosts.
+
+-- Ernesto Nadir Crespo Avila Tue, 14 Apr 2009 14:06:01 -0430
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Para agregar los cambios al repositorio se ejecuta un commit:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">ecrespo@canaima:~/repositorio/repositorio/sshguard$ hg commit -m&quot;Change control and rules files&quot; -u &quot;Ernesto Nadir Crespo Avila &quot;
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Al ejecutar hg log se muestra los cambios realizados:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">changeset: 5:7a64e00a1c05
+tag: tip
+user: Ernesto Nadir Crespo Avila
+date: Tue Apr 14 14:11:19 2009 -0430
+summary: Change control and rules files
+
+changeset: 4:19b2688f71ec
+user: ecrespo@canaima
+date: Tue Apr 14 13:57:26 2009 -0430
+summary: Added tag DEBIAN_sshguard_1.3-1 for changeset a7094766c4e6
+
+changeset: 3:a7094766c4e6
+tag: DEBIAN_sshguard_1.3-1
+user: ecrespo@canaima
+date: Tue Apr 14 13:57:25 2009 -0430
+summary: Import Debian sshguard 1.3-1
+
+changeset: 2:85a24e090d85
+user: ecrespo@canaima
+date: Tue Apr 14 13:57:24 2009 -0430
+summary: Added tag UPSTREAM_sshguard_1.3_TAG for changeset f61bc4db3564
+
+changeset: 1:f61bc4db3564
+tag: UPSTREAM_sshguard_1.3_TAG
+user: ecrespo@canaima
+date: Tue Apr 14 13:57:24 2009 -0430
+summary: Added tag UPSTREAM_sshguard_1.3 for changeset b438c8517fe7
+
+changeset: 0:b438c8517fe7
+tag: UPSTREAM_sshguard_1.3
+user: ecrespo@canaima
+date: Tue Apr 14 13:57:24 2009 -0430
+summary: Import upstream sshguard version 1.3
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se suben los cambios al repositorio:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">ecrespo@canaima:~/repositorio/repositorio$ hg pull sshguard
+pulling from sshguard
+requesting all changes
+adding changesets
+adding manifests
+adding file changes
+added 7 changesets with 66 changes to 60 files
+(run &#x27;hg update&#x27; to get a working copy)
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se actualiza el repositorio:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">ecrespo@canaima:~/repositorio/repositorio$ hg update
+60 files updated, 0 files merged, 0 files removed, 0 files unresolved
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Ahora se crea el paquete:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">ecrespo@canaima:~/repositorio/repositorio$ hg-buildpackage -rfakeroot -k
+Building ../sshguard_1.3.orig.tar.gz from Mercurial history
+dpkg-buildpackage -rfakeroot -D -us -uc -i.hg -I.hg
+dpkg-buildpackage: set CFLAGS to default value: -g -O2
+dpkg-buildpackage: set CPPFLAGS to default value:
+dpkg-buildpackage: set LDFLAGS to default value:
+dpkg-buildpackage: set FFLAGS to default value: -g -O2
+dpkg-buildpackage: set CXXFLAGS to default value: -g -O2
+dpkg-buildpackage: source package sshguard
+dpkg-buildpackage: source version 1.3-2
+dpkg-buildpackage: source changed by Ernesto Nadir Crespo Avila
+dpkg-buildpackage: host architecture i386
+fakeroot debian/rules clean
+dh_testdir
+dh_testroot
+rm -f build-stamp
+# Add here commands to clean up after the build process.
+[ ! -f Makefile ] || /usr/bin/make distclean
+rm -f config.sub config.guess config.status config.status.lineno config.log
+dh_clean
+dpkg-source -i.hg -I.hg -b repositorio
+dpkg-source: warning: source directory &#x27;repositorio&#x27; is not - &#x27;sshguard-1.3&#x27;
+dpkg-source: warning: .orig directory name repositorio.orig is not - (wanted sshguard-1.3.orig)
+dpkg-source: info: using source format `1.0&#x27;
+dpkg-source: info: building sshguard using existing sshguard_1.3.orig.tar.gz
+dpkg-source: info: building sshguard in sshguard_1.3-2.diff.gz
+dpkg-source: info: building sshguard in sshguard_1.3-2.dsc
+debian/rules build
+dh_testdir
+# Add here commands to configure the package.
+cp -f /usr/share/misc/config.sub config.sub
+cp -f /usr/share/misc/config.guess config.guess
+./configure --build i486-linux-gnu --prefix=/usr --mandir=\${prefix}/share/man --with-firewall=hosts --infodir=\${prefix}/share/info CFLAGS=&quot;-g -O2&quot; LDFLAGS=&quot;-Wl,-z,defs&quot;
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables...
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for style of include used by make... GNU
+checking dependency style of gcc... gcc3
+checking for ranlib... ranlib
+checking for bison... bison -y
+checking for flex... flex
+checking lex output file root... lex.yy
+checking lex library... -lfl
+checking whether yytext is a pointer... yes
+checking for pthread_create in -lpthread... yes
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/wait.h that is POSIX.1 compatible... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking arpa/inet.h usability... yes
+checking arpa/inet.h presence... yes
+checking for arpa/inet.h... yes
+checking malloc.h usability... yes
+checking malloc.h presence... yes
+checking for malloc.h... yes
+checking netdb.h usability... yes
+checking netdb.h presence... yes
+checking for netdb.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking syslog.h usability... yes
+checking syslog.h presence... yes
+checking for syslog.h... yes
+checking for unistd.h... (cached) yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for off_t... yes
+checking for pid_t... yes
+checking for size_t... yes
+checking vfork.h usability... no
+checking vfork.h presence... no
+checking for vfork.h... no
+checking for fork... yes
+checking for vfork... yes
+checking for working fork... yes
+checking for working vfork... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... yes
+checking return type of signal handlers... void
+checking for gethostbyname... yes
+checking for inet_ntoa... yes
+checking for strerror... yes
+checking for strstr... yes
+checking for strtol... yes
+configure: Using /etc/hosts.allow as hosts.allow file
+configure: creating ./config.status
+config.status: creating Makefile
+config.status: creating man/Makefile
+config.status: creating src/Makefile
+config.status: creating src/fwalls/Makefile
+config.status: creating src/config.h
+config.status: executing depfiles commands
+dh_testdir
+# Add here commands to compile the package.
+/usr/bin/make
+make[1]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio&#x27;
+cd . &amp;&amp; /bin/sh /home/ecrespo/repositorio/repositorio/missing --run aclocal-1.10
+cd . &amp;&amp; /bin/sh /home/ecrespo/repositorio/repositorio/missing --run automake-1.10 --foreign
+cd . &amp;&amp; /bin/sh /home/ecrespo/repositorio/repositorio/missing --run autoconf
+/bin/sh ./config.status --recheck
+running CONFIG_SHELL=/bin/sh /bin/sh ./configure --build i486-linux-gnu --prefix=/usr --mandir=${prefix}/share/man --with-firewall=hosts --infodir=${prefix}/share/info CFLAGS=-g -O2 LDFLAGS=-Wl,-z,defs build_alias=i486-linux-gnu CPPFLAGS= --no-create --no-recursion
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for a thread-safe mkdir -p... /bin/mkdir -p
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+checking for gcc... gcc
+checking for C compiler default output file name... a.out
+checking whether the C compiler works... yes
+checking whether we are cross compiling... no
+checking for suffix of executables...
+checking for suffix of object files... o
+checking whether we are using the GNU C compiler... yes
+checking whether gcc accepts -g... yes
+checking for gcc option to accept ISO C89... none needed
+checking for style of include used by make... GNU
+checking dependency style of gcc... gcc3
+checking for ranlib... ranlib
+checking for bison... bison -y
+checking for flex... flex
+checking lex output file root... lex.yy
+checking lex library... -lfl
+checking whether yytext is a pointer... yes
+checking for pthread_create in -lpthread... yes
+checking how to run the C preprocessor... gcc -E
+checking for grep that handles long lines and -e... /bin/grep
+checking for egrep... /bin/grep -E
+checking for ANSI C header files... yes
+checking for sys/wait.h that is POSIX.1 compatible... yes
+checking for sys/types.h... yes
+checking for sys/stat.h... yes
+checking for stdlib.h... yes
+checking for string.h... yes
+checking for memory.h... yes
+checking for strings.h... yes
+checking for inttypes.h... yes
+checking for stdint.h... yes
+checking for unistd.h... yes
+checking arpa/inet.h usability... yes
+checking arpa/inet.h presence... yes
+checking for arpa/inet.h... yes
+checking malloc.h usability... yes
+checking malloc.h presence... yes
+checking for malloc.h... yes
+checking netdb.h usability... yes
+checking netdb.h presence... yes
+checking for netdb.h... yes
+checking netinet/in.h usability... yes
+checking netinet/in.h presence... yes
+checking for netinet/in.h... yes
+checking for stdlib.h... (cached) yes
+checking for string.h... (cached) yes
+checking sys/socket.h usability... yes
+checking sys/socket.h presence... yes
+checking for sys/socket.h... yes
+checking syslog.h usability... yes
+checking syslog.h presence... yes
+checking for syslog.h... yes
+checking for unistd.h... (cached) yes
+checking for an ANSI C-conforming const... yes
+checking for inline... inline
+checking for off_t... yes
+checking for pid_t... yes
+checking for size_t... yes
+checking vfork.h usability... no
+checking vfork.h presence... no
+checking for vfork.h... no
+checking for fork... yes
+checking for vfork... yes
+checking for working fork... yes
+checking for working vfork... (cached) yes
+checking for stdlib.h... (cached) yes
+checking for GNU libc compatible malloc... yes
+checking return type of signal handlers... void
+checking for gethostbyname... yes
+checking for inet_ntoa... yes
+checking for strerror... yes
+checking for strstr... yes
+checking for strtol... yes
+configure: Using /etc/hosts.allow as hosts.allow file
+configure: creating ./config.status
+/bin/sh ./config.status
+config.status: creating Makefile
+config.status: creating man/Makefile
+config.status: creating src/Makefile
+config.status: creating src/fwalls/Makefile
+config.status: creating src/config.h
+config.status: src/config.h is unchanged
+config.status: executing depfiles commands
+make[1]: se sale del directorio `/home/ecrespo/repositorio/repositorio&#x27;
+make[1]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio&#x27;
+Making all in src
+make[2]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+cd .. &amp;&amp; /bin/sh /home/ecrespo/repositorio/repositorio/missing --run autoheader
+rm -f stamp-h1
+touch config.h.in
+cd .. &amp;&amp; /bin/sh ./config.status src/config.h
+config.status: creating src/config.h
+config.status: src/config.h is unchanged
+/usr/bin/make all-recursive
+make[3]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+Making all in fwalls
+make[4]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src/fwalls&#x27;
+gcc -DHAVE_CONFIG_H -I. -I../../src -I. -I.. -O2 -g -O2 -MT hosts.o -MD -MP -MF .deps/hosts.Tpo -c -o hosts.o hosts.c
+mv -f .deps/hosts.Tpo .deps/hosts.Po
+rm -f libfwall.a
+ar cru libfwall.a hosts.o
+ranlib libfwall.a
+make[4]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src/fwalls&#x27;
+make[4]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+gcc -DHAVE_CONFIG_H -I. -I. -O2 -g -O2 -MT attack_parser.o -MD -MP -MF .deps/attack_parser.Tpo -c -o attack_parser.o attack_parser.c
+mv -f .deps/attack_parser.Tpo .deps/attack_parser.Po
+gcc -DHAVE_CONFIG_H -I. -I. -O2 -g -O2 -MT attack_scanner.o -MD -MP -MF .deps/attack_scanner.Tpo -c -o attack_scanner.o attack_scanner.c
+mv -f .deps/attack_scanner.Tpo .deps/attack_scanner.Po
+gcc -DHAVE_CONFIG_H -I. -I. -O2 -g -O2 -MT sshguard.o -MD -MP -MF .deps/sshguard.Tpo -c -o sshguard.o sshguard.c
+mv -f .deps/sshguard.Tpo .deps/sshguard.Po
+gcc -DHAVE_CONFIG_H -I. -I. -O2 -g -O2 -MT sshguard_whitelist.o -MD -MP -MF .deps/sshguard_whitelist.Tpo -c -o sshguard_whitelist.o sshguard_whitelist.c
+mv -f .deps/sshguard_whitelist.Tpo .deps/sshguard_whitelist.Po
+gcc -DHAVE_CONFIG_H -I. -I. -O2 -g -O2 -MT sshguard_log.o -MD -MP -MF .deps/sshguard_log.Tpo -c -o sshguard_log.o sshguard_log.c
+mv -f .deps/sshguard_log.Tpo .deps/sshguard_log.Po
+gcc -DHAVE_CONFIG_H -I. -I. -O2 -g -O2 -MT sshguard_procauth.o -MD -MP -MF .deps/sshguard_procauth.Tpo -c -o sshguard_procauth.o sshguard_procauth.c
+mv -f .deps/sshguard_procauth.Tpo .deps/sshguard_procauth.Po
+gcc -DHAVE_CONFIG_H -I. -I. -O2 -g -O2 -MT simclist.o -MD -MP -MF .deps/simclist.Tpo -c -o simclist.o simclist.c
+mv -f .deps/simclist.Tpo .deps/simclist.Po
+gcc -I. -O2 -g -O2 -Wl,-z,defs -o sshguard attack_parser.o attack_scanner.o sshguard.o sshguard_whitelist.o sshguard_log.o sshguard_procauth.o simclist.o fwalls/libfwall.a -lpthread
+make[4]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+make[3]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+make[2]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+Making all in man
+make[2]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/man&#x27;
+make[2]: No se hace nada para `all&#x27;.
+make[2]: se sale del directorio `/home/ecrespo/repositorio/repositorio/man&#x27;
+make[2]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio&#x27;
+make[2]: No se hace nada para `all-am&#x27;.
+make[2]: se sale del directorio `/home/ecrespo/repositorio/repositorio&#x27;
+make[1]: se sale del directorio `/home/ecrespo/repositorio/repositorio&#x27;
+#docbook-to-man debian/sshguard.sgml &gt; sshguard.1
+touch build-stamp
+fakeroot debian/rules binary
+dh_testdir
+dh_testroot
+dh_prep
+dh_installdirs
+# Add here commands to install the package into debian/sshguard.
+/usr/bin/make DESTDIR=/home/ecrespo/repositorio/repositorio/debian/sshguard install
+make[1]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio&#x27;
+Making install in src
+make[2]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+/usr/bin/make install-recursive
+make[3]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+Making install in fwalls
+make[4]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src/fwalls&#x27;
+make[5]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src/fwalls&#x27;
+make[5]: No se hace nada para `install-exec-am&#x27;.
+make[5]: No se hace nada para `install-data-am&#x27;.
+make[5]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src/fwalls&#x27;
+make[4]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src/fwalls&#x27;
+make[4]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+make[5]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+test -z &quot;/usr/sbin&quot; || /bin/mkdir -p &quot;/home/ecrespo/repositorio/repositorio/debian/sshguard/usr/sbin&quot;
+/usr/bin/install -c &#x27;sshguard&#x27; &#x27;/home/ecrespo/repositorio/repositorio/debian/sshguard/usr/sbin/sshguard&#x27;
+make[5]: No se hace nada para `install-data-am&#x27;.
+make[5]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+make[4]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+make[3]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+make[2]: se sale del directorio `/home/ecrespo/repositorio/repositorio/src&#x27;
+Making install in man
+make[2]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/man&#x27;
+make[3]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio/man&#x27;
+make[3]: No se hace nada para `install-exec-am&#x27;.
+test -z &quot;/usr/share/man/man8&quot; || /bin/mkdir -p &quot;/home/ecrespo/repositorio/repositorio/debian/sshguard/usr/share/man/man8&quot;
+/usr/bin/install -c -m 644 &#x27;./sshguard.8&#x27; &#x27;/home/ecrespo/repositorio/repositorio/debian/sshguard/usr/share/man/man8/sshguard.8&#x27;
+make[3]: se sale del directorio `/home/ecrespo/repositorio/repositorio/man&#x27;
+make[2]: se sale del directorio `/home/ecrespo/repositorio/repositorio/man&#x27;
+make[2]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio&#x27;
+make[3]: se ingresa al directorio `/home/ecrespo/repositorio/repositorio&#x27;
+make[3]: No se hace nada para `install-exec-am&#x27;.
+make[3]: No se hace nada para `install-data-am&#x27;.
+make[3]: se sale del directorio `/home/ecrespo/repositorio/repositorio&#x27;
+make[2]: se sale del directorio `/home/ecrespo/repositorio/repositorio&#x27;
+make[1]: se sale del directorio `/home/ecrespo/repositorio/repositorio&#x27;
+dh_testdir
+dh_testroot
+dh_installchangelogs Changes
+dh_installdocs
+dh_installexamples
+dh_installman
+dh_link
+dh_strip
+dh_compress
+dh_fixperms
+dh_installdeb
+dh_shlibdeps
+dh_gencontrol
+dpkg-gencontrol: warning: unknown substitution variable ${misc:Depends}
+dh_md5sums
+dh_builddeb
+dpkg-deb: construyendo el paquete `sshguard&#x27; en `../sshguard_1.3-2_i386.deb&#x27;.
+dpkg-genchanges &gt;../sshguard_1.3-2_i386.changes
+dpkg-genchanges: not including original source code in upload
+dpkg-buildpackage: binary and diff upload (original source NOT included)
+Now running lintian...
+Finished running lintian.
+Now signing changes and any dsc files...
+signfile sshguard_1.3-2.dsc C97E7015
+
+Necesita una frase contraseña para desbloquear la clave secreta
+del usuario: &quot;Ernesto Nadir Crespo Avila (seraph1) &quot;
+clave DSA de 1024 bits, ID C97E7015, creada el 2005-08-15
+
+
+signfile sshguard_1.3-2_i386.changes C97E7015
+
+Necesita una frase contraseña para desbloquear la clave secreta
+del usuario: &quot;Ernesto Nadir Crespo Avila (seraph1) &quot;
+clave DSA de 1024 bits, ID C97E7015, creada el 2005-08-15
+
+
+Successfully signed dsc and changes files
+</code></pre></pre>
+<p class="rt-Text css-56tzch">En este momento se tiene el paquete .deb y los archivos creados en el momento del empaquetado:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">ecrespo@canaima:~/repositorio$ ls
+sshguard_1.3-2.diff.gz sshguard_1
+.3-2_i386.build sshguard_1.3-2_i386.deb
+repositorio sshguard_1.3-2.dsc sshguard_1.3-2_i386.changes sshguard_1.3.orig.tar.gz
+</code></pre></pre>
+<p class="rt-Text css-56tzch">===</p>
+<p class="rt-Text css-56tzch">¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
+<p class="rt-Text css-56tzch">O Escaneando el código QR desde billetera:</p>
+<img src="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png" alt="17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV"/></div></article></div></main></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="rt-Box css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><p class="rt-Text css-vq6poo">Built with Reflex</p></div></a></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"unstable_subResourceIntegrity":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-51368191.js";
+import * as route0 from "/assets/root-zD6cxJWt.js";
+import * as route1 from "/assets/_blog_._paquetedebianconmercurial_._index-DN_Aqc-D.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[paquetedebianconmercurial]._index":route1};
+
+import("/assets/entry.client-Dv70GDZP.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>
