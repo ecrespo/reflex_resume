@@ -8,5 +8,11 @@
       "source": "/(.*)",
       "destination": "/index.html"
     }
-  ]
+  ],
+  "toolbar": {
+    "enabled": false
+  },
+  "comments": {
+    "enabled": false
+  }
 }
