@@ -1,0 +1,639 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-1.png"/><link rel="preload" as="image" href="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-2.png"/><link rel="preload" as="image" href="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-3.png"/><link rel="preload" as="image" href="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-4.png"/><link rel="preload" as="image" href="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-5.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | API Rest Ful con Flask y MongoDB (Flask-MongoAlchemy)</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-51368191.js"/><link rel="modulepreload" href="/assets/entry.client-Dv70GDZP.js"/><link rel="modulepreload" href="/assets/react-dom-DX0clM9j.js"/><link rel="modulepreload" href="/assets/chunk-WWGJGFF6-D2pN2XHm.js"/><link rel="modulepreload" href="/assets/react-DtDMbhE7.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-BDpGGt_t.js"/><link rel="modulepreload" href="/assets/root-zD6cxJWt.js"/><link rel="modulepreload" href="/assets/preload-helper-ogMfbiXo.js"/><link rel="modulepreload" href="/assets/reflex-env-BNCxk_2_.js"/><link rel="modulepreload" href="/assets/one-dark-v9h4L60p.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-BYkyYPI_.js"/><link rel="modulepreload" href="/assets/esm-DZDdZhc0.js"/><link rel="modulepreload" href="/assets/character-entities-legacy-iZb7EYKq.js"/><link rel="modulepreload" href="/assets/index.dom-CMcpImPJ.js"/><link rel="modulepreload" href="/assets/prop-types-4LQ6TUfN.js"/><link rel="modulepreload" href="/assets/_blog_._apirestfulconflaskymongodbflaskmongoalchemy_._index-BF6ConFF.js"/><link rel="modulepreload" href="/assets/stateful_components-CKKPf-BG.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .prose {
+                max-width: none;
+            }
+            .prose h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a202c;
+            }
+            .prose h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #2d3748;
+            }
+            .prose h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #4a5568;
+            }
+            .prose p {
+                margin-bottom: 1rem;
+                line-height: 1.75;
+                color: #4a5568;
+            }
+            .prose code {
+                background-color: #f7fafc;
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            .prose pre {
+                background-color: #2d3748;
+                color: #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            .prose pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+            }
+            .prose ul, .prose ol {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+            }
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+            .prose a {
+                color: #4a9bba;
+                text-decoration: underline;
+            }
+            .prose a:hover {
+                color: #3a8baa;
+            }
+            .prose img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+            .prose blockquote {
+                border-left: 4px solid #4a9bba;
+                padding-left: 1rem;
+                margin: 1rem 0;
+                color: #718096;
+                font-style: italic;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CjirM0bN.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/one-dark-DWfq818h.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen font-[&#x27;Inter&#x27;] bg-[#f5f5dc]"><aside class="md:hidden w-80 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10 z-50 transition-transform duration-300 ease-in-out transform -translate-x-full"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><aside class="hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"><nav class="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><button class="md:hidden p-2 hover:bg-white/10 rounded"><div class="flex flex-col"><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white"></span></div></button><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/" data-discover="true">HOME</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog" data-discover="true">BLOG</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/archives" data-discover="true">ARCHIVES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/categories" data-discover="true">CATEGORIES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/tags" data-discover="true">TAGS</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/feed.xml" data-discover="true">ATOM</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts" href="/blog" data-discover="true"><span class="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6">← Volver al Blog</span></a><header class="mb-8 pb-6 border-b border-gray-200"><h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">API Rest Ful con Flask y MongoDB (Flask-MongoAlchemy)</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-gray-500">October 06, 2016</span><span class="text-gray-400 mx-2"> • </span><span class="text-[#4a9bba] font-medium">Tutorial de Python</span><span class="text-gray-400 mx-2"> • </span><span class="text-gray-600">Por </span><span class="text-gray-800 font-medium">Unknown</span></div></header><article class="post-content"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">En artículo <a data-accent-color="" href="https://www.seraph.to/crud-usando-flask-y-mongodb-con-orm-flask-mongoalchemy-parte-4.html" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">anterior (enlace roto)</a> se hizo un CRUD para Flask con MongoDB usando Mongo-Alchemy, en dicho artículo se manejaron varios URL para hacer el CRUD.</p>
+<p class="rt-Text css-56tzch">En este artículo se manejará el REST por medio de los URL y con Flask solamente, en próximos artículos se usará Flask-RESTful y Flask-Restless.</p>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Métodos de HTTP</h4>
+<p class="rt-Text css-56tzch">En este caso se va a estandarizar el CRUD por medio de API Rest Ful, donde se usará el mismo URL con métodos GET, POST, PUT y DELETE.</p>
+<p class="rt-Text css-56tzch">Los métodos se usarán de la siguiente forma:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<li class="css-jzlc08">Agregar Empleado: Método POST, URL /empleado, sin parámetros.</li>
+<li class="css-jzlc08">Buscar Empleado: Método  GET, URL /empleado, parámetro <a data-accent-color="" href="javascript:throw new Error(&#x27;React has blocked a javascript: URL as a security precaution.&#x27;)" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">string:nombre</a>.</li>
+<li class="css-jzlc08">Listar Empleados: Método GET, URL /empleado.</li>
+<li class="css-jzlc08">Editar/Actualizar Empleado: Método PUT, URL /empleado, parámetro <a data-accent-color="" href="javascript:throw new Error(&#x27;React has blocked a javascript: URL as a security precaution.&#x27;)" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">string:nombre</a>.</li>
+<li class="css-jzlc08">Borrar Empleado: Método DELETE, URL /empleado, parámetro <a data-accent-color="" href="javascript:throw new Error(&#x27;React has blocked a javascript: URL as a security precaution.&#x27;)" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">string:nombre</a>.</li>
+</ul>
+<p class="rt-Text css-56tzch">Como puede notarse, con un sólo URL se tiene las acciones del CRUD usando los métodos de HTTP, esto permite estándarizar y simplificar el uso de los URL, y principalmente hacer un correcto uso de HTTP:</p>
+<p class="rt-Text css-56tzch">Para más información sobre el estilo arquitectónico API REST pueden revisar en <a data-accent-color="" href="https://es.wikipedia.org/wiki/Representational_State_Transfer" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">wikipedia</a>.</p>
+<p class="rt-Text css-56tzch">Estructura de directorios y archivos
+Se mantiene la misma estructura de archivos y directorios del artículo sobre CRUD:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">tutorial-flask
+├── app
+│   └── run.py
+├── docker-compose.yml
+├── Dockerfile
+└── README.md
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Archivo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dockerfile</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">docker-compose.yml</code></p>
+<p class="rt-Text css-56tzch">El archivo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Docker</code> contiene lo siguiente:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">FROM python
+
+
+WORKDIR /code/
+
+
+RUN pip3 install --upgrade pip
+
+
+RUN pip3 install  pymongo
+
+
+RUN pip3 install Flask
+
+
+RUN pip3 install Flask-PyMongo
+
+
+RUN pip3 install Flask-MongoAlchemy
+
+
+
+EXPOSE 5000
+
+
+
+ADD ./app/* /code/
+
+
+COPY ./app/* /code/
+
+
+CMD python run.py
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">El archivo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">docker-compose.yml</code> contiene lo siguiente:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">flask-rest1:
+
+  build: .
+
+  ports:
+
+    - &quot;5000:5000&quot;
+
+  volumes:
+
+    - &quot;./app/:/code&quot;
+
+  links:
+
+    - mongo
+
+mongo:
+
+  image: mongo
+
+  ports:
+
+    - &quot;27017:27017&quot;
+
+  volumes:
+
+    - &quot;/srv/data/db:/data/db:rw&quot;
+
+</code></pre></pre>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Codigo de la aplicación</h4>
+<p class="rt-Text css-56tzch">El código de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">run.py</code> se muestra a continuación:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">
+
+#!/usr/bin/env python
+
+
+
+#Se importa Flask, reqest y jsonify
+
+
+from flask import Flask, request,jsonify
+
+
+
+#Se importa MongoAlchemy
+
+
+from flask_mongoalchemy import MongoAlchemy
+
+
+
+#Se importa dumps
+
+
+from bson.json_util import dumps
+
+
+
+#Se instancia la clase de Flask, se configura el acceso
+
+
+#a la base de datos mongodb a empleados
+
+
+app = Flask(__name__)
+
+
+app.config[&#x27;MONGOALCHEMY_DATABASE&#x27;] = &#x27;empleados&#x27;
+
+
+app.config[&#x27;MONGOALCHEMY_CONNECTION_STRING&#x27;] = &#x27;mongodb://mongo:27017/empleados&#x27;
+
+
+
+#Se instancia mongoalchemy pasando la app.
+
+
+db = MongoAlchemy(app)
+
+
+#Se crea la clase empleados la cual manejara los documentos.
+
+
+class empleados(db.Document):
+
+
+    nombre = db.StringField()
+
+
+    sexo = db.StringField()
+
+
+    edad = db.IntField()
+
+
+    dni = db.IntField()
+
+
+#Se define la funcion agregar con metodo get
+
+
+@app.route(&#x27;/empleado&#x27;,methods=[&#x27;POST&#x27;])
+
+
+def agregar():
+
+
+    #Se crea la instancia empleado de la clase empleados donde se
+
+
+    #logra hacer la inserción de un empleado con el metodo save.
+
+
+    nombre = str(request.json[&#x27;nombre&#x27;])
+
+
+    sexo = str(request.json[&#x27;sexo&#x27;])
+
+
+    edad = int(request.json[&#x27;edad&#x27;])
+
+
+    dni = int(request.json[&#x27;dni&#x27;])
+
+
+    empleado = empleados(nombre=nombre,sexo=sexo,edad=edad,dni=dni)
+
+
+    empleado.save()
+
+
+
+
+
+    #Se retorna que el usuario fue agregado.
+
+
+    ###
+
+
+    consulta = empleados.query.all()
+
+
+    listado = []
+
+
+    for i in consulta:
+
+
+        listado.append(i.wrap())
+
+
+    return dumps(listado)
+
+
+#Se crea la funcion buscar con metodo get.
+
+
+@app.route(&#x27;/empleado/&lt;string:nombre&gt;&#x27;,methods=[&#x27;GET&#x27;])
+
+
+def buscar(nombre):
+
+
+    #Se realiza la busqueda y se devuelve el resultado, si existe un error de atributo (que el empleado no existe)
+
+
+    #Se devuelve empleado no encontrado.
+
+
+    try:
+
+
+        resultado = empleados.query.filter(empleados.nombre == nombre).first()
+
+
+        return dumps({&#x27;resultado&#x27;:{&#x27;nombre&#x27;:resultado.nombre,&#x27;sexo&#x27;:resultado.sexo,&#x27;edad&#x27;:resultado.edad,&#x27;dni&#x27;:resultado.dni}})
+
+
+    except (AttributeError):
+
+
+        return dumps({&#x27;resultado&#x27;: &#x27;Empleado no encontrado&#x27;})
+
+
+@app.route(&#x27;/empleado&#x27;,methods=[&#x27;GET&#x27;])
+
+
+def listar():
+
+
+    #Se realiza la busqueda y se devuelve el resultado, si existe un error de atributo (que el empleado no existe)
+
+
+    #Se devuelve empleado no encontrado.
+
+
+    try:
+
+
+        consulta = empleados.query.all()
+
+
+        resultado = []
+
+
+        for i in consulta:
+
+
+            resultado.append(i.wrap())
+
+
+        return dumps(resultado)
+
+
+    except (AttributeError):
+
+
+        return dumps({&#x27;resultado&#x27;: &#x27;Empleado no encontrado&#x27;})
+
+
+
+#Se crea la funcion actualizar que tiene metodo put, con
+
+
+#url /empleado y se le pasa el nombre a buscar
+
+
+@app.route(&#x27;/empleado/&lt;string:nombre&gt;&#x27;,methods=[&#x27;PUT&#x27;])
+
+
+def actualizar(nombre):
+
+
+    #Se intenta buscar al empleado en la base de datos, si no esta devuelve error
+
+
+    try:
+
+
+        #Se consulta en la base de datos, donde devuelve el primer elemento encontrado
+
+
+        resultado = empleados.query.filter(empleados.nombre == nombre).first()
+
+
+        #Se toma los datos de un json y se guardan en sus variables, salvando luego
+
+
+        #en la base de datos.
+
+
+        resultado.sexo = str(request.json[&#x27;sexo&#x27;])
+
+
+        resulado.edad = int(request.json[&#x27;edad&#x27;])
+
+
+        resultado.dni = int(request.json[&#x27;dni&#x27;])
+
+
+        resultado.save()
+
+
+        #Se realiza la consulta desplegando los empleados
+
+
+        consulta = empleados.query.all()
+
+
+        listado = []
+
+
+        for i in consulta:
+
+
+            listado.append(i.wrap())
+
+
+        #Se devuelve la nueva lista de empleados en un json.
+
+
+        return dumps(listado)
+
+
+    except (AttributeError):
+
+
+        return dumps({&#x27;resultado&#x27;: &#x27;Empleado no encontrado&#x27;})
+
+
+#Borrar un empleado de la base de datos, se pasa el url /empleado con el
+
+
+#string nombre usando el metodo delete.
+
+
+@app.route(&#x27;/empleado/&lt;string:nombre&gt;&#x27;,methods=[&#x27;DELETE&#x27;])
+
+
+def borrar(nombre):
+
+
+    #Se busca el empleado, si existe se borra de la base de datos y se devuelve
+
+
+    #mensaje de empleado borrado, si no, se devuelve el mensaje de empleado no
+
+
+    #encontrado.
+
+
+    try:
+
+
+        resultado = empleados.query.filter(empleados.nombre == nombre).first()
+
+
+        resultado.remove()
+
+
+        ###
+
+
+        consulta = empleados.query.all()
+
+
+        listado = []
+
+
+        for i in consulta:
+
+
+            listado.append(i.wrap())
+
+
+        return dumps(listado)
+
+
+    except (AttributeError):
+
+
+        return dumps({&#x27;resultado&#x27;:&#x27;Empleado no encontrado&#x27;})
+
+
+if __name__ == &quot;__main__&quot;:
+
+
+    #Se corre la aplicacion en modo debug
+
+
+    app.run(host=&quot;0.0.0.0&quot;,debug=True)
+
+</code></pre></pre>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Construcción de la imagen y ejecución del contenedor</h4>
+<p class="rt-Text css-56tzch">Construcción de la imagen Docker:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">docker-compose build
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Ejecución del contenedor:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">docker-compose up
+</code></pre></pre>
+<h3 level="3" class="rt-Heading rt-r-size-4 css-jzlc08">Pruebas del API REST FUL</h3>
+<p class="rt-Text css-56tzch">Para este caso se usará POSTMAN, una aplicación para google chrome.</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Listar Empleados</h4>
+<p class="rt-Text css-56tzch">Se usa postman colocando 127.0.0.1:5000/empleados con método GET, en la siguiente figura se muestra el listado:</p>
+<img src="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-1.png" alt=""/>
+<p class="rt-Text css-56tzch">El JSON que devuelve es el siguiente:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">[{&quot;edad&quot;: 29, &quot;dni&quot;: 8, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Jane Doe&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbce45fd2bbeffc51330b&quot;}}, {&quot;edad&quot;: 39, &quot;dni&quot;: 7, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;John Doe&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd195fd2bbeffc51330c&quot;}}, {&quot;edad&quot;: 55, &quot;dni&quot;: 6, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Pedro Perez&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd505fd2bbeffc51330d&quot;}}, {&quot;edad&quot;: 65, &quot;dni&quot;: 5, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Petra&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd6b5fd2bbeffc51330e&quot;}}, {&quot;edad&quot;: 18, &quot;dni&quot;: 4, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Luis Gonzalez&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc34d5fd2bbeffc51330f&quot;}}, {&quot;edad&quot;: 34, &quot;dni&quot;: 2, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Luissana&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc3935fd2bbeffc513311&quot;}}, {&quot;edad&quot;: 43, &quot;dni&quot;: 1, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Neg&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc4b85fd2bbeffc513312&quot;}}, {&quot;edad&quot;: 29, &quot;dni&quot;: 1050, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Dayana&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57f64d7d557e3f00086651e8&quot;}}]
+</code></pre></pre>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Buscar un Empleado</h4>
+<p class="rt-Text css-56tzch">En el postman se coloca el siguiente url con método GET 127.0.0.1/empleado/Neg , la siguiente figura muestra el resultado:</p>
+<img src="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-2.png" alt=""/>
+<p class="rt-Text css-56tzch">EL JSON que devuelve es el siguiente:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">{&quot;resultado&quot;: {&quot;edad&quot;: 43, &quot;dni&quot;: 1, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Neg&quot;}}
+</code></pre></pre>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Agregar Empleado</h4>
+<p class="rt-Text css-56tzch">En postman se agrega el url con método POST 127.0.0.1:5000/empleado y se pasa en formato JSON lo siguiente:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">{
+ &quot;nombre&quot;: &quot;Fatima&quot;,
+ &quot;sexo&quot;: &quot;Femenino&quot;,
+ &quot;edad&quot;: 24,
+ &quot;dni&quot;: 1052
+}
+</code></pre></pre>
+<p class="rt-Text css-56tzch">La siguiente figura muestra la captura de la información que se coloca en postman:</p>
+<img src="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-3.png" alt=""/>
+<p class="rt-Text css-56tzch">Esto devuelve el siguiente JSON:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">[{&quot;edad&quot;: 29, &quot;dni&quot;: 8, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Jane Doe&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbce45fd2bbeffc51330b&quot;}}, {&quot;edad&quot;: 39, &quot;dni&quot;: 7, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;John Doe&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd195fd2bbeffc51330c&quot;}}, {&quot;edad&quot;: 55, &quot;dni&quot;: 6, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Pedro Perez&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd505fd2bbeffc51330d&quot;}}, {&quot;edad&quot;: 65, &quot;dni&quot;: 5, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Petra&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd6b5fd2bbeffc51330e&quot;}}, {&quot;edad&quot;: 18, &quot;dni&quot;: 4, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Luis Gonzalez&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc34d5fd2bbeffc51330f&quot;}}, {&quot;edad&quot;: 34, &quot;dni&quot;: 2, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Luissana&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc3935fd2bbeffc513311&quot;}}, {&quot;edad&quot;: 43, &quot;dni&quot;: 1, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Neg&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc4b85fd2bbeffc513312&quot;}}, {&quot;edad&quot;: 29, &quot;dni&quot;: 1050, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Dayana&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57f64d7d557e3f00086651e8&quot;}}, {&quot;edad&quot;: 24, &quot;dni&quot;: 1052, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Fatima&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57f68505557e3f000e1aa766&quot;}}]
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Como se nota el empleado Fátima aparece en la base de datos al final.</p>
+<p class="rt-Text css-56tzch">####Borrar Empleado
+Para este caso se buscará borrar al empleado Fátima, se coloca el siguiente url en postman con método DELETE: 127.0.0.1:5000/empleado/Fatima .</p>
+<p class="rt-Text css-56tzch">La siguiente imagen muestra la ejecución en postman:</p>
+<img src="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-4.png" alt=""/>
+<p class="rt-Text css-56tzch">Esto devuelve el siguiente JSON:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">[{&quot;edad&quot;: 29, &quot;dni&quot;: 8, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Jane Doe&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbce45fd2bbeffc51330b&quot;}}, {&quot;edad&quot;: 39, &quot;dni&quot;: 7, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;John Doe&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd195fd2bbeffc51330c&quot;}}, {&quot;edad&quot;: 55, &quot;dni&quot;: 6, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Pedro Perez&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd505fd2bbeffc51330d&quot;}}, {&quot;edad&quot;: 65, &quot;dni&quot;: 5, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Petra&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd6b5fd2bbeffc51330e&quot;}}, {&quot;edad&quot;: 18, &quot;dni&quot;: 4, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Luis Gonzalez&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc34d5fd2bbeffc51330f&quot;}}, {&quot;edad&quot;: 34, &quot;dni&quot;: 2, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Luissana&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc3935fd2bbeffc513311&quot;}}, {&quot;edad&quot;: 43, &quot;dni&quot;: 1, &quot;sexo&quot;: &quot;Masculino&quot;, &quot;nombre&quot;: &quot;Neg&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc4b85fd2bbeffc513312&quot;}}, {&quot;edad&quot;: 29, &quot;dni&quot;: 1050, &quot;sexo&quot;: &quot;Femenino&quot;, &quot;nombre&quot;: &quot;Dayana&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57f64d7d557e3f00086651e8&quot;}}]
+</code></pre></pre>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Modificar empleado</h4>
+<p class="rt-Text css-56tzch">Para este caso se modificará el empleado Neg, cambiando su edad.</p>
+<p class="rt-Text css-56tzch">Se abre el postman colocando el url 127.0.0.1:5000/empleado/Neg con método PUT. Adicional se agrega el JSON:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">{
+ &quot;sexo&quot;: &quot;Masculino&quot;,
+ &quot;edad&quot;: 41,
+ &quot;dni&quot;: 1
+}
+</code></pre></pre>
+<p class="rt-Text css-56tzch">La siguiente imagen muestra el postman:</p>
+<img src="/blog/images/apirestfulconflaskymongodbflaskmongoalchemy-5.png" alt=""/>
+<p class="rt-Text css-56tzch">Esto devuelve el siguiente JSON:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">[{&quot;sexo&quot;: &quot;Femenino&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbce45fd2bbeffc51330b&quot;}, &quot;nombre&quot;: &quot;Jane Doe&quot;, &quot;dni&quot;: 8, &quot;edad&quot;: 29}, {&quot;sexo&quot;: &quot;Masculino&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd195fd2bbeffc51330c&quot;}, &quot;nombre&quot;: &quot;John Doe&quot;, &quot;dni&quot;: 7, &quot;edad&quot;: 39}, {&quot;sexo&quot;: &quot;Masculino&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd505fd2bbeffc51330d&quot;}, &quot;nombre&quot;: &quot;Pedro Perez&quot;, &quot;dni&quot;: 6, &quot;edad&quot;: 55}, {&quot;sexo&quot;: &quot;Femenino&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebbd6b5fd2bbeffc51330e&quot;}, &quot;nombre&quot;: &quot;Petra&quot;, &quot;dni&quot;: 5, &quot;edad&quot;: 65}, {&quot;sexo&quot;: &quot;Masculino&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc34d5fd2bbeffc51330f&quot;}, &quot;nombre&quot;: &quot;Luis Gonzalez&quot;, &quot;dni&quot;: 4, &quot;edad&quot;: 18}, {&quot;sexo&quot;: &quot;Femenino&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc3935fd2bbeffc513311&quot;}, &quot;nombre&quot;: &quot;Luissana&quot;, &quot;dni&quot;: 2, &quot;edad&quot;: 34}, {&quot;sexo&quot;: &quot;Masculino&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57ebc4b85fd2bbeffc513312&quot;}, &quot;nombre&quot;: &quot;Neg&quot;, &quot;dni&quot;: 1, &quot;edad&quot;: 41}, {&quot;sexo&quot;: &quot;Femenino&quot;, &quot;_id&quot;: {&quot;$oid&quot;: &quot;57f64d7d557e3f00086651e8&quot;}, &quot;nombre&quot;: &quot;Dayana&quot;, &quot;dni&quot;: 1050, &quot;edad&quot;: 29}]
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se muestra en subrayado el empleado Neg que cambió su edad en la base de datos.</p>
+<p class="rt-Text css-56tzch">Para terminar, ahora se muestra la salida del servidor:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">flask-rest1_1 | 172.17.0.1 - - [06/Oct/2016 15:59:33] &quot;GET /empleado HTTP/1.1&quot; 200 -
+flask-rest1_1 | 172.17.0.1 - - [06/Oct/2016 16:03:48] &quot;GET /empleado/Neg HTTP/1.1&quot; 200 -
+flask-rest1_1 | 172.17.0.1 - - [06/Oct/2016 17:08:22] &quot;POST /empleado HTTP/1.1&quot; 200 -
+flask-rest1_1 | 172.17.0.1 - - [06/Oct/2016 17:39:24] &quot;DELETE /empleado/Fatima HTTP/1.1&quot; 200 -
+flask-rest1_1 | 172.17.0.1 - - [06/Oct/2016 17:47:59] &quot;PUT /empleado/Neg HTTP/1.1&quot; 200 -
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Como se ve, la salida devuelve el URL que se usa y los métodos utilizados.</p>
+<p class="rt-Text css-56tzch">De esta manera se muestra el uso del estilo arquitectónico API REST y el uso de HTTP con sus diferentes métodos.</p>
+<p class="rt-Text css-56tzch">El código fuente de este artículo se encuentra en el repositorio <a data-accent-color="" href="https://gitlab.com/ecrespo/tutorial-flask/tree/mongo-restful" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">tutorial-flask de gitlab en la rama mongo-restful</a>.</p>
+<h2 level="2" class="rt-Heading rt-r-size-5 css-jzlc08"></h2>
+<p class="rt-Text css-56tzch">¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
+<p class="rt-Text css-56tzch">O Escaneando el código QR desde la billetera:</p>
+<img src="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png" alt="17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV"/></div></article></div></main></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="rt-Box css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><p class="rt-Text css-vq6poo">Built with Reflex</p></div></a></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"unstable_subResourceIntegrity":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-51368191.js";
+import * as route0 from "/assets/root-zD6cxJWt.js";
+import * as route1 from "/assets/_blog_._apirestfulconflaskymongodbflaskmongoalchemy_._index-BF6ConFF.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[apirestfulconflaskymongodbflaskmongoalchemy]._index":route1};
+
+import("/assets/entry.client-Dv70GDZP.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

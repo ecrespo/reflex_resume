@@ -1,0 +1,435 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | Contar palabras de un texto usando Spark con PySpark</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-51368191.js"/><link rel="modulepreload" href="/assets/entry.client-Dv70GDZP.js"/><link rel="modulepreload" href="/assets/react-dom-DX0clM9j.js"/><link rel="modulepreload" href="/assets/chunk-WWGJGFF6-D2pN2XHm.js"/><link rel="modulepreload" href="/assets/react-DtDMbhE7.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-BDpGGt_t.js"/><link rel="modulepreload" href="/assets/root-zD6cxJWt.js"/><link rel="modulepreload" href="/assets/preload-helper-ogMfbiXo.js"/><link rel="modulepreload" href="/assets/reflex-env-BNCxk_2_.js"/><link rel="modulepreload" href="/assets/one-dark-v9h4L60p.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-BYkyYPI_.js"/><link rel="modulepreload" href="/assets/esm-DZDdZhc0.js"/><link rel="modulepreload" href="/assets/character-entities-legacy-iZb7EYKq.js"/><link rel="modulepreload" href="/assets/index.dom-CMcpImPJ.js"/><link rel="modulepreload" href="/assets/prop-types-4LQ6TUfN.js"/><link rel="modulepreload" href="/assets/_blog_._contarpalabrasdeuntextousandosparkconpyspark_._index-Blw_n4pC.js"/><link rel="modulepreload" href="/assets/stateful_components-CKKPf-BG.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .prose {
+                max-width: none;
+            }
+            .prose h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a202c;
+            }
+            .prose h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #2d3748;
+            }
+            .prose h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #4a5568;
+            }
+            .prose p {
+                margin-bottom: 1rem;
+                line-height: 1.75;
+                color: #4a5568;
+            }
+            .prose code {
+                background-color: #f7fafc;
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            .prose pre {
+                background-color: #2d3748;
+                color: #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            .prose pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+            }
+            .prose ul, .prose ol {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+            }
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+            .prose a {
+                color: #4a9bba;
+                text-decoration: underline;
+            }
+            .prose a:hover {
+                color: #3a8baa;
+            }
+            .prose img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+            .prose blockquote {
+                border-left: 4px solid #4a9bba;
+                padding-left: 1rem;
+                margin: 1rem 0;
+                color: #718096;
+                font-style: italic;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CjirM0bN.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/one-dark-DWfq818h.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen font-[&#x27;Inter&#x27;] bg-[#f5f5dc]"><aside class="md:hidden w-80 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10 z-50 transition-transform duration-300 ease-in-out transform -translate-x-full"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><aside class="hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"><nav class="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><button class="md:hidden p-2 hover:bg-white/10 rounded"><div class="flex flex-col"><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white"></span></div></button><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/" data-discover="true">HOME</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog" data-discover="true">BLOG</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/archives" data-discover="true">ARCHIVES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/categories" data-discover="true">CATEGORIES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/tags" data-discover="true">TAGS</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/feed.xml" data-discover="true">ATOM</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts" href="/blog" data-discover="true"><span class="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6">← Volver al Blog</span></a><header class="mb-8 pb-6 border-b border-gray-200"><h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Contar palabras de un texto usando Spark con PySpark</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-gray-500">July 03, 2018</span><span class="text-gray-400 mx-2"> • </span><span class="text-[#4a9bba] font-medium">Tutorial Python</span><span class="text-gray-400 mx-2"> • </span><span class="text-gray-600">Por </span><span class="text-gray-800 font-medium">Unknown</span></div></header><article class="post-content"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">En el artículo anterior se explicó el <a data-accent-color="" href="/blog/comocorrerapachesparkdesdeunaimagendocker" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">procedimiento de instalación de Spark usando Docker</a>.  En este artículo se usará un texto tomado de la página de la ONU, de ahí se extrae las líneas y se cuentan las palabras.</p>
+<p class="rt-Text css-56tzch">A continuación el texto que se va a utilizar (lo pueden bajar desde el repositorio <a data-accent-color="" href="https://gitlab.com/mangoosta/articulos-cienciasdedatos/blob/master/datos/declaracion_onut.text" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">gitlab</a>):</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">1942: La Declaración de las Naciones Unidas
+Representantes de 26 Estados que lucharon contra las potencias del Eje Roma-Berlín-Tokio manifestaron su apoyo a la Carta del Atlántico mediante su firma de la « Declaración de las Naciones Unidas ». En este trascendental documento, los signatarios se comprometían a poner su máximo empeño en la guerra y a no firmar una paz por separado. 
+
+
+Declaración de las Naciones Unidas prometiendo &quot;emplear todos sus recursos, militares o económicos&quot; en &quot;la lucha por la victoria sobre el hitlerismo&quot;.
+El día de año nuevo de 1942, el señor presidente Roosevelt y los señores Winston Churchill, Maxim Litvinov, de la Unión Soviética, y T. V. Soong, de China, firmaron un breve documento que luego se conocería como la Declaración de las Naciones Unidas. Al día siguiente se sumaron los representantes de otras 22 naciones más. En este trascendental documento, los signatarios se comprometían a poner su máximo empeño en la guerra y a no firmar una paz por separado.
+
+La Declaración de las Naciones Unidas
+La alianza completa a que se llegó en esta forma concordaba con los principios enunciados en la Carta del Atlántico, y la primera cláusula de la declaración de las Naciones Unidas reza que los países signatarios 
+
+« . . . han suscrito un programa común de propósitos y principios enunciados en la declaración conjunta del presidente de los Estados Unidos de América y del primer ministro del Reino Unido de la Gran Bretaña e Irlanda del Norte, fechada el 14 de agosto de 1941, y conocida como la Carta del Atlántico. ».
+
+Cuando tres años después se iniciaban los preparativos para la conferencia de San Francisco, únicamente se invitó a participar a aquellos estados que, en marzo de 1945, habían declarado la guerra a Alemania y al Japón y que habían firmado la Declaración de las Naciones Unidas.
+
+Signatarios Originales de la Declaración de la ONU
+Los 26 signatarios originales fueron: Los Estados Unidos de América, el Reino Unido de la Gran Bretaña e Irlanda del Norte, la Unión de Repúblicas Socialistas Soviéticas, China, Australia, Bélgica, Canadá, Costa Rica, Checoeslovaquia, El Salvador, Grecia, Guatemala, Haití, Honduras, India, Luxemburgo, Nicaragua, Noruega, Nueva Zelandia, Países Bajos, Panamá, Polonia, República Dominicana, Unión Sudafricana, Yugoeslavia .
+
+Los firmantes posteriores
+Más tarde se adhirieron a la Declaración los siguientes países (en el orden de las firmas): México, Colombia, Iraq, Irán, Liberia, Paraguay, Chile, Uruguay, Egipto, Siria, Francia, Filipinas, Brasil, Bolivia, Etiopía, Ecuador, Perú, Venezuela, Turquía, Arabia Saudita, Líbano.
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">A continuación se muestra la ejecución del código (si quieren bajar el archivo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">jupyter notebook</code> lo pueden descargar desde <a data-accent-color="" href="https://gitlab.com/mangoosta/articulos-cienciasdedatos/blob/master/spark1.ipynb" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">gitlab</a>):</p>
+<p class="rt-Text css-56tzch">In [1]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se importa SparkContext y SparkConf
+from pyspark import SparkContext, SparkConf
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [2]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se crea la instancia de la configuración con el nombre de la aplicación contador
+conf1 = SparkConf().setAppName(&quot;contador&quot;).setMaster(&quot;local[3]&quot;)
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [3]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se crea el contexto pasando la instancia de la configuración
+sc = SparkContext(conf = conf1)
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [4]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se extrae las líneas del texto 
+lineas = sc.textFile(&quot;data/declaracion_onut.text&quot;)
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [6]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se extrae las palabras del texto y se cuentan
+contarPalabras = lineas.flatMap(lambda linea: linea.split(&quot; &quot;)).countByValue()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [7]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se muestra las palabras con la cantidad de veces que tiene su aparición
+for palabra, contador in contarPalabras.items():
+    print(&quot;{} : {}&quot;.format(palabra, contador))
+</code></pre></pre>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">1942: : 1
+La : 3
+Declaración : 8
+de : 29
+las : 9
+Naciones : 7
+Unidas : 5
+Representantes : 1
+26 : 2
+Estados : 3
+que : 5
+lucharon : 1
+contra : 1
+potencias : 1
+del : 9
+Eje : 1
+Roma-Berlín-Tokio : 1
+manifestaron : 1
+su : 4
+apoyo : 1
+a : 10
+la : 21
+Carta : 3
+Atlántico : 1
+mediante : 1
+firma : 1
+« : 2
+». : 2
+En : 2
+este : 2
+trascendental : 2
+documento, : 2
+los : 9
+signatarios : 4
+se : 8
+comprometían : 2
+poner : 2
+máximo : 2
+empeño : 2
+en : 7
+guerra : 3
+y : 10
+no : 2
+firmar : 2
+una : 2
+paz : 2
+por : 3
+separado. : 2
+ : 9
+prometiendo : 1
+&quot;emplear : 1
+todos : 1
+sus : 1
+recursos, : 1
+militares : 1
+o : 1
+económicos&quot; : 1
+&quot;la : 1
+lucha : 1
+victoria : 1
+sobre : 1
+el : 5
+hitlerismo&quot;. : 1
+El : 2
+día : 2
+año : 1
+nuevo : 1
+1942, : 1
+señor : 1
+presidente : 2
+Roosevelt : 1
+señores : 1
+Winston : 1
+Churchill, : 1
+Maxim : 1
+Litvinov, : 1
+Unión : 3
+Soviética, : 1
+T. : 1
+V. : 1
+Soong, : 1
+China, : 2
+firmaron : 1
+un : 2
+breve : 1
+documento : 1
+luego : 1
+conocería : 1
+como : 2
+Unidas. : 2
+Al : 1
+siguiente : 1
+sumaron : 1
+representantes : 1
+otras : 1
+22 : 1
+naciones : 1
+más. : 1
+alianza : 1
+completa : 1
+llegó : 1
+esta : 1
+forma : 1
+concordaba : 1
+con : 1
+principios : 2
+enunciados : 2
+Atlántico, : 1
+primera : 1
+cláusula : 1
+declaración : 2
+reza : 1
+países : 2
+. : 4
+han : 1
+suscrito : 1
+programa : 1
+común : 1
+propósitos : 1
+conjunta : 1
+Unidos : 2
+América : 1
+primer : 1
+ministro : 1
+Reino : 2
+Unido : 2
+Gran : 2
+Bretaña : 2
+e : 2
+Irlanda : 2
+Norte, : 2
+fechada : 1
+14 : 1
+agosto : 1
+1941, : 1
+conocida : 1
+Atlántico. : 1
+Cuando : 1
+tres : 1
+años : 1
+después : 1
+iniciaban : 1
+preparativos : 1
+para : 1
+conferencia : 1
+San : 1
+Francisco, : 1
+únicamente : 1
+invitó : 1
+participar : 1
+aquellos : 1
+estados : 1
+que, : 1
+marzo : 1
+1945, : 1
+habían : 2
+declarado : 1
+Alemania : 1
+al : 1
+Japón : 1
+firmado : 1
+Signatarios : 1
+Originales : 1
+ONU : 1
+Los : 3
+originales : 1
+fueron: : 1
+América, : 1
+Repúblicas : 1
+Socialistas : 1
+Soviéticas, : 1
+Australia, : 1
+Bélgica, : 1
+Canadá, : 1
+Costa : 1
+Rica, : 1
+Checoeslovaquia, : 1
+Salvador, : 1
+Grecia, : 1
+Guatemala, : 1
+Haití, : 1
+Honduras, : 1
+India, : 1
+Luxemburgo, : 1
+Nicaragua, : 1
+Noruega, : 1
+Nueva : 1
+Zelandia, : 1
+Países : 1
+Bajos, : 1
+Panamá, : 1
+Polonia, : 1
+República : 1
+Dominicana, : 1
+Sudafricana, : 1
+Yugoeslavia : 1
+firmantes : 1
+posteriores : 1
+Más : 1
+tarde : 1
+adhirieron : 1
+siguientes : 1
+(en : 1
+orden : 1
+firmas): : 1
+México, : 1
+Colombia, : 1
+Iraq, : 1
+Irán, : 1
+Liberia, : 1
+Paraguay, : 1
+Chile, : 1
+Uruguay, : 1
+Egipto, : 1
+Siria, : 1
+Francia, : 1
+Filipinas, : 1
+Brasil, : 1
+Bolivia, : 1
+Etiopía, : 1
+Ecuador, : 1
+Perú, : 1
+Venezuela, : 1
+Turquía, : 1
+Arabia : 1
+Saudita, : 1
+Líbano. : 1
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Como se puede ver, se logra obtener la cantidad de veces que aparecen las palabras en el texto.</p>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h2 level="2" class="rt-Heading rt-r-size-5 css-jzlc08"></h2>
+<p class="rt-Text css-56tzch">¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
+<p class="rt-Text css-56tzch">O Escaneando el código QR desde la billetera:</p>
+<img src="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png" alt="17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV"/></div></article></div></main></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="rt-Box css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><p class="rt-Text css-vq6poo">Built with Reflex</p></div></a></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"unstable_subResourceIntegrity":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-51368191.js";
+import * as route0 from "/assets/root-zD6cxJWt.js";
+import * as route1 from "/assets/_blog_._contarpalabrasdeuntextousandosparkconpyspark_._index-Blw_n4pC.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[contarpalabrasdeuntextousandosparkconpyspark]._index":route1};
+
+import("/assets/entry.client-Dv70GDZP.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

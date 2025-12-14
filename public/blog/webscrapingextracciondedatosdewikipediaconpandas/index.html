@@ -1,0 +1,704 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/webscrapingextracciondedatosdewikipediaconpandas-1.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | WebScraping (extracción de datos) de wikipedia con Pandas</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-51368191.js"/><link rel="modulepreload" href="/assets/entry.client-Dv70GDZP.js"/><link rel="modulepreload" href="/assets/react-dom-DX0clM9j.js"/><link rel="modulepreload" href="/assets/chunk-WWGJGFF6-D2pN2XHm.js"/><link rel="modulepreload" href="/assets/react-DtDMbhE7.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-BDpGGt_t.js"/><link rel="modulepreload" href="/assets/root-zD6cxJWt.js"/><link rel="modulepreload" href="/assets/preload-helper-ogMfbiXo.js"/><link rel="modulepreload" href="/assets/reflex-env-BNCxk_2_.js"/><link rel="modulepreload" href="/assets/one-dark-v9h4L60p.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-BYkyYPI_.js"/><link rel="modulepreload" href="/assets/esm-DZDdZhc0.js"/><link rel="modulepreload" href="/assets/character-entities-legacy-iZb7EYKq.js"/><link rel="modulepreload" href="/assets/index.dom-CMcpImPJ.js"/><link rel="modulepreload" href="/assets/prop-types-4LQ6TUfN.js"/><link rel="modulepreload" href="/assets/_blog_._webscrapingextracciondedatosdewikipediaconpandas_._index-BCY82C2E.js"/><link rel="modulepreload" href="/assets/stateful_components-CKKPf-BG.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .prose {
+                max-width: none;
+            }
+            .prose h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a202c;
+            }
+            .prose h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #2d3748;
+            }
+            .prose h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #4a5568;
+            }
+            .prose p {
+                margin-bottom: 1rem;
+                line-height: 1.75;
+                color: #4a5568;
+            }
+            .prose code {
+                background-color: #f7fafc;
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            .prose pre {
+                background-color: #2d3748;
+                color: #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            .prose pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+            }
+            .prose ul, .prose ol {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+            }
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+            .prose a {
+                color: #4a9bba;
+                text-decoration: underline;
+            }
+            .prose a:hover {
+                color: #3a8baa;
+            }
+            .prose img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+            .prose blockquote {
+                border-left: 4px solid #4a9bba;
+                padding-left: 1rem;
+                margin: 1rem 0;
+                color: #718096;
+                font-style: italic;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CjirM0bN.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/one-dark-DWfq818h.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen font-[&#x27;Inter&#x27;] bg-[#f5f5dc]"><aside class="md:hidden w-80 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10 z-50 transition-transform duration-300 ease-in-out transform -translate-x-full"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><aside class="hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"><nav class="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><button class="md:hidden p-2 hover:bg-white/10 rounded"><div class="flex flex-col"><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white"></span></div></button><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/" data-discover="true">HOME</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog" data-discover="true">BLOG</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/archives" data-discover="true">ARCHIVES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/categories" data-discover="true">CATEGORIES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/tags" data-discover="true">TAGS</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/feed.xml" data-discover="true">ATOM</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts" href="/blog" data-discover="true"><span class="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6">← Volver al Blog</span></a><header class="mb-8 pb-6 border-b border-gray-200"><h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">WebScraping (extracción de datos) de wikipedia con Pandas</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-gray-500">April 19, 2018</span><span class="text-gray-400 mx-2"> • </span><span class="text-[#4a9bba] font-medium">Tutorial Python</span><span class="text-gray-400 mx-2"> • </span><span class="text-gray-600">Por </span><span class="text-gray-800 font-medium">Unknown</span></div></header><article class="post-content"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Continuando con la serie de artículos sobre <a data-accent-color="" href="https://www.seraph.to/tag/pandas.html" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Pandas (enlace roto)</a>, en este artículo se muestra un proceso de extracción de datos web de la <a data-accent-color="" href="https://es.wikipedia.org/wiki/Estados_de_Venezuela" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">página que contiene información sobre  los Estados de Venezuela de Wikipedia</a>.</p>
+<p class="rt-Text css-56tzch">En los procesos anteriores de WebScraping se trabajaba practicamente a mano para indentificar  las secciones del código html donde se encuentra la información útil, para el caso con Pandas este abstrae ese proceso.</p>
+<p class="rt-Text css-56tzch">A continuación se muestra una captura de pantalla de la página donde se quiere extraer la información:</p>
+<img src="/blog/images/webscrapingextracciondedatosdewikipediaconpandas-1.png" alt=""/>
+<p class="rt-Text css-56tzch">La información que maneja la página son los estados con sus capitales, densidad poblacional, superficie, año de admisión, población, densidad, región y código ISO, la parte de la bandera ni del mapa no se muestra por que son imágenes y no se obtiene información útil de ellas.</p>
+<p class="rt-Text css-56tzch">A continuación todo el proceso de extracción de información de la página:</p>
+<p class="rt-Text css-56tzch">In [1]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se importa pandas como pd
+import pandas as pd
+#Se lee los datos de wikipedia de los estados de venezuela, este devuelve una lista
+estados=   pd.read_html(&#x27;https://es.wikipedia.org/wiki/Estados_de_Venezuela&#x27;) 
+estados
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[1]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">[    0                                                  1
+ 0 NaN  Este artículo o sección necesita referencias q...,
+                                                    0
+ 0                     Estados Federales de Venezuela
+ 1  Bolívar Amazonas Apure Zulia Táchira Barinas M...,
+           0                       1                       2           3  \
+ 0   Bandera         Entidad federal                 Capital  Código ISO   
+ 1       NaN                Amazonas         Puerto Ayacucho        VE-Z   
+ 2       NaN              Anzoátegui               Barcelona        VE-B   
+ 3       NaN                   Apure   San Fernando de Apure        VE-C   
+ 4       NaN                  Aragua                 Maracay        VE-D   
+ 5       NaN                 Barinas                 Barinas        VE-E   
+ 6       NaN                 Bolívar          Ciudad Bolívar        VE-F   
+ 7       NaN                Carabobo                Valencia        VE-G   
+ 8       NaN                 Cojedes              San Carlos        VE-H   
+ 9       NaN           Delta Amacuro                Tucupita        VE-Y   
+ 10      NaN        Distrito Capital                 Caracas        VE-A   
+ 11      NaN                  Falcón                    Coro        VE-I   
+ 12      NaN                 Guárico  San Juan de Los Morros        VE-J   
+ 13      NaN                    Lara            Barquisimeto        VE-K   
+ 14      NaN                  Mérida                  Mérida        VE-L   
+ 15      NaN                 Miranda              Los Teques        VE-M   
+ 16      NaN                 Monagas                 Maturín        VE-N   
+ 17      NaN           Nueva Esparta             La Asunción        VE-O   
+ 18      NaN              Portuguesa                 Guanare        VE-P   
+ 19      NaN                   Sucre                  Cumaná        VE-R   
+ 20      NaN                 Táchira           San Cristóbal        VE-S   
+ 21      NaN                Trujillo                Trujillo        VE-T   
+ 22      NaN                  Vargas               La Guaira        VE-X   
+ 23      NaN                 Yaracuy              San Felipe        VE-U   
+ 24      NaN                   Zulia               Maracaibo        VE-V   
+ 25      NaN  Dependencias Federales              Gran Roque        VE-W   
+
+                   4                                 5  \
+ 0   Año de admisión              Población (2011)[2]​   
+ 1              1992    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0161844.&amp;&amp;&amp;&amp;&amp;0161 844   
+ 2              1909  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;02179838.&amp;&amp;&amp;&amp;&amp;02 179 838   
+ 3              1864    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0501404.&amp;&amp;&amp;&amp;&amp;0501 404   
+ 4              1909  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;01819630.&amp;&amp;&amp;&amp;&amp;01 819 630   
+ 5              1937    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0853949.&amp;&amp;&amp;&amp;&amp;0853 949   
+ 6              1901  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;02069064.&amp;&amp;&amp;&amp;&amp;02 069 064   
+ 7              1865  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;02342665.&amp;&amp;&amp;&amp;&amp;02 342 665   
+ 8              1864    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0367020.&amp;&amp;&amp;&amp;&amp;0367 020   
+ 9              1992    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0180363.&amp;&amp;&amp;&amp;&amp;0180 363   
+ 10             1999  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;04033186.&amp;&amp;&amp;&amp;&amp;04 033 186   
+ 11             1872  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;01064615.&amp;&amp;&amp;&amp;&amp;01 064 615   
+ 12             1864    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0746174.&amp;&amp;&amp;&amp;&amp;0746 174   
+ 13             1909  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;01892439.&amp;&amp;&amp;&amp;&amp;01 892 439   
+ 14             1909    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0903955.&amp;&amp;&amp;&amp;&amp;0903 955   
+ 15             1909  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;03112851.&amp;&amp;&amp;&amp;&amp;03 112 851   
+ 16             1909    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0938185.&amp;&amp;&amp;&amp;&amp;0938 185   
+ 17             1909    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0525139.&amp;&amp;&amp;&amp;&amp;0525 139   
+ 18             1909    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0897104.&amp;&amp;&amp;&amp;&amp;0897 104   
+ 19             1909    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0892990.&amp;&amp;&amp;&amp;&amp;0892 990   
+ 20             1899  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;01277241.&amp;&amp;&amp;&amp;&amp;01 277 241   
+ 21             1864    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0901239.&amp;&amp;&amp;&amp;&amp;0901 239   
+ 22             1998    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0419928.&amp;&amp;&amp;&amp;&amp;0419 928   
+ 23             1899    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0645688.&amp;&amp;&amp;&amp;&amp;0645 688   
+ 24             1864  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;04694856.&amp;&amp;&amp;&amp;&amp;04 694 856   
+ 25             1938       &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;02155.&amp;&amp;&amp;&amp;&amp;02155   
+
+                                  6                              7  \
+ 0                 Superficie (km²)             Densidad (hab/km²)   
+ 1   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0177617.&amp;&amp;&amp;&amp;&amp;0177 617    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;00.9900000,99   
+ 2    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;043300.&amp;&amp;&amp;&amp;&amp;043 300    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;033.90000033,9   
+ 3    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;076500.&amp;&amp;&amp;&amp;&amp;076 500     &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;06.&amp;&amp;&amp;&amp;&amp;06,0   
+ 4      &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;07014.&amp;&amp;&amp;&amp;&amp;07014   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0235.600000235,6   
+ 5    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;035200.&amp;&amp;&amp;&amp;&amp;035 200    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;023.20000023,2   
+ 6   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0240528.&amp;&amp;&amp;&amp;&amp;0240 528    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;07.8700007,87   
+ 7      &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;04650.&amp;&amp;&amp;&amp;&amp;04650  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0713.&amp;10000713,01   
+ 8    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;014800.&amp;&amp;&amp;&amp;&amp;014 800    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;021.80000021,8   
+ 9    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;040200.&amp;&amp;&amp;&amp;&amp;040 200    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;04.6500004,65   
+ 10      &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0433.&amp;&amp;&amp;&amp;&amp;0433  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;07246.4000007246,4   
+ 11   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;024800.&amp;&amp;&amp;&amp;&amp;024 800    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;036.40000036,4   
+ 12   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;064986.&amp;&amp;&amp;&amp;&amp;064 986    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;011.50000011,5   
+ 13   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;019800.&amp;&amp;&amp;&amp;&amp;019 800    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;089.60000089,6   
+ 14   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;011300.&amp;&amp;&amp;&amp;&amp;011 300    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;092.80000092,8   
+ 15     &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;07950.&amp;&amp;&amp;&amp;&amp;07950   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0336.500000336,5   
+ 16   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;028900.&amp;&amp;&amp;&amp;&amp;028 900    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;031.30000031,3   
+ 17     &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;01150.&amp;&amp;&amp;&amp;&amp;01150  &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0480.&amp;10000480,01   
+ 18   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;015200.&amp;&amp;&amp;&amp;&amp;015 200    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;057.70000057,7   
+ 19   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;011800.&amp;&amp;&amp;&amp;&amp;011 800    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;076.&amp;&amp;&amp;&amp;&amp;076,0   
+ 20   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;011100.&amp;&amp;&amp;&amp;&amp;011 100   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0105.300000105,3   
+ 21     &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;07400.&amp;&amp;&amp;&amp;&amp;07400    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;092.80000092,8   
+ 22     &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;01497.&amp;&amp;&amp;&amp;&amp;01497   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0235.800000235,8   
+ 23     &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;07100.&amp;&amp;&amp;&amp;&amp;07100    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;084.60000084,6   
+ 24   &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;063100.&amp;&amp;&amp;&amp;&amp;063 100    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;073.70000073,7   
+ 25      &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;0120.&amp;&amp;&amp;&amp;&amp;0120    &amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;&amp;018.&amp;&amp;&amp;&amp;&amp;018,0   
+
+                     8     9  
+ 0              Región  Mapa  
+ 1             Guayana   NaN  
+ 2      Nor - Oriental   NaN  
+ 3              Llanos   NaN  
+ 4             Central   NaN  
+ 5              Andina   NaN  
+ 6             Guayana   NaN  
+ 7             Central   NaN  
+ 8             Central   NaN  
+ 9             Guayana   NaN  
+ 10            Capital   NaN  
+ 11  Centro-Occidental   NaN  
+ 12             Llanos   NaN  
+ 13  Centro-Occidental   NaN  
+ 14             Andina   NaN  
+ 15            Capital   NaN  
+ 16     Nor - Oriental   NaN  
+ 17            Insular   NaN  
+ 18  Centro-Occidental   NaN  
+ 19     Nor - Oriental   NaN  
+ 20             Andina   NaN  
+ 21             Andina   NaN  
+ 22            Capital   NaN  
+ 23  Centro-Occidental   NaN  
+ 24            Zuliana   NaN  
+ 25            Insular   NaN  ]
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [2]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Tipo de los estados
+type(estados)
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[2]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">list
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [3]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Tipo del primer elemento es un dataframe
+type(estados[0])
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[3]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">pandas.core.frame.DataFrame
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [4]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se listan del dataframe estados y capitales (elementos 1 y 2 del dataframe, y se recorre)
+for i in range(1,26):
+    print(estados[2][1][i],estados[2][2][i])
+Amazonas Puerto Ayacucho
+Anzoátegui Barcelona
+Apure San Fernando de Apure
+Aragua Maracay
+Barinas Barinas
+Bolívar Ciudad Bolívar
+Carabobo Valencia
+Cojedes San Carlos
+Delta Amacuro Tucupita
+Distrito Capital Caracas
+Falcón Coro
+Guárico San Juan de Los Morros
+Lara Barquisimeto
+Mérida Mérida
+Miranda Los Teques
+Monagas Maturín
+Nueva Esparta La Asunción
+Portuguesa Guanare
+Sucre Cumaná
+Táchira San Cristóbal
+Trujillo Trujillo
+Vargas La Guaira
+Yaracuy San Felipe
+Zulia Maracaibo
+Dependencias Federales Gran Roque
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [5]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Ahora se crea una lista de diccionarios donde estará la información de cada estado
+lista = []
+for i in range(1,26):
+    lista.append({&#x27;Estado&#x27;:estados[2][1][i],
+                  &#x27;Capital&#x27;: estados[2][2][i],
+                  &#x27;codigo_iso&#x27;: estados[2][3][i],
+                  u&#x27;año_admision&#x27;: estados[2][4][i],
+                  &#x27;Poblacion&#x27;: int(estados[2][5][i].split(&quot;.&quot;)[0].split(&quot;&amp;&quot;)[-1]),
+                  &#x27;Superficie&#x27;: int(estados[2][6][i].split(&quot;.&quot;)[0].split(&quot;&amp;&quot;)[-1]),
+                  &#x27;Densidad&#x27;: float(estados[2][7][i].split(&quot;,&quot;)[0].split(&quot;&amp;&quot;)[-1]),
+                  &#x27;Region&#x27;: estados[2][8][i]
+                 })
+
+print(lista)
+[{&#x27;Region&#x27;: &#x27;Guayana&#x27;, &#x27;Densidad&#x27;: 0.99, &#x27;Superficie&#x27;: 177617, &#x27;Estado&#x27;: &#x27;Amazonas&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-Z&#x27;, &#x27;Poblacion&#x27;: 161844, &#x27;Capital&#x27;: &#x27;Puerto Ayacucho&#x27;, &#x27;año_admision&#x27;: &#x27;1992&#x27;}, {&#x27;Region&#x27;: &#x27;Nor - Oriental&#x27;, &#x27;Densidad&#x27;: 33.90000033, &#x27;Superficie&#x27;: 43300, &#x27;Estado&#x27;: &#x27;Anzoátegui&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-B&#x27;, &#x27;Poblacion&#x27;: 2179838, &#x27;Capital&#x27;: &#x27;Barcelona&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Llanos&#x27;, &#x27;Densidad&#x27;: 6.0, &#x27;Superficie&#x27;: 76500, &#x27;Estado&#x27;: &#x27;Apure&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-C&#x27;, &#x27;Poblacion&#x27;: 501404, &#x27;Capital&#x27;: &#x27;San Fernando de Apure&#x27;, &#x27;año_admision&#x27;: &#x27;1864&#x27;}, {&#x27;Region&#x27;: &#x27;Central&#x27;, &#x27;Densidad&#x27;: 235.600000235, &#x27;Superficie&#x27;: 7014, &#x27;Estado&#x27;: &#x27;Aragua&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-D&#x27;, &#x27;Poblacion&#x27;: 1819630, &#x27;Capital&#x27;: &#x27;Maracay&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Andina&#x27;, &#x27;Densidad&#x27;: 23.20000023, &#x27;Superficie&#x27;: 35200, &#x27;Estado&#x27;: &#x27;Barinas&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-E&#x27;, &#x27;Poblacion&#x27;: 853949, &#x27;Capital&#x27;: &#x27;Barinas&#x27;, &#x27;año_admision&#x27;: &#x27;1937&#x27;}, {&#x27;Region&#x27;: &#x27;Guayana&#x27;, &#x27;Densidad&#x27;: 7.8700007, &#x27;Superficie&#x27;: 240528, &#x27;Estado&#x27;: &#x27;Bolívar&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-F&#x27;, &#x27;Poblacion&#x27;: 2069064, &#x27;Capital&#x27;: &#x27;Ciudad Bolívar&#x27;, &#x27;año_admision&#x27;: &#x27;1901&#x27;}, {&#x27;Region&#x27;: &#x27;Central&#x27;, &#x27;Densidad&#x27;: 10000713.0, &#x27;Superficie&#x27;: 4650, &#x27;Estado&#x27;: &#x27;Carabobo&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-G&#x27;, &#x27;Poblacion&#x27;: 2342665, &#x27;Capital&#x27;: &#x27;Valencia&#x27;, &#x27;año_admision&#x27;: &#x27;1865&#x27;}, {&#x27;Region&#x27;: &#x27;Central&#x27;, &#x27;Densidad&#x27;: 21.80000021, &#x27;Superficie&#x27;: 14800, &#x27;Estado&#x27;: &#x27;Cojedes&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-H&#x27;, &#x27;Poblacion&#x27;: 367020, &#x27;Capital&#x27;: &#x27;San Carlos&#x27;, &#x27;año_admision&#x27;: &#x27;1864&#x27;}, {&#x27;Region&#x27;: &#x27;Guayana&#x27;, &#x27;Densidad&#x27;: 4.6500004, &#x27;Superficie&#x27;: 40200, &#x27;Estado&#x27;: &#x27;Delta Amacuro&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-Y&#x27;, &#x27;Poblacion&#x27;: 180363, &#x27;Capital&#x27;: &#x27;Tucupita&#x27;, &#x27;año_admision&#x27;: &#x27;1992&#x27;}, {&#x27;Region&#x27;: &#x27;Capital&#x27;, &#x27;Densidad&#x27;: 7246.4000007246, &#x27;Superficie&#x27;: 433, &#x27;Estado&#x27;: &#x27;Distrito Capital&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-A&#x27;, &#x27;Poblacion&#x27;: 4033186, &#x27;Capital&#x27;: &#x27;Caracas&#x27;, &#x27;año_admision&#x27;: &#x27;1999&#x27;}, {&#x27;Region&#x27;: &#x27;Centro-Occidental&#x27;, &#x27;Densidad&#x27;: 36.40000036, &#x27;Superficie&#x27;: 24800, &#x27;Estado&#x27;: &#x27;Falcón&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-I&#x27;, &#x27;Poblacion&#x27;: 1064615, &#x27;Capital&#x27;: &#x27;Coro&#x27;, &#x27;año_admision&#x27;: &#x27;1872&#x27;}, {&#x27;Region&#x27;: &#x27;Llanos&#x27;, &#x27;Densidad&#x27;: 11.50000011, &#x27;Superficie&#x27;: 64986, &#x27;Estado&#x27;: &#x27;Guárico&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-J&#x27;, &#x27;Poblacion&#x27;: 746174, &#x27;Capital&#x27;: &#x27;San Juan de Los Morros&#x27;, &#x27;año_admision&#x27;: &#x27;1864&#x27;}, {&#x27;Region&#x27;: &#x27;Centro-Occidental&#x27;, &#x27;Densidad&#x27;: 89.60000089, &#x27;Superficie&#x27;: 19800, &#x27;Estado&#x27;: &#x27;Lara&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-K&#x27;, &#x27;Poblacion&#x27;: 1892439, &#x27;Capital&#x27;: &#x27;Barquisimeto&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Andina&#x27;, &#x27;Densidad&#x27;: 92.80000092, &#x27;Superficie&#x27;: 11300, &#x27;Estado&#x27;: &#x27;Mérida&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-L&#x27;, &#x27;Poblacion&#x27;: 903955, &#x27;Capital&#x27;: &#x27;Mérida&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Capital&#x27;, &#x27;Densidad&#x27;: 336.500000336, &#x27;Superficie&#x27;: 7950, &#x27;Estado&#x27;: &#x27;Miranda&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-M&#x27;, &#x27;Poblacion&#x27;: 3112851, &#x27;Capital&#x27;: &#x27;Los Teques&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Nor - Oriental&#x27;, &#x27;Densidad&#x27;: 31.30000031, &#x27;Superficie&#x27;: 28900, &#x27;Estado&#x27;: &#x27;Monagas&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-N&#x27;, &#x27;Poblacion&#x27;: 938185, &#x27;Capital&#x27;: &#x27;Maturín&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Insular&#x27;, &#x27;Densidad&#x27;: 10000480.0, &#x27;Superficie&#x27;: 1150, &#x27;Estado&#x27;: &#x27;Nueva Esparta&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-O&#x27;, &#x27;Poblacion&#x27;: 525139, &#x27;Capital&#x27;: &#x27;La Asunción&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Centro-Occidental&#x27;, &#x27;Densidad&#x27;: 57.70000057, &#x27;Superficie&#x27;: 15200, &#x27;Estado&#x27;: &#x27;Portuguesa&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-P&#x27;, &#x27;Poblacion&#x27;: 897104, &#x27;Capital&#x27;: &#x27;Guanare&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Nor - Oriental&#x27;, &#x27;Densidad&#x27;: 76.0, &#x27;Superficie&#x27;: 11800, &#x27;Estado&#x27;: &#x27;Sucre&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-R&#x27;, &#x27;Poblacion&#x27;: 892990, &#x27;Capital&#x27;: &#x27;Cumaná&#x27;, &#x27;año_admision&#x27;: &#x27;1909&#x27;}, {&#x27;Region&#x27;: &#x27;Andina&#x27;, &#x27;Densidad&#x27;: 105.300000105, &#x27;Superficie&#x27;: 11100, &#x27;Estado&#x27;: &#x27;Táchira&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-S&#x27;, &#x27;Poblacion&#x27;: 1277241, &#x27;Capital&#x27;: &#x27;San Cristóbal&#x27;, &#x27;año_admision&#x27;: &#x27;1899&#x27;}, {&#x27;Region&#x27;: &#x27;Andina&#x27;, &#x27;Densidad&#x27;: 92.80000092, &#x27;Superficie&#x27;: 7400, &#x27;Estado&#x27;: &#x27;Trujillo&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-T&#x27;, &#x27;Poblacion&#x27;: 901239, &#x27;Capital&#x27;: &#x27;Trujillo&#x27;, &#x27;año_admision&#x27;: &#x27;1864&#x27;}, {&#x27;Region&#x27;: &#x27;Capital&#x27;, &#x27;Densidad&#x27;: 235.800000235, &#x27;Superficie&#x27;: 1497, &#x27;Estado&#x27;: &#x27;Vargas&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-X&#x27;, &#x27;Poblacion&#x27;: 419928, &#x27;Capital&#x27;: &#x27;La Guaira&#x27;, &#x27;año_admision&#x27;: &#x27;1998&#x27;}, {&#x27;Region&#x27;: &#x27;Centro-Occidental&#x27;, &#x27;Densidad&#x27;: 84.60000084, &#x27;Superficie&#x27;: 7100, &#x27;Estado&#x27;: &#x27;Yaracuy&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-U&#x27;, &#x27;Poblacion&#x27;: 645688, &#x27;Capital&#x27;: &#x27;San Felipe&#x27;, &#x27;año_admision&#x27;: &#x27;1899&#x27;}, {&#x27;Region&#x27;: &#x27;Zuliana&#x27;, &#x27;Densidad&#x27;: 73.70000073, &#x27;Superficie&#x27;: 63100, &#x27;Estado&#x27;: &#x27;Zulia&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-V&#x27;, &#x27;Poblacion&#x27;: 4694856, &#x27;Capital&#x27;: &#x27;Maracaibo&#x27;, &#x27;año_admision&#x27;: &#x27;1864&#x27;}, {&#x27;Region&#x27;: &#x27;Insular&#x27;, &#x27;Densidad&#x27;: 18.0, &#x27;Superficie&#x27;: 120, &#x27;Estado&#x27;: &#x27;Dependencias Federales&#x27;, &#x27;codigo_iso&#x27;: &#x27;VE-W&#x27;, &#x27;Poblacion&#x27;: 2155, &#x27;Capital&#x27;: &#x27;Gran Roque&#x27;, &#x27;año_admision&#x27;: &#x27;1938&#x27;}]
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [6]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Luego se crea un dataframe de la lista de diccionarios
+df = pd.DataFrame(lista)
+df
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[6]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">Capital</th><th style="text-align:center">Densidad</th><th style="text-align:left">Estado</th><th style="text-align:center">Poblacion</th><th style="text-align:center">Region</th><th style="text-align:left">Superficie</th><th style="text-align:center">año_admision</th><th style="text-align:center">codigo_iso</th></tr></thead><tbody><tr><td style="text-align:left">0</td><td style="text-align:center">Puerto Ayacucho</td><td style="text-align:center">9.900000e-01</td><td style="text-align:left">Amazonas</td><td style="text-align:center">161844</td><td style="text-align:center">Guayana</td><td style="text-align:left">177617</td><td style="text-align:center">1992</td><td style="text-align:center">VE-Z</td></tr><tr><td style="text-align:left">1</td><td style="text-align:center">Barcelona</td><td style="text-align:center">3.390000e+01</td><td style="text-align:left">Anzoátegui</td><td style="text-align:center">2179838</td><td style="text-align:center">Nor - Oriental</td><td style="text-align:left">43300</td><td style="text-align:center">1909</td><td style="text-align:center">VE-B</td></tr><tr><td style="text-align:left">2</td><td style="text-align:center">San Fernando de Apure</td><td style="text-align:center">6.000000e+00</td><td style="text-align:left">Apure</td><td style="text-align:center">501404</td><td style="text-align:center">Llanos</td><td style="text-align:left">76500</td><td style="text-align:center">1864</td><td style="text-align:center">VE-C</td></tr><tr><td style="text-align:left">3</td><td style="text-align:center">Maracay</td><td style="text-align:center">2.356000e+02</td><td style="text-align:left">Aragua</td><td style="text-align:center">1819630</td><td style="text-align:center">Central</td><td style="text-align:left">7014</td><td style="text-align:center">1909</td><td style="text-align:center">VE-D</td></tr><tr><td style="text-align:left">4</td><td style="text-align:center">Barinas</td><td style="text-align:center">2.320000e+01</td><td style="text-align:left">Barinas</td><td style="text-align:center">853949</td><td style="text-align:center">Andina</td><td style="text-align:left">35200</td><td style="text-align:center">1937</td><td style="text-align:center">VE-E</td></tr><tr><td style="text-align:left">5</td><td style="text-align:center">Ciudad Bolívar</td><td style="text-align:center">7.870001e+00</td><td style="text-align:left">Bolívar</td><td style="text-align:center">2069064</td><td style="text-align:center">Guayana</td><td style="text-align:left">240528</td><td style="text-align:center">1901</td><td style="text-align:center">VE-F</td></tr><tr><td style="text-align:left">6</td><td style="text-align:center">Valencia</td><td style="text-align:center">1.000071e+07</td><td style="text-align:left">Carabobo</td><td style="text-align:center">2342665</td><td style="text-align:center">Central</td><td style="text-align:left">4650</td><td style="text-align:center">1865</td><td style="text-align:center">VE-G</td></tr><tr><td style="text-align:left">7</td><td style="text-align:center">San Carlos</td><td style="text-align:center">2.180000e+01</td><td style="text-align:left">Cojedes</td><td style="text-align:center">367020</td><td style="text-align:center">Central</td><td style="text-align:left">14800</td><td style="text-align:center">1864</td><td style="text-align:center">VE-H</td></tr><tr><td style="text-align:left">8</td><td style="text-align:center">Tucupita</td><td style="text-align:center">4.650000e+00</td><td style="text-align:left">Delta Amacuro</td><td style="text-align:center">180363</td><td style="text-align:center">Guayana</td><td style="text-align:left">40200</td><td style="text-align:center">1992</td><td style="text-align:center">VE-Y</td></tr><tr><td style="text-align:left">9</td><td style="text-align:center">Caracas</td><td style="text-align:center">7.246400e+03</td><td style="text-align:left">Distrito Capital</td><td style="text-align:center">4033186</td><td style="text-align:center">Capital</td><td style="text-align:left">433</td><td style="text-align:center">1999</td><td style="text-align:center">VE-A</td></tr><tr><td style="text-align:left">10</td><td style="text-align:center">Coro</td><td style="text-align:center">3.640000e+01</td><td style="text-align:left">Falcón</td><td style="text-align:center">1064615</td><td style="text-align:center">Centro-Occidental</td><td style="text-align:left">24800</td><td style="text-align:center">1872</td><td style="text-align:center">VE-I</td></tr><tr><td style="text-align:left">11</td><td style="text-align:center">San Juan de Los Morros</td><td style="text-align:center">1.150000e+01</td><td style="text-align:left">Guárico</td><td style="text-align:center">746174</td><td style="text-align:center">Llanos</td><td style="text-align:left">64986</td><td style="text-align:center">1864</td><td style="text-align:center">VE-J</td></tr><tr><td style="text-align:left">12</td><td style="text-align:center">Barquisimeto</td><td style="text-align:center">8.960000e+01</td><td style="text-align:left">Lara</td><td style="text-align:center">1892439</td><td style="text-align:center">Centro-Occidental</td><td style="text-align:left">19800</td><td style="text-align:center">1909</td><td style="text-align:center">VE-K</td></tr><tr><td style="text-align:left">13</td><td style="text-align:center">Mérida</td><td style="text-align:center">9.280000e+01</td><td style="text-align:left">Mérida</td><td style="text-align:center">903955</td><td style="text-align:center">Andina</td><td style="text-align:left">11300</td><td style="text-align:center">1909</td><td style="text-align:center">VE-L</td></tr><tr><td style="text-align:left">14</td><td style="text-align:center">Los Teques</td><td style="text-align:center">3.365000e+02</td><td style="text-align:left">Miranda</td><td style="text-align:center">3112851</td><td style="text-align:center">Capital</td><td style="text-align:left">7950</td><td style="text-align:center">1909</td><td style="text-align:center">VE-M</td></tr><tr><td style="text-align:left">15</td><td style="text-align:center">Maturín</td><td style="text-align:center">3.130000e+01</td><td style="text-align:left">Monagas</td><td style="text-align:center">938185</td><td style="text-align:center">Nor - Oriental</td><td style="text-align:left">28900</td><td style="text-align:center">1909</td><td style="text-align:center">VE-N</td></tr><tr><td style="text-align:left">16</td><td style="text-align:center">La Asunción</td><td style="text-align:center">1.000048e+07</td><td style="text-align:left">Nueva Esparta</td><td style="text-align:center">525139</td><td style="text-align:center">Insular</td><td style="text-align:left">1150</td><td style="text-align:center">1909</td><td style="text-align:center">VE-O</td></tr><tr><td style="text-align:left">17</td><td style="text-align:center">Guanare</td><td style="text-align:center">5.770000e+01</td><td style="text-align:left">Portuguesa</td><td style="text-align:center">897104</td><td style="text-align:center">Centro-Occidental</td><td style="text-align:left">15200</td><td style="text-align:center">1909</td><td style="text-align:center">VE-P</td></tr><tr><td style="text-align:left">18</td><td style="text-align:center">Cumaná</td><td style="text-align:center">7.600000e+01</td><td style="text-align:left">Sucre</td><td style="text-align:center">892990</td><td style="text-align:center">Nor - Oriental</td><td style="text-align:left">11800</td><td style="text-align:center">1909</td><td style="text-align:center">VE-R</td></tr><tr><td style="text-align:left">19</td><td style="text-align:center">San Cristóbal</td><td style="text-align:center">1.053000e+02</td><td style="text-align:left">Táchira</td><td style="text-align:center">1277241</td><td style="text-align:center">Andina</td><td style="text-align:left">11100</td><td style="text-align:center">1899</td><td style="text-align:center">VE-S</td></tr><tr><td style="text-align:left">20</td><td style="text-align:center">Trujillo</td><td style="text-align:center">9.280000e+01</td><td style="text-align:left">Trujillo</td><td style="text-align:center">901239</td><td style="text-align:center">Andina</td><td style="text-align:left">7400</td><td style="text-align:center">1864</td><td style="text-align:center">VE-T</td></tr><tr><td style="text-align:left">21</td><td style="text-align:center">La Guaira</td><td style="text-align:center">2.358000e+02</td><td style="text-align:left">Vargas</td><td style="text-align:center">419928</td><td style="text-align:center">Capital</td><td style="text-align:left">1497</td><td style="text-align:center">1998</td><td style="text-align:center">VE-X</td></tr><tr><td style="text-align:left">22</td><td style="text-align:center">San Felipe</td><td style="text-align:center">8.460000e+01</td><td style="text-align:left">Yaracuy</td><td style="text-align:center">645688</td><td style="text-align:center">Centro-Occidental</td><td style="text-align:left">7100</td><td style="text-align:center">1899</td><td style="text-align:center">VE-U</td></tr><tr><td style="text-align:left">23</td><td style="text-align:center">Maracaibo</td><td style="text-align:center">7.370000e+01</td><td style="text-align:left">Zulia</td><td style="text-align:center">4694856</td><td style="text-align:center">Zuliana</td><td style="text-align:left">63100</td><td style="text-align:center">1864</td><td style="text-align:center">VE-V</td></tr><tr><td style="text-align:left">24</td><td style="text-align:center">Gran Roque</td><td style="text-align:center">1.800000e+01</td><td style="text-align:left">D. Federales</td><td style="text-align:center">2155</td><td style="text-align:center">Insular</td><td style="text-align:left">120</td><td style="text-align:center">1938</td><td style="text-align:center">VE-W</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [7]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Si se quiere la información de Carabobo
+mascara = df[&quot;Estado&quot;] == &quot;Carabobo&quot;
+df[mascara]
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[7]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">Capital</th><th style="text-align:center">Densidad</th><th style="text-align:left">Estado</th><th style="text-align:center">Poblacion</th><th style="text-align:center">Region</th><th style="text-align:left">Superficie</th><th style="text-align:center">año_admision</th><th style="text-align:center">codigo_iso</th></tr></thead><tbody><tr><td style="text-align:left">6</td><td style="text-align:center">Valencia</td><td style="text-align:center">1.000071e+07</td><td style="text-align:left">Carabobo</td><td style="text-align:center">2342665</td><td style="text-align:center">Central</td><td style="text-align:left">4650</td><td style="text-align:center">1865</td><td style="text-align:center">VE-G</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [8]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Otra forma de traer la información de Carabobo
+df.iloc[6]
+Out[8]:
+Capital            Valencia
+Densidad        1.00007e+07
+Estado             Carabobo
+Poblacion           2342665
+Region              Central
+Superficie             4650
+año_admision           1865
+codigo_iso             VE-G
+Name: 6, dtype: object
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [9]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Para obtener la capital del estado
+df.iloc[6][&quot;Capital&quot;]
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[9]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">&#x27;Valencia&#x27;
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [ ]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"></code></pre></pre>
+<p class="rt-Text css-56tzch">El proceso de eliminar la basura dentro del texto de algunos campos no se muestra, pero se usa en la construcción del diccionario.</p>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h2 level="2" class="rt-Heading rt-r-size-5 css-jzlc08"></h2>
+<p class="rt-Text css-56tzch">¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
+<p class="rt-Text css-56tzch">O Escaneando el código QR desde la billetera:</p>
+<img src="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png" alt="17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV"/></div></article></div></main></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="rt-Box css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><p class="rt-Text css-vq6poo">Built with Reflex</p></div></a></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"unstable_subResourceIntegrity":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-51368191.js";
+import * as route0 from "/assets/root-zD6cxJWt.js";
+import * as route1 from "/assets/_blog_._webscrapingextracciondedatosdewikipediaconpandas_._index-BCY82C2E.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[webscrapingextracciondedatosdewikipediaconpandas]._index":route1};
+
+import("/assets/entry.client-Dv70GDZP.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

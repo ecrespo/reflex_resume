@@ -1,0 +1,414 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-1.png"/><link rel="preload" as="image" href="/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-3.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | Visualizando estadisticas de pokemon usando plotly ( gráfica de radar)</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-51368191.js"/><link rel="modulepreload" href="/assets/entry.client-Dv70GDZP.js"/><link rel="modulepreload" href="/assets/react-dom-DX0clM9j.js"/><link rel="modulepreload" href="/assets/chunk-WWGJGFF6-D2pN2XHm.js"/><link rel="modulepreload" href="/assets/react-DtDMbhE7.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-BDpGGt_t.js"/><link rel="modulepreload" href="/assets/root-zD6cxJWt.js"/><link rel="modulepreload" href="/assets/preload-helper-ogMfbiXo.js"/><link rel="modulepreload" href="/assets/reflex-env-BNCxk_2_.js"/><link rel="modulepreload" href="/assets/one-dark-v9h4L60p.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-BYkyYPI_.js"/><link rel="modulepreload" href="/assets/esm-DZDdZhc0.js"/><link rel="modulepreload" href="/assets/character-entities-legacy-iZb7EYKq.js"/><link rel="modulepreload" href="/assets/index.dom-CMcpImPJ.js"/><link rel="modulepreload" href="/assets/prop-types-4LQ6TUfN.js"/><link rel="modulepreload" href="/assets/_blog_._visualizandoestadisticasdepokemonusandoplotlygraficaderadar_._index-D8ygTpdL.js"/><link rel="modulepreload" href="/assets/stateful_components-CKKPf-BG.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .prose {
+                max-width: none;
+            }
+            .prose h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a202c;
+            }
+            .prose h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #2d3748;
+            }
+            .prose h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #4a5568;
+            }
+            .prose p {
+                margin-bottom: 1rem;
+                line-height: 1.75;
+                color: #4a5568;
+            }
+            .prose code {
+                background-color: #f7fafc;
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            .prose pre {
+                background-color: #2d3748;
+                color: #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            .prose pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+            }
+            .prose ul, .prose ol {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+            }
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+            .prose a {
+                color: #4a9bba;
+                text-decoration: underline;
+            }
+            .prose a:hover {
+                color: #3a8baa;
+            }
+            .prose img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+            .prose blockquote {
+                border-left: 4px solid #4a9bba;
+                padding-left: 1rem;
+                margin: 1rem 0;
+                color: #718096;
+                font-style: italic;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CjirM0bN.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/one-dark-DWfq818h.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen font-[&#x27;Inter&#x27;] bg-[#f5f5dc]"><aside class="md:hidden w-80 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10 z-50 transition-transform duration-300 ease-in-out transform -translate-x-full"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><aside class="hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"><nav class="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><button class="md:hidden p-2 hover:bg-white/10 rounded"><div class="flex flex-col"><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white"></span></div></button><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/" data-discover="true">HOME</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog" data-discover="true">BLOG</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/archives" data-discover="true">ARCHIVES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/categories" data-discover="true">CATEGORIES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/tags" data-discover="true">TAGS</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/feed.xml" data-discover="true">ATOM</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts" href="/blog" data-discover="true"><span class="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6">← Volver al Blog</span></a><header class="mb-8 pb-6 border-b border-gray-200"><h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Visualizando estadisticas de pokemon usando plotly ( gráfica de radar)</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-gray-500">December 01, 2018</span><span class="text-gray-400 mx-2"> • </span><span class="text-[#4a9bba] font-medium">Tutorial Python</span><span class="text-gray-400 mx-2"> • </span><span class="text-gray-600">Por </span><span class="text-gray-800 font-medium">Unknown</span></div></header><article class="post-content"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Luego de un tiempo sin escribir, retomo los artículos sobre Ciencia de Datos, ahora con visualización de datos. Para ello se usará la estadística de un repositorio de datos sobre los pokemon.</p>
+<p class="rt-Text css-56tzch">El gráfico radar es un gráfico que consiste en una secuencia de radios equi-angulares, llamados radios, y cada radio representa una de las variables. La longitud de los datos de un radio es proporcional a la magnitud de la variable para el punto de datos en relación con la longitud máxima de la variable en todos los puntos de datos. Se dibuja una línea que conecta con los valores de los datos para cada radio. Esto le da a la trama una apariencia de estrella (<a data-accent-color="" href="https://en.wikipedia.org/wiki/Radar_chart" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">wikipedia</a>).  Pueden ver un ejemplo en la siguiente figura:</p>
+<img src="/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-1.png" alt=""/>
+<p class="rt-Text css-56tzch">La idea es mostrar múltiples variables sobre la información que se tiene de los pokemons. El repositorio de datos de donde se obtienen los datos para trabajar es el sitio de <a data-accent-color="" href="https://www.kaggle.com/abcsds/pokemon/data" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">kaggle (enlace roto)</a>.</p>
+<p class="rt-Text css-56tzch">La librería de Python que se usará en este artículo para visualizar los datos usando la gráfica radar se llama plotly, en el <a data-accent-color="" href="https://plot.ly/python/" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">siguiente enlace</a> podrán ver una galería de gráficas usando python, ya que dicha librería se puede usar también en el Lenguaje R y en Javascript. Lo bueno de plotly es que maneja más interactividad o dinamismo a las gráficas, no son simples gráficas estáticas.  Plotly se puede usar en línea o desconectado.</p>
+<p class="rt-Text css-56tzch">La idea de hacer este artículo sobre visualizando estadísticas de pokemon usando plotly fue de un <a data-accent-color="" href="https://typewind.github.io/2017/09/29/radar-chart/" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo</a> donde usan la gráfica radar pero con matplotlib.</p>
+<p class="rt-Text css-56tzch">El tutoral básico de como usar la gráfica radar en plotly lo pueden ver en el siguiente enlace.</p>
+<p class="rt-Text css-56tzch">Este artículo se basa en un notebook que se encuentra en <a data-accent-color="" href="https://www.kaggle.com/thebrownviking20/intermediate-visualization-tutorial-using-plotly" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">kaggle (enlace roto)</a>.</p>
+<p class="rt-Text css-56tzch">La información que contiene el repositorio es la siguiente:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><li class="css-jzlc08">#: ID de cada pokemon.</li>
+<li class="css-jzlc08">Name: Nombre de cada pokemon.</li>
+<li class="css-jzlc08">Type 1: Cada pokemon tiene un tipo, esto determina su debilidad/resistencia a ataques.</li>
+<li class="css-jzlc08">Type 2: Algunos pokemon tienen dos tipos.</li>
+<li class="css-jzlc08">Total: Suma de todas las estadísticas.</li>
+<li class="css-jzlc08">HP: Hit point, o health.</li>
+<li class="css-jzlc08">Defense:  Nivel de resistencia a los ataques.</li>
+<li class="css-jzlc08">SP Atk: ataque especial.</li>
+<li class="css-jzlc08">SP Def:  Resistencia contra ataques especiales.</li>
+<li class="css-jzlc08">Speed: Velocidad en el ataque.</li>
+</ul>
+<h3 level="3" class="rt-Heading rt-r-size-4 css-jzlc08">Visualización de estadística de pokemon usando gráfica de radar</h3>
+<p class="rt-Text css-56tzch">####Enlaces de interés</p>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><a data-accent-color="" href="https://typewind.github.io/2017/09/29/radar-chart/" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">https://typewind.github.io/2017/09/29/radar-chart/</a></li>
+<li class="css-jzlc08"><a data-accent-color="" href="https://www.kaggle.com/abcsds/pokemon/data" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">https://www.kaggle.com/abcsds/pokemon/data (enlace roto)</a></li>
+<li class="css-jzlc08"><a data-accent-color="" href="https://plot.ly/python/radar-chart/" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">https://plot.ly/python/radar-chart/</a></li>
+<li class="css-jzlc08"><a data-accent-color="" href="https://www.kaggle.com/thebrownviking20/intermediate-visualization-tutorial-using-plotly" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">https://www.kaggle.com/thebrownviking20/intermediate-visualization-tutorial-using-plotly (enlace roto)</a></li>
+</ul>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Se importan las librerías necesarias</h4>
+<p class="rt-Text css-56tzch">In [1]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">import pandas as pd
+import numpy as np
+import plotly.plotly as py
+import plotly.graph_objs as go
+import plotly
+
+import matplotlib.pyplot as plt
+from plotly import tools
+from plotly.offline import init_notebook_mode, iplot
+init_notebook_mode(connected=True)
+import plotly.figure_factory as ff
+from IPython.display import HTML, Image
+Se lee y convierte el archivo csv de los datos de pokemon en un dataframe
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [2]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">df=pd.read_csv(&quot;./datos/Pokemon.csv&quot;)
+Se muestra las 5 primeras filas de datos
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [3]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">df.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[3]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:center"></th><th style="text-align:center">#</th><th style="text-align:center">Name</th><th style="text-align:left">Type 1</th><th style="text-align:center">Type 2</th><th style="text-align:center">Total</th><th style="text-align:left">HP</th><th style="text-align:center">Attack</th><th style="text-align:center">Defense</th><th style="text-align:center">Sp. Atk</th><th style="text-align:center">Sp. Def</th><th style="text-align:center">Speed</th><th style="text-align:center">Generation</th><th style="text-align:center">Legendary</th></tr></thead><tbody><tr><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">Bulbasaur</td><td style="text-align:left">Grass</td><td style="text-align:center">Poison</td><td style="text-align:center">318</td><td style="text-align:left">45</td><td style="text-align:center">49</td><td style="text-align:center">49</td><td style="text-align:center">65</td><td style="text-align:center">65</td><td style="text-align:center">45</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">Ivysaur</td><td style="text-align:left">Grass</td><td style="text-align:center">Poison</td><td style="text-align:center">405</td><td style="text-align:left">60</td><td style="text-align:center">62</td><td style="text-align:center">63</td><td style="text-align:center">80</td><td style="text-align:center">80</td><td style="text-align:center">60</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr><tr><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">Venusaur</td><td style="text-align:left">Grass</td><td style="text-align:center">Poison</td><td style="text-align:center">525</td><td style="text-align:left">80</td><td style="text-align:center">82</td><td style="text-align:center">83</td><td style="text-align:center">100</td><td style="text-align:center">100</td><td style="text-align:center">80</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr><tr><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">VenusaurMega Venusaur</td><td style="text-align:left">Grass</td><td style="text-align:center">Poison</td><td style="text-align:center">625</td><td style="text-align:left">80</td><td style="text-align:center">100</td><td style="text-align:center">123</td><td style="text-align:center">122</td><td style="text-align:center">120</td><td style="text-align:center">80</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">Charmander</td><td style="text-align:left">Fire</td><td style="text-align:center">NaN</td><td style="text-align:center">309</td><td style="text-align:left">39</td><td style="text-align:center">52</td><td style="text-align:center">43</td><td style="text-align:center">60</td><td style="text-align:center">50</td><td style="text-align:center">65</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr></tbody></table>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Se muestra el tipo de dato de cada columna que maneja el dataframe.</h4>
+<p class="rt-Text css-56tzch">In [4]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">df.info()
+&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;
+RangeIndex: 800 entries, 0 to 799
+Data columns (total 13 columns):
+#             800 non-null int64
+Name          800 non-null object
+Type 1        800 non-null object
+Type 2        414 non-null object
+Total         800 non-null int64
+HP            800 non-null int64
+Attack        800 non-null int64
+Defense       800 non-null int64
+Sp. Atk       800 non-null int64
+Sp. Def       800 non-null int64
+Speed         800 non-null int64
+Generation    800 non-null int64
+Legendary     800 non-null bool
+dtypes: bool(1), int64(9), object(3)
+memory usage: 75.9+ KB
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se visualiza los datos de un sólo pokemon
+In [5]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">#Se busca los datos del pokemon Charizard
+x = df[df[&quot;Name&quot;] == &quot;Charizard&quot;]
+#Se crea la grafica scatterpolar donde se le pasa  las variables que se quiere graficar. HP, Ataque, defensa, SP atk, 
+#Sp def, velocidad y se define los nombres de los ejes.
+data = [go.Scatterpolar(
+  r = [x[&#x27;HP&#x27;].values[0],x[&#x27;Attack&#x27;].values[0],x[&#x27;Defense&#x27;].values[0],x[&#x27;Sp. Atk&#x27;].values[0],x[&#x27;Sp. Def&#x27;].values[0],x[&#x27;Speed&#x27;].values[0],x[&quot;HP&quot;].values[0]],
+  theta = [&#x27;HP&#x27;,&#x27;Attack&#x27;,&#x27;Defense&#x27;,&#x27;Sp. Atk&#x27;,&#x27;Sp. Def&#x27;,&#x27;Speed&#x27;,&#x27;HP&#x27;],
+  fill = &#x27;toself&#x27;
+)]
+
+# se crea el layout, donde se le pasa un diccionario  donde se define los ejes de los radios, que son visibles y
+#su rango en este caso desde 0 a 250, no se muestra legenda, y el título de la gráfica.
+
+layout = go.Layout(
+  polar = dict(
+    radialaxis = dict(
+      visible = True,
+      range = [0, 250]
+    )
+  ),
+  showlegend = False,
+  title = &quot;Stats of {}&quot;.format(x.Name.values[0])
+)
+#Se crea la instancia fig donde se pasa los datos y el layout.
+fig = go.Figure(data=data, layout=layout)
+#Se gràfica la gráfica
+iplot(fig, filename = &quot;Single Pokemon stats&quot;)
+
+![](/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-2.png)
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Comparación de 2 pokemons
+In [6]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"># Se crea una función donde se hace la comparación vía gráfica de la estadística de dos pokemons.
+def compare2pokemon(x,y):
+    #Se  captura los datos de los dos pokemons
+    x = df[df[&quot;Name&quot;] == x]
+    y = df[df[&quot;Name&quot;] == y]
+
+    #Se define lo que se quiere gráficar del primer y segundo pokemon.
+    trace0 = go.Scatterpolar(
+      r = [x[&#x27;HP&#x27;].values[0],x[&#x27;Attack&#x27;].values[0],x[&#x27;Defense&#x27;].values[0],x[&#x27;Sp. Atk&#x27;].values[0],x[&#x27;Sp. Def&#x27;].values[0],x[&#x27;Speed&#x27;].values[0],x[&quot;HP&quot;].values[0]],
+      theta = [&#x27;HP&#x27;,&#x27;Attack&#x27;,&#x27;Defense&#x27;,&#x27;Sp. Atk&#x27;,&#x27;Sp. Def&#x27;,&#x27;Speed&#x27;,&#x27;HP&#x27;],
+      fill = &#x27;toself&#x27;,
+      name = x.Name.values[0]
+    )
+
+    trace1 = go.Scatterpolar(
+      r = [y[&#x27;HP&#x27;].values[0],y[&#x27;Attack&#x27;].values[0],y[&#x27;Defense&#x27;].values[0],y[&#x27;Sp. Atk&#x27;].values[0],y[&#x27;Sp. Def&#x27;].values[0],y[&#x27;Speed&#x27;].values[0],y[&quot;HP&quot;].values[0]],
+      theta = [&#x27;HP&#x27;,&#x27;Attack&#x27;,&#x27;Defense&#x27;,&#x27;Sp. Atk&#x27;,&#x27;Sp. Def&#x27;,&#x27;Speed&#x27;,&#x27;HP&#x27;],
+      fill = &#x27;toself&#x27;,
+      name = y.Name.values[0]
+    )
+
+    #se define data como una lista que contiene los datos de los dos pokemon
+    data = [trace0, trace1]
+
+    #Se define el layout como en la gráfica anterior.
+    layout = go.Layout(
+      polar = dict(
+        radialaxis = dict(
+          visible = True,
+          range = [0, 200]
+        )
+      ),
+      showlegend = True,
+      title = &quot;{} vs {}&quot;.format(x.Name.values[0],y.Name.values[0])
+    )
+    #Se crea la instancia donde se pasa los datos y el layout
+    fig = go.Figure(data=data, layout=layout)
+    #Se crea la grafica.
+    iplot(fig, filename = &quot;Two Pokemon stats&quot;)
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [7]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"># Se compara primeape y muk
+compare2pokemon(&quot;Primeape&quot;, &quot;Muk&quot;)
+</code></pre></pre>
+<img src="/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-3.png" alt=""/>
+<p class="rt-Text css-56tzch">En siguientes artículos se seguirá mostrando ejemplos de usos de la galería de gráficas de plotly.</p>
+<h2 level="2" class="rt-Heading rt-r-size-5 css-jzlc08"></h2>
+<p class="rt-Text css-56tzch">¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
+<p class="rt-Text css-56tzch">O Escaneando el código QR desde la billetera:</p>
+<img src="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png" alt="17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV"/></div></article></div></main></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="rt-Box css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><p class="rt-Text css-vq6poo">Built with Reflex</p></div></a></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"unstable_subResourceIntegrity":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-51368191.js";
+import * as route0 from "/assets/root-zD6cxJWt.js";
+import * as route1 from "/assets/_blog_._visualizandoestadisticasdepokemonusandoplotlygraficaderadar_._index-D8ygTpdL.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[visualizandoestadisticasdepokemonusandoplotlygraficaderadar]._index":route1};
+
+import("/assets/entry.client-Dv70GDZP.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

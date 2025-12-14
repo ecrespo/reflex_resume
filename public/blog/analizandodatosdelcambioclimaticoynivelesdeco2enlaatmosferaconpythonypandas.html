@@ -1,0 +1,1631 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-9.png"/><link rel="preload" as="image" href="/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-10.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | Analizando datos del cambio climático y niveles de CO2 en la atmosfera con Python y pandas.</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-51368191.js"/><link rel="modulepreload" href="/assets/entry.client-Dv70GDZP.js"/><link rel="modulepreload" href="/assets/react-dom-DX0clM9j.js"/><link rel="modulepreload" href="/assets/chunk-WWGJGFF6-D2pN2XHm.js"/><link rel="modulepreload" href="/assets/react-DtDMbhE7.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-BDpGGt_t.js"/><link rel="modulepreload" href="/assets/root-zD6cxJWt.js"/><link rel="modulepreload" href="/assets/preload-helper-ogMfbiXo.js"/><link rel="modulepreload" href="/assets/reflex-env-BNCxk_2_.js"/><link rel="modulepreload" href="/assets/one-dark-v9h4L60p.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-BYkyYPI_.js"/><link rel="modulepreload" href="/assets/esm-DZDdZhc0.js"/><link rel="modulepreload" href="/assets/character-entities-legacy-iZb7EYKq.js"/><link rel="modulepreload" href="/assets/index.dom-CMcpImPJ.js"/><link rel="modulepreload" href="/assets/prop-types-4LQ6TUfN.js"/><link rel="modulepreload" href="/assets/_blog_._analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas_._index-e5DvruqU.js"/><link rel="modulepreload" href="/assets/stateful_components-CKKPf-BG.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || "system";
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            .prose {
+                max-width: none;
+            }
+            .prose h1 {
+                font-size: 2rem;
+                font-weight: 700;
+                margin-top: 2rem;
+                margin-bottom: 1rem;
+                color: #1a202c;
+            }
+            .prose h2 {
+                font-size: 1.5rem;
+                font-weight: 600;
+                margin-top: 1.5rem;
+                margin-bottom: 0.75rem;
+                color: #2d3748;
+            }
+            .prose h3 {
+                font-size: 1.25rem;
+                font-weight: 600;
+                margin-top: 1.25rem;
+                margin-bottom: 0.5rem;
+                color: #4a5568;
+            }
+            .prose p {
+                margin-bottom: 1rem;
+                line-height: 1.75;
+                color: #4a5568;
+            }
+            .prose code {
+                background-color: #f7fafc;
+                padding: 0.125rem 0.25rem;
+                border-radius: 0.25rem;
+                font-size: 0.875rem;
+            }
+            .prose pre {
+                background-color: #2d3748;
+                color: #e2e8f0;
+                padding: 1rem;
+                border-radius: 0.5rem;
+                overflow-x: auto;
+                margin: 1rem 0;
+            }
+            .prose pre code {
+                background-color: transparent;
+                padding: 0;
+                color: inherit;
+            }
+            .prose ul, .prose ol {
+                margin: 1rem 0;
+                padding-left: 1.5rem;
+            }
+            .prose li {
+                margin-bottom: 0.5rem;
+            }
+            .prose a {
+                color: #4a9bba;
+                text-decoration: underline;
+            }
+            .prose a:hover {
+                color: #3a8baa;
+            }
+            .prose img {
+                max-width: 100%;
+                height: auto;
+                border-radius: 0.5rem;
+                margin: 1rem 0;
+            }
+            .prose blockquote {
+                border-left: 4px solid #4a9bba;
+                padding-left: 1rem;
+                margin: 1rem 0;
+                color: #718096;
+                font-style: italic;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CjirM0bN.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/one-dark-DWfq818h.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen font-[&#x27;Inter&#x27;] bg-[#f5f5dc]"><aside class="md:hidden w-80 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10 z-50 transition-transform duration-300 ease-in-out transform -translate-x-full"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><aside class="hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4"><button class="md:hidden absolute top-4 right-4 text-gray-700 hover:text-gray-900 text-2xl font-bold">✕</button><div class="mb-4 text-center"><h1 class="text-2xl font-bold text-gray-900 mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-gray-700 text-sm font-medium tracking-wide">Resume</p></div><img alt="Ernesto Crespo" class="w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30" src="/ec.jpg"/><div class="w-full flex flex-col mb-3"><h2 class="text-base font-bold text-gray-800 mb-2 self-start w-full pl-1">Summary</h2><div class="bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-blue-700 text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a class="block w-full" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></a></div><div class="w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto block w-full css-1macts" href="/blog" data-discover="true"><div class="flex items-center gap-2"><div class="rx-Html">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Blog</p><p class="text-xs text-gray-600 mb-0">Ver artículos</p></div></div></a></div><div class="w-full px-4"><p class="text-sm text-gray-700 font-medium mb-1">Wish to connect?</p><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block css-1macts" href="mailto:ecrespo@gmail.com" target="_blank">📧 ecrespo@gmail.com</a><a download="ErnestoCrespo.pdf" data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm css-1macts" href="/Resume_Ernesto_Crespo_software.pdf" target="_blank" data-discover="true">Download Resume</a></div></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"><nav class="w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><button class="md:hidden p-2 hover:bg-white/10 rounded"><div class="flex flex-col"><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white mb-1.5"></span><span class="block w-6 h-0.5 bg-white"></span></div></button><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/" data-discover="true">HOME</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog" data-discover="true">BLOG</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/archives" data-discover="true">ARCHIVES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/categories" data-discover="true">CATEGORIES</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/blog/tags" data-discover="true">TAGS</a><a class="text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap" href="/feed.xml" data-discover="true">ATOM</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><a data-accent-color="" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts" href="/blog" data-discover="true"><span class="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6">← Volver al Blog</span></a><header class="mb-8 pb-6 border-b border-gray-200"><h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Analizando datos del cambio climático y niveles de CO2 en la atmosfera con Python y pandas.</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-gray-500">October 14, 2018</span><span class="text-gray-400 mx-2"> • </span><span class="text-[#4a9bba] font-medium">Tutorial Python</span><span class="text-gray-400 mx-2"> • </span><span class="text-gray-600">Por </span><span class="text-gray-800 font-medium">Unknown</span></div></header><article class="post-content"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Continuando con los artículos sobre ciencia de datos, esta vez se analizará datos sobre información del clima global y por países, así como los niveles de CO2.</p>
+<p class="rt-Text css-56tzch">Estos datos y proyecto los encontré en el sitio <a data-accent-color="" href="https://www.kaggle.com/" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">kaggle (enlace roto)</a>, este sitio es para publicar proyectos de ciencia de datos. Los datos para este artículo lo encuentran en el siguiente <a data-accent-color="" href="https://www.kaggle.com/derevirn/data-analysis-on-climate-change/data" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">enlace (enlace roto)</a>.</p>
+<p class="rt-Text css-56tzch">El código de este artículo se basa en el artículo que se encuentra en kaggle sobre el tema en inglés <a data-accent-color="" href="https://www.kaggle.com/derevirn/data-analysis-on-climate-change/notebook" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Climate Change and CO2 levels in atmosphere (enlace roto)</a>.</p>
+<p class="rt-Text css-56tzch">En este artículo se explora los cambios globales de la temperatura media y el incremento de la concentración del CO2 en la atmosfera.</p>
+<p class="rt-Text css-56tzch">Los datos se obtienen de los siguientes archivos:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><li class="css-jzlc08">GlobalLandTemperaturesByCountry.csv: Contiene la información de la temperatura por país.</li>
+<li class="css-jzlc08">GlobalTemperatures.csv: Contiene la información global de la temperatura.</li>
+<li class="css-jzlc08">archive.csv: Contiene la información de los niveles de CO2 en la atmosfera.</li>
+</ul>
+<p class="rt-Text css-56tzch">A continuación se muestra el notebook:</p>
+<p class="rt-Text css-56tzch"><a data-accent-color="" href="https://www.kaggle.com/derevirn/data-analysis-on-climate-change/notebook" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">https://www.kaggle.com/derevirn/data-analysis-on-climate-change/notebook (enlace roto)</a>
+<a data-accent-color="" href="https://www.kaggle.com/derevirn/data-analysis-on-climate-change/data" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">https://www.kaggle.com/derevirn/data-analysis-on-climate-change/data (enlace roto)</a></p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Se importan las librerías de pandas, matplotlib y seaborn.</h4>
+<p class="rt-Text css-56tzch">In [1]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">import pandas as pd
+import matplotlib.pyplot as plt
+import seaborn as sns
+</code></pre></pre>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Se crea los dataframes a partir de los archivos csv.</h4>
+<p class="rt-Text css-56tzch">In [2]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"># Se crea el dataframe data_pais, data_vzla, data_global y co2_ppm
+
+data_pais = pd.read_csv(&quot;./datos/GlobalLandTemperaturesByCountry.csv&quot;)
+#Se crea una copia del dataframe obteniendo solo la información de Venezuela.
+data_vzla = data_pais[data_pais[&quot;Country&quot;] == &quot;Venezuela&quot;].copy()
+data_vzla[&quot;dt&quot;] = pd.to_datetime(data_vzla[&quot;dt&quot;])
+
+#Se crea una copia del dataframe obteniendo solo la información de Argentina.
+data_arg = data_pais[data_pais[&quot;Country&quot;] == &quot;Argentina&quot;].copy()
+data_arg[&quot;dt&quot;] = pd.to_datetime(data_arg[&quot;dt&quot;])
+
+#Se crea una copia del dataframe obteniendo solo la información de USA.
+data_canada = data_pais[data_pais[&quot;Country&quot;] == &quot;Canada&quot;].copy()
+data_canada[&quot;dt&quot;] = pd.to_datetime(data_canada[&quot;dt&quot;])
+
+#Se crea una copia del dataframe obteniendo solo la información de Mexico.
+data_mexico = data_pais[data_pais[&quot;Country&quot;] == &quot;Mexico&quot;].copy()
+data_mexico[&quot;dt&quot;] = pd.to_datetime(data_mexico[&quot;dt&quot;])
+
+#Se crea una copia del dataframe obteniendo solo la información de Brasil.
+data_brasil = data_pais[data_pais[&quot;Country&quot;] == &quot;Brazil&quot;].copy()
+data_brasil[&quot;dt&quot;] = pd.to_datetime(data_brasil[&quot;dt&quot;])
+
+#Se crea una copia del dataframe obteniendo solo la información de Venezuela.
+data_chile = data_pais[data_pais[&quot;Country&quot;] == &quot;Chile&quot;].copy()
+data_chile[&quot;dt&quot;] = pd.to_datetime(data_chile[&quot;dt&quot;])
+
+#Se crea el dataframe de la temperatura global. 
+data_global = pd.read_csv(&quot;./datos/GlobalTemperatures.csv&quot;)
+#Se modifica la fecha y hora como datetime.
+data_global[&quot;dt&quot;] = pd.to_datetime(data_global[&quot;dt&quot;])
+#Se crea el dataframe del co2.
+co2_ppm = pd.read_csv(&quot;./datos/archive.csv&quot;)
+</code></pre></pre>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Los dataframes creados.</h4>
+<p class="rt-Text css-56tzch">In [3]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_pais.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[3]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">Average Temperature</th><th style="text-align:center">Average Temperature Uncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">0</td><td style="text-align:center">1743-11-01</td><td style="text-align:center">4.384</td><td style="text-align:center">2.294</td><td style="text-align:left">Åland</td></tr><tr><td style="text-align:left">1</td><td style="text-align:center">1743-12-01</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:left">Åland</td></tr><tr><td style="text-align:left">2</td><td style="text-align:center">1744-01-01</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:left">Åland</td></tr><tr><td style="text-align:left">3</td><td style="text-align:center">1744-02-01</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:left">Åland</td></tr><tr><td style="text-align:left">4</td><td style="text-align:center">1744-03-01</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:left">Åland</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Como se puede observar, se tiene la fecha, la temperatura promedio, la temperatura promedio de incertidumbre y país.
+In [4]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_pais.info()
+&lt;class &#x27;pandas.core.frame.DataFrame&#x27;&gt;
+RangeIndex: 577462 entries, 0 to 577461
+Data columns (total 4 columns):
+dt                               577462 non-null object
+AverageTemperature               544811 non-null float64
+AverageTemperatureUncertainty    545550 non-null float64
+Country                          577462 non-null object
+dtypes: float64(2), object(2)
+memory usage: 17.6+ MB
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Los tipos de datos de las columnas son dt objeto, temperatura promedio y temperatura promedio de incertidumbre son float64 y country como objeto</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Venezuela</h4>
+<p class="rt-Text css-56tzch">In [5]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_vzla.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[5]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">Average Temperature</th><th style="text-align:center">Average Temperature Uncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">562339</td><td style="text-align:center">1824-01-01</td><td style="text-align:center">24.613</td><td style="text-align:center">0.824</td><td style="text-align:left">Venezuela</td></tr><tr><td style="text-align:left">562340</td><td style="text-align:center">1824-02-01</td><td style="text-align:center">24.670</td><td style="text-align:center">2.017</td><td style="text-align:left">Venezuela</td></tr><tr><td style="text-align:left">562341</td><td style="text-align:center">1824-03-01</td><td style="text-align:center">25.527</td><td style="text-align:center">1.065</td><td style="text-align:left">Venezuela</td></tr><tr><td style="text-align:left">562342</td><td style="text-align:center">1824-04-01</td><td style="text-align:center">25.732</td><td style="text-align:center">1.771</td><td style="text-align:left">Venezuela</td></tr><tr><td style="text-align:left">562343</td><td style="text-align:center">1824-05-01</td><td style="text-align:center">24.999</td><td style="text-align:center">1.157</td><td style="text-align:left">Venezuela</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Se tiene la misma información anterior pero sólo de Venezuela.
+In [6]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_vzla.describe().T
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[6]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">2086.0</td><td style="text-align:center">25.025686</td><td style="text-align:center">0.703189</td><td style="text-align:left">22.777</td><td style="text-align:left">24.52325</td><td style="text-align:center">24.9825</td><td style="text-align:center">25.49525</td><td style="text-align:center">27.807</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">2086.0</td><td style="text-align:center">0.586000</td><td style="text-align:center">0.398460</td><td style="text-align:left">0.084</td><td style="text-align:left">0.31000</td><td style="text-align:center">0.4540</td><td style="text-align:center">0.76000</td><td style="text-align:center">4.120</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Se tienen 2086 datos, los cuales la temperatura promedio es 25.025 grados, y la incertidumbre es de 0.586, la desviación de la temperatura promedio es de 0.703, y de la incertidumbre es de 0.398, la mínima temperatura fue de 22.77, la máxima de 27.807.
+In [7]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_vzla.corr()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[7]:</p>
+<p class="rt-Text css-56tzch">|					 			| AverageTemperature | AverageTemperatureUncertainty |
+|:--------------------------- - | :---------------:  | :---------------------------: |
+|AverageTemperature				| 1.000000			 | -0.319882					 |
+|AverageTemperatureUncertainty	| -0.319882			 | 1.000000						 |</p>
+<p class="rt-Text css-56tzch">Las dos variables tienen una correlación contraria en cierta manera.
+Argentina
+In [8]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_arg.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[8]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">Average Temperature</th><th style="text-align:center">Average Temperature Uncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">25466</td><td style="text-align:center">1855-05-01</td><td style="text-align:center">10.745</td><td style="text-align:center">1.499</td><td style="text-align:left">Argentina</td></tr><tr><td style="text-align:left">25467</td><td style="text-align:center">1855-06-01</td><td style="text-align:center">6.995</td><td style="text-align:center">2.073</td><td style="text-align:left">Argentina</td></tr><tr><td style="text-align:left">25468</td><td style="text-align:center">1855-07-01</td><td style="text-align:center">6.901</td><td style="text-align:center">1.568</td><td style="text-align:left">Argentina</td></tr><tr><td style="text-align:left">25469</td><td style="text-align:center">1855-08-01</td><td style="text-align:center">9.097</td><td style="text-align:center">1.412</td><td style="text-align:left">Argentina</td></tr><tr><td style="text-align:left">25470</td><td style="text-align:center">1855-09-01</td><td style="text-align:center">11.316</td><td style="text-align:center">1.384</td><td style="text-align:left">Argentina</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [9]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_arg.describe().T
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[9]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">1900.0</td><td style="text-align:center">14.621194</td><td style="text-align:center">4.846885</td><td style="text-align:left">4.796</td><td style="text-align:left">10.13225</td><td style="text-align:center">14.6305</td><td style="text-align:center">19.27875</td><td style="text-align:center">23.290</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">1900.0</td><td style="text-align:center">0.527338</td><td style="text-align:center">0.465652</td><td style="text-align:left">0.083</td><td style="text-align:left">0.20900</td><td style="text-align:center">0.3035</td><td style="text-align:center">0.74525</td><td style="text-align:center">2.974</td></tr></tbody></table>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Brasil</h4>
+<p class="rt-Text css-56tzch">In [10]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_brasil.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[10]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">Average Temperature</th><th style="text-align:center">Average Temperature Uncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">77110</td><td style="text-align:center">1832-01-01</td><td style="text-align:center">24.935</td><td style="text-align:center">1.372</td><td style="text-align:left">Brazil</td></tr><tr><td style="text-align:left">77111</td><td style="text-align:center">1832-02-01</td><td style="text-align:center">24.505</td><td style="text-align:center">1.953</td><td style="text-align:left">Brazil</td></tr><tr><td style="text-align:left">77112</td><td style="text-align:center">1832-03-01</td><td style="text-align:center">24.617</td><td style="text-align:center">1.359</td><td style="text-align:left">Brazil</td></tr><tr><td style="text-align:left">77113</td><td style="text-align:center">1832-04-01</td><td style="text-align:center">23.990</td><td style="text-align:center">2.013</td><td style="text-align:left">Brazil</td></tr><tr><td style="text-align:left">77114</td><td style="text-align:center">1832-05-01</td><td style="text-align:center">23.124</td><td style="text-align:center">1.592</td><td style="text-align:left">Brazil</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [11]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_brasil.describe().T
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[11]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">2164.0</td><td style="text-align:center">24.699256</td><td style="text-align:center">0.978787</td><td style="text-align:left">21.797</td><td style="text-align:left">24.02250</td><td style="text-align:center">24.8295</td><td style="text-align:center">25.44975</td><td style="text-align:center">27.151</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">2164.0</td><td style="text-align:center">0.572940</td><td style="text-align:center">0.411794</td><td style="text-align:left">0.060</td><td style="text-align:left">0.24375</td><td style="text-align:center">0.4160</td><td style="text-align:center">0.84000</td><td style="text-align:center">3.353</td></tr></tbody></table>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Chile</h4>
+<p class="rt-Text css-56tzch">In [12]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_chile.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[12]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">108248</td><td style="text-align:center">1855-05-01</td><td style="text-align:center">7.152</td><td style="text-align:center">1.296</td><td style="text-align:left">Chile</td></tr><tr><td style="text-align:left">108249</td><td style="text-align:center">1855-06-01</td><td style="text-align:center">4.257</td><td style="text-align:center">1.641</td><td style="text-align:left">Chile</td></tr><tr><td style="text-align:left">108250</td><td style="text-align:center">1855-07-01</td><td style="text-align:center">4.113</td><td style="text-align:center">1.313</td><td style="text-align:left">Chile</td></tr><tr><td style="text-align:left">108251</td><td style="text-align:center">1855-08-01</td><td style="text-align:center">5.508</td><td style="text-align:center">1.168</td><td style="text-align:left">Chile</td></tr><tr><td style="text-align:left">108252</td><td style="text-align:center">1855-09-01</td><td style="text-align:center">6.684</td><td style="text-align:center">1.153</td><td style="text-align:left">Chile</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [13]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_chile.describe().T
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[13]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">1900.0</td><td style="text-align:center">9.383474</td><td style="text-align:center">3.179081</td><td style="text-align:left">3.206</td><td style="text-align:left">6.502</td><td style="text-align:center">9.3815</td><td style="text-align:center">12.37775</td><td style="text-align:center">15.493</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">1900.0</td><td style="text-align:center">0.572654</td><td style="text-align:center">0.418011</td><td style="text-align:left">0.114</td><td style="text-align:left">0.281</td><td style="text-align:center">0.3825</td><td style="text-align:center">0.80300</td><td style="text-align:center">2.408</td></tr></tbody></table>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Mexico</h4>
+<p class="rt-Text css-56tzch">In [14]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_mexico.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[14]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">338438</td><td style="text-align:center">1835-01-01</td><td style="text-align:center">15.810</td><td style="text-align:center">1.484</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338438</td><td style="text-align:center">1835-01-01</td><td style="text-align:center">15.810</td><td style="text-align:center">1.484</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338439</td><td style="text-align:center">1835-02-01</td><td style="text-align:center">14.911</td><td style="text-align:center">1.579</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338440</td><td style="text-align:center">1835-03-01</td><td style="text-align:center">16.826</td><td style="text-align:center">1.858</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338441</td><td style="text-align:center">1835-04-01</td><td style="text-align:center">19.925</td><td style="text-align:center">1.966</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338442</td><td style="text-align:center">1835-05-01</td><td style="text-align:center">22.037</td><td style="text-align:center">1.609</td><td style="text-align:left">Mexico</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [15]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_mexico.describe().T
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[15]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">2145.0</td><td style="text-align:center">20.567558</td><td style="text-align:center">3.753343</td><td style="text-align:left">12.064</td><td style="text-align:left">17.109</td><td style="text-align:center">21.050</td><td style="text-align:center">24.164</td><td style="text-align:center">26.926</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">2145.0</td><td style="text-align:center">0.638233</td><td style="text-align:center">0.547605</td><td style="text-align:left">0.091</td><td style="text-align:left">0.226</td><td style="text-align:center">0.398</td><td style="text-align:center">0.970</td><td style="text-align:center">3.699</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">####Canadá
+In [16]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_canada.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[16]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">97255</td><td style="text-align:center">1768-09-01</td><td style="text-align:center">5.257</td><td style="text-align:center">3.107</td><td style="text-align:left">Canada</td></tr><tr><td style="text-align:left">97256</td><td style="text-align:center">1768-10-01</td><td style="text-align:center">-3.393</td><td style="text-align:center">2.981</td><td style="text-align:left">Canada</td></tr><tr><td style="text-align:left">97257</td><td style="text-align:center">1768-11-01</td><td style="text-align:center">-12.829</td><td style="text-align:center">3.967</td><td style="text-align:left">Canada</td></tr><tr><td style="text-align:left">97258</td><td style="text-align:center">1768-12-01</td><td style="text-align:center">-20.582</td><td style="text-align:center">4.622</td><td style="text-align:left">Canada</td></tr><tr><td style="text-align:left">97259</td><td style="text-align:center">1769-01-01</td><td style="text-align:center">-24.756</td><td style="text-align:center">4.722</td><td style="text-align:left">Canada</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [17]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">data_canada.describe().T
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[17]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">2504.0</td><td style="text-align:center">-5.216659</td><td style="text-align:center">12.878074</td><td style="text-align:left">-28.736</td><td style="text-align:left">-17.7025</td><td style="text-align:center">-4.7285</td><td style="text-align:center">7.41275</td><td style="text-align:center">14.796</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">2504.0</td><td style="text-align:center">1.256211</td><td style="text-align:center">1.046127</td><td style="text-align:left">0.123</td><td style="text-align:left">0.2870</td><td style="text-align:center">0.8980</td><td style="text-align:center">2.12025</td><td style="text-align:center">5.275</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Se nota que las variaciones de la temperatura promedio de incertidumbre es mayor en Brasil, Venezuela, Mexico y Canadá en ese orden, con respecto a Chile y Argentina.</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Incremento anual de la temperatura promedio global</h4>
+<p class="rt-Text css-56tzch">In [18]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_global = data_global.groupby(data_global[&quot;dt&quot;].dt.year).mean()
+reference_temperature_global = annual_mean_global.loc[1951:1980].mean()[&quot;LandAndOceanAverageTemperature&quot;]
+annual_mean_global[&quot;Anomaly&quot;] = annual_mean_global[&quot;LandAndOceanAverageTemperature&quot;] - reference_temperature_global
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [19]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure()
+plt.style.use(&quot;fivethirtyeight&quot;)
+annual_mean_global.loc[1960:2015][&quot;Anomaly&quot;].plot(figsize = (10,5), grid=True, legend=True)
+plt.title(&quot;Anomalia anual de la temperatura promedio global&quot;)
+plt.xlabel(&#x27;&#x27;)
+plt.ylabel(&#x27;Anomalia de la temperatura&#x27;)
+plt.show()
+
+![](/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-1.png)
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se nota que anualmente el incremento de la temperatura tiene una tendencia ascendente que ha aumentado en los últimos años, este incremento en el año 2015 fue de 0.75 grados que es consistente con el cambio climático.</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Venezuela.</h4>
+<p class="rt-Text css-56tzch">Se hace el mismo cálculo para el caso de Venezuela.
+In [20]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_vzla = data_vzla.groupby(data_vzla[&quot;dt&quot;].dt.year).mean()
+reference_temperature_vzla = annual_mean_vzla.loc[1951:1980].mean()[&quot;AverageTemperature&quot;]
+annual_mean_vzla[&quot;Anomaly&quot;] = annual_mean_vzla[&quot;AverageTemperature&quot;] - reference_temperature_vzla
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [21]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_vzla.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[21]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1824</td><td style="text-align:center">24.896545</td><td style="text-align:center">1.516091</td><td style="text-align:center">-0.420966</td></tr><tr><td style="text-align:left">1825</td><td style="text-align:center">25.071583</td><td style="text-align:center">1.552083</td><td style="text-align:center">-0.245928</td></tr><tr><td style="text-align:left">1826</td><td style="text-align:center">24.871900</td><td style="text-align:center">1.440800</td><td style="text-align:center">-0.445611</td></tr><tr><td style="text-align:left">1827</td><td style="text-align:center">25.156273</td><td style="text-align:center">1.474182</td><td style="text-align:center">-0.161238</td></tr><tr><td style="text-align:left">1828</td><td style="text-align:center">24.751818</td><td style="text-align:center">1.516727</td><td style="text-align:center">-0.565693</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [22]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_vzla.tail()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[22]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">26.084917</td><td style="text-align:center">0.353917</td><td style="text-align:center">0.767406</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">26.150250</td><td style="text-align:center">0.341333</td><td style="text-align:center">0.832739</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">25.677333</td><td style="text-align:center">0.336750</td><td style="text-align:center">0.359822</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">25.688583</td><td style="text-align:center">0.401417</td><td style="text-align:center">0.371072</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">25.912875</td><td style="text-align:center">0.484500</td><td style="text-align:center">0.595364</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">El último registro es del año 2013, el cual el incremento fue de 0.595 grados, hubo un pico en el año 2010 de 0.8332 grados.
+In [23]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure()
+plt.style.use(&quot;fivethirtyeight&quot;)
+annual_mean_vzla.loc[1960:2012][&quot;Anomaly&quot;].plot(figsize = (10,5), grid=True, legend=True)
+plt.title(&quot;Variación promedio anual de la temperatura de Venezuela&quot;)
+plt.xlabel(&#x27;&#x27;)
+plt.ylabel(&#x27;Incremento de la temperatura&#x27;)
+plt.show()
+
+![](/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-2.png)
+
+</code></pre></pre>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Argentina</h4>
+<p class="rt-Text css-56tzch">In [24]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_arg = data_arg.groupby(data_arg[&quot;dt&quot;].dt.year).mean()
+reference_temperature_arg = annual_mean_arg.loc[1951:1980].mean()[&quot;AverageTemperature&quot;]
+annual_mean_arg[&quot;Anomaly&quot;] = annual_mean_arg[&quot;AverageTemperature&quot;] - reference_temperature_arg
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [25]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_arg.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[25]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1855</td><td style="text-align:center">11.729250</td><td style="text-align:center">1.711875</td><td style="text-align:center">-3.090742</td></tr><tr><td style="text-align:left">1856</td><td style="text-align:center">13.998750</td><td style="text-align:center">1.553167</td><td style="text-align:center">-0.821242</td></tr><tr><td style="text-align:left">1857</td><td style="text-align:center">14.221083</td><td style="text-align:center">1.993417</td><td style="text-align:center">-0.598908</td></tr><tr><td style="text-align:left">1858</td><td style="text-align:center">14.015667</td><td style="text-align:center">1.770750</td><td style="text-align:center">-0.804325</td></tr><tr><td style="text-align:left">1859</td><td style="text-align:center">14.414583</td><td style="text-align:center">1.635583</td><td style="text-align:center">-0.405408</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [26]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_arg.tail()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[26]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">15.534417</td><td style="text-align:center">0.215750</td><td style="text-align:center">0.714425</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">15.078833</td><td style="text-align:center">0.218917</td><td style="text-align:center">0.258842</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">15.339667</td><td style="text-align:center">0.219833</td><td style="text-align:center">0.519675</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">15.689000</td><td style="text-align:center">0.265750</td><td style="text-align:center">0.869008</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">14.457125</td><td style="text-align:center">0.276500</td><td style="text-align:center">-0.362867</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [27]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure()
+plt.style.use(&quot;fivethirtyeight&quot;)
+annual_mean_arg.loc[1960:2012][&quot;Anomaly&quot;].plot(figsize = (10,5), grid=True, legend=True)
+plt.title(&quot;Variación promedio anual de la temperatura de Argentina&quot;)
+plt.xlabel(&#x27;&#x27;)
+plt.ylabel(&#x27;Incremento de la temperatura&#x27;)
+plt.show()
+
+![](/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-3.png)
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Para el caso de Argentina la pendiente de la tendencia de incremento de la temperatura es menos pronunciada.</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Brasil</h4>
+<p class="rt-Text css-56tzch">In [28]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_brasil = data_brasil.groupby(data_brasil[&quot;dt&quot;].dt.year).mean()
+reference_temperature_brasil = annual_mean_brasil.loc[1951:1980].mean()[&quot;AverageTemperature&quot;]
+annual_mean_brasil[&quot;Anomaly&quot;] = annual_mean_brasil[&quot;AverageTemperature&quot;] - reference_temperature_brasil
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [29]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_brasil.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[29]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1832</td><td style="text-align:center">23.858583</td><td style="text-align:center">1.734500</td><td style="text-align:center">-1.072247</td></tr><tr><td style="text-align:left">1833</td><td style="text-align:center">24.517833</td><td style="text-align:center">1.450083</td><td style="text-align:center">-0.412997</td></tr><tr><td style="text-align:left">1834</td><td style="text-align:center">24.346750</td><td style="text-align:center">1.498083</td><td style="text-align:center">-0.584081</td></tr><tr><td style="text-align:left">1835</td><td style="text-align:center">23.537500</td><td style="text-align:center">1.298583</td><td style="text-align:center">-1.393331</td></tr><tr><td style="text-align:left">1836</td><td style="text-align:center">23.921167</td><td style="text-align:center">1.426083</td><td style="text-align:center">-1.009664</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [30]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_brasil.tail()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[30]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">25.600583</td><td style="text-align:center">0.185667</td><td style="text-align:center">0.669753</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">25.812417</td><td style="text-align:center">0.158000</td><td style="text-align:center">0.881586</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">25.428917</td><td style="text-align:center">0.204833</td><td style="text-align:center">0.498086</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">25.717083</td><td style="text-align:center">0.231000</td><td style="text-align:center">0.786253</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">25.348125</td><td style="text-align:center">0.262250</td><td style="text-align:center">0.417294</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [31]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure()
+plt.style.use(&quot;fivethirtyeight&quot;)
+annual_mean_brasil.loc[1960:2012][&quot;Anomaly&quot;].plot(figsize = (10,5), grid=True, legend=True)
+plt.title(&quot;Variación promedio anual de la temperatura de Brasil&quot;)
+plt.xlabel(&#x27;&#x27;)
+plt.ylabel(&#x27;Incremento de la temperatura&#x27;)
+plt.show()
+
+![](/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-4.png)
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">En el caso de Brasil se nota un fuerte incremento en la decada de los 90s con un pico de más de 1 grado, luego la tendencia se ha estabilizado en 0.79 grados.</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Chile</h4>
+<p class="rt-Text css-56tzch">In [32]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_chile = data_chile.groupby(data_chile[&quot;dt&quot;].dt.year).mean()
+reference_temperature_chile = annual_mean_chile.loc[1951:1980].mean()[&quot;AverageTemperature&quot;]
+annual_mean_chile[&quot;Anomaly&quot;] = annual_mean_chile[&quot;AverageTemperature&quot;] - reference_temperature_chile
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [33]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_chile.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[33]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1855</td><td style="text-align:center">7.070125</td><td style="text-align:center">1.424125</td><td style="text-align:center">-2.510742</td></tr><tr><td style="text-align:left">1856</td><td style="text-align:center">8.664083</td><td style="text-align:center">1.319250</td><td style="text-align:center">-0.916783</td></tr><tr><td style="text-align:left">1857</td><td style="text-align:center">8.645917</td><td style="text-align:center">1.439250</td><td style="text-align:center">-0.934950</td></tr><tr><td style="text-align:left">1858</td><td style="text-align:center">8.810250</td><td style="text-align:center">1.428333</td><td style="text-align:center">-0.770617</td></tr><tr><td style="text-align:left">1859</td><td style="text-align:center">9.245583</td><td style="text-align:center">1.376917</td><td style="text-align:center">-0.335283</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [34]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_chile.tail()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[34]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">9.994417</td><td style="text-align:center">0.281917</td><td style="text-align:center">0.413550</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">9.712833</td><td style="text-align:center">0.340000</td><td style="text-align:center">0.131967</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">10.032250</td><td style="text-align:center">0.322250</td><td style="text-align:center">0.451383</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">10.272583</td><td style="text-align:center">0.384583</td><td style="text-align:center">0.691717</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">9.877375</td><td style="text-align:center">0.393875</td><td style="text-align:center">0.296508</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [35]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure()
+plt.style.use(&quot;fivethirtyeight&quot;)
+annual_mean_chile.loc[1960:2012][&quot;Anomaly&quot;].plot(figsize = (10,5), grid=True, legend=True)
+plt.title(&quot;Variación promedio anual de la temperatura de Chile&quot;)
+plt.xlabel(&#x27;&#x27;)
+plt.ylabel(&#x27;Incremento de la temperatura&#x27;)
+plt.show()
+
+![](/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-5.png)
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">La variación no supera el 0.8 grados de temperatura, con un aumento fuerte entre los 70s y 80s y luego un pico en los 90s.</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Mexico</h4>
+<p class="rt-Text css-56tzch">In [36]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_mexico = data_mexico.groupby(data_mexico[&quot;dt&quot;].dt.year).mean()
+reference_temperature_mexico = annual_mean_mexico.loc[1951:1980].mean()[&quot;AverageTemperature&quot;]
+annual_mean_mexico[&quot;Anomaly&quot;] = annual_mean_mexico[&quot;AverageTemperature&quot;] - reference_temperature_mexico
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [37]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-text" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_mexico.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[37]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1835</td><td style="text-align:center">18.993250</td><td style="text-align:center">1.684083</td><td style="text-align:center">-1.745911</td></tr><tr><td style="text-align:left">1836</td><td style="text-align:center">19.587167</td><td style="text-align:center">1.695333</td><td style="text-align:center">-1.151994</td></tr><tr><td style="text-align:left">1837</td><td style="text-align:center">19.671083</td><td style="text-align:center">1.647667</td><td style="text-align:center">-1.068078</td></tr><tr><td style="text-align:left">1838</td><td style="text-align:center">19.337000</td><td style="text-align:center">1.862417</td><td style="text-align:center">-1.402161</td></tr><tr><td style="text-align:left">1839</td><td style="text-align:center">19.785833</td><td style="text-align:center">1.603000</td><td style="text-align:center">-0.953328</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [38]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_mexico.tail()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[38]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">21.546083</td><td style="text-align:center">0.205917</td><td style="text-align:center">0.806922</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">20.852917</td><td style="text-align:center">0.217750</td><td style="text-align:center">0.113756</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">21.599333</td><td style="text-align:center">0.245333</td><td style="text-align:center">0.860172</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">21.652417</td><td style="text-align:center">0.324500</td><td style="text-align:center">0.913256</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">22.219222</td><td style="text-align:center">0.365111</td><td style="text-align:center">1.480061</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [39]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure()
+plt.style.use(&quot;fivethirtyeight&quot;)
+annual_mean_mexico.loc[1960:2012][&quot;Anomaly&quot;].plot(figsize = (10,5), grid=True, legend=True)
+plt.title(&quot;Variación promedio anual de la temperatura de Mexico&quot;)
+plt.xlabel(&#x27;&#x27;)
+plt.ylabel(&#x27;Incremento de la temperatura&#x27;)
+plt.show()
+
+
+![](/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-6.png)
+
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se nota la tendencia al alsa de la temperatura en Mexico pasando el año 2013 a estar por 1.48 grados por encima del promedio.</p>
+<p class="rt-Text css-56tzch">####Canadá
+In [40]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_canada = data_canada.groupby(data_canada[&quot;dt&quot;].dt.year).mean()
+reference_temperature_canada = annual_mean_canada.loc[1951:1980].mean()[&quot;AverageTemperature&quot;]
+annual_mean_canada[&quot;Anomaly&quot;] = annual_mean_canada[&quot;AverageTemperature&quot;] - reference_temperature_canada
+</code></pre></pre>
+<p class="rt-Text css-56tzch">In [41]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_canada.head()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[41]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1768</td><td style="text-align:center">-7.886750</td><td style="text-align:center">3.66925</td><td style="text-align:center">-2.969253</td></tr><tr><td style="text-align:left">1769</td><td style="text-align:center">-3.427875</td><td style="text-align:center">3.50550</td><td style="text-align:center">1.489622</td></tr><tr><td style="text-align:left">1770</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td></tr><tr><td style="text-align:left">1771</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td></tr><tr><td style="text-align:left">1772</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [42]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_mean_canada.tail()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[42]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">-4.135083</td><td style="text-align:center">0.231833</td><td style="text-align:center">0.782414</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">-1.887917</td><td style="text-align:center">0.218583</td><td style="text-align:center">3.029581</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">-3.557083</td><td style="text-align:center">0.232583</td><td style="text-align:center">1.360414</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">-3.176833</td><td style="text-align:center">0.300083</td><td style="text-align:center">1.740664</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">-1.640667</td><td style="text-align:center">0.533667</td><td style="text-align:center">3.276831</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [43]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure()
+plt.style.use(&quot;fivethirtyeight&quot;)
+annual_mean_canada.loc[1960:2012][&quot;Anomaly&quot;].plot(figsize = (10,5), grid=True, legend=True)
+plt.title(&quot;Variación promedio anual de la temperatura de Canadá&quot;)
+plt.xlabel(&#x27;&#x27;)
+plt.ylabel(&#x27;Incremento de la temperatura&#x27;)
+plt.show()
+
+![](/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-7.png)
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se nota la tendencia al alsa de la temperatura en Canadá y lo preocupante es que la variación pase los 3 grados de temperatura en el año 2013.</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Niveles anuales de CO2 en la Atmosfera</h4>
+<p class="rt-Text css-56tzch">In [44]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure()
+plt.style.use(&quot;fivethirtyeight&quot;)
+annual_co2_ppm = co2_ppm.groupby(co2_ppm[&quot;Year&quot;]).mean()
+annual_co2_ppm.loc[1960:2015][&quot;Carbon Dioxide (ppm)&quot;].plot(figsize = (10,5), grid=True, legend=True)
+plt.title(&quot;Nivel anual global de CO2 en la Atmosfera&quot;)
+plt.ylabel(&quot;CO2 partes por millón&quot;)
+plt.show()
+
+![](/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-8.png)
+
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Se nota el incremento anual con tendencia al alza.</p>
+<h4 level="4" class="rt-Heading rt-r-size-3 css-jzlc08">Se cálcula la relación del CO2 con la temperatura.</h4>
+<p class="rt-Text css-56tzch">In [45]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">annual_co2_temp = pd.merge(annual_mean_global.loc[1960:2015], annual_co2_ppm.loc[1960:2015], left_index=True, right_index=True)
+annual_co2_temp = annual_co2_temp[[&quot;LandAndOceanAverageTemperature&quot;, &quot;Anomaly&quot;, &quot;Carbon Dioxide (ppm)&quot;]].copy()
+annual_co2_temp.corr()
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[45]:</p>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<table><thead><tr><th style="text-align:left"></th><th style="text-align:center">LandAndOceanAverageTemperature</th><th style="text-align:center">Anomaly</th><th style="text-align:left">Carbon Dioxide (ppm)</th></tr></thead><tbody><tr><td style="text-align:left">LandAndOceanAverageTemperature</td><td style="text-align:center">1.000000</td><td style="text-align:center">1.000000</td><td style="text-align:left">0.923603</td></tr><tr><td style="text-align:left">Anomaly</td><td style="text-align:center">1.000000</td><td style="text-align:center">1.000000</td><td style="text-align:left">0.923603</td></tr><tr><td style="text-align:left">Carbon Dioxide (ppm)</td><td style="text-align:center">0.923603</td><td style="text-align:center">0.923603</td><td style="text-align:left">1.000000</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">In [46]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">sns.heatmap(annual_co2_temp.corr())
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Out[46]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fcacea9cdd8&gt;
+</code></pre></pre>
+<img src="/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-9.png" alt=""/>
+<p class="rt-Text css-56tzch">In [47]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">plt.figure(figsize=(10,8))
+sns.scatterplot(x=&quot;Anomaly&quot;,y=&quot;Carbon Dioxide (ppm)&quot;, data=annual_co2_temp)
+</code></pre></pre>
+<img src="/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-10.png" alt=""/>
+<p class="rt-Text css-56tzch">Out[47]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none">&lt;matplotlib.axes._subplots.AxesSubplot at 0x7fcace8d6c50&gt;
+</code></pre></pre>
+<p class="rt-Text css-56tzch">Con la gráfica de calor y la scatter, se nota la relación practicamente lineal del incremento de la temperatura y del Dioxido de Carbono. Ambas están relacionadas en el Cambio climático.
+In [ ]:</p>
+<pre><pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em"><code class="language-python" style="white-space:pre;background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none"></code></pre></pre>
+<p class="rt-Text css-56tzch">En el sitio donde se almacenan los datos hay más archivos, temperatura por ciudad por ejemplo para ir más a detalle de la situación por ciudad. También pueden seguir buscando info de otros países, en el artículo original se hizo el de Grecia, y acá probé con Argentina, Brasil, Chile, Canadá, México y Venezuela.</p>
+<h2 level="2" class="rt-Heading rt-r-size-5 css-jzlc08"></h2>
+<p class="rt-Text css-56tzch">¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
+<p class="rt-Text css-56tzch">O Escaneando el código QR desde la billetera:</p>
+<img src="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png" alt="17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV"/></div></article></div></main></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="rt-Box css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><p class="rt-Text css-vq6poo">Built with Reflex</p></div></a></div><script>((storageKey2, restoreKey) => {
+    if (!window.history.state || !window.history.state.key) {
+      let key = Math.random().toString(32).slice(2);
+      window.history.replaceState({ key }, "");
+    }
+    try {
+      let positions = JSON.parse(sessionStorage.getItem(storageKey2) || "{}");
+      let storedY = positions[restoreKey || window.history.state.key];
+      if (typeof storedY === "number") {
+        window.scrollTo(0, storedY);
+      }
+    } catch (error) {
+      console.error(error);
+      sessionStorage.removeItem(storageKey2);
+    }
+  })("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_optimizeDeps":true,"unstable_subResourceIntegrity":false,"v8_middleware":false,"v8_splitRouteModules":false,"v8_viteEnvironmentApi":false},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-51368191.js";
+import * as route0 from "/assets/root-zD6cxJWt.js";
+import * as route1 from "/assets/_blog_._analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas_._index-e5DvruqU.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas]._index":route1};
+
+import("/assets/entry.client-Dv70GDZP.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>
