@@ -1,5 +1,5 @@
-ARG PYTHON_VERSION=3.13.9
-ARG UV_VERSION=latest
+ARG PYTHON_VERSION=3.13.15
+ARG UV_VERSION=0.12.13
 
 # UV stage to allow static --from references (no ARG expansion in --from)
 FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
@@ -18,6 +18,9 @@ COPY --from=uv /uv /uvx /bin/
 
 # Set working directory
 WORKDIR /app
+
+# Never install the dev dependency group (lint/security tools) in the image
+ENV UV_NO_DEV=1
 
 # Copy dependency files first for better layer caching
 COPY pyproject.toml uv.lock ./
@@ -39,6 +42,8 @@ FROM python:${PYTHON_VERSION}-slim-trixie
 
 LABEL authors="Ernesto Crespo <ecrespo@gmail.com>"
 LABEL description="Reflex Resume"
+
+ENV UV_NO_DEV=1
 
 # Create non-root user
 RUN useradd -m -u 1000 appuser

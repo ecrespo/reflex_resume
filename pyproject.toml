@@ -1,11 +1,30 @@
 [project]
 name = "reflex-resume"
 version = "0.1.0"
-description = "Add your description here"
+description = "Ernesto Crespo's web site"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "reflex>=0.8.22",
-    "plotly>=5.0.0",
-    "flexdown>=0.2.5",
+    "reflex>=0.9.11",
+    "plotly>=7.0.0",
+    "flexdown>=0.3.0",
 ]
+
+[dependency-groups]
+dev = [
+    "bandit>=1.9.4",
+    "pip-audit>=2.10.1",
+    "ruff>=0.16.7",
+]
+
+[tool.ruff]
+target-version = "py313"
+line-length = 100
+extend-exclude = [".web", "public", "node_modules", "content", "assets"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "UP", "B", "BLE", "SIM"]
+ignore = ["E501"]
+
+[tool.bandit]
+exclude_dirs = [".venv", ".web", "public", "node_modules"]

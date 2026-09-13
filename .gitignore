@@ -4,6 +4,7 @@
 *.db
 assets/external/
 .web/
+reflex.lock/
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]

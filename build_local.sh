@@ -1,18 +1,16 @@
 #!/bin/bash
+set -e
 
-source .venv/bin/activate
-pip install --upgrade pip 
-pip install -r requirements.txt
-reflex init 
+uv sync --frozen
+uv run reflex init
 if [ -f "frontend.zip" ]; then
     rm frontend.zip
 fi
 if [ -d "public" ]; then
     rm -rf public
 fi
-reflex export --frontend-only
+uv run reflex export --frontend-only
 unzip frontend.zip -d public
 if [ -f "frontend.zip" ]; then
     rm frontend.zip
-fi 
-deactivate
+fi

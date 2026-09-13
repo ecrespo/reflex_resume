@@ -1,9 +1,8 @@
 #!/bin/bash
-python3 -m venv .venv
-source .venv/bin/activate
-pip install --upgrade pip 
-pip install -r requirements.txt
-reflex init 
+set -e
+
+uv sync --frozen
+uv run reflex init
 
 if [ -f "frontend.zip" ]; then
     rm frontend.zip
@@ -13,12 +12,10 @@ if [ -d "public" ]; then
     rm -rf public
 fi
 
-API_URL=https://api.seraph.to reflex export --frontend-only
+API_URL=https://api.seraph.to uv run reflex export --frontend-only
 
 unzip frontend.zip -d public
 
 if [ -f "frontend.zip" ]; then
     rm frontend.zip
 fi
-
-deactivate
