@@ -22,8 +22,18 @@ config = rx.Config(
         # light page for visitors whose system theme is dark. Note the plugin
         # config — not the root tailwind.config.js — is what generates
         # .web/tailwind.config.js, so the typography plugin has to be repeated.
+        # `content` keeps Reflex's defaults (app/, utils/) and adds
+        # public/external/, where custom components such as reflex-rosencharts
+        # ship their .tsx sources; without it their Tailwind classes (fills,
+        # strokes, max-w-[18rem]) are never generated and the radars render as
+        # huge black shapes.
         rx.plugins.TailwindV4Plugin(
             config={
+                "content": [
+                    "./app/**/*.{js,ts,jsx,tsx}",
+                    "./utils/**/*.{js,ts,jsx,tsx}",
+                    "./public/external/**/*.{js,ts,jsx,tsx}",
+                ],
                 "darkMode": "class",
                 "plugins": ["@tailwindcss/typography@0.5.20"],
             }
