@@ -9,6 +9,7 @@ dependencies = [
     "flexdown>=0.3.0",
     "reflex-knightlab-timeline>=0.1.2",
     "reflex-rosencharts>=0.2.1",
+    "reflex-react-github-calendar>=0.1.0",
 ]
 
 [dependency-groups]
