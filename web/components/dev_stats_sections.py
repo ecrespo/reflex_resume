@@ -41,6 +41,7 @@ from ..dev_stats_data import (
     PORTFOLIO_SPLIT,
     PORTFOLIO_TOTAL,
     REPO_LIFECYCLE,
+    REPO_LIFECYCLE_EXCLUDED,
     SUBJECT_LENGTH_AFTER,
     SUBJECT_LENGTH_BEFORE,
     TOPICS_BUILT,
@@ -449,9 +450,11 @@ def repo_lifecycle_section() -> rx.Component:
         table_headers=["Repository", "Lifespan (days)", "Commits"],
         table_rows=[[row["company"], row["revenue"], row["value"]] for row in REPO_LIFECYCLE],
         footnote=(
-            "ecrespo.github.io sits alone in the top right: 1,451 commits over 2,609 days, "
-            "most of them the blog's automated static generation rather than hand-written "
-            "work. It stretches both axes, which is why the rest of the field clusters."
+            f"Not plotted: {REPO_LIFECYCLE_EXCLUDED['company']}, with "
+            f"{REPO_LIFECYCLE_EXCLUDED['value']:,} commits over "
+            f"{REPO_LIFECYCLE_EXCLUDED['revenue']:,} days, most of them the blog's automated "
+            "static generation rather than hand-written work. On the same axes it would "
+            "squash every other repository into one corner."
         ),
         min_height="min-h-[20rem]",
         scrollable=True,

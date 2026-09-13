@@ -273,6 +273,10 @@ DELIVERY_FUNNEL = [
 #     The component builds its x domain from `data[0]` and `data[-1]` rather than
 #     from the min/max, so the rows MUST stay sorted ascending by `revenue`;
 #     any other order yields negative hover-band widths and a broken axis.
+#
+#     ecrespo.github.io is kept out of the plotted series: with 1,451 commits over
+#     2,609 days it stretches both linear axes and squashes the other repositories
+#     into one corner. The section footnote reports it from REPO_LIFECYCLE_EXCLUDED.
 # --------------------------------------------------------------------------- #
 
 REPO_LIFECYCLE = [
@@ -289,8 +293,9 @@ REPO_LIFECYCLE = [
     {"company": "python-autoaccesibilidad", "revenue": 403, "value": 49},
     {"company": "tutorial_fastAPI", "revenue": 1409, "value": 45},
     {"company": "pysms-send", "revenue": 2345, "value": 29},
-    {"company": "ecrespo.github.io", "revenue": 2609, "value": 1451},
 ]
+
+REPO_LIFECYCLE_EXCLUDED = {"company": "ecrespo.github.io", "revenue": 2609, "value": 1451}
 
 # --------------------------------------------------------------------------- #
 # 11. Live contributions calendar — reflex-react-github-calendar.
