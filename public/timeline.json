@@ -2,6 +2,1431 @@
     "events": [
         {
             "start_date": {
+                "year": "2026"  ,
+                "month": "01",
+                "day": "11"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1b8ahVw2-eHlPKPNkRNTK8XrhTwH3Mz0I/view?usp=sharing",
+                "credit": "Anthropic Academy"
+            },
+            "text": {
+                "headline": "Claude Code in Action",
+                "text": "Claude Code in Action"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "12",
+                "day": "31"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/16gH8iGhWujaGklsfpqmNp6wdGL1_LQg-/view?usp=sharing",
+                "credit": "Coursera - Packt"
+            },
+            "text": {
+                "headline": "Building Autonomous AI Agents with LangGraph",
+                "text": "Building Autonomous AI Agents with LangGraph"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "12",
+                "day": "09"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1TMA3Z0HJvryxymzGXPYJw2bo8l94YfJZ/view?usp=sharing",
+                "credit": "Coursera - Packt"
+            },
+            "text": {
+                "headline": "LangChain MasterClass: Build 15 LLM Apps with Python",
+                "text": "LangChain MasterClass: Build 15 LLM Apps with Python"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "12",
+                "day": "24"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1OK7Gb020IxfWHALkzxeA7KI166Lk_7-b/view?usp=sharing",
+                "credit": "Coursera - Packt"
+            },
+            "text": {
+                "headline": "The Complete LangChain & LLMs Guide",
+                "text": "The Complete LangChain & LLMs Guide"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "10",
+                "day": "23"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1m4zmneabqtQ07ckoxoZbhn8ZXdAvZ3Z0/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "AI-Assisted Coding for Developers",
+                "text": "AI-Assisted Coding for Developers"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "10",
+                "day": "09"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1ZoTklJQrd9RKgFeNUU403l6hEFJ31v3m/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Agentic AI with LangGraph, CrewAI, AutoGen and BeeAI",
+                "text": "Agentic AI with LangGraph, CrewAI, AutoGen and BeeAI"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "10",
+                "day": "09"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1hq5RsNORBInbwXErc8mns3q9hdX4kJJI/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "IBM RAG and Agentic AI",
+                "text": "IBM RAG and Agentic AI"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "08",
+                "day": "08"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1-v9w1ceX4rU1iO6xMQMVQQGrSBGO1bWu/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Advanced RAG with Vector Databases and Retrievers",
+                "text": "Advanced RAG with Vector Databases and Retrievers"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "08",
+                "day": "29"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1d7HUlrsgt6wAt_bAyoKrVoIrExjCIlPq/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Agentic AI with LangChain and LangGraph",
+                "text": "Agentic AI with LangChain and LangGraph"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "08",
+                "day": "16"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1eRwMzrBvZfwn7AJiDF7Qmp6UbdTNhFjf/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Build Multimodal Generative AI Applications",
+                "text": "Build Multimodal Generative AI Applications"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "08",
+                "day": "22"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1iZPlxNtfQVwozM0k6vHzrPEab0-kqTts/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Fundamentals of Building AI Agents",
+                "text": "Fundamentals of Building AI Agents"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "08",
+                "day": "19"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1EpdeICXwth7j1HCJGyz4Ag-VLdv4rYKm/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to AI Agents",
+                "text": "Introduction to AI Agents"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "07",
+                "day": "19"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1CUjd_r0Y_gITZwWZJclpVHvYT0FiYG8X/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Develop Generative AI Applications: Get Started",
+                "text": "Develop Generative AI Applications: Get Started"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "07",
+                "day": "04"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1S8Z5EwpQQjv-MXQRwrfHtOqMvBCXq9sC/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Generative AI: Elevate Your Data Science Career",
+                "text": "Generative AI: Elevate Your Data Science Career"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "07",
+                "day": "24"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1Gf3eo-Ocu0GMBYad_a9iLtD-89UikfHv/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Build RAG Applications: Get Started",
+                "text": "Build RAG Applications: Get Started"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "07",
+                "day": "12"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1zd2vUSYAA6f0hDxeEvOUAN9Ss1722NlY/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Generative AI: Elevate your Software Development Career",
+                "text": "Generative AI: Elevate your Software Development Career"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "07",
+                "day": "09"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1DWNMlQs2b7MB_xg505XxuJHSli-2q7Hu/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Python for Finance",
+                "text": "Introduction to Python for Finance"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "08",
+                "day": "01"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1bhxbyfe_oXwF5MbxZGDYhM3IkYLJAmL5/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Vector Databases for RAG: An Introduction",
+                "text": "Vector Databases for RAG: An Introduction"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "06",
+                "day": "10"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/11BeRJDfpVtxBw-amRDcpb51JQ15f6LC2/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Generative AI for Data Analysts",
+                "text": "Generative AI for Data Analysts"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "05",
+                "day": "06"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1n2rMIItyNrHof7Eo9cM1kmRSQMJXQd05/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Generative AI: Prompt Engineering Basics",
+                "text": "Generative AI: Prompt Engineering Basics"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "05",
+                "day": "30"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1Eadfqyq4-iLQRku_87dceWqlLWgt10Qd/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Math for Finance Professionals",
+                "text": "Math for Finance Professionals"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "04",
+                "day": "04"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1KsA2A2MlQV7QUme6004qP5pm_5XbF3tv/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "AI Fundamentals",
+                "text": "AI Fundamentals"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "04",
+                "day": "06"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1DS4JWj6jt4AaESB4FAiVgfb9qacPGqJH/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Designing Agentic Systems with LangChain",
+                "text": "Designing Agentic Systems with LangChain"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "04",
+                "day": "06"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1l7hNmK7mfBfWaKxP-pC2SF1Mcd-mzXSV/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Developing Applications with LangChain",
+                "text": "Developing Applications with LangChain"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "04",
+                "day": "04"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1eNcqj1l4ah4nERUHktgm6PcGo8Tg5YSk/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Generative AI Concepts",
+                "text": "Generative AI Concepts"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "04",
+                "day": "29"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1CmeN2ITUUw0gHZ1M3RklXfHILi_uhXXp/view?usp=sharing",
+                "credit": "Coursera - IBM"
+            },
+            "text": {
+                "headline": "Generative AI: Introduction and Applications",
+                "text": "Generative AI: Introduction and Applications"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "04",
+                "day": "05"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1Ha9-jhOnZADrzZ5jdfxfJsmaeGl2nqhv/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Retrieval Augmented Generation (RAG) with LangChain",
+                "text": "Retrieval Augmented Generation (RAG) with LangChain"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "03",
+                "day": "18"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1NG3C2VXbFvBRFCiKN-Pi3J3uPa3lz1pZ/view?usp=sharing",
+                "credit": "Hugging Face Agents Course"
+            },
+            "text": {
+                "headline": "Fundamentals of Agents",
+                "text": "Fundamentals of Agents"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "02",
+                "day": "14"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1auMeVdGHrzTILP3DuBFs1BWx0wAYFBWY/view?usp=sharing",
+                "credit": "Coursera - Duke University"
+            },
+            "text": {
+                "headline": "Python Essentials for MLOps",
+                "text": "Python Essentials for MLOps"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "01",
+                "day": "28"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1HxgM2lxranP7GJycGvl0kki-TnT5_dP1/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Fine-Tuning with Llama 3",
+                "text": "Fine-Tuning with Llama 3"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2025",
+                "month": "01",
+                "day": "28"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1BvqB77gYiN9_hYhIG8hweLLrE2OrtbCC/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Llama Fundamentals",
+                "text": "Llama Fundamentals"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "21"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/15G3jF6-MTyzmlhfZYAeurd3upH-iKBlI/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Associate AI Engineer for Data Scientists",
+                "text": "Associate AI Engineer for Data Scientists"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "23"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1l-22PdJ6P1_XkCSjirOO0H9DXNa8HMX5/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Containerization and Virtualization Concepts",
+                "text": "Containerization and Virtualization Concepts"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "30"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1uza3U4puMMpwTZ5v_nNZlqW7JmAKaETh/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Manipulation in KNIME",
+                "text": "Data Manipulation in KNIME"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "29"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1u5HMn7me2TtwUuxZJFODjMeb_COO8Ugy/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Transformation in KNIME",
+                "text": "Data Transformation in KNIME"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "31"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/14fo2xmcG7cNt6zGzzlWcsVyJbZmZawu9/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Visualization in KNIME",
+                "text": "Data Visualization in KNIME"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "21"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/15UsMHJP0H577zs3WSJe3C31q79LmQa4H/view?usp=sharing",
+                "credit": "DeepLearning.AI"
+            },
+            "text": {
+                "headline": "Generative AI with Large Language Models",
+                "text": "Generative AI with Large Language Models"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "25"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1kEiWTBrP-gKe3aQWzwOu-CFpmkLhTZ5H/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to KNIME",
+                "text": "Introduction to KNIME"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "21"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/186jms2T0aN0zSxJbVEbeEmid1pNGFwBD/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Testing in Python",
+                "text": "Introduction to Testing in Python"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "12",
+                "day": "31"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1DUIaH7QZ4DocTt4rF7SdyqHtwono-ogy/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "KNIME Fundamentals",
+                "text": "KNIME Fundamentals"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "09",
+                "day": "19"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1iadwtXmuYcpCsbE78NEjggQjgP5Y8PaP/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Associate AI Engineer for Developers",
+                "text": "Associate AI Engineer for Developers"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "09",
+                "day": "26"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1QIqAugAK46JCu1qjx3a85StPm4hHeKkF/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Intermediate ChatGPT",
+                "text": "Intermediate ChatGPT"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "09",
+                "day": "21"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1avxdmGiERODnzQ_mg_oaT8VeQLIK0Tzy/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Responsible AI Data Management",
+                "text": "Responsible AI Data Management"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "09",
+                "day": "18"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1D92JxToQUZoXB48INq8tDXNRbMwV0ID0/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Understanding Prompt Engineering",
+                "text": "Understanding Prompt Engineering"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "09",
+                "day": "19"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1ViydhoGtc2gr0ZIni7ZHhqrJX2kPWZuJ/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Vector Databases for Embeddings with Pinecone",
+                "text": "Vector Databases for Embeddings with Pinecone"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "09",
+                "day": "05"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1y25IsBta4_3xvotirWrSugJkpTFHcfS9/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Working with Llama 3",
+                "text": "Working with Llama 3"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "08",
+                "day": "03"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1HzeGpYfZeS6y9VggvMOByDDmS87iDQu-/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Understanding ChatGPT",
+                "text": "Understanding ChatGPT"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "08",
+                "day": "03"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1AbZshlFPqbmnBsn7xh-Z-3B4cnuTNrU-/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "LLMOps Concepts",
+                "text": "LLMOps Concepts"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "15"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1m3Io6OjmX8yP8f2hJ8zqO6hmS2bvAMek/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "AI Ethics",
+                "text": "AI Ethics"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "19"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1a7qmchoMn1ZZEjl5Dvdts3Nb_Uv8qM93/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Prompt Engineering with the OpenAI API",
+                "text": "Prompt Engineering with the OpenAI API"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "30"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1u4vCl3sFRlD4S3NZjx91AsfGuXlJxHrM/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Developing AI Applications",
+                "text": "Developing AI Applications"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "20"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1PDIJUytJ1QXmrCZvSDkgE3nR7T5G4yCG/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Developing AI Systems with the OpenAI API",
+                "text": "Developing AI Systems with the OpenAI API"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "30"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1xZ1GgrNwT5cvnWcuJEW9kPplxUWfAdNj/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Developing LLM Applications with LangChain",
+                "text": "Developing LLM Applications with LangChain"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "15"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1YJvT-Hb0tOFmjCwnU1VVAeqFPYyuS6T1/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Data Privacy",
+                "text": "Introduction to Data Privacy"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "30"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1ShY-cizA84G6vHMtDx-t_GCJ_e6Krgdj/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Embeddings with the OpenAI API",
+                "text": "Introduction to Embeddings with the OpenAI API"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "30"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1hq6crMIbFt0zK5rpO0JT3_M_swfsr6sY/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "OpenAI Fundamentals",
+                "text": "OpenAI Fundamentals"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "19"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1NDs-lfNZ2cGdfNIBjTYkSDxC7KDD7bDz/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Working with Hugging Face",
+                "text": "Working with Hugging Face"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "06",
+                "day": "15"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1DKOTBsVoCQZGYvA9NEIA5FrbTqv_mE5y/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Working with the OpenAI API",
+                "text": "Working with the OpenAI API"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "23"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/170BMuLdku79_Rli4PN-fN1A53MglcWzZ/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "CI/CD for Machine Learning",
+                "text": "CI/CD for Machine Learning"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2023",
+                "month": "06",
+                "day": "04"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1iTupZoiJ1chwbH8wrXx23NPJ8bu5ClPl/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Engineer in Python",
+                "text": "Data Engineer in Python"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "24"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/18BvAbQMVcA0UJs1eI3qy5sqxDWH_q7BU/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Intermediate Docker",
+                "text": "Intermediate Docker"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "20"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1zg62W6YwJHQZKu9fmtuVzQQj9RNkWkum/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "ETL and ELT in Python",
+                "text": "ETL and ELT in Python"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "18"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1Nk2MgFOhsG_MKdzXPngrZ1Wuy_br81Bt/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Warehousing Concepts",
+                "text": "Data Warehousing Concepts"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "22"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1UJwty79Dy92gDJqP-nRPs5O8onqAu8PJ/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Docker",
+                "text": "Introduction to Docker"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "11"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1Vkjks9JuyE5-bh4QKjJXDPtecHvHwxcQ/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to MLflow",
+                "text": "Introduction to MLflow"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "30"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1hQav0kmMc8p-zaqOCc8B-DAEXkdxLblt/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Snowflake SQL",
+                "text": "Introduction to Snowflake SQL"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "23"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1anxptEupZeJf9zdyxXc81e1IY7TP12tf/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Machine Learning Engineer",
+                "text": "Machine Learning Engineer"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "21"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1IF6GC2i9f25ngEyDNXlvp1g2D7tVNfIK/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Monitoring Machine Learning Concepts",
+                "text": "Monitoring Machine Learning Concepts"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "05",
+                "day": "22"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1BP3RURSbJ7-My6IhMHzKY0wToq_7e2nk/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Monitoring Machine Learning in Python",
+                "text": "Monitoring Machine Learning in Python"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "04",
+                "day": "04"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1eQCaUkqL_42xuzF2wsbekVzgbmH2pkJj/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "End-to-End Machine Learning",
+                "text": "End-to-End Machine Learning"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "09"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1E10N1oAROkzkkERwg2rZuz_IyMcv7VAA/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Deep Learning for Text with PyTorch",
+                "text": "Deep Learning for Text with PyTorch"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "10"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1jXLRq02SW7ZzI2Qa31F6bwI04-h6wmHJ/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Developing Large Language Models",
+                "text": "Developing Large Language Models"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "19"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1OU6BdHatrxpzFJkWl_8V7At6Cf84G5Z5/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Developing Machine Learning Models for Production",
+                "text": "Developing Machine Learning Models for Production"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "28"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1SvpiUAZEzRQZQkFzvwjGdIAFdmFaE1DN/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Fully Automated MLOps",
+                "text": "Fully Automated MLOps"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "06"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1Ky4VeDwd9nYHBK0e9AbDdKMNFM2nZodw/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Intermediate Deep Learning with PyTorch",
+                "text": "Intermediate Deep Learning with PyTorch"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "03"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1IMTqu66b1YNLi0qB-a-Fcy-iBQmguWnN/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Deep Learning with PyTorch",
+                "text": "Introduction to Deep Learning with PyTorch"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "10"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1CLVI9gpmk1m6j67Aw_1Am9hJV_AcvxfY/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to LLMs in Python",
+                "text": "Introduction to LLMs in Python"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "01"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1yDuP6OikfxrbsrG5ViumxUuZna9fxp0z/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to NumPy",
+                "text": "Introduction to NumPy"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "15"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1HKrwCdYpLPLMFt-B4xJxTK6JNvHT1EiY/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "MLOps Concepts",
+                "text": "MLOps Concepts"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "23"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1nfZ5OEBw9WbuWhi_WhQHuEiksimP0-ni/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "MLOps Deployment and Life Cycling",
+                "text": "MLOps Deployment and Life Cycling"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "28"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1d0RHbfZfpVzDeBoWYkNyCnAhlcsHMyib/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "MLOps Fundamentals",
+                "text": "MLOps Fundamentals"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "03",
+                "day": "11"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1QzD0sQRGxFJeh0Fmhv5vkzN17B1fIpDw/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Understanding Machine Learning",
+                "text": "Understanding Machine Learning"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "02",
+                "day": "20"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1bcNK7I_nCsF9kZvRFsZD8EjIfmpi3QKH/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Case Study: Analyzing Customer Churn in Power BI",
+                "text": "Case Study: Analyzing Customer Churn in Power BI"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "02",
+                "day": "28"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1cWPcSjekyncxomWMkOMAdJWXUtQgbkvs/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Modeling in Power BI",
+                "text": "Data Modeling in Power BI"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "02",
+                "day": "27"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1D5ghikPev6_mCDo5SmLJNQqjYo1vrJQm/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Preparation in Power BI",
+                "text": "Data Preparation in Power BI"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "02",
+                "day": "15"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/14gQJf3WzfOuPgCe4O0x4zQOICGKZpOUl/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Visualization in Power BI",
+                "text": "Data Visualization in Power BI"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "02",
+                "day": "11"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1zmg2giQDnvYnaX36eMHuPZf_vRRXqr8e/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to DAX in Power BI",
+                "text": "Introduction to DAX in Power BI"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "02",
+                "day": "10"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1DGvIXwU9-d1lq00knsVgN5tw9TCug9MT/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Power BI",
+                "text": "Introduction to Power BI"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2024",
+                "month": "02",
+                "day": "28"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1BPJvZ5J-ZvO8dUNu89J-_zjS-v7WJ_Ri/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Power BI Fundamentals",
+                "text": "Power BI Fundamentals"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2023",
+                "month": "12",
+                "day": "09"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1Q1E2BVAWD0cMarkZyFAsMLAAqt_Ch6Gt/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Manipulation in Julia",
+                "text": "Data Manipulation in Julia"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2023",
+                "month": "12",
+                "day": "23"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1CMME_owS6Z9oHtdHPgA4v07_0b-P1GP7/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Data Visualization in Python",
+                "text": "Data Visualization in Python"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2023",
+                "month": "12",
+                "day": "20"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/14YXC0c2Bgr4QvEkpOWx_iQ9jvDeTAe0m/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Improving Your Data Visualizations in Python",
+                "text": "Improving Your Data Visualizations in Python"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2023",
+                "month": "12",
+                "day": "13"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1VmTKtcH6P7tJtgEcdbuG7zdiVUNUp-UN/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Introduction to Data Visualization with Julia",
+                "text": "Introduction to Data Visualization with Julia"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2023",
+                "month": "12",
+                "day": "13"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1FxvImoJi1UBxeDiA7A4Tf-abCyAzPjnG/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Julia Fundamentals",
+                "text": "Julia Fundamentals"
+            }
+        },
+        {
+            "start_date": {
+                "year": "2023",
+                "month": "12",
+                "day": "23"
+            },
+            "media": {
+                "url": "https://drive.google.com/file/d/1iBAZdp7zB2T8JNoWcNLEiOJjj9_szn4W/view?usp=sharing",
+                "credit": "Datacamp"
+            },
+            "text": {
+                "headline": "Visualizing Geospatial Data in Python",
+                "text": "Visualizing Geospatial Data in Python"
+            }
+        },
+        {
+            "start_date": {
                 "year": "2023",
                 "month": "11",
                 "day": "22"
