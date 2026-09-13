@@ -1,4 +1,5 @@
 import reflex as rx
+from reflex_knightlab_timeline import timeline
 
 from ..resume_data import (
     education_data,
@@ -7,6 +8,8 @@ from ..resume_data import (
     social_media_data,
     work_experience_data,
 )
+from ..states.certifications_state import CertificationsState
+from ..timeline_data import certifications_data, certifications_options
 
 
 def section_heading(text: str) -> rx.Component:
@@ -35,36 +38,31 @@ def education_section() -> rx.Component:
 
 
 def experience_item(item: list) -> rx.Component:
+    # Built from static Python data (not state Vars), so plain Python conditionals apply.
+    title, company, period, responsibilities, tech_stack = item
     return rx.el.div(
         rx.el.div(
             rx.el.div(
-                rx.el.span(item[0], class_name="font-bold text-gray-900 text-lg"),
+                rx.el.span(title, class_name="font-bold text-gray-900 text-lg"),
                 rx.el.span(", ", class_name="text-gray-800"),
-                rx.el.span(item[1], class_name="italic text-gray-700"),
+                rx.el.span(company, class_name="italic text-gray-700"),
             ),
-            rx.el.span(item[2], class_name="text-gray-600 font-medium whitespace-nowrap"),
+            rx.el.span(period, class_name="text-gray-600 font-medium whitespace-nowrap"),
             class_name="flex flex-col md:flex-row justify-between items-start md:items-baseline mb-3",
         ),
-        rx.cond(
-            item[3] is not None,
-            rx.el.ul(
-                rx.foreach(
-                    item[3],
-                    lambda r: rx.el.li(r, class_name="mb-1 leading-relaxed"),
-                ),
-                class_name="list-disc list-outside ml-5 text-gray-700 mb-4 space-y-1",
-            ),
-            rx.fragment(),
-        ),
-        rx.cond(
-            item[4] is not None,
-            rx.el.p(
-                rx.el.span("Tech Stack: ", class_name="font-semibold text-gray-800"),
-                item[4],
-                class_name="text-sm text-gray-600 bg-gray-100/50 p-3 rounded-lg",
-            ),
-            rx.fragment(),
-        ),
+        rx.el.ul(
+            *[rx.el.li(r, class_name="mb-1 leading-relaxed") for r in responsibilities],
+            class_name="list-disc list-outside ml-5 text-gray-700 mb-4 space-y-1",
+        )
+        if responsibilities
+        else rx.fragment(),
+        rx.el.p(
+            rx.el.span("Tech Stack: ", class_name="font-semibold text-gray-800"),
+            tech_stack,
+            class_name="text-sm text-gray-600 bg-gray-100/50 p-3 rounded-lg",
+        )
+        if tech_stack
+        else rx.fragment(),
         class_name="mb-10 last:mb-0",
     )
 
@@ -72,7 +70,7 @@ def experience_item(item: list) -> rx.Component:
 def work_experience_section() -> rx.Component:
     return rx.el.section(
         section_heading("Work Experience"),
-        rx.foreach(work_experience_data, lambda item: experience_item(item)),
+        *[experience_item(item) for item in work_experience_data],
         id="work-experience",
         class_name="mb-12 scroll-mt-24",
     )
@@ -178,13 +176,33 @@ def social_media_section() -> rx.Component:
 
 
 def certifications_section() -> rx.Component:
-    """Certifications timeline section using iframe embed."""
+    """Certifications timeline, rendered by the native Knight Lab component.
+
+    Data comes from `assets/timeline.json` via `web/timeline_data.py`; the
+    selected slide is pushed back into `CertificationsState` by `on_change`.
+    """
     return rx.el.section(
         section_heading("Certifications"),
-        rx.el.iframe(
-            src="/timeline.html",
-            class_name="w-full border-0 rounded-lg shadow-md h-[400px] md:h-[700px] lg:h-[800px]",
-            style={"background": "white"},
+        rx.el.p(
+            rx.cond(
+                CertificationsState.current_certification != "",
+                CertificationsState.current_certification,
+                "Browse the timeline to explore every certification.",
+            ),
+            class_name="text-sm text-gray-600 mb-3 min-h-[1.25rem]",
+        ),
+        rx.el.div(
+            timeline(
+                data=certifications_data,
+                options=certifications_options,
+                on_change=CertificationsState.on_slide_change,
+                width="100%",
+                height="100%",
+            ),
+            class_name=(
+                "w-full overflow-hidden border-0 rounded-lg shadow-md bg-white "
+                "h-[400px] md:h-[700px] lg:h-[800px]"
+            ),
         ),
         id="certifications",
         class_name="mb-12 scroll-mt-24",

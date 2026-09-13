@@ -1,10 +1,15 @@
 import reflex as rx
+import reflex_rosencharts as rxc
 
 from web.states.resume_state import ResumeState
 
+# The rosencharts radar draws its axis labels outside the circle, so the card
+# needs room around it.
+_CHART_CARD = "mb-12 w-full bg-white rounded-lg shadow-md px-6 py-10 md:px-16 md:py-14"
+
 
 def skills_chart_section() -> rx.Component:
-    """Interactive skills radar chart section."""
+    """Interactive skills radar charts (reflex-rosencharts)."""
     return rx.el.section(
         rx.el.h2(
             "Skills",
@@ -24,26 +29,28 @@ def skills_chart_section() -> rx.Component:
             ),
             class_name="mb-8",
         ),
-        # Individual skill chart with responsive container
+        # One axis per skill of the selected category.
         rx.el.div(
-            rx.plotly(
-                data=ResumeState.individual_chart,
-                class_name="w-full",
+            rx.el.h3(
+                ResumeState.selected_skill,
+                class_name="text-xl font-semibold text-gray-700 text-center",
             ),
-            class_name="mb-12 w-full overflow-x-auto",
+            rxc.radar_chart_rounded(data=ResumeState.current_skill_radar),
+            class_name=_CHART_CARD,
         ),
         # Comparative chart title
         rx.el.h3(
             "Comparative View",
             class_name="text-2xl font-bold text-gray-700 mb-4 mt-8",
         ),
-        # Comparative chart with responsive container
+        # One axis per category, valued by the average level of its skills.
         rx.el.div(
-            rx.plotly(
-                data=ResumeState.comparative_chart,
-                class_name="w-full",
+            rx.el.h3(
+                "Average level per category",
+                class_name="text-xl font-semibold text-gray-700 text-center",
             ),
-            class_name="mb-12 w-full overflow-x-auto",
+            rxc.radar_chart_rounded(data=ResumeState.category_average_radar),
+            class_name=_CHART_CARD,
         ),
         id="skills",
         class_name="mb-12 scroll-mt-24",

@@ -4,9 +4,12 @@ Este documento describe el proceso completo para agregar un nuevo certificado o 
 
 ## Tecnología Utilizada
 
-El timeline utiliza **TimelineJS** de Knight Lab, una librería open-source para crear líneas de tiempo interactivas.
+El timeline utiliza **TimelineJS** de Knight Lab a través de
+[`reflex-knightlab-timeline`](https://github.com/ecrespo/reflex-knightlab-timeline),
+un componente nativo de Reflex que envuelve la librería (sin iframe ni HTML estático).
 
 - Documentación oficial: [TimelineJS](https://timeline.knightlab.com/)
+- Componente: [PyPI](https://pypi.org/project/reflex-knightlab-timeline/) · [GitHub](https://github.com/ecrespo/reflex-knightlab-timeline)
 - Los datos se almacenan en formato JSON
 
 ---
@@ -15,9 +18,16 @@ El timeline utiliza **TimelineJS** de Knight Lab, una librería open-source para
 
 ```
 assets/
-├── timeline.html    # Página HTML que renderiza el timeline
-└── timeline.json    # Datos de los certificados (EDITAR ESTE ARCHIVO)
+└── timeline.json                        # Datos de los certificados (EDITAR ESTE ARCHIVO)
+
+web/
+├── timeline_data.py                     # Carga timeline.json y define las opciones del timeline
+├── states/certifications_state.py       # Estado: slide activo (evento on_change)
+└── components/resume_sections.py        # certifications_section() renderiza el componente
 ```
+
+> El JSON se lee **al importar el módulo**, no en el navegador: después de
+> editarlo hay que reiniciar la aplicación para ver los cambios.
 
 ---
 
@@ -304,8 +314,10 @@ TimelineJS soporta campos adicionales que puedes usar:
 
 ### Error al cargar el timeline
 
-1. Revisa la consola del navegador (F12 → Console)
-2. Verifica que `timeline.json` sea accesible en `/timeline.json`
+1. Revisa la consola del navegador (F12 → Console) — el componente registra sus
+   errores con el prefijo `[reflex-knightlab-timeline]`
+2. Revisa la salida de `reflex run`: si el JSON no valida, `load_timeline_data`
+   falla al arrancar la aplicación
 3. Valida la sintaxis JSON
 
 ### El enlace del certificado no funciona
