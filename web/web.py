@@ -4,6 +4,21 @@ from web.blog.archives import archives_page
 from web.blog.blog import blog_list_page, blog_post_routes
 from web.blog.categories import categories_page
 from web.blog.tags import tags_page
+from web.components.dev_stats_sections import (
+    acceleration_section,
+    built_vs_studied_section,
+    code_composition_section,
+    contributions_section,
+    delivery_funnel_section,
+    dev_stats_footer,
+    flagship_section,
+    hero_section,
+    portfolio_split_section,
+    process_maturity_section,
+    repo_lifecycle_section,
+    weekly_rhythm_section,
+    yearly_activity_section,
+)
 from web.components.navbar import navbar
 from web.components.resume_sections import (
     certifications_section,
@@ -46,6 +61,37 @@ def index() -> rx.Component:
     )
 
 
+def dev_stats_page() -> rx.Component:
+    """`/dev-stats` — an EDA of the GitHub account, told through charts."""
+    return rx.el.div(
+        sidebar(),
+        rx.el.div(
+            navbar(),
+            rx.el.main(
+                rx.el.div(
+                    hero_section(),
+                    yearly_activity_section(),
+                    acceleration_section(),
+                    process_maturity_section(),
+                    contributions_section(),
+                    built_vs_studied_section(),
+                    code_composition_section(),
+                    portfolio_split_section(),
+                    weekly_rhythm_section(),
+                    delivery_funnel_section(),
+                    repo_lifecycle_section(),
+                    flagship_section(),
+                    dev_stats_footer(),
+                    class_name="container mx-auto",
+                ),
+                class_name="p-4 md:p-8 lg:p-16 w-full",
+            ),
+            class_name="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96",
+        ),
+        class_name="dev-stats-page flex min-h-screen font-['Inter'] bg-[#f5f5dc]",
+    )
+
+
 app = rx.App(
     head_components=[
         rx.el.link(rel="preconnect", href="https://fonts.googleapis.com"),
@@ -57,6 +103,13 @@ app = rx.App(
         rx.el.style("""
             html {
                 scroll-behavior: smooth;
+            }
+            /* The rosencharts line and scatter charts hardcode a 25px y-axis
+               label gutter inline, which wraps any three-digit tick into two
+               lines. Custom properties in a stylesheet beat inline ones when
+               marked !important, so widen it for this page only. */
+            .dev-stats-page [style*="--marginLeft"] {
+                --marginLeft: 46px !important;
             }
             .prose {
                 max-width: none;
@@ -145,6 +198,7 @@ app = rx.App(
 
 # Main pages
 app.add_page(index, route="/")
+app.add_page(dev_stats_page, route="/dev-stats", title="Dev Stats | Seraph's Resume")
 app.add_page(blog_list_page, route="/blog", title="Blog | Seraph's Resume")
 app.add_page(archives_page, route="/blog/archives", title="Blog Archives")
 app.add_page(categories_page, route="/blog/categories", title="Blog Categories")

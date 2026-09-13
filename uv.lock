@@ -920,6 +920,18 @@ wheels = [
 ]
 
 [[package]]
+name = "reflex-react-github-calendar"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "reflex" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/32/81/8ee8a2983b4b706a3504dfb0fc810d8f8255beb9eed4ea6c5e86340b696a/reflex_react_github_calendar-0.1.0.tar.gz", hash = "sha256:664e2332ada1fe717e2303cadd678f99bb71e21a6d6371d774c50792909053b3", size = 18879, upload-time = "2026-06-24T00:51:46.83Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/4b/c5/7fdb0001a2fe89135724e1a0e0edafff546fd72c120a2ec9d243ffa05138/reflex_react_github_calendar-0.1.0-py3-none-any.whl", hash = "sha256:184798ad6e2a368e69668b7401db533ab448c3cf75778153156cbbdeedc8942a", size = 15138, upload-time = "2026-06-24T00:51:44.95Z" },
+]
+
+[[package]]
 name = "reflex-resume"
 version = "0.1.0"
 source = { virtual = "." }
@@ -927,6 +939,7 @@ dependencies = [
     { name = "flexdown" },
     { name = "reflex" },
     { name = "reflex-knightlab-timeline" },
+    { name = "reflex-react-github-calendar" },
     { name = "reflex-rosencharts" },
 ]
 
@@ -942,6 +955,7 @@ requires-dist = [
     { name = "flexdown", specifier = ">=0.3.0" },
     { name = "reflex", specifier = ">=0.9.11" },
     { name = "reflex-knightlab-timeline", specifier = ">=0.1.2" },
+    { name = "reflex-react-github-calendar", specifier = ">=0.1.0" },
     { name = "reflex-rosencharts", specifier = ">=0.2.1" },
 ]
 
