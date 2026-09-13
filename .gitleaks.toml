@@ -1,0 +1,10 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Generated static export and vendored JS"
+paths = ['''^public/''', '''^node_modules/''']
+
+[[allowlists]]
+description = "Example credentials published in old blog posts (2014 bit.ly post, 2016 GitLab runner post)"
+regexes = ['''R_172fe1dcf183470c85ce345aaa784cf9395''', '''6kN_Uo_j2YitsJkh7q94''']

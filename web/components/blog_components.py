@@ -1,14 +1,16 @@
 """Blog UI components."""
+
+from typing import Any
+
 import reflex as rx
-from typing import Dict, Any
 
 from web.states.blog_state import BlogState
 
 
-def post_card(post: Dict[str, Any]) -> rx.Component:
+def post_card(post: dict[str, Any]) -> rx.Component:
     """
     Card component for displaying a post in the list view.
-    
+
     Args:
         post: Dictionary with post data (title, date, category, summary, author, slug)
     """
@@ -17,13 +19,13 @@ def post_card(post: Dict[str, Any]) -> rx.Component:
             rx.el.div(
                 # Title
                 rx.el.h3(
-                    post['title'],
+                    post["title"],
                     class_name="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#4a9bba] transition-colors",
                 ),
                 # Meta info
                 rx.el.div(
                     rx.el.span(
-                        post['formatted_date'],
+                        post["formatted_date"],
                         class_name="text-sm text-gray-500",
                     ),
                     rx.el.span(
@@ -31,7 +33,7 @@ def post_card(post: Dict[str, Any]) -> rx.Component:
                         class_name="text-gray-400 mx-2",
                     ),
                     rx.el.span(
-                        post['category'],
+                        post["category"],
                         class_name="text-sm text-[#4a9bba] font-medium",
                     ),
                     rx.el.span(
@@ -39,22 +41,22 @@ def post_card(post: Dict[str, Any]) -> rx.Component:
                         class_name="text-gray-400 mx-2",
                     ),
                     rx.el.span(
-                        post['author'],
+                        post["author"],
                         class_name="text-sm text-gray-600",
                     ),
                     class_name="flex items-center flex-wrap mb-3",
                 ),
                 # Summary
                 rx.el.p(
-                    post['summary'],
+                    post["summary"],
                     class_name="text-gray-700 text-sm line-clamp-3 mb-4",
                 ),
                 # Tags
                 rx.cond(
-                    len(post['tags']) > 0,
+                    len(post["tags"]) > 0,
                     rx.el.div(
                         rx.foreach(
-                            post['tags'][:3],
+                            post["tags"][:3],
                             lambda tag: rx.el.span(
                                 tag,
                                 class_name="inline-block bg-[#73cbb6] text-gray-800 text-xs px-2 py-1 rounded mr-2 mb-1",
@@ -81,7 +83,7 @@ def post_card(post: Dict[str, Any]) -> rx.Component:
     )
 
 
-def post_card_from_dict(post: rx.Var[Dict[str, Any]]) -> rx.Component:
+def post_card_from_dict(post: rx.Var[dict[str, Any]]) -> rx.Component:
     """
     Card component that works with rx.Var for use with rx.foreach.
     """
@@ -90,13 +92,13 @@ def post_card_from_dict(post: rx.Var[Dict[str, Any]]) -> rx.Component:
             rx.el.div(
                 # Title
                 rx.el.h3(
-                    post['title'],
+                    post["title"],
                     class_name="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#4a9bba] transition-colors",
                 ),
                 # Meta info
                 rx.el.div(
                     rx.el.span(
-                        post['formatted_date'],
+                        post["formatted_date"],
                         class_name="text-sm text-gray-500",
                     ),
                     rx.el.span(
@@ -104,7 +106,7 @@ def post_card_from_dict(post: rx.Var[Dict[str, Any]]) -> rx.Component:
                         class_name="text-gray-400 mx-2",
                     ),
                     rx.el.span(
-                        post['category'],
+                        post["category"],
                         class_name="text-sm text-[#4a9bba] font-medium",
                     ),
                     rx.el.span(
@@ -112,14 +114,14 @@ def post_card_from_dict(post: rx.Var[Dict[str, Any]]) -> rx.Component:
                         class_name="text-gray-400 mx-2",
                     ),
                     rx.el.span(
-                        post['author'],
+                        post["author"],
                         class_name="text-sm text-gray-600",
                     ),
                     class_name="flex items-center flex-wrap mb-3",
                 ),
                 # Summary
                 rx.el.p(
-                    post['summary'],
+                    post["summary"],
                     class_name="text-gray-700 text-sm line-clamp-3 mb-4",
                 ),
                 # Read more indicator
@@ -132,7 +134,7 @@ def post_card_from_dict(post: rx.Var[Dict[str, Any]]) -> rx.Component:
                 ),
                 class_name="p-6",
             ),
-            href=("/blog/" + post['slug'].to(str)),
+            href=("/blog/" + post["slug"].to(str)),
             class_name="block",
         ),
         class_name="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-200 overflow-hidden group",
@@ -155,7 +157,10 @@ def pagination_controls() -> rx.Component:
         ),
         # Page indicator
         rx.el.span(
-            "Página ", BlogState.current_page, " de ", BlogState.total_pages,
+            "Página ",
+            BlogState.current_page,
+            " de ",
+            BlogState.total_pages,
             class_name="text-gray-700 font-medium mx-4",
         ),
         # Next button
@@ -207,16 +212,16 @@ def back_to_blog_button() -> rx.Component:
     )
 
 
-def post_detail_header(post: rx.Var[Dict[str, Any]]) -> rx.Component:
+def post_detail_header(post: rx.Var[dict[str, Any]]) -> rx.Component:
     """Header for post detail page."""
     return rx.el.header(
         rx.el.h1(
-            post['title'],
+            post["title"],
             class_name="text-3xl md:text-4xl font-bold text-gray-900 mb-4",
         ),
         rx.el.div(
             rx.el.span(
-                post['formatted_date'],
+                post["formatted_date"],
                 class_name="text-gray-500",
             ),
             rx.el.span(
@@ -224,7 +229,7 @@ def post_detail_header(post: rx.Var[Dict[str, Any]]) -> rx.Component:
                 class_name="text-gray-400 mx-2",
             ),
             rx.el.span(
-                post['category'],
+                post["category"],
                 class_name="text-[#4a9bba] font-medium",
             ),
             rx.el.span(
@@ -236,7 +241,7 @@ def post_detail_header(post: rx.Var[Dict[str, Any]]) -> rx.Component:
                 class_name="text-gray-600",
             ),
             rx.el.span(
-                post['author'],
+                post["author"],
                 class_name="text-gray-800 font-medium",
             ),
             class_name="flex items-center flex-wrap text-sm mb-6",

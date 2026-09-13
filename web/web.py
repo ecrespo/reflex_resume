@@ -1,20 +1,20 @@
 import reflex as rx
-from web.components.sidebar import sidebar
+
+from web.blog.archives import archives_page
+from web.blog.blog import blog_list_page, blog_post_routes
+from web.blog.categories import categories_page
+from web.blog.tags import tags_page
 from web.components.navbar import navbar
 from web.components.resume_sections import (
-    education_section, 
-    work_experience_section,
+    certifications_section,
+    education_section,
     portfolio_section,
     skills_list_section,
     social_media_section,
-    certifications_section,
+    work_experience_section,
 )
+from web.components.sidebar import sidebar
 from web.components.skills_chart import skills_chart_section
-from web.states.resume_state import ResumeState
-from web.blog.blog import blog_list_page, blog_post_routes
-from web.blog.archives import archives_page
-from web.blog.categories import categories_page
-from web.blog.tags import tags_page
 
 
 def index() -> rx.Component:
@@ -47,7 +47,6 @@ def index() -> rx.Component:
 
 
 app = rx.App(
-    theme=rx.theme(appearance="light"),
     head_components=[
         rx.el.link(rel="preconnect", href="https://fonts.googleapis.com"),
         rx.el.link(rel="preconnect", href="https://fonts.gstatic.com", cross_origin=""),

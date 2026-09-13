@@ -1,5 +1,7 @@
 """Blog state management for pagination and filtering."""
+
 import reflex as rx
+
 from web.blog.paths import sorted_posts
 
 

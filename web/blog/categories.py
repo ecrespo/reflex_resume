@@ -1,8 +1,10 @@
-import reflex as rx
 from collections import defaultdict
-from web.components.sidebar import sidebar
-from web.components.navbar import blog_navbar
+
+import reflex as rx
+
 from web.blog.paths import sorted_posts
+from web.components.navbar import blog_navbar
+from web.components.sidebar import sidebar
 
 # Constants
 MAIN_LAYOUT_CLASS = "flex min-h-screen font-['Inter'] bg-[#f5f5dc]"
@@ -12,7 +14,7 @@ MAIN_PADDING_CLASS = "p-4 md:p-8 lg:p-16 w-full"
 
 class CategoriesState(rx.State):
     """State for categories page."""
-    
+
     @rx.var
     def categories_with_counts(self) -> list[tuple[str, int]]:
         """Get list of categories with their post counts."""
@@ -21,7 +23,7 @@ class CategoriesState(rx.State):
             cat = post.category.strip()
             if cat:
                 counts[cat] += 1
-                
+
         # Sort alphabetically
         return sorted(counts.items())
 
@@ -33,10 +35,11 @@ def category_entry(item: tuple[str, int]) -> rx.Component:
         rx.link(
             rx.el.span(category, class_name="text-[#d05040] hover:underline"),
             f" ({count})",
-            href=f"#",
-            class_name="text-gray-700 block py-1"
+            href="#",
+            class_name="text-gray-700 block py-1",
         )
     )
+
 
 def categories_page() -> rx.Component:
     return rx.el.div(
@@ -50,11 +53,8 @@ def categories_page() -> rx.Component:
                         class_name="mb-8",
                     ),
                     rx.el.ul(
-                        rx.foreach(
-                            CategoriesState.categories_with_counts,
-                            category_entry
-                        ),
-                        class_name="list-none space-y-2"
+                        rx.foreach(CategoriesState.categories_with_counts, category_entry),
+                        class_name="list-none space-y-2",
                     ),
                     class_name="container mx-auto max-w-5xl",
                 ),

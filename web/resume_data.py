@@ -106,9 +106,7 @@ work_experience_data = [
         "Linux Instructor",
         "AIT DST PDVSA",
         "Apr2010-Nov2010",
-        [
-            "Debian Linux Instructor for the Scada DST project"
-        ],
+        ["Debian Linux Instructor for the Scada DST project"],
         "Debian Linux, network management.",
     ],
     [
@@ -133,36 +131,28 @@ work_experience_data = [
         "Team Lead",
         "AIT DST PDVSA",
         "Jan2010-Jun2010",
-        [
-            "Developed Live-CD Linux for blind people"
-        ],
+        ["Developed Live-CD Linux for blind people"],
         "Python, Debian live-cd, bash, GTK, Debian custom package",
     ],
     [
         "Team Lead",
         "AIT DST PDVSA",
         "Dec2009-Apr2010",
-        [
-            "Leading the Gas Pipeline Network Simulation Project in real-time"
-        ],
+        ["Leading the Gas Pipeline Network Simulation Project in real-time"],
         "Fortran, C++, GTK, postgreSQL",
     ],
     [
         "Team Lead",
         "Fundabit",
         "Jun2006-Mar2007",
-        [
-            "Authoring tool developed for teaching."
-        ],
+        ["Authoring tool developed for teaching."],
         None,
     ],
     [
         "Technology Advisor",
         "Fundabit",
         "Mar2005-Nov2005",
-        [
-            "Development of the Fundabit Educational Portal."
-        ],
+        ["Development of the Fundabit Educational Portal."],
         "CMS mambo PHP, Linux, Apache, mod_security",
     ],
     [
@@ -180,18 +170,14 @@ work_experience_data = [
         "Network and Systems Administrator",
         "José Antonio Páez University",
         "Jan2002-Jul2004",
-        [
-            "Implemented: Email server, Proxy server, File server, Printer server, Web server"
-        ],
+        ["Implemented: Email server, Proxy server, File server, Printer server, Web server"],
         "Fedora, Sendmail, Squid, SquidGuard, Samba, NFS, CUPS, Apache.",
     ],
     [
         "Professor",
         "Carabobo University",
         "Mar2001-Aug2001",
-        [
-            "Digital Logic Laboratory"
-        ],
+        ["Digital Logic Laboratory"],
         None,
     ],
     [
@@ -209,15 +195,33 @@ work_experience_data = [
 
 portfolio_data = {
     "edas": [
-        ["Climate Change Temperature by Country, Global Temperature and CO2 ppm", "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/Climate_change.ipynb"],
-        ["Exploring Covid19 data with pandas", "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/covid19-6.ipynb"],
-        ["Analysis of the 25 largest retailers in the United States", "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/Retailers_US.ipynb"],
-        ["Analysis Stanford Open Policy Project Dataset", "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/police_traffic.ipynb"],
-        ["Investigating Netflix Movies and Guest Stars in The Office", "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/Netflix.ipynb"],
+        [
+            "Climate Change Temperature by Country, Global Temperature and CO2 ppm",
+            "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/Climate_change.ipynb",
+        ],
+        [
+            "Exploring Covid19 data with pandas",
+            "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/covid19-6.ipynb",
+        ],
+        [
+            "Analysis of the 25 largest retailers in the United States",
+            "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/Retailers_US.ipynb",
+        ],
+        [
+            "Analysis Stanford Open Policy Project Dataset",
+            "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/police_traffic.ipynb",
+        ],
+        [
+            "Investigating Netflix Movies and Guest Stars in The Office",
+            "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/Netflix.ipynb",
+        ],
     ],
     "graphs": [
-        ["Matplotlib", "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/Matplotlib.ipynb"],
-    ]
+        [
+            "Matplotlib",
+            "https://github.com/ecrespo/data_science_portfoliio/blob/main/notebooks/Matplotlib.ipynb",
+        ],
+    ],
 }
 
 skills_data = [
@@ -234,7 +238,7 @@ skills_data = [
     ["Low code tools", "Knime, Tableu, Power BI, N8N"],
     ["Containers", "Docker, Docker-compose, Kubernetes"],
     ["Serverless Development", "AWS Cloudformation, AWS SAM, Serverless"],
-    ["Database Engine", "PostgreSQL, MySQLdb, MongoDB","DuckDB"],
+    ["Database Engine", "PostgreSQL, MySQLdb, MongoDB", "DuckDB"],
 ]
 
 social_media_data = [

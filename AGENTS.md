@@ -112,6 +112,7 @@ def new_page() -> rx.Component:
         # Your components here
     )
 
+
 # Register the page
 app.add_page(new_page, route="/new-page")
 ```
@@ -123,10 +124,11 @@ The `State` class in `web/web.py` manages application state:
 ```python
 class State(rx.State):
     """The app state."""
+
     # Add your state variables here
     # Example:
     # counter: int = 0
-    # 
+    #
     # def increment(self):
     #     self.counter += 1
 ```
@@ -173,7 +175,7 @@ config = rx.Config(
     plugins=[
         rx.plugins.SitemapPlugin(),
         rx.plugins.TailwindV4Plugin(),
-    ]
+    ],
 )
 ```
 
