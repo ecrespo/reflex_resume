@@ -1,5 +1,12 @@
 import reflex as rx
-from ..resume_data import education_data, work_experience_data, portfolio_data, skills_data, social_media_data
+
+from ..resume_data import (
+    education_data,
+    portfolio_data,
+    skills_data,
+    social_media_data,
+    work_experience_data,
+)
 
 
 def section_heading(text: str) -> rx.Component:
@@ -65,10 +72,7 @@ def experience_item(item: list) -> rx.Component:
 def work_experience_section() -> rx.Component:
     return rx.el.section(
         section_heading("Work Experience"),
-        rx.foreach(
-            work_experience_data,
-            lambda item: experience_item(item)
-        ),
+        rx.foreach(work_experience_data, lambda item: experience_item(item)),
         id="work-experience",
         class_name="mb-12 scroll-mt-24",
     )
@@ -97,7 +101,7 @@ def portfolio_section() -> rx.Component:
                         class_name="text-blue-600 hover:text-blue-800 hover:underline",
                     ),
                     class_name="mb-2",
-                )
+                ),
             ),
             class_name="list-disc list-outside ml-5 text-gray-700",
         ),
@@ -116,7 +120,7 @@ def portfolio_section() -> rx.Component:
                         class_name="text-blue-600 hover:text-blue-800 hover:underline",
                     ),
                     class_name="mb-2",
-                )
+                ),
             ),
             class_name="list-disc list-outside ml-5 text-gray-700",
         ),
@@ -137,7 +141,7 @@ def skills_list_section() -> rx.Component:
                     rx.el.span(f"{item[0]}: ", class_name="font-bold text-gray-800"),
                     rx.el.code(f"{item[1]}", class_name="text-sm text-gray-700"),
                     class_name="mb-3",
-                )
+                ),
             ),
             class_name="space-y-2",
         ),
@@ -154,7 +158,9 @@ def social_media_section() -> rx.Component:
             rx.foreach(
                 social_media_data,
                 lambda item: rx.el.div(
-                    rx.el.span(f"{item[0]}: ", class_name="font-semibold text-gray-800 inline-block w-32"),
+                    rx.el.span(
+                        f"{item[0]}: ", class_name="font-semibold text-gray-800 inline-block w-32"
+                    ),
                     rx.el.a(
                         item[1],
                         href=item[1],
@@ -162,7 +168,7 @@ def social_media_section() -> rx.Component:
                         class_name="text-blue-600 hover:text-blue-800 hover:underline",
                     ),
                     class_name="mb-3 flex items-start",
-                )
+                ),
             ),
             class_name="space-y-1",
         ),

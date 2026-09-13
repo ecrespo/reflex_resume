@@ -1,4 +1,5 @@
 import reflex as rx
+
 from ..states.resume_state import ResumeState
 
 
@@ -12,31 +13,31 @@ def navbar_link(text: str, url: str = "#") -> rx.Component:
 
 def blog_navbar_link(text: str, url: str) -> rx.Component:
     """Specific link style for blog navbar (red/orange text on hover as per screenshot implies theme).
-    Actually user asked to KEEP main page style. 
+    Actually user asked to KEEP main page style.
     But looking at the screenshots, the blog navbar has a specific look in the second screenshot?
     Wait, the user said: "Tienes que mantener el estilo de la página principal como ya se tiene en los post del blog."
     (You have to maintain the style of the main page as it is already in the blog posts).
-    
+
     The screenshots show:
     Image 1: HOME ARCHIVES CATEGORIES TAGS ATOM (Reddish text)
     Image 2: Categories list (Orange/Reddish links)
-    
+
     However, the current blog uses the blue theme (#4a9bba) from the main resume.
     If I look at `web/blog/blog.py`:
     `navbar()` is used.
     And `navbar()` uses `bg-[#4a9bba]`.
-    
+
     The user request says: "Cuando se muestra los post del blog el navbar debe cambiar a lo siguiente... Tienes que mantener el estilo de la página principal como ya se tiene en los post del blog."
     This is slightly contradictory if the screenshots show a different style (white bg, red text).
     BUT, "mantener el estilo de la página principal" implies keeping the BLUE navbar.
-    
+
     Let's re-read carefully: "Tienes que mantener el estilo de la página principal como ya se tiene en los post del blog."
-    This implies the CURRENT blog posts have the main page style (Blue navbar). 
+    This implies the CURRENT blog posts have the main page style (Blue navbar).
     So I should probably keep the Blue Navbar but CHANGE the links.
-    
+
     The screenshots provided might be from the OLD blog (Pelican) which had white background and red text.
     The user wants the NEW blog (Reflex) to have the links from the OLD blog, but the STYLE of the NEW blog (Main page).
-    
+
     So:
     - Background: #4a9bba (Blue)
     - Text: White
