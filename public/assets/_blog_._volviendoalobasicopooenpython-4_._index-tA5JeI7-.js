@@ -1,0 +1,589 @@
+import{r as e}from"./rolldown-runtime-hePW80VL.js";import{W as t,a as n}from"./components-DO_H3UDc.js";import{B as r,L as i,n as a,t as o}from"./link-DxqtXDAU.js";import{n as s}from"./emotion-react.browser.esm-D8ztlwVE.js";import{n as c,t as l}from"./code-BdqBTYPI.js";import{a as u,d,l as f,o as p,t as m}from"./blog-Df_uhXIx.js";import{a as h,c as g,i as _,l as v,n as y,o as b,r as x,t as S,u as C}from"./one-dark-B_jZNFYR.js";var w=e(t(),1);function T(){let{resolvedColorMode:e}=(0,w.useContext)(i);return{h1:({node:e,children:t,...n})=>s(c,{as:`h1`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`6`,...n},t),h2:({node:e,children:t,...n})=>s(c,{as:`h2`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`5`,...n},t),h3:({node:e,children:t,...n})=>s(c,{as:`h3`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`4`,...n},t),h4:({node:e,children:t,...n})=>s(c,{as:`h4`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`3`,...n},t),h5:({node:e,children:t,...n})=>s(c,{as:`h5`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`2`,...n},t),h6:({node:e,children:t,...n})=>s(c,{as:`h6`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`1`,...n},t),p:({node:e,children:t,...n})=>s(a,{as:`p`,css:{marginTop:`1em`,marginBottom:`1em`},...n},t),ul:({node:e,children:t,...n})=>s(`ul`,{css:{listStyleType:`disc`,marginTop:`1em`,marginBottom:`1em`,marginLeft:`1.5rem`,direction:`column`},...n},t),ol:({node:e,children:t,...n})=>s(`ol`,{css:{listStyleType:`decimal`,marginTop:`1em`,marginBottom:`1em`,marginLeft:`1.5rem`,direction:`column`},...n},t),li:({node:e,children:t,...n})=>s(`li`,{css:{marginTop:`0.5em`,marginBottom:`0.5em`},...n},t),a:({node:e,children:t,...n})=>s(o,{css:{"&:hover":{color:`var(--accent-8)`}},href:`#`,...n},t),code:({node:e,children:t,...n})=>s(l,{...n},t),pre:({node:t,...n})=>{let{node:r,className:i,children:a,...o}=n.children.props,c=String(Array.isArray(a)?a.join(`
+`):a).replace(/\n$/,``),l=(i||``).match(/language-(?<lang>.*)/),u=l?l[1]:``;return s(x,{children:c,codeTagProps:{style:{whiteSpace:`pre-wrap`}},css:{marginTop:`1em`,marginBottom:`1em`},customStyle:{marginTop:`1em`,marginBottom:`1em`},language:u,style:e?.valueOf?.()===`light`.valueOf?.()?y:S,wrapLongLines:!0,...o})}}}function E(){return s(w.Fragment,{},s(`div`,{className:`flex min-h-screen font-['Inter'] bg-[#f5f5dc]`},s(w.Fragment,{},s(w.Fragment,{},s(f,{},s(w.Fragment,{},s(d,{})),s(w.Fragment,{}))),s(m,{},s(`div`,{className:`flex flex-col items-center pt-6 px-4 w-full pb-4`},s(u,{},`✕`),s(`div`,{className:`mb-4 text-center`},s(`h1`,{className:`text-2xl font-bold text-gray-900 mb-0.5 tracking-tight`},`Ernesto Crespo.`),s(`p`,{className:`italic text-gray-700 text-sm font-medium tracking-wide`},`Resume`)),s(`img`,{alt:`Ernesto Crespo`,className:`w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30`,src:`/ec.jpg`}),s(`div`,{className:`w-full flex flex-col mb-3`},s(`h2`,{className:`text-base font-bold text-gray-800 mb-2 self-start w-full pl-1`},`Summary`),s(`div`,{className:`bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm`},s(`ul`,{className:`list-none m-0 p-0`},s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Electrical Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Python Developer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data analyst.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`AWS Cloud Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data Scientist.`))))),s(`div`,{className:`w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200`},s(r,{className:`block w-full`,rel:`noopener noreferrer`,target:`_blank`,to:`https://www.linkedin.com/in/ernestocrespo/`},s(`div`,{className:`flex items-center gap-2`},s(`div`,{className:`rx-Html`,dangerouslySetInnerHTML:{__html:`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    `}}),s(`div`,{className:`flex-1`},s(`p`,{className:`font-bold text-gray-900 text-sm mb-0`},`Ernesto Crespo`),s(`p`,{className:`text-xs text-gray-600 mb-0`},`View LinkedIn Profile`))))),s(`div`,{className:`w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200`},s(o,{asChild:!0,className:`block w-full`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{to:`/blog`},s(`div`,{className:`flex items-center gap-2`},s(`div`,{className:`rx-Html`,dangerouslySetInnerHTML:{__html:`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    `}}),s(`div`,{className:`flex-1`},s(`p`,{className:`font-bold text-gray-900 text-sm mb-0`},`Blog`),s(`p`,{className:`text-xs text-gray-600 mb-0`},`Ver artículos`)))))),s(`div`,{className:`w-full px-4`},s(`p`,{className:`text-sm text-gray-700 font-medium mb-1`},`Wish to connect?`),s(o,{asChild:!0,className:`text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{target:`_blank`,to:`mailto:ecrespo@gmail.com`},`📧 ecrespo@gmail.com`)),s(o,{asChild:!0,className:`inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{download:`ErnestoCrespo.pdf`,target:`_blank`,to:`/Resume_Ernesto_Crespo_software.pdf`},`Download Resume`))))),s(`aside`,{className:`hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10`},s(`div`,{className:`flex flex-col items-center pt-6 px-4 w-full pb-4`},s(u,{},`✕`),s(`div`,{className:`mb-4 text-center`},s(`h1`,{className:`text-2xl font-bold text-gray-900 mb-0.5 tracking-tight`},`Ernesto Crespo.`),s(`p`,{className:`italic text-gray-700 text-sm font-medium tracking-wide`},`Resume`)),s(`img`,{alt:`Ernesto Crespo`,className:`w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30`,src:`/ec.jpg`}),s(`div`,{className:`w-full flex flex-col mb-3`},s(`h2`,{className:`text-base font-bold text-gray-800 mb-2 self-start w-full pl-1`},`Summary`),s(`div`,{className:`bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm`},s(`ul`,{className:`list-none m-0 p-0`},s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Electrical Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Python Developer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data analyst.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`AWS Cloud Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data Scientist.`))))),s(`div`,{className:`w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200`},s(r,{className:`block w-full`,rel:`noopener noreferrer`,target:`_blank`,to:`https://www.linkedin.com/in/ernestocrespo/`},s(`div`,{className:`flex items-center gap-2`},s(`div`,{className:`rx-Html`,dangerouslySetInnerHTML:{__html:`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    `}}),s(`div`,{className:`flex-1`},s(`p`,{className:`font-bold text-gray-900 text-sm mb-0`},`Ernesto Crespo`),s(`p`,{className:`text-xs text-gray-600 mb-0`},`View LinkedIn Profile`))))),s(`div`,{className:`w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200`},s(o,{asChild:!0,className:`block w-full`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{to:`/blog`},s(`div`,{className:`flex items-center gap-2`},s(`div`,{className:`rx-Html`,dangerouslySetInnerHTML:{__html:`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    `}}),s(`div`,{className:`flex-1`},s(`p`,{className:`font-bold text-gray-900 text-sm mb-0`},`Blog`),s(`p`,{className:`text-xs text-gray-600 mb-0`},`Ver artículos`)))))),s(`div`,{className:`w-full px-4`},s(`p`,{className:`text-sm text-gray-700 font-medium mb-1`},`Wish to connect?`),s(o,{asChild:!0,className:`text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{target:`_blank`,to:`mailto:ecrespo@gmail.com`},`📧 ecrespo@gmail.com`)),s(o,{asChild:!0,className:`inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{download:`ErnestoCrespo.pdf`,target:`_blank`,to:`/Resume_Ernesto_Crespo_software.pdf`},`Download Resume`)))))),s(`div`,{className:`flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96`},s(`nav`,{className:`w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0`},s(`div`,{className:`flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar`},s(p,{},s(`div`,{className:`flex flex-col`},s(`span`,{className:`block w-6 h-0.5 bg-white mb-1.5`}),s(`span`,{className:`block w-6 h-0.5 bg-white mb-1.5`}),s(`span`,{className:`block w-6 h-0.5 bg-white`}))),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/`},`HOME`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/blog`},`BLOG`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/blog/archives`},`ARCHIVES`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/blog/categories`},`CATEGORIES`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/blog/tags`},`TAGS`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/feed.xml`},`ATOM`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/dev-stats`},`DEV STATS`))),s(`main`,{className:`p-4 md:p-8 lg:p-16 w-full`},s(`div`,{className:`container mx-auto max-w-4xl`},s(o,{asChild:!0,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{to:`/blog`},s(`span`,{className:`inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6`},`← Volver al Blog`))),s(`header`,{className:`mb-8 pb-6 border-b border-gray-200`},s(`h1`,{className:`text-3xl md:text-4xl font-bold text-gray-900 mb-4`},`Volviendo a lo básico, POO en Python (parte 4)`),s(`div`,{className:`flex items-center flex-wrap text-sm mb-6`},s(`span`,{className:`text-gray-500`},`October 31, 2016`),s(`span`,{className:`text-gray-400 mx-2`},` • `),s(`span`,{className:`text-[#4a9bba] font-medium`},`Tutorial Python`),s(`span`,{className:`text-gray-400 mx-2`},` • `),s(`span`,{className:`text-gray-600`},`Por `),s(`span`,{className:`text-gray-800 font-medium`},`Unknown`))),s(`article`,{className:`post-content`},s(`div`,{className:`prose prose-lg max-w-none`},s(C,{components:T(),rehypePlugins:[b,h,_],remarkPlugins:[v,g]},`Los artículos anteriores sobre Programación Orientada a Objetos los pueden revisar en el [enlace (enlace roto)](https://www.seraph.to/tag/poo.html).
+
+En este artículo se tocará el tema de la herencia, la encapsulación, el uso de getter, setter y deleter, el uso de método estático y y classmethod.
+
+En el artículo de la [parte 3 de POO (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-3.html) se explica el uso de @property y @método.setter, falto explicar el deleter que sirve para borrar atributos del objeto.
+
+El @staticmethod se usa cuando no se está usando el argumento self en un método.
+
+El @classmethod define un método que se le pasa entre los argumentos a la clase (por convención se define como cls).
+
+Se creará la clase Punto2D con los siguientes atributos y métodos:
+
+- Se define al punto como (x,y), la clase Punto2 tiene los atributos privados (estos atributos no se pueden acceder a ellos desde la instancia de la clase, por esa razón se tiene el getter y setter):
+    - self.__x
+    - self.__y
+- Método __init__ que le asigna los valores inciales a la instancia.
+- getter, setter y deleter de punto.
+- getter, setter y deleter de ValorX y ValorY.
+- Método mover: Asigna nuevo valor a punto.
+- Método reset: Asigna el valor (0,0) al punto. 
+- Método distanciaOtroPunto: Cálcula la distancia con otro punto.
+
+El código de \`ej12.py\` se muestra a continuación:
+
+\`\`\`python
+#!/usr/bin/env python3
+
+# -*- coding: utf-8 -*-
+
+
+from math import sqrt
+
+
+class Punto2D(object):
+
+    """Representacion de un punto en 2 dimensiones"""
+
+    cont_puntos = 1
+
+
+
+    def __init__(self,punto=(0,0)):
+
+        '''constructor del punto'''
+
+        self.__x,self.__y = punto
+
+        Punto2D.cont_puntos += 1
+
+
+
+    @property
+
+    def ValorX(self):
+
+        '''Devuelve el valor de X'''
+
+        return self.__x
+
+
+
+    @ValorX.setter
+
+    def ValorX(self,x):
+
+        '''Se le asigna un valor  a x por medio de setter'''
+
+        self.__x = x
+
+
+
+    @property
+
+    def ValorY(self):
+
+        '''Devuelve el valor de y'''
+
+        return self.__y
+
+
+
+    @ValorY.setter
+
+    def ValorY(self,y):
+
+        '''Se le asigna un valor a y por medio del setter'''
+
+        self.__y = y
+
+
+
+    @property
+
+    def punto(self):
+
+        """el getter de punto, devuelve el punto"""
+
+        return (self.__x,self.__y)
+
+
+
+    @punto.setter
+
+    def punto(self,punto):
+
+        ''''el setter de punto'''
+
+        self.__x,self.__y = punto
+
+
+
+    @property
+
+    def cantPuntos(self):
+
+        '''Devuelve la cantidad de puntos creados'''
+
+        return Empleado.cont_puntos
+
+
+
+    @punto.deleter
+
+    def punto(self):
+
+        '''deleter de punto'''
+
+        del self.__x
+
+        del self.__y
+
+        cont_puntos = 0
+
+
+
+    def mover(self,x,y):
+
+        '''mueve el punto a un nuevo punto'''
+
+        self.__x, self.__y = x,y
+
+
+
+    def reset(self):
+
+        '''coloca en el origen al punto'''
+
+        self.mover(0,0)
+
+
+
+    def distanciaOtroPunto(self,oPunto):
+
+        '''devuelve la distancia entre el punto original y un punto dado'''
+
+        return sqrt((self.__x - oPunto.punto[0])**2 + (self.__y - oPunto.punto[1])**2 )
+
+
+
+    @staticmethod
+
+    def autor(autor):
+
+        '''Se define el autor de la clase'''
+
+        return "El autor de esta clase es: {}".format(autor)
+
+
+
+    @classmethod
+
+    def cantidadPuntos(cls,cantidad):
+
+        '''Se cambia la cantidad de puntos'''
+
+        cls.cont_puntos = cantidad
+
+
+
+if __name__ == "__main__":
+
+    #Se crea cordenada de la clase Punto2D donde se le pasa (4,6)
+
+    cordenada = Punto2D((4,6))
+
+    #Se muestra el valor del punto.
+
+    print(cordenada.punto)
+
+    #Se asigna por setter un nuevo valor
+
+    cordenada.punto = (10,15)
+
+    #Se muestra el nuevo valor de cordenada
+
+    print(cordenada.punto)
+
+    #Se calcula la distancia con respecto a otro punto.
+
+    print(cordenada.distanciaOtroPunto(Punto2D((100,100))))
+
+    #Se fija el punto en un valor (0,0)
+
+    cordenada.reset()
+
+    #Se muestra el nuevo valor de la cordenada.
+
+    print (cordenada.punto)
+
+    #Se muestra un mensaje pasando el autor de la clase.
+
+    print (cordenada.autor("Ernesto"))
+
+    #Muestra la cantidad de puntos que se han creado.
+
+    print ('Cantidad de puntos : {0}'.format(cordenada.cont_puntos ))
+
+    #Se modifica la cantidad de puntos a 1 por medio de setter.
+
+    Punto2D.cantidadPuntos(1)
+
+    #Se vuelve a mostrar la cantida de puntos.
+
+    print ('Cantidad de puntos : {0}'.format(cordenada.cont_puntos ))
+
+    #Se borra la instancia cordenada.
+
+    del(cordenada)
+
+    #Se intenta mostrar el punto pero va a devolver que no se puede
+
+    try:
+
+        print (cordenada.punto)
+
+    except (NameError):
+
+        print ("No existe el objeto cordenada")
+\`\`\` 
+
+Al ejecutar \`ej12.py\` se tiene lo siguiente:
+\`\`\`python
+python ej12.py
+(4, 6)
+(10, 15)
+123.794184031
+(0, 0)
+El autor de esta clase es: Ernesto
+Cantidad de puntos : 3
+Cantidad de puntos : 1
+No existe el objeto cordenada
+
+\`\`\`
+
+Ahora se va a crear \`ej12_3d.py\` que tendrá la clase Punto3D que hereda de Punto2D.
+
+La clase Punto3D tiene practicamente los mismos métodos, lo único distinto es que ahora maneja un punto con 3 dimensiones, para ello hereda del punto en 2 dimensiones X y Y y maneja Z. 
+
+Así que se sobrecarga los métodos de Punto2D en Punto3D. Para poder acceder al objeto Punto2D se usa super. 
+
+A continuación el código de \`ej12_3d.py\`:
+
+\`\`\`python
+#!/usr/bin/env python3
+
+
+# -*- coding: utf-8 -*-
+
+
+
+
+
+#Se importa la clase Punto2D de ej12.py
+
+
+from ej12 import Punto2D
+
+
+#Se importa raiz cuadrada
+
+
+from math import sqrt
+
+
+
+
+
+class Punto3D(Punto2D):
+
+
+    '''Se define la clase Punto3D'''
+
+
+
+
+
+    def __init__(self,punto3d):
+
+
+        '''Método init donde se le asigna x y y a Punto2D por medio de super'''
+
+
+        super(Punto3D,self).__init__(punto3d[0:-1])
+
+
+        self.__z = punto3d[-1]
+
+
+
+
+
+    @property
+
+
+    def ValorZ(self):
+
+
+        '''devuelve el valor de z por medio de getter'''
+
+
+        return self.__z
+
+
+
+
+
+    @ValorZ.setter
+
+
+    def ValorZ(self,z):
+
+
+        '''Se asigna un valor a z por medio de setter'''
+
+
+        self.__z = z
+
+
+
+
+
+    @ValorZ.deleter
+
+
+    def ValorZ(self):
+
+
+        '''se borra el valor de z por medio de deleter'''
+
+
+        del (self.__z)
+
+
+
+
+
+    @property
+
+
+    def punto(self):
+
+
+        '''el getter de punto, devuelve el punto'''
+
+
+        x,y = super(Punto3D,self).punto
+
+
+        return (x,y,self.ValorZ)
+
+
+
+
+
+    @punto.setter
+
+
+    def punto(self,punto3d):
+
+
+        '''Se le asigna un valor al punto por medio de setter'''
+
+
+        super(Punto3D,self).mover(punto3d[0],punto3d[1])
+
+
+        self.__z = punto3d[-1]
+
+
+
+
+
+    @punto.deleter
+
+
+    def punto(self):
+
+
+        '''Se borra el punto por medio de deleter'''
+
+
+        print ("Punto borrado")
+
+
+        del Punto2D
+
+
+        del self.__z
+
+
+
+
+
+    def mover(self,x,y,z):
+
+
+        '''Se asigna un nuevo valor al punto''''
+
+
+        super(Punto3D,self).mover(x,y)
+
+
+        self.__z = z
+
+
+
+
+
+    def reset(self):
+
+
+        '''Se fija el punto como (0,0,0)'''
+
+
+        super(Punto3D,self).mover(0,0)
+
+
+        self.__z = 0
+
+
+
+
+
+    def distanciaOtroPunto(self,oPunto):
+
+
+        '''devuelve la distancia entre el punto original y un punto dado'''
+
+
+        x,y = super(Punto3D,self).punto
+
+
+        z = self.__z
+
+
+        return sqrt((x - oPunto.punto[0])**2 + (y - oPunto.punto[1])**2 + (z - oPunto.ValorZ) ** 2 )
+
+
+if __name__ == '__main__':
+
+
+    #Se crea la instancia Punto3D con el punto.
+
+
+    punto3d = Punto3D((4,6,4))
+
+
+    #Se muestra el valor del punto
+
+
+    print(punto3d.punto)
+
+
+    #Se asigna un nuevo valor a punto.
+
+
+    punto3d.punto = (3,3,3)
+
+
+    #Se muestra dicho valor
+
+
+    print(punto3d.punto)
+
+
+    #Se muestra los valores de x,y y z.
+
+
+    print(punto3d.ValorX)
+
+
+    print(punto3d.ValorY)
+
+
+    print(punto3d.ValorZ)
+
+
+    #Se asigna el valor (0,0,0)
+
+
+    punto3d.reset()
+
+
+    #Se muestra su valor.
+
+
+    print(punto3d.punto)
+
+
+    #Se calcula la distancia con otro punto.
+
+
+    print(punto3d.distanciaOtroPunto(Punto3D((15,45,55))))
+
+
+    #Se borra el punto3d.
+
+
+    del(punto3d)
+
+
+    #Se intenta mostrar el valor o devuelve que el objeto no existe.
+
+
+    try:
+
+
+        print (punto3d.punto)
+
+
+    except (NameError):
+
+
+        print ("No existe el objeto punto3d")
+
+\`\`\`
+
+Al ejecutar \`ej12_3d.py\` se obtiene lo siguiente:
+\`\`\`python
+python ej12_3d.py
+(4, 6, 4)
+(3, 3, 3)
+3
+3
+3
+(0, 0, 0)
+72.6291952317
+No existe el objeto punto3d
+\`\`\`
+
+
+En este artículo se muestra la encapsulación, la herencia y varios métodos.
+
+Los códigos lo pueden encontrar en gitlab tanto para [ej12.py](https://gitlab.com/ecrespo/tutorial-poo/blob/master/ej12.py) como para [ej12_3d.py](https://gitlab.com/ecrespo/tutorial-poo/blob/master/ej12_3d.py).
+
+##  ##
+¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV
+
+O Escaneando el código QR desde la billetera:
+
+![17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV](/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png)
+
+
+
+`))))))),s(`title`,{},`Blog | Volviendo a lo básico, POO en Python (parte 4)`),s(`meta`,{content:`favicon.ico`,property:`og:image`}))}E.displayName=`Component(blog/volviendoalobasicopooenpython-4)`;var D=n(E);export{D as default};
