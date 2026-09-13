@@ -22,23 +22,28 @@ jobs:
 
     steps:
       - name: Checkout repo
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           fetch-depth: 0
 
-      - name: Setup Python
-        uses: actions/setup-python@v5
+      - name: Setup uv
+        uses: astral-sh/setup-uv@v10
         with:
-          python-version: "3.13"
+          version: "0.12.13"
+          enable-cache: true
+          cache-dependency-glob: uv.lock
 
       - name: Run build script
         run: bash remote_build.sh
 
+      # On pull requests only validate that the export works; publish only on push to main.
       - name: Add public folder to git
+        if: github.event_name == 'push'
         run: git add -f public/
 
       - name: Commit and Push changes
-        uses: stefanzweifel/git-auto-commit-action@v5
+        if: github.event_name == 'push'
+        uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Update static build [skip ci]
           commit_user_name: Ernesto Crespo [Github Actions]
