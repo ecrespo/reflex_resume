@@ -130,8 +130,11 @@ Headings reuse `resume_sections.section_heading`; cards reuse the `_CHART_CARD` 
   left most cards mostly empty.
 - **§10 stays `scatter_chart`.** It was briefly swapped for a treemap because
   `ecrespo.github.io` (1,451 commits over 2,609 days) stretches both axes and clusters the
-  other 13 repositories; the scatter was restored on request and the footnote now says so
-  outright, which is more honest than hiding the outlier.
+  other 13 repositories; the scatter was restored on request. The outlier is now left out
+  of the plotted series (`REPO_LIFECYCLE_EXCLUDED`) so the sprint/marathon pattern is
+  visible, and the footnote names it with its figures rather than hiding it. Still open
+  upstream: the x axis labels every fifth data point instead of regular ticks, so the 1-
+  and 28-day labels overlap, and the y domain has no top padding.
 - **Three charts were legible-but-wrong and are fixed.** `donut_chart_center_text` appends a
   hardcoded `%` to every slice value, so the raw counts rendered as "128%"/"141%" — the
   slices now carry percentages and the counts moved to the headline, and the names were
