@@ -89,7 +89,7 @@ Note: `uv.lock` is the only lockfile — both build scripts, CI and the Dockerfi
 
 - **Frontend**: static export served by Vercel from `public/` (`vercel.json`, SPA rewrite to `index.html`). `.github/workflows/static_build.yml` runs `remote_build.sh` (exports with `API_URL=https://api.seraph.to`) on PRs to `main` as a check, and on push to `main` auto-commits `public/` as "Update static build [skip ci]". Don't hand-edit `public/`.
 - **Backend**: Railway builds the Dockerfile on push to `main`; the image runs `reflex run --backend-only` on port 8000 at `api.seraph.to`. `rxconfig.py` sets `api_url`, CORS origins, and `state_manager_mode="memory"`.
-- Work happens on `develop`; `main` is the deploy branch.
+- Work happens on `develop`; `main` is the deploy branch, protected by the "Protect main" ruleset (changes only via PR with the CI and Static Build checks passing; no force-push or deletion). The Static Build pushes `public/` with the `STATIC_BUILD_DEPLOY_KEY` deploy key, which is the ruleset's bypass actor.
 
 ## Architecture
 

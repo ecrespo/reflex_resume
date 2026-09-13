@@ -25,6 +25,9 @@ jobs:
         uses: actions/checkout@v7
         with:
           fetch-depth: 0
+          # Deploy key is a bypass actor in the "Protect main" ruleset, so the
+          # auto-commit of public/ can push to main. Empty on PRs from forks.
+          ssh-key: ${{ secrets.STATIC_BUILD_DEPLOY_KEY }}
 
       - name: Setup uv
         uses: astral-sh/setup-uv@v10.1.0
@@ -46,6 +49,8 @@ jobs:
         uses: stefanzweifel/git-auto-commit-action@v7
         with:
           commit_message: Update static build [skip ci]
+          # reflex init also rewrites files like AGENTS.md/CLAUDE.md; only publish the export.
+          file_pattern: public/
           commit_user_name: Ernesto Crespo [Github Actions]
           commit_user_email: ecrespo@gmail.com
           commit_author: Ernesto Crespo <ecrespo@gmail.com>
