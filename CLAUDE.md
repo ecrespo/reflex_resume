@@ -69,6 +69,7 @@ Personal resume site + blog for seraph.to, built with Reflex (Python full-stack 
 uv sync                          # install deps (uv.lock is committed)
 uv run reflex init               # generate .web/ on first run
 uv run reflex run                # dev server, frontend at http://localhost:3000
+API_URL=http://localhost:8000 uv run reflex run   # …wired to the LOCAL backend
 uv run reflex export --frontend-only   # static frontend -> frontend.zip
 
 bash build_local.sh              # local static build into public/ (uv sync --frozen + reflex export)
@@ -88,14 +89,14 @@ Note: `uv.lock` is the only lockfile — both build scripts, CI and the Dockerfi
 ## Deployment model
 
 - **Frontend**: static export served by Vercel from `public/` (`vercel.json`, SPA rewrite to `index.html`). `.github/workflows/static_build.yml` runs `remote_build.sh` (exports with `API_URL=https://api.seraph.to`) on PRs to `main` as a check, and on push to `main` auto-commits `public/` as "Update static build [skip ci]". Don't hand-edit `public/`.
-- **Backend**: Railway builds the Dockerfile on push to `main`; the image runs `reflex run --backend-only` on port 8000 at `api.seraph.to`. `rxconfig.py` sets `api_url`, CORS origins, and `state_manager_mode="memory"`.
+- **Backend**: Railway builds the Dockerfile on push to `main`; the image runs `reflex run --backend-only` on port 8000 at `api.seraph.to`. `rxconfig.py` sets CORS origins, `state_manager_mode="memory"`, and `api_url` from `$API_URL` (default `https://api.seraph.to`). **A plain `uv run reflex run` therefore points the local frontend at the deployed backend** — state added since the last deploy will not come back in the deltas, so a new computed var looks like it never updates. Run `API_URL=http://localhost:8000 uv run reflex run` when testing state changes.
 - Work happens on `develop`; `main` is the deploy branch, protected by the "Protect main" ruleset (changes only via PR with the CI and Static Build checks passing; no force-push or deletion). The Static Build pushes `public/` with the `STATIC_BUILD_DEPLOY_KEY` deploy key, which is the ruleset's bypass actor.
 
 ## Architecture
 
 - `web/web.py` — creates `rx.App`, global `<head>` (Inter font, `.prose` CSS for rendered posts), and registers all routes: `/`, `/blog`, `/blog/archives`, `/blog/categories`, `/blog/tags`, plus one static route per post.
-- **Resume page**: content is hardcoded Python data in `web/resume_data.py`, rendered by `web/components/resume_sections.py`; `web/states/resume_state.py` builds Plotly radar charts used by `components/skills_chart.py`. Layout is sidebar (`components/sidebar.py`, fixed, `md:ml-96` offset) + navbar + main, styled with Tailwind classes via `class_name` (TailwindV4Plugin).
-- **Certifications timeline**: not Reflex components — `resume_sections.certifications_section` iframes `assets/timeline.html` (Knight Lab TimelineJS), which fetches `assets/timeline.json`. Add certificates by editing `assets/timeline.json` (`web/timeline.json` is a separate, stale copy). See `timeline.md` (Spanish) for the entry format.
+- **Resume page**: content is hardcoded Python data in `web/resume_data.py`, rendered by `web/components/resume_sections.py`; `web/states/resume_state.py` turns `skills_data` into radar series (`current_skill_radar`, `category_average_radar`) rendered by `components/skills_chart.py` with `reflex_rosencharts.radar_chart_rounded` (single-series `[{topic, value}]`, radial scale derived from the max value). Layout is sidebar (`components/sidebar.py`, fixed, `md:ml-96` offset) + navbar + main, styled with Tailwind classes via `class_name` (TailwindV4Plugin).
+- **Certifications timeline**: `resume_sections.certifications_section` renders the `reflex-knightlab-timeline` component (native Reflex wrapper around Knight Lab TimelineJS; the npm package is installed by Reflex at build time). `web/timeline_data.py` loads `assets/timeline.json` **at import time** into the typed model and rebuilds TimelineJS' slide-id → headline map, so `on_change` can resolve the active slide; `web/states/certifications_state.py` holds it. The component also emits an unbundled copy of `timeline.css` whose `@font-face` points at `/css/icons/tl-icons.*`, so those fonts are vendored in `assets/css/icons/` (copied from `@knight-lab/timelinejs/dist/css/icons`; update them if the package version changes). Add certificates by editing `assets/timeline.json` and restarting the app (`web/timeline.json` is a separate, stale copy). See `timeline.md` (Spanish) for the entry format.
 - **Blog** (`web/blog/`):
   - `paths.py` loads every `content/posts/*.md` **at import time** into `blog_data` (slug → `BlogPost`) and `sorted_posts`. Posts use Pelican-style header metadata (`Title:`, `Date:`, `Category:`, `Tags:`, `Slug:`, `Summary:`…) terminated by a blank line; files without `Title` are skipped. Slug comes from `Slug:` or the filename minus its date prefix, then `sanitize_slug` strips to `[a-z0-9_-]`.
   - `blog.py` builds `blog_post_routes` — one statically generated page per post via closures (the Reflex official blog pattern). Adding/renaming a post requires restarting the app / re-exporting.

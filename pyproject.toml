@@ -6,8 +6,9 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "reflex>=0.9.11",
-    "plotly>=7.0.0",
     "flexdown>=0.3.0",
+    "reflex-knightlab-timeline>=0.1.2",
+    "reflex-rosencharts>=0.2.1",
 ]
 
 [dependency-groups]

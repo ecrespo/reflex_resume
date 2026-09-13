@@ -1,4 +1,3 @@
-import plotly.graph_objects as go
 import reflex as rx
 
 
@@ -18,30 +17,30 @@ class ResumeState(rx.State):
 
     # Skills data structure for radar charts
     skills_data = {
-        "Programming": {"Python": 5, "R": 3, "Golang": 3, "Javascript": 2, "Julia": 2, "Nestjs": 2},
+        "Programming": {"Python": 5, "R": 3, "Golang": 4, "Javascript": 3, "Julia": 3, "Nestjs": 2},
         "Data processing/wrangling": {
             "SQL": 5,
             "Pandas": 5,
             "Numpy": 5,
-            "Polars": 2,
-            "Pyspark": 2,
-            "DuckDB": 1,
+            "Polars": 3,
+            "Pyspark": 3,
+            "DuckDB": 3,
         },
-        "Data visualization": {"Matplotlib": 5, "Seaborn": 5, "Plotly": 3, "Bokeh": 2},
-        "Dashboard": {"Streamlit": 5, "Dash": 2, "Taipy": 1, "Reflex": 3},
+        "Data visualization": {"Matplotlib": 5, "Seaborn": 5, "Plotly": 5, "Bokeh": 4},
+        "Dashboard": {"Streamlit": 4, "Dash": 2, "Taipy": 1, "Reflex": 5, "GRadio": 3},
         "Machine Learning/Deep Learning": {
             "scikit-learn": 5,
-            "TensorFlow": 2,
+            "TensorFlow": 1,
             "Keras": 1,
-            "Pytorch": 3,
+            "Pytorch": 4,
         },
-        "IA": {"Langchain": 3, "LangGraph": 1, "CrewAI": 2, "AutoGen": 1, "BeeAI": 1},
+        "IA": {"Langchain": 5, "LangGraph": 5, "CrewAI": 4, "AutoGen": 1, "BeeAI": 1},
         "Web development": {"Django": 4, "FastAPI": 5, "Flask": 2, "HTML": 3, "CSS": 3},
         "Operating System": {"Linux": 5, "Window": 3, "MacOs": 2},
-        "Low code tools": {"Knime": 3, "Tableu": 2, "Power BI": 1, "N8N": 4},
-        "Containers": {"Docker": 5, "Docker-compose": 4, "Kubernetes": 2},
+        "Low code tools": {"Knime": 4, "Tableu": 2, "Power BI": 1, "N8N": 5},
+        "Containers": {"Docker": 5, "Docker-compose": 5, "Kubernetes": 1},
         "Serverless Development": {"AWS Cloudformation": 4, "AWS SAM": 4, "Serverless": 3},
-        "Database Engine": {"PostgreSQL": 5, "MySQLdb": 3, "MongoDB": 3},
+        "Database Engine": {"PostgreSQL": 5, "MySQLdb": 3, "MongoDB": 5},
     }
 
     # Currently selected skill category
@@ -61,59 +60,39 @@ class ResumeState(rx.State):
         """Get data for currently selected skill."""
         return self.skills_data.get(self.selected_skill, {})
 
-    @rx.var
-    def individual_chart(self) -> go.Figure:
-        """Generate individual skill radar chart for selected category."""
-        data = self.skills_data.get(self.selected_skill, {})
-
-        fig = go.Figure()
-        fig.add_trace(
-            go.Scatterpolar(
-                r=list(data.values()),
-                theta=list(data.keys()),
-                fill="toself",
-                name=self.selected_skill,
-            )
-        )
-
-        fig.update_layout(
-            polar=dict(radialaxis=dict(visible=True, range=[0, 5])),
-            showlegend=False,
-            title=self.selected_skill,
-            autosize=True,
-            height=400,  # Smaller height for mobile
-            margin=dict(l=40, r=40, t=80, b=40),  # Reduced margins for mobile
-        )
-
-        return fig
+    # Shorter axis labels for the 12-axis comparative radar, where the full
+    # category names would overlap.
+    category_short_labels = {
+        "Data processing/wrangling": "Data wrangling",
+        "Data visualization": "Data viz",
+        "Machine Learning/Deep Learning": "ML / DL",
+        "Web development": "Web dev",
+        "Operating System": "OS",
+        "Low code tools": "Low code",
+        "Serverless Development": "Serverless",
+        "Database Engine": "Databases",
+    }
 
     @rx.var
-    def comparative_chart(self) -> go.Figure:
-        """Generate comparative radar chart with all skill categories."""
-        fig = go.Figure()
+    def current_skill_radar(self) -> list[dict]:
+        """Selected category as radar data: one axis per skill."""
+        return [
+            {"topic": name, "value": level}
+            for name, level in self.skills_data.get(self.selected_skill, {}).items()
+        ]
 
-        for category, skills in self.skills_data.items():
-            fig.add_trace(
-                go.Scatterpolar(
-                    r=list(skills.values()), theta=list(skills.keys()), fill="toself", name=category
-                )
-            )
+    @rx.var
+    def category_average_radar(self) -> list[dict]:
+        """One axis per category, valued by the average level of its skills.
 
-        fig.update_layout(
-            polar=dict(radialaxis=dict(visible=True, range=[0, 5])),
-            showlegend=True,
-            title="All Skills Comparison",
-            autosize=True,
-            height=700,  # Increased height even more
-            margin=dict(l=40, r=40, t=80, b=240),  # Significantly increased bottom margin
-            legend=dict(
-                orientation="h",  # Horizontal legend
-                yanchor="bottom",
-                y=-0.55,  # Position much further below the chart
-                xanchor="center",
-                x=0.5,
-                font=dict(size=9),  # Smaller font for mobile
-            ),
-        )
-
-        return fig
+        A single series keeps every category on the same radial scale, so the
+        axes stay comparable.
+        """
+        return [
+            {
+                "topic": self.category_short_labels.get(category, category),
+                "value": round(sum(levels.values()) / len(levels), 1),
+            }
+            for category, levels in self.skills_data.items()
+            if levels
+        ]
