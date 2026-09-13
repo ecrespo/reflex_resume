@@ -51,6 +51,8 @@ jobs:
           commit_message: Update static build [skip ci]
           # reflex init also rewrites files like AGENTS.md/CLAUDE.md; only publish the export.
           file_pattern: public/
+          # public/ is in .gitignore (local builds); force-add the export here.
+          add_options: -f
           commit_user_name: Ernesto Crespo [Github Actions]
           commit_user_email: ecrespo@gmail.com
           commit_author: Ernesto Crespo <ecrespo@gmail.com>
