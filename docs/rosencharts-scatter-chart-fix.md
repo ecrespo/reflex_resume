@@ -7,6 +7,30 @@
 
 ---
 
+## Estado
+
+**Resuelto en reflex-rosencharts 0.2.2**, ya aplicado en `reflex_resume`:
+- **Ejes:** se calculan desde la extensión de los datos, con marcas regulares y margen.
+- **Orden de los datos:** ya no hace falta ordenarlos.
+- **Escalas y margen:** hay props `x_scale`/`y_scale` y `margin_left`.
+- **Parche CSS:** se eliminó el de `web/web.py`.
+
+**Pendiente en el paquete: el margen izquierdo automático se queda corto.** `axisMarginLeft`
+(`components/helpers/ChartAxis.tsx`) calcula `longitud × CHAR_WIDTH(7) + LABEL_PADDING(10)`,
+es decir 31px para 3 dígitos. Pero la etiqueta lleva `pr-2` (8px) dentro de ese ancho: al texto
+le quedan 23px y ticks como `500` o `180` (Inter, 12px) se parten en dos líneas. Afecta a
+`scatter_chart` y a `line_chart_pulse`.
+
+Arreglo propuesto:
+- Añadir `whitespace-nowrap` a las etiquetas del eje Y.
+- Sumar el `pr-2` al cálculo: `LABEL_PADDING ≥ 8 + holgura`.
+- Mejor aún, medir el texto con `canvas.measureText` en lugar de estimarlo.
+
+Mientras tanto, `reflex_resume` fija `margin_left="46px"` en esos dos gráficos
+(`_Y_AXIS_GUTTER` en `web/components/dev_stats_sections.py`).
+
+---
+
 ## Contexto
 
 `reflex-rosencharts` (versión publicada **0.2.1**) envuelve los componentes de rosencharts

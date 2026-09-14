@@ -118,10 +118,10 @@ Headings reuse `resume_sections.section_heading`; cards reuse the `_CHART_CARD` 
 
 ## 8. Found during implementation
 
-- **`scatter_chart` requires x-sorted input.** Its x domain is built from `data[0]` and
-  `data[-1]` rather than from min/max, so unsorted rows produce negative hover-band widths
-  and a broken axis. `REPO_LIFECYCLE` is therefore kept sorted ascending by `revenue`, and
-  the data module says so. Worth an upstream issue alongside the prop-alias one.
+- **`scatter_chart` required x-sorted input up to reflex-rosencharts 0.2.1.** Its x domain
+  came from `data[0]` and `data[-1]`, so unsorted rows broke the axis and the hover bands.
+  Fixed upstream in 0.2.2 (see `docs/rosencharts-scatter-chart-fix.md`): both axes now use
+  the data extent with regular ticks and padding, so row order no longer matters.
 - **`sr-only` cannot go on a `<table>`.** A table's used width never falls below its
   min-content width, so `width: 1px` leaves it overflowing the viewport. The class goes on
   a wrapping `div` instead.
@@ -132,17 +132,19 @@ Headings reuse `resume_sections.section_heading`; cards reuse the `_CHART_CARD` 
   `ecrespo.github.io` (1,451 commits over 2,609 days) stretches both axes and clusters the
   other 13 repositories; the scatter was restored on request. The outlier is now left out
   of the plotted series (`REPO_LIFECYCLE_EXCLUDED`) so the sprint/marathon pattern is
-  visible, and the footnote names it with its figures rather than hiding it. Still open
-  upstream: the x axis labels every fifth data point instead of regular ticks, so the 1-
-  and 28-day labels overlap, and the y domain has no top padding.
+  visible, and the footnote names it with its figures rather than hiding it. The axis
+  defects of 0.2.1 (x labels taken from every fifth data point, so the 1- and 28-day labels
+  overlapped; no padding on either domain, so the extreme points were clipped) are fixed in
+  reflex-rosencharts 0.2.2.
 - **Three charts were legible-but-wrong and are fixed.** `donut_chart_center_text` appends a
   hardcoded `%` to every slice value, so the raw counts rendered as "128%"/"141%" — the
   slices now carry percentages and the counts moved to the headline, and the names were
   shortened because the labels are drawn outside the ring and clip against the card.
   `funnel_chart` clips the labels of its narrow bottom stages, so the stage keys are short.
-  `line_chart_pulse` and `scatter_chart` pin a 25px y-axis label gutter inline, which wraps
-  every three-digit tick over two lines; a `!important` custom-property override scoped to
-  `.dev-stats-page` widens it to 46px (inline custom properties lose to `!important` ones).
+  `line_chart_pulse` and `scatter_chart` pinned a 25px y-axis label gutter inline, which
+  wrapped every three-digit tick over two lines. Until 0.2.2 a `!important` CSS override
+  scoped to `.dev-stats-page` widened it; since 0.2.2 the gutter is sized from the longest
+  label (or set with `margin_left`) and the override was removed.
 - **§11 is the only live section.** The calendar fetches from
   `github-contributions-api.jogruber.de` in the visitor's browser, so it carries an
   `error_message` and degrades to one line of text when that host is unreachable (verified).

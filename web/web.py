@@ -88,7 +88,7 @@ def dev_stats_page() -> rx.Component:
             ),
             class_name="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96",
         ),
-        class_name="dev-stats-page flex min-h-screen font-['Inter'] bg-[#f5f5dc]",
+        class_name="flex min-h-screen font-['Inter'] bg-[#f5f5dc]",
     )
 
 
@@ -103,13 +103,6 @@ app = rx.App(
         rx.el.style("""
             html {
                 scroll-behavior: smooth;
-            }
-            /* The rosencharts line and scatter charts hardcode a 25px y-axis
-               label gutter inline, which wraps any three-digit tick into two
-               lines. Custom properties in a stylesheet beat inline ones when
-               marked !important, so widen it for this page only. */
-            .dev-stats-page [style*="--marginLeft"] {
-                --marginLeft: 46px !important;
             }
             .prose {
                 max-width: none;
