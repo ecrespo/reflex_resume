@@ -143,8 +143,12 @@ Headings reuse `resume_sections.section_heading`; cards reuse the `_CHART_CARD` 
   `funnel_chart` clips the labels of its narrow bottom stages, so the stage keys are short.
   `line_chart_pulse` and `scatter_chart` pinned a 25px y-axis label gutter inline, which
   wrapped every three-digit tick over two lines. Until 0.2.2 a `!important` CSS override
-  scoped to `.dev-stats-page` widened it; since 0.2.2 the gutter is sized from the longest
-  label (or set with `margin_left`) and the override was removed.
+  scoped to `.dev-stats-page` widened it. 0.2.2 sized the gutter from the label length but
+  still ~2px short, so `margin_left="46px"` was pinned on both charts; 0.2.3 fixed the
+  estimate and added `whitespace-nowrap`, and both workarounds are gone.
+- **`line_chart_pulse` x labels overlap on phones.** It labels only the first, last and
+  maximum points; at 390px June and September 2026 collide ("6/19/1"). Tracked in
+  `docs/rosencharts-scatter-chart-fix.md` as an upstream issue.
 - **§11 is the only live section.** The calendar fetches from
   `github-contributions-api.jogruber.de` in the visitor's browser, so it carries an
   `error_message` and degrades to one line of text when that host is unreachable (verified).
