@@ -58,6 +58,11 @@ _HEADLINE = "text-3xl md:text-4xl font-bold text-gray-900"
 _HEADLINE_LABEL = "text-sm uppercase tracking-wide text-gray-500 mt-1"
 _FOOTNOTE = "text-sm text-gray-600 mt-4 max-w-3xl"
 
+# y-axis gutter for the line and scatter charts. reflex-rosencharts 0.2.2 sizes it
+# from the label length (7px per character + 10px), which leaves 3-digit ticks
+# about 2px short once the label's own `pr-2` is taken off, so they wrap.
+_Y_AXIS_GUTTER = "46px"
+
 
 def _sr_table(caption: str, headers: list[str], rows: list[list]) -> rx.Component:
     """Screen-reader-only table carrying the same numbers as the chart.
@@ -202,7 +207,7 @@ def acceleration_section() -> rx.Component:
             "Monthly commits from January 2024 onward. The step up in October 2025 has held "
             "for twelve months, which makes it a new regime rather than a spike."
         ),
-        chart=rxc.line_chart_pulse(data=DevStatsState.monthly_commits),
+        chart=rxc.line_chart_pulse(data=DevStatsState.monthly_commits, margin_left=_Y_AXIS_GUTTER),
         headline=f"{MONTHLY_BEFORE} → {MONTHLY_AFTER} commits/month",
         headline_label=f"a {MONTHLY_SPEEDUP} acceleration, sustained for a year",
         table_caption="Authored commits per month, January 2024 to September 2026",
@@ -443,7 +448,7 @@ def repo_lifecycle_section() -> rx.Component:
             "commit; vertically, how many commits it holds. The upper left is compressed "
             "sprints; the right is the long-running projects. Hover a point for its name."
         ),
-        chart=rxc.scatter_chart(data=DevStatsState.repo_lifecycle),
+        chart=rxc.scatter_chart(data=DevStatsState.repo_lifecycle, margin_left=_Y_AXIS_GUTTER),
         headline="53 commits in one day",
         headline_label="omagnome: 173 files, a single sitting",
         table_caption="Lifespan and commit count of the most active repositories",
@@ -456,8 +461,9 @@ def repo_lifecycle_section() -> rx.Component:
             "static generation rather than hand-written work. On the same axes it would "
             "squash every other repository into one corner."
         ),
+        # Not scrollable: 0.2.2 sizes the x ticks to the available width, and an
+        # overflow-x container would clip the last tick label at the right edge.
         min_height="min-h-[20rem]",
-        scrollable=True,
     )
 
 

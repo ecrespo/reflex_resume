@@ -269,10 +269,8 @@ DELIVERY_FUNNEL = [
 #     The field names come from the original rosencharts example and are wired
 #     into the TSX: `revenue` is the x axis (days from first to last commit),
 #     `value` the y axis (commits), `company` the tooltip label (repository).
-#
-#     The component builds its x domain from `data[0]` and `data[-1]` rather than
-#     from the min/max, so the rows MUST stay sorted ascending by `revenue`;
-#     any other order yields negative hover-band widths and a broken axis.
+#     Since reflex-rosencharts 0.2.2 the axes come from the data extent, so row
+#     order no longer matters; rows are kept sorted only for readability.
 #
 #     ecrespo.github.io is kept out of the plotted series: with 1,451 commits over
 #     2,609 days it stretches both linear axes and squashes the other repositories
