@@ -26,11 +26,22 @@ La 0.2.3 cambia el cálculo y blinda las etiquetas:
 página: margen de 36px, 28px disponibles para el texto frente a 23,3px del número más ancho,
 sin etiquetas partidas a 1440px ni a 390px.
 
-**Pendiente en `line_chart_pulse`: solape de etiquetas del eje X en móvil.** Solo se etiquetan el
-primer punto, el último y el máximo. En pantallas estrechas el máximo (junio 2026) y el último
-(septiembre 2026) quedan tan cerca que se solapan ("6/19/1" a 390px). Arreglo propuesto: omitir
-la etiqueta del máximo cuando esté a menos de su ancho de la del último o del primer punto, o
-usar marcas regulares con `responsiveTickCount` como en `scatter_chart`.
+**Resuelto en reflex-rosencharts 0.2.4: solape de etiquetas del eje X en los gráficos de
+línea/área.** Solo se etiquetaban el primer punto, el último y el máximo, sin mirar el espacio
+disponible. A 390px el máximo (junio 2026) y el último (septiembre 2026) se solapaban
+("6/19/1"). La 0.2.4 añade el helper compartido `xAxisLabels` en `ChartAxis.tsx`, que usan los
+8 componentes afectados:
+- **Colisiones:** mide el ancho real y descarta las etiquetas que chocan, por prioridad primer
+  punto > último > máximo.
+- **Redimensionado:** recalcula las etiquetas al cambiar el ancho de la ventana.
+- **Prop opcional `x_ticks="regular"`:** marcas regulares.
+
+Verificado en `/dev-stats`:
+- **1440px:** "1/1", "6/1" y "9/1".
+- **390px:** "1/1" y "9/1".
+- **Siempre:** sin solapes, también al redimensionar.
+
+No hizo falta ningún cambio en `reflex_resume` más allá de la dependencia.
 
 ---
 

@@ -956,7 +956,7 @@ requires-dist = [
     { name = "reflex", specifier = ">=0.9.11" },
     { name = "reflex-knightlab-timeline", specifier = ">=0.1.2" },
     { name = "reflex-react-github-calendar", specifier = ">=0.1.0" },
-    { name = "reflex-rosencharts", specifier = ">=0.2.3" },
+    { name = "reflex-rosencharts", specifier = ">=0.2.4" },
 ]
 
 [package.metadata.requires-dev]
@@ -968,15 +968,15 @@ dev = [
 
 [[package]]
 name = "reflex-rosencharts"
-version = "0.2.3"
+version = "0.2.4"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "reflex" },
     { name = "reflex-hosting-cli" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/da/14/131fe307430bd71b030c26b75cb904b1d86b29f0f8244d8693639594cc73/reflex_rosencharts-0.2.3.tar.gz", hash = "sha256:424cc6fedd41e60ef8c38b5678b7a27651289910276748539abffbf654525e9f", size = 78912, upload-time = "2026-09-14T01:31:04.372Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/4c/5e/46ef2a82887ddc5394f4885838bc7c8aad7abf482aedcc157b77dbb62a61/reflex_rosencharts-0.2.4.tar.gz", hash = "sha256:21014743268fe637507ff0256da88c7ac12c925bdd058bb0e82101420474429f", size = 81101, upload-time = "2026-09-14T02:14:00.732Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/d0/4c/ae919b89b7a8a84275e45d9c852f45ec291fef93270794a4e156e3899163/reflex_rosencharts-0.2.3-py3-none-any.whl", hash = "sha256:f6d6feb3fae49f73e9aa7567963c7f6bcfa7d2c0de370d1ea9de5b9034acf727", size = 212444, upload-time = "2026-09-14T01:31:02.626Z" },
+    { url = "https://files.pythonhosted.org/packages/06/16/94f7e647ff94f6d1578e12085c5f79fdd3099ba21f30ec8b75f8d197e2ea/reflex_rosencharts-0.2.4-py3-none-any.whl", hash = "sha256:7a9d79346a209feeb3f7f19d741bc803c25a19a339d23cacbce82d04d3aa0d63", size = 216474, upload-time = "2026-09-14T02:13:59.215Z" },
 ]
 
 [[package]]

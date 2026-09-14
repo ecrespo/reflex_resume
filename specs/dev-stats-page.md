@@ -146,9 +146,10 @@ Headings reuse `resume_sections.section_heading`; cards reuse the `_CHART_CARD` 
   scoped to `.dev-stats-page` widened it. 0.2.2 sized the gutter from the label length but
   still ~2px short, so `margin_left="46px"` was pinned on both charts; 0.2.3 fixed the
   estimate and added `whitespace-nowrap`, and both workarounds are gone.
-- **`line_chart_pulse` x labels overlap on phones.** It labels only the first, last and
-  maximum points; at 390px June and September 2026 collide ("6/19/1"). Tracked in
-  `docs/rosencharts-scatter-chart-fix.md` as an upstream issue.
+- **`line_chart_pulse` x labels overlapped on phones.** Up to 0.2.3 it labelled the first,
+  last and maximum points regardless of space, so at 390px June and September 2026 collided
+  ("6/19/1"). reflex-rosencharts 0.2.4 drops colliding labels by priority (first > last >
+  max) and recomputes on resize; no app-side change was needed.
 - **§11 is the only live section.** The calendar fetches from
   `github-contributions-api.jogruber.de` in the visitor's browser, so it carries an
   `error_message` and degrades to one line of text when that host is unreachable (verified).
