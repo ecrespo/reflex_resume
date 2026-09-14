@@ -15,19 +15,22 @@
 - **Escalas y margen:** hay props `x_scale`/`y_scale` y `margin_left`.
 - **Parche CSS:** se eliminó el de `web/web.py`.
 
-**Pendiente en el paquete: el margen izquierdo automático se queda corto.** `axisMarginLeft`
-(`components/helpers/ChartAxis.tsx`) calcula `longitud × CHAR_WIDTH(7) + LABEL_PADDING(10)`,
-es decir 31px para 3 dígitos. Pero la etiqueta lleva `pr-2` (8px) dentro de ese ancho: al texto
-le quedan 23px y ticks como `500` o `180` (Inter, 12px) se parten en dos líneas. Afecta a
-`scatter_chart` y a `line_chart_pulse`.
+**Resuelto en reflex-rosencharts 0.2.3: margen izquierdo automático.** En 0.2.2,
+`axisMarginLeft` calculaba `longitud × 7px + 10px` (31px para 3 dígitos). Como la etiqueta lleva
+`pr-2` (8px), al texto le quedaban 23px y ticks como `500` o `180` se partían en dos líneas.
+La 0.2.3 cambia el cálculo y blinda las etiquetas:
+- 8px por carácter, 4px para los separadores y 12px de relleno.
+- `whitespace-nowrap` en las etiquetas.
 
-Arreglo propuesto:
-- Añadir `whitespace-nowrap` a las etiquetas del eje Y.
-- Sumar el `pr-2` al cálculo: `LABEL_PADDING ≥ 8 + holgura`.
-- Mejor aún, medir el texto con `canvas.measureText` en lugar de estimarlo.
+`reflex_resume` fijaba `margin_left="46px"` como parche; se retiró con la 0.2.3. Medido en la
+página: margen de 36px, 28px disponibles para el texto frente a 23,3px del número más ancho,
+sin etiquetas partidas a 1440px ni a 390px.
 
-Mientras tanto, `reflex_resume` fija `margin_left="46px"` en esos dos gráficos
-(`_Y_AXIS_GUTTER` en `web/components/dev_stats_sections.py`).
+**Pendiente en `line_chart_pulse`: solape de etiquetas del eje X en móvil.** Solo se etiquetan el
+primer punto, el último y el máximo. En pantallas estrechas el máximo (junio 2026) y el último
+(septiembre 2026) quedan tan cerca que se solapan ("6/19/1" a 390px). Arreglo propuesto: omitir
+la etiqueta del máximo cuando esté a menos de su ancho de la del último o del primer punto, o
+usar marcas regulares con `responsiveTickCount` como en `scatter_chart`.
 
 ---
 
