@@ -1,0 +1,300 @@
+import{r as e}from"./rolldown-runtime-hePW80VL.js";import{W as t,a as n}from"./components-DO_H3UDc.js";import{B as r,L as i,n as a,t as o}from"./link-COHQ-ppo.js";import{n as s}from"./emotion-react.browser.esm-D8ztlwVE.js";import{n as c,t as l}from"./code-BOOhlaUK.js";import{a as u,d,l as f,o as p,t as m}from"./blog-56V6I352.js";import{a as h,c as g,i as _,l as v,n as y,o as b,r as x,t as S,u as C}from"./one-dark-BaPqULrx.js";var w=e(t(),1);function T(){let{resolvedColorMode:e}=(0,w.useContext)(i);return{h1:({node:e,children:t,...n})=>s(c,{as:`h1`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`6`,...n},t),h2:({node:e,children:t,...n})=>s(c,{as:`h2`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`5`,...n},t),h3:({node:e,children:t,...n})=>s(c,{as:`h3`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`4`,...n},t),h4:({node:e,children:t,...n})=>s(c,{as:`h4`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`3`,...n},t),h5:({node:e,children:t,...n})=>s(c,{as:`h5`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`2`,...n},t),h6:({node:e,children:t,...n})=>s(c,{as:`h6`,css:{marginTop:`0.5em`,marginBottom:`0.5em`},size:`1`,...n},t),p:({node:e,children:t,...n})=>s(a,{as:`p`,css:{marginTop:`1em`,marginBottom:`1em`},...n},t),ul:({node:e,children:t,...n})=>s(`ul`,{css:{listStyleType:`disc`,marginTop:`1em`,marginBottom:`1em`,marginLeft:`1.5rem`,direction:`column`},...n},t),ol:({node:e,children:t,...n})=>s(`ol`,{css:{listStyleType:`decimal`,marginTop:`1em`,marginBottom:`1em`,marginLeft:`1.5rem`,direction:`column`},...n},t),li:({node:e,children:t,...n})=>s(`li`,{css:{marginTop:`0.5em`,marginBottom:`0.5em`},...n},t),a:({node:e,children:t,...n})=>s(o,{css:{"&:hover":{color:`var(--accent-8)`}},href:`#`,...n},t),code:({node:e,children:t,...n})=>s(l,{...n},t),pre:({node:t,...n})=>{let{node:r,className:i,children:a,...o}=n.children.props,c=String(Array.isArray(a)?a.join(`
+`):a).replace(/\n$/,``),l=(i||``).match(/language-(?<lang>.*)/),u=l?l[1]:``;return s(x,{children:c,codeTagProps:{style:{whiteSpace:`pre-wrap`}},css:{marginTop:`1em`,marginBottom:`1em`},customStyle:{marginTop:`1em`,marginBottom:`1em`},language:u,style:e?.valueOf?.()===`light`.valueOf?.()?y:S,wrapLongLines:!0,...o})}}}function E(){return s(w.Fragment,{},s(`div`,{className:`flex min-h-screen font-['Inter'] bg-[#f5f5dc]`},s(w.Fragment,{},s(w.Fragment,{},s(f,{},s(w.Fragment,{},s(d,{})),s(w.Fragment,{}))),s(m,{},s(`div`,{className:`flex flex-col items-center pt-6 px-4 w-full pb-4`},s(u,{},`✕`),s(`div`,{className:`mb-4 text-center`},s(`h1`,{className:`text-2xl font-bold text-gray-900 mb-0.5 tracking-tight`},`Ernesto Crespo.`),s(`p`,{className:`italic text-gray-700 text-sm font-medium tracking-wide`},`Resume`)),s(`img`,{alt:`Ernesto Crespo`,className:`w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30`,src:`/ec.jpg`}),s(`div`,{className:`w-full flex flex-col mb-3`},s(`h2`,{className:`text-base font-bold text-gray-800 mb-2 self-start w-full pl-1`},`Summary`),s(`div`,{className:`bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm`},s(`ul`,{className:`list-none m-0 p-0`},s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Electrical Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Python Developer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data analyst.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`AWS Cloud Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data Scientist.`))))),s(`div`,{className:`w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200`},s(r,{className:`block w-full`,rel:`noopener noreferrer`,target:`_blank`,to:`https://www.linkedin.com/in/ernestocrespo/`},s(`div`,{className:`flex items-center gap-2`},s(`div`,{className:`rx-Html`,dangerouslySetInnerHTML:{__html:`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    `}}),s(`div`,{className:`flex-1`},s(`p`,{className:`font-bold text-gray-900 text-sm mb-0`},`Ernesto Crespo`),s(`p`,{className:`text-xs text-gray-600 mb-0`},`View LinkedIn Profile`))))),s(`div`,{className:`w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200`},s(o,{asChild:!0,className:`block w-full`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{to:`/blog`},s(`div`,{className:`flex items-center gap-2`},s(`div`,{className:`rx-Html`,dangerouslySetInnerHTML:{__html:`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    `}}),s(`div`,{className:`flex-1`},s(`p`,{className:`font-bold text-gray-900 text-sm mb-0`},`Blog`),s(`p`,{className:`text-xs text-gray-600 mb-0`},`Ver artículos`)))))),s(`div`,{className:`w-full px-4`},s(`p`,{className:`text-sm text-gray-700 font-medium mb-1`},`Wish to connect?`),s(o,{asChild:!0,className:`text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{target:`_blank`,to:`mailto:ecrespo@gmail.com`},`📧 ecrespo@gmail.com`)),s(o,{asChild:!0,className:`inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{download:`ErnestoCrespo.pdf`,target:`_blank`,to:`/Resume_Ernesto_Crespo_software.pdf`},`Download Resume`))))),s(`aside`,{className:`hidden md:flex w-96 min-h-screen bg-[#7dd3c0] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-teal-600/10`},s(`div`,{className:`flex flex-col items-center pt-6 px-4 w-full pb-4`},s(u,{},`✕`),s(`div`,{className:`mb-4 text-center`},s(`h1`,{className:`text-2xl font-bold text-gray-900 mb-0.5 tracking-tight`},`Ernesto Crespo.`),s(`p`,{className:`italic text-gray-700 text-sm font-medium tracking-wide`},`Resume`)),s(`img`,{alt:`Ernesto Crespo`,className:`w-24 h-24 rounded-xl object-cover mb-4 shadow-sm bg-gray-100 border-2 border-white/30`,src:`/ec.jpg`}),s(`div`,{className:`w-full flex flex-col mb-3`},s(`h2`,{className:`text-base font-bold text-gray-800 mb-2 self-start w-full pl-1`},`Summary`),s(`div`,{className:`bg-[#73cbb6] p-4 rounded-lg w-full shadow-sm`},s(`ul`,{className:`list-none m-0 p-0`},s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Electrical Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Python Developer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data analyst.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`AWS Cloud Engineer.`)),s(`li`,{className:`flex items-start mb-1.5 last:mb-0`},s(`span`,{className:`text-blue-700 text-xl leading-none mr-2 align-middle inline-block`},`•`),s(`span`,{className:`text-gray-700 font-medium text-sm`},`Data Scientist.`))))),s(`div`,{className:`w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200`},s(r,{className:`block w-full`,rel:`noopener noreferrer`,target:`_blank`,to:`https://www.linkedin.com/in/ernestocrespo/`},s(`div`,{className:`flex items-center gap-2`},s(`div`,{className:`rx-Html`,dangerouslySetInnerHTML:{__html:`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    `}}),s(`div`,{className:`flex-1`},s(`p`,{className:`font-bold text-gray-900 text-sm mb-0`},`Ernesto Crespo`),s(`p`,{className:`text-xs text-gray-600 mb-0`},`View LinkedIn Profile`))))),s(`div`,{className:`w-full bg-white rounded-lg p-3 mb-3 shadow-sm hover:shadow-md transition-shadow cursor-pointer border border-gray-200`},s(o,{asChild:!0,className:`block w-full`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{to:`/blog`},s(`div`,{className:`flex items-center gap-2`},s(`div`,{className:`rx-Html`,dangerouslySetInnerHTML:{__html:`
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#4a9bba" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path>
+                            <path d="M8 7h6"></path>
+                            <path d="M8 11h8"></path>
+                        </svg>
+                    `}}),s(`div`,{className:`flex-1`},s(`p`,{className:`font-bold text-gray-900 text-sm mb-0`},`Blog`),s(`p`,{className:`text-xs text-gray-600 mb-0`},`Ver artículos`)))))),s(`div`,{className:`w-full px-4`},s(`p`,{className:`text-sm text-gray-700 font-medium mb-1`},`Wish to connect?`),s(o,{asChild:!0,className:`text-sm text-blue-600 hover:text-blue-800 hover:underline mb-2 inline-block`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{target:`_blank`,to:`mailto:ecrespo@gmail.com`},`📧 ecrespo@gmail.com`)),s(o,{asChild:!0,className:`inline-block w-full text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors shadow-sm text-sm`,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{download:`ErnestoCrespo.pdf`,target:`_blank`,to:`/Resume_Ernesto_Crespo_software.pdf`},`Download Resume`)))))),s(`div`,{className:`flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96`},s(`nav`,{className:`w-full h-14 bg-[#4a9bba] flex items-center shadow-sm flex-shrink-0 z-20 sticky top-0`},s(`div`,{className:`flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar`},s(p,{},s(`div`,{className:`flex flex-col`},s(`span`,{className:`block w-6 h-0.5 bg-white mb-1.5`}),s(`span`,{className:`block w-6 h-0.5 bg-white mb-1.5`}),s(`span`,{className:`block w-6 h-0.5 bg-white`}))),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/`},`HOME`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/blog`},`BLOG`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/blog/archives`},`ARCHIVES`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/blog/categories`},`CATEGORIES`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/blog/tags`},`TAGS`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/feed.xml`},`ATOM`),s(r,{className:`text-white hover:text-white/80 text-sm font-medium hover:underline transition-all whitespace-nowrap`,to:`/dev-stats`},`DEV STATS`))),s(`main`,{className:`p-4 md:p-8 lg:p-16 w-full`},s(`div`,{className:`container mx-auto max-w-4xl`},s(o,{asChild:!0,css:{"&:hover":{color:`var(--accent-8)`}}},s(r,{to:`/blog`},s(`span`,{className:`inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6`},`← Volver al Blog`))),s(`header`,{className:`mb-8 pb-6 border-b border-gray-200`},s(`h1`,{className:`text-3xl md:text-4xl font-bold text-gray-900 mb-4`},`Bajar vídeos de youtube desde Python con Pafy.`),s(`div`,{className:`flex items-center flex-wrap text-sm mb-6`},s(`span`,{className:`text-gray-500`},`September 01, 2013`),s(`span`,{className:`text-gray-400 mx-2`},` • `),s(`span`,{className:`text-[#4a9bba] font-medium`},`General`),s(`span`,{className:`text-gray-400 mx-2`},` • `),s(`span`,{className:`text-gray-600`},`Por `),s(`span`,{className:`text-gray-800 font-medium`},`Unknown`))),s(`article`,{className:`post-content`},s(`div`,{className:`prose prose-lg max-w-none`},s(C,{components:T(),rehypePlugins:[b,h,_],remarkPlugins:[v,g]},`\`Pafy\` permite realizar busquedas de vídeos de youtube y descargarlos.
+
+El sitio de \`Pafy\` se encuentra en [github (enlace roto)](http://np1.github.io/pafy/), en ese sitio se puede bajar la librería en formato zip, tar.gz o visitar el repositorio git del proyecto.
+
+Para instalar \`Pafy\` desde Linux se puede hacer con \`easy_install\` o \`pip\`:
+\`\`\`
+pip install Pafy
+\`\`\`
+Se ejecuta python:
+\`\`\`python
+ernesto@grievous:~$ python
+
+Python 2.7.3 (default, Jan  2 2013, 13:56:14) 
+
+[GCC 4.7.2] on linux2
+
+Type "help", "copyright", "credits" or "license" for more information.
+
+>>> 
+\`\`\`
+
+Se importa Pafy:
+\`\`\`python
+>>> from pafy import Pafy
+\`\`\`
+
+Se crea la variable donde se encuentra el url del vídeo:
+\`\`\`python
+>>> url="http://www.youtube.com/watch?v=YOZjaqHioro"
+\`\`\`
+
+Se crea la instancia del vídeo:
+\`\`\`python
+>>> video = Pafy(url)
+\`\`\`
+
+Se obtiene el título del vídeo:
+\`\`\`python
+>>> video.title
+
+u'Jimmy Fallon, Robin Thicke & The Roots Sing "Blurred Lines" (w/ Classroom Instruments)'
+\`\`\`
+El rating y longitud del vídeo:
+
+\`\`\`python
+>>> video.rating
+
+
+4.9188302785
+
+
+
+
+>>> video.length
+
+
+214
+
+\`\`\`
+
+Se muestra los metadatos del vídeo:
+\`\`\`python
+>>> print video
+
+
+Title: Jimmy Fallon, Robin Thicke & The Roots Sing "Blurred Lines" (w/ Classroom Instruments)
+
+
+Author: latenight
+
+
+ID: YOZjaqHioro
+
+
+Duration: 00:03:34
+
+
+Rating: 4.9188302785
+
+
+Views: 10459846
+
+
+Thumbnail: https://i1.ytimg.com/vi/YOZjaqHioro/default.jpg
+
+
+Keywords: Jimmy Fallon, Late Night With Jimmy Fallon, Late Night, NBC, NBC TV, Television, Funny, Talk Show, comedic, humor, stand-up, snl, Fallon Stand-up, Fallon monologue, latenight, jokes, funny video, interview, variety, comedy sketches, talent, celebrities, music, musical performance, The Roots, video, clip, highlight, talking, youtube, jimmy fallon & robin thicke, robin thicke, blurred lines, classroom instruments, late night music room
+\`\`\`
+
+Se muestra el título del vídeo, el autor, el ID del vídeo, la duración, el rating, la cantidad de veces que se ha visto, entre otra información.
+
+Se muestra todos los formatos del vídeo y su resolución:
+\`\`\`python
+>>> streams = video.streams
+
+
+>>> for s in streams: print s.resolution, s.extension
+
+
+... 
+
+
+1080x1920 webm
+
+
+1080x1920 mp4
+
+
+720x1280 webm
+
+
+720x1280 mp4
+
+
+480x854 webm
+
+
+480x854 flv
+
+
+360x640 webm
+
+
+360x640 flv
+
+
+360x640 mp4
+
+
+240x400 flv
+
+
+320x240 3gp
+
+
+144x176 3gp
+
+\`\`\`
+
+Se muestran todos los formatos, su resolución y el url para descargarlo:
+
+\`\`\`python
+>>> for s in streams: print s.resolution, s.extension, s.url
+
+
+... 
+
+
+1080x1920 webm http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+1080x1920 mp4 http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+720x1280 webm http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+720x1280 mp4 http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+480x854 webm http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+480x854 flv http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+360x640 webm http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+360x640 flv http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+360x640 mp4 http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+240x400 flv http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+320x240 3gp http://r14---sn-ab5e6nll.c.youtube.com...
+
+
+144x176 3gp http://r14---sn-ab5e6nll.c.youtube.com...
+
+\`\`\`
+
+Obtener la mejor resolución y su extensión:
+
+\`\`\`python
+>>> best = video.getbest()
+
+
+>>> best.resolution, best.extension
+
+
+('1080x1920', 'webm')
+
+\`\`\`
+
+Mejor resolución para un formato en específico:
+
+\`\`\`python
+
+>>> best = video.getbest(preftype="mp4")
+
+
+>>> best.resolution, best.extension
+
+
+('1080x1920', 'mp4')
+
+
+\`\`\`
+
+Obtener el url para descargar el vídeo:
+
+\`\`\`python
+>>> best.url
+
+
+'http://r14---sn-ab5e6nll.c.youtube.com/videoplayback...'
+
+\`\`\`
+
+Se descarga el vídeo con un nombre y en una ruta predefinida:
+
+\`\`\`python
+>>> myfilename = "/home/ernesto/videos/" + "JimmtFallon" + "." + best.extension
+
+
+>>> best.download(progress=False, filepath=myfilename)
+
+
+-Downloading 'Jimmy Fallon, Robin Thicke & The Roots Sing "Blurred Lines" (w/ Classroom Instruments).webm' [157,236,345 Bytes]
+
+
+
+Done
+\`\`\`
+
+Se sale de python:
+
+\`\`\`python
+>>> exit()
+
+\`\`\`
+
+Se verifica que el archivo bajo:
+
+\`\`\`
+ernesto@grievous:~/videos$ ls -l
+
+
+total 153556
+
+
+-rw-r--r-- 1 ernesto ernesto 157236345 sep  1 11:03 JimmtFallon.webm
+
+\`\`\`
+
+Ahora puede ejecutar su reproductor de vídeo preferido para ver el vídeo.  
+
+En la siguiente figura se muestra la captura de pantalla del escritorio al momento de reproducir el vídeo con VLC:
+
+![](/blog/images/bajarvideosdeyoutubedesdepythonconpafy-1.png) 
+
+
+Si desean ver el vídeo a continuación les dejo el enlace de youtube para verlo:
+
+[https://youtu.be/YOZjaqHioro](https://youtu.be/YOZjaqHioro) 
+
+##  ##
+¡Haz tu donativo!
+Si te gustó el artículo puedes realizar un donativo con Bitcoin (BTC)
+usando la billetera digital de tu preferencia a la siguiente
+dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV
+
+O Escaneando el código QR desde la billetera:
+
+![17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV](/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png)`))))))),s(`title`,{},`Blog | Bajar vídeos de youtube desde Python con Pafy.`),s(`meta`,{content:`favicon.ico`,property:`og:image`}))}E.displayName=`Component(blog/bajarvideosdeyoutubedesdepythonconpafy)`;var D=n(E);export{D as default};

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | Analizar código python con pylint desde Docker</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-5395a858.js"/><link rel="modulepreload" href="/assets/entry.client-C_V-1ZtH.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-hePW80VL.js"/><link rel="modulepreload" href="/assets/components-DO_H3UDc.js"/><link rel="modulepreload" href="/assets/react-dom-CGlty157.js"/><link rel="modulepreload" href="/assets/errorBoundaries-BQeIBB2f.js"/><link rel="modulepreload" href="/assets/root-yeEBWOOR.js"/><link rel="modulepreload" href="/assets/link-ETk5Xehg.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-D8ztlwVE.js"/><link rel="modulepreload" href="/assets/radius.prop-IkoOEK_C.js"/><link rel="modulepreload" href="/assets/select-BwHa8eiG.js"/><link rel="modulepreload" href="/assets/button-BUeNLdv6.js"/><link rel="modulepreload" href="/assets/code-Lzds_kFA.js"/><link rel="modulepreload" href="/assets/_blog_._analizarcodigopythonconpylintdesdedocker_._index-CI99MAlr.js"/><link rel="modulepreload" href="/assets/blog-CtFyvHQ2.js"/><link rel="modulepreload" href="/assets/one-dark-Bdy0S0uu.js"/><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><title>Blog | Analizar código python con pylint desde Docker</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-3c6e5800.js"/><link rel="modulepreload" href="/assets/entry.client-C_V-1ZtH.js"/><link rel="modulepreload" href="/assets/rolldown-runtime-hePW80VL.js"/><link rel="modulepreload" href="/assets/components-DO_H3UDc.js"/><link rel="modulepreload" href="/assets/react-dom-CGlty157.js"/><link rel="modulepreload" href="/assets/errorBoundaries-BQeIBB2f.js"/><link rel="modulepreload" href="/assets/root-jY7kzK43.js"/><link rel="modulepreload" href="/assets/link-COHQ-ppo.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/emotion-react.browser.esm-D8ztlwVE.js"/><link rel="modulepreload" href="/assets/radius.prop-NCQsNfqJ.js"/><link rel="modulepreload" href="/assets/select-D9Ps5Byk.js"/><link rel="modulepreload" href="/assets/button-7uz0UdaN.js"/><link rel="modulepreload" href="/assets/code-BOOhlaUK.js"/><link rel="modulepreload" href="/assets/_blog_._analizarcodigopythonconpylintdesdedocker_._index-CZzvD-Ny.js"/><link rel="modulepreload" href="/assets/blog-56V6I352.js"/><link rel="modulepreload" href="/assets/one-dark-BaPqULrx.js"/><script>
 // Only run in browser environment, not during SSR
 if (typeof document !== 'undefined') {
     try {
@@ -23,13 +23,6 @@ if (typeof document !== 'undefined') {
 </script><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><style>
             html {
                 scroll-behavior: smooth;
-            }
-            /* The rosencharts line and scatter charts hardcode a 25px y-axis
-               label gutter inline, which wraps any three-digit tick into two
-               lines. Custom properties in a stylesheet beat inline ones when
-               marked !important, so widen it for this page only. */
-            .dev-stats-page [style*="--marginLeft"] {
-                --marginLeft: 46px !important;
             }
             .prose {
                 max-width: none;
@@ -545,9 +538,9 @@ dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
 			console.error(error);
 			sessionStorage.removeItem(storageKey);
 		}
-	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-5395a858.js";
-import * as route0 from "/assets/root-yeEBWOOR.js";
-import * as route1 from "/assets/_blog_._analizarcodigopythonconpylintdesdedocker_._index-CI99MAlr.js";
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-3c6e5800.js";
+import * as route0 from "/assets/root-jY7kzK43.js";
+import * as route1 from "/assets/_blog_._analizarcodigopythonconpylintdesdedocker_._index-CZzvD-Ny.js";
   
   window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[analizarcodigopythonconpylintdesdedocker]._index":route1};
 
