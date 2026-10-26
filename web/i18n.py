@@ -50,8 +50,8 @@ def localize(route: str, lang: str) -> str:
 
 
 def page_title(lang: str, en: str, es: str) -> str:
-    """The browser-tab title of a page."""
-    site = t(lang, "Seraph's Resume", "Currículum de Seraph")
+    """The browser-tab title of a page: `Resume | Seraph`, or `Seraph` for the home page."""
+    site = "Seraph"
     name = t(lang, en, es)
     return site if not name else f"{name} | {site}"
 
