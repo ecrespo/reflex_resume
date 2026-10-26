@@ -1,1 +1,0 @@
-import{c as e,l as t,p as n,s as r}from"./rss-Ce-bPYqM.js";function i({children:i,dashboardCell:a,...o}){return r(n(o,t(o,a),{text:e(i)}),{slots:{content:i}})}export{i as t};

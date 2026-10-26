@@ -4,1242 +4,2484 @@
     <loc>http://localhost:3000/</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/resume</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/resume</loc>
   </url>
   <url>
     <loc>http://localhost:3000/portfolio</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/portfolio</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/dev-dashboard-stats</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/dev-dashboard-stats</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/archives</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/archives</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/categories</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/categories</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tags</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tags</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/reactivando_el_blog</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/reactivando_el_blog</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python_calendar</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python_calendar</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python_solid5</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python_solid5</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python_solid4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python_solid4</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python_solid3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python_solid3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python_solid2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python_solid2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python_solid1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python_solid1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python_typing</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python_typing</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python_orjson</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python_orjson</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python_pydantic</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python_pydantic</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pyenv_poetry</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pyenv_poetry</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python_dataclass</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python_dataclass</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/data_fake_faler</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/data_fake_faler</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalar_airflow_ubuntu</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalar_airflow_ubuntu</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python-clean-python-code</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python-clean-python-code</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python-tutorial-streamlit</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python-tutorial-streamlit</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python-streamlit-magnetic-field</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python-streamlit-magnetic-field</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python-genson-xml-json_schema</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python-genson-xml-json_schema</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python-request-wget-springer-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python-request-wget-springer-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python-pandas-covid19-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python-pandas-covid19-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python-tools-security-quality-code</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python-tools-security-quality-code</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/python-loops-maps-filter-reduce-2020</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/python-loops-maps-filter-reduce-2020</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python-wikipedia-2019</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python-wikipedia-2019</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/memcached_2019</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/memcached_2019</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/entorno_desarrollo_datascience</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/entorno_desarrollo_datascience</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/apirest-aiohttp-cerberus-2019</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/apirest-aiohttp-cerberus-2019</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/webscrapingextracciondedatosdewikipediaconpandas</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/webscrapingextracciondedatosdewikipediaconpandas</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/visualizandoseriesdetiempodepreciosdelmercadoconpandasymatplotlib</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/visualizandoseriesdetiempodepreciosdelmercadoconpandasymatplotlib</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/visualizandoestadisticasdepokemonusandoplotlygraficaderadar</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/visualizandoestadisticasdepokemonusandoplotlygraficaderadar</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/visualizaciondeobjetosgraphcontensorboard</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/visualizaciondeobjetosgraphcontensorboard</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/visualizaciondearboldedecision</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/visualizaciondearboldedecision</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/variablesyplaceholdersentensorflow</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/variablesyplaceholdersentensorflow</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/unaredneuronalparaaprendizajesupervisadousandoscikitlearn</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/unaredneuronalparaaprendizajesupervisadousandoscikitlearn</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pdfscrapingparapandasusandotabulapy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pdfscrapingparapandasusandotabulapy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/obtenercotizaciondecriptomonedasyalmacenarlasenunarchivocsvpormediodepandas</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/obtenercotizaciondecriptomonedasyalmacenarlasenunarchivocsvpormediodepandas</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/obtenercotizaciondebitcoindecoinmarketcapconpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/obtenercotizaciondebitcoindecoinmarketcapconpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/objetographdetensorflow</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/objetographdetensorflow</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/matematicasbasicascontensorflow</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/matematicasbasicascontensorflow</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/manejodematricescontensorflow</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/manejodematricescontensorflow</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/introduccionapandas</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/introduccionapandas</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/introduccionalperceptronconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/introduccionalperceptronconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/holamundodesdetensorflow</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/holamundodesdetensorflow</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/graficarlineasdecampoelectricoconmatplotlibypython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/graficarlineasdecampoelectricoconmatplotlibypython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/graficadecurvasen3dconpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/graficadecurvasen3dconpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/generargraficosanimadosdeburbujaalogapminerconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/generargraficosanimadosdeburbujaalogapminerconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/funcionesdeactivacionparaunperceptron</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/funcionesdeactivacionparaunperceptron</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/contarpalabrasdeuntextousandosparkconpyspark</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/contarpalabrasdeuntextousandosparkconpyspark</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/construirunaredneuronalenpocosminutos</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/construirunaredneuronalenpocosminutos</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/comoobtenerdatosfinancierosdequandlconpythonypandas</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/comoobtenerdatosfinancierosdequandlconpythonypandas</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/comocorrerapachesparkdesdeunaimagendocker</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/comocorrerapachesparkdesdeunaimagendocker</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/analisisdesentimientodetweetsconpythontextblobytweepy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/analisisdesentimientodetweetsconpythontextblobytweepy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/algoritmodeclasificacionconscikitlearn</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/algoritmodeclasificacionconscikitlearn</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpythondiferenciaentreinitynew-10</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpythondiferenciaentreinitynew-10</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/usartordesdeprivoxyendebianstretch</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/usartordesdeprivoxyendebianstretch</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/reestructuraciondelblog</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/reestructuraciondelblog</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pruebasunitariasenpythonusandomockingydocker</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pruebasunitariasenpythonusandomockingydocker</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/obtenerdatosdeeventossismologicosdefunvisisconpython3-2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/obtenerdatosdeeventossismologicosdefunvisisconpython3-2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/obtenerdatosdeeventossismologicosdefunvisisconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/obtenerdatosdeeventossismologicosdefunvisisconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/navegardemaneraanonimacontorendebianstretch</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/navegardemaneraanonimacontorendebianstretch</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/mejorarlasrespuestasdeconsultasdednscondnsmasqusandodnscrypt</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/mejorarlasrespuestasdeconsultasdednscondnsmasqusandodnscrypt</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalardockerendebianstretchactualizacion2017</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalardockerendebianstretchactualizacion2017</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/fabriccomounsshconesteroidesendebianstretch</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/fabriccomounsshconesteroidesendebianstretch</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/estructuradedatosenpythonnodo</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/estructuradedatosenpythonnodo</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/estructuradedatosenpythonlistaenlazada</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/estructuradedatosenpythonlistaenlazada</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/estructuradedatosenpythongrafos</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/estructuradedatosenpythongrafos</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/entornodedesarrolloenlanubecloud9</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/entornodedesarrolloenlanubecloud9</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/devueltaalobasicocomomanejarcolasenpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/devueltaalobasicocomomanejarcolasenpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/desarrollarunapicongraphqlenflask</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/desarrollarunapicongraphqlenflask</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearunaimagendockerapartirdedebootstrapparadebianjessie</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearunaimagendockerapartirdedebootstrapparadebianjessie</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/consultardnspormediodescapy</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/consultardnspormediodescapy</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/cifrareltraficodednsendebian9stretchactualizacion2017</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/cifrareltraficodednsendebian9stretchactualizacion2017</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/calculodepiporelmetodomontecarlousandopython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/calculodepiporelmetodomontecarlousandopython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/basededatosinfluxdbendebianstretch</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/basededatosinfluxdbendebianstretch</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/arboldedecisionhechoenpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/arboldedecisionhechoenpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/almacenarlosdatosdeloseventossismologicosdefunvisisconpython3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/almacenarlosdatosdeloseventossismologicosdefunvisisconpython3</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpythonmultipleherencia-7</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpythonmultipleherencia-7</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpythonherenciamultipleproblemadeldiamante-8</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpythonherenciamultipleproblemadeldiamante-8</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpythoncomposicion-9</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpythoncomposicion-9</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpython-6</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpython-6</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpython-5</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpython-5</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpython-4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpython-4</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/utilizardragdelratonconpythonusandopyautogui</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/utilizardragdelratonconpythonusandopyautogui</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/usodedockermachine</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/usodedockermachine</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/usarjupyternotebookdesdeuncontenedordedocker</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/usarjupyternotebookdesdeuncontenedordedocker</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/usardockeruiparalagestiondeimagenesycontenedoresdedocker</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/usardockeruiparalagestiondeimagenesycontenedoresdedocker</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/usaranacondadesdeuncontenedordocker</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/usaranacondadesdeuncontenedordocker</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialdeflask-5</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialdeflask-5</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialdeflask-4</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialdeflask-4</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialdeflask-3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialdeflask-3</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialdeflask-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialdeflask-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialdeflask-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialdeflask-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/trabajarconuncontenedordockerenpythonusandodockerpy</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/trabajarconuncontenedordockerenpythonusandodockerpy</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/trabajarcondatosjsonenflask</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/trabajarcondatosjsonenflask</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pydayeventopytatuyenmerida</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pydayeventopytatuyenmerida</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pruebasunitariasconunitestenpythonusandonosetestsydockerdockercompose</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pruebasunitariasconunitestenpythonusandonosetestsydockerdockercompose</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/proveerunclustercondockerswarmydockermachine</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/proveerunclustercondockerswarmydockermachine</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/profilingdeunscriptpythonconcprofile</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/profilingdeunscriptpythonconcprofile</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/montarunaplataformacomoserviciopaascondokkudocker</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/montarunaplataformacomoserviciopaascondokkudocker</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/moduloquepermiteaccederaarchivosdeconfiguracioniniusandoconfigparserenpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/moduloquepermiteaccederaarchivosdeconfiguracioniniusandoconfigparserenpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/introduccionderedisconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/introduccionderedisconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/internetdelascosas</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/internetdelascosas</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/instalarjenkinspormediodedockerycrearunaimagendockerdejenkins</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/instalarjenkinspormediodedockerycrearunaimagendockerdejenkins</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalargitlabrunnerdegitlabcipormediodedocker</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalargitlabrunnerdegitlabcipormediodedocker</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/instalargitlabpormediodedocker</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/instalargitlabpormediodedocker</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalardockerenubuntuserverxenial1604</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalardockerenubuntuserverxenial1604</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/instalaciondeopen365ioenunservidordebianjessielocal</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/instalaciondeopen365ioenunservidordebianjessielocal</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/iniciandodjangousandodocker</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/iniciandodjangousandodocker</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/iniciandodjangocondockerusandodockercomposeconpostgresqlcomomicroservicio</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/iniciandodjangocondockerusandodockercomposeconpostgresqlcomomicroservicio</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/importaruncontenedordockerenpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/importaruncontenedordockerenpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/extracciondedatosdelpdfdereportedesaluddecencoex</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/extracciondedatosdelpdfdereportedesaluddecencoex</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/ejecutarunapruebadeunittestenpythonconuncontenedordocker</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/ejecutarunapruebadeunittestenpythonconuncontenedordocker</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/ejecutarunapruebadeintegracioncontinuacongitlabciygitlabrunner</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/ejecutarunapruebadeintegracioncontinuacongitlabciygitlabrunner</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/ejecutarunapruebadedoctestconuncontenedordocker</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/ejecutarunapruebadedoctestconuncontenedordocker</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/ejecutandomicrosservicioscondockerusandodockercompose</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/ejecutandomicrosservicioscondockerusandodockercompose</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/dockerendockerdind</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/dockerendockerdind</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/descargadedocumentosinformesdegestiondel2015delapaginawebdelaasambleanacionalconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/descargadedocumentosinformesdegestiondel2015delapaginawebdelaasambleanacionalconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crudusandoflaskymongodbconormflaskmongoalchemy-4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crudusandoflaskymongodbconormflaskmongoalchemy-4</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/crudusandoflaskparamongodb-3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/crudusandoflaskparamongodb-3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearunregistrodeimagenesdockerprivado</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearunregistrodeimagenesdockerprivado</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/crearunpaquetepythondelmodulopywrapperconfig</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/crearunpaquetepythondelmodulopywrapperconfig</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearunentornodeintegracionydespliguecontinuocondockerparanodejs</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearunentornodeintegracionydespliguecontinuocondockerparanodejs</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/crearuncontenedordockercomoentornodedesarrolloparasailsjs</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/crearuncontenedordockercomoentornodedesarrolloparasailsjs</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearunaimagendockerparamongodb-3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearunaimagendockerparamongodb-3</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/crearunaimagendockerderethinkdb</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/crearunaimagendockerderethinkdb</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearunaimagendockerderedis</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearunaimagendockerderedis</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/crearunaimagendockerapartirdeunarchivodockerfile</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/crearunaimagendockerapartirdeunarchivodockerfile</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/creardatosjsonapartirdeundiccionarioenflaskactualizaciondocker-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/creardatosjsonapartirdeundiccionarioenflaskactualizaciondocker-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/creardatosjsonapartirdeundiccionarioenflask-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/creardatosjsonapartirdeundiccionarioenflask-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/corrersonarqubedesdeuncontenedordocker</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/corrersonarqubedesdeuncontenedordocker</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/correraplicacionesdeescritoriodesdeuncontenedordocker</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/correraplicacionesdeescritoriodesdeuncontenedordocker</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/controlandoelmovimientodelratondesdepythonconpyautogui</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/controlandoelmovimientodelratondesdepythonconpyautogui</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/consultaamongodbdesdeflask-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/consultaamongodbdesdeflask-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/consultaamongodbdesdeflask-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/consultaamongodbdesdeflask-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/compartirimagenesdockerpormediodearchivostar</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/compartirimagenesdockerpormediodearchivostar</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/automatizarpruebafuncionaldelinicioyfindesesiondeladmindedjango</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/automatizarpruebafuncionaldelinicioyfindesesiondeladmindedjango</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/automatizarlaconstrucciondeimagenesdockercongithub</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/automatizarlaconstrucciondeimagenesdockercongithub</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/apirestfulconflaskymongodbflaskmongoalchemy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/apirestfulconflaskymongodbflaskmongoalchemy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/apirestfulconflaskymongodb</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/apirestfulconflaskymongodb</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/apirestfulconeve-2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/apirestfulconeve-2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/analizarcodigopythonconpylintdesdedocker</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/analizarcodigopythonconpylintdesdedocker</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpython-3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpython-3</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpython-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpython-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/volviendoalobasicopooenpython-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/volviendoalobasicopooenpython-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/usodedockerendebianjessie-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/usodedockerendebianjessie-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/usodedockerendebianjessie-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/usodedockerendebianjessie-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/usarmongodbendjango</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/usarmongodbendjango</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/resoluciondesistemasdeecuacionesconsympy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/resoluciondesistemasdeecuacionesconsympy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/obtenerlaresoluciondelapantalladesdepython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/obtenerlaresoluciondelapantalladesdepython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalardockerendebianjessie</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalardockerendebianjessie</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/hacertraduccionescongoogletranslatedesdepython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/hacertraduccionescongoogletranslatedesdepython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/habilitarautenticacionenunservidormongodb</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/habilitarautenticacionenunservidormongodb</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/graficadepresiondevaporconnumpyymatplotlib</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/graficadepresiondevaporconnumpyymatplotlib</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/geometriaanaliticaconsympytriangulos</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/geometriaanaliticaconsympytriangulos</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/geometriaanaliticaconsympysegmentos</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/geometriaanaliticaconsympysegmentos</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/geometriaanaliticaconsympyrectas</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/geometriaanaliticaconsympyrectas</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/geometriaanaliticaconsympycirculos</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/geometriaanaliticaconsympycirculos</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/generaciondeunhistogramadefrecuenciaconnumpyscipyymatplotlib</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/generaciondeunhistogramadefrecuenciaconnumpyscipyymatplotlib</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/extracciondeinformaciondepdfsconpython-3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/extracciondeinformaciondepdfsconpython-3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/extracciondeinformaciondepdfsconpython-2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/extracciondeinformaciondepdfsconpython-2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/extracciondeinformaciondepdfsconpython-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/extracciondeinformaciondepdfsconpython-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/extracciondedatosdepaginaswebconscrapyymongodb</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/extracciondedatosdepaginaswebconscrapyymongodb</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/extracciondedatosdepaginaswebconscrapy</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/extracciondedatosdepaginaswebconscrapy</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/escrituraylecturadeunarchivoconformatobsonusandopython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/escrituraylecturadeunarchivoconformatobsonusandopython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/darleestilomaterialdesignadjangoadmin-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/darleestilomaterialdesignadjangoadmin-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/calculodelimitesconlalibreriasympy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/calculodelimitesconlalibreriasympy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/calculodeintegralesconsympy</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/calculodeintegralesconsympy</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/calculodederivadasconsympy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/calculodederivadasconsympy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/apirestfullparapythonconeve-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/apirestfullparapythonconeve-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetbuttonyscatterwidgetdecomportamientoenkivy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetbuttonyscatterwidgetdecomportamientoenkivy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/utilizandomongodbpormediodepython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/utilizandomongodbpormediodepython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/urwidlibreriancursesparahaceraplicacionesdetextoparalaconsola-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/urwidlibreriancursesparahaceraplicacionesdetextoparalaconsola-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tareadedjangocelerydesdeunurl</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tareadedjangocelerydesdeunurl</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/restfulapicondjangotastypieydjangocelery</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/restfulapicondjangotastypieydjangocelery</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/restfulapicondjangotastypie</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/restfulapicondjangotastypie</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/reproductordevideoconpythonykivy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/reproductordevideoconpythonykivy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/participacionenelprimerencuentrosobreconocimientolibrecomunidadydemocracia</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/participacionenelprimerencuentrosobreconocimientolibrecomunidadydemocracia</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/obtenerinformaciondelclimaenunaciudadconpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/obtenerinformaciondelclimaenunaciudadconpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/microframeworkflask-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/microframeworkflask-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/microframeworkdedesarrollowebflask</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/microframeworkdedesarrollowebflask</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/manejodecolasderabbitmqendjangocondjangocelery</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/manejodecolasderabbitmqendjangocondjangocelery</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/jugandoconrssdelblogdesdepython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/jugandoconrssdelblogdesdepython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/instalarunservidormongodbendebian</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/instalarunservidormongodbendebian</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/desarrollodeaplicacionesmultiplataformaconpythonykivy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/desarrollodeaplicacionesmultiplataformaconpythonykivy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/crearurlrecortadasconpythonbitly</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/crearurlrecortadasconpythonbitly</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearundemoniodelinuxconpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearundemoniodelinuxconpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/configurandounsitioestaticoconflask</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/configurandounsitioestaticoconflask</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/webscrapingoextracciondedatosdepaginaswebconbeautifulsoup4ypython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/webscrapingoextracciondedatosdepaginaswebconbeautifulsoup4ypython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/webscrapingconpythonmechanizeybeautifulsoup4</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/webscrapingconpythonmechanizeybeautifulsoup4</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/utilizandoelapidestreamdetwitterconpythonytweetstream-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/utilizandoelapidestreamdetwitterconpythonytweetstream-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/unaintroduccionabeautifulsoup4enpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/unaintroduccionabeautifulsoup4enpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/teoremademuestreoexplicadoconnumpy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/teoremademuestreoexplicadoconnumpy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/resoluciondesistemasdeecuacioneslinealespordescomposionqrusandonumpy</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/resoluciondesistemasdeecuacioneslinealespordescomposionqrusandonumpy</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/probandolalibreriatwythonparatwitter</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/probandolalibreriatwythonparatwitter</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/obtenernumerodeserialynumerodeversionderaspberrypiconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/obtenernumerodeserialynumerodeversionderaspberrypiconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/obtenerinformaciondemetadatosexifdeunaimagenconpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/obtenerinformaciondemetadatosexifdeunaimagenconpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/nodosmasinfluyentesenungrafoconnetworkx-4</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/nodosmasinfluyentesenungrafoconnetworkx-4</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/mostrartweetsentiemporealcontwythonyelapistreamdetwitter</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/mostrartweetsentiemporealcontwythonyelapistreamdetwitter</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/monitorearelusodememoriadeunprogramapythonconmemoryprofiler</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/monitorearelusodememoriadeunprogramapythonconmemoryprofiler</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/mejorarlaprivacidadencelularesytabletasconandroid</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/mejorarlaprivacidadencelularesytabletasconandroid</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/maquinasvirtualesconkvmyqemu</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/maquinasvirtualesconkvmyqemu</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/manejodesesionenelormsqlalchemy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/manejodesesionenelormsqlalchemy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/manejarinformaciondeunarchivocsvconcsvkit</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/manejarinformaciondeunarchivocsvconcsvkit</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalacionderaspbianenunraspberrypi</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalacionderaspbianenunraspberrypi</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/graficarunafuncionde2variablesconmatplotlib</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/graficarunafuncionde2variablesconmatplotlib</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/graficarlatangentedeunacurvaconpythonnumpyypylab</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/graficarlatangentedeunacurvaconpythonnumpyypylab</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/graficarlaintercepcionde2funciones</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/graficarlaintercepcionde2funciones</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/graficarelespectrodefrecuenciaconnumpy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/graficarelespectrodefrecuenciaconnumpy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/graficarconsumodememoriaconmemoryprofiler</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/graficarconsumodememoriaconmemoryprofiler</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/extracciondedatosenpaginaswebconwebscrapingypython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/extracciondedatosenpaginaswebconwebscrapingypython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/extracciondedatosdepaginawebconpyqueryypython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/extracciondedatosdepaginawebconpyqueryypython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/extracciondedatosdepaginaswebconscrapemarkypython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/extracciondedatosdepaginaswebconscrapemarkypython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/extracciondedatosconscraperwikiypython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/extracciondedatosconscraperwikiypython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/encontrarlaraizdeunafuncionconfsolve</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/encontrarlaraizdeunafuncionconfsolve</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/encontrarelminimodeunafuncionusandofmindescipy</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/encontrarelminimodeunafuncionusandofmindescipy</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/encenderyapagarunledconstantementeconarduino</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/encenderyapagarunledconstantementeconarduino</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/diadebianenbarquisimeto</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/diadebianenbarquisimeto</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/descubrirequiposenunaredlocalconpythonipcalcyscapy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/descubrirequiposenunaredlocalconpythonipcalcyscapy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/descubriendotrendingtopicsdetwittercontwythonypython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/descubriendotrendingtopicsdetwittercontwythonypython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/descubriendotrendingtopicsdetwitterconpythontwitter</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/descubriendotrendingtopicsdetwitterconpythontwitter</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/creaciondegrafosconnetworkx-3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/creaciondegrafosconnetworkx-3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/creaciondegrafosconnetworkx-2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/creaciondegrafosconnetworkx-2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/creaciondegraficodeburbujasconmatplotlib</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/creaciondegraficodeburbujasconmatplotlib</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/contadorincrementalconundisplay7segmentosyarduino</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/contadorincrementalconundisplay7segmentosyarduino</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/bajarvideosdeyoutubedesdepythonconpafy</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/bajarvideosdeyoutubedesdepythonconpafy</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/webserviceconsoappy</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/webserviceconsoappy</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialdezeromqconpython-8</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialdezeromqconpython-8</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialdezeromqconpython-7</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialdezeromqconpython-7</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialdezeromqconpython-6</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialdezeromqconpython-6</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialdezeromqconpython-5</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialdezeromqconpython-5</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialdezeromqconpython-4</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialdezeromqconpython-4</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialdezeromqconpython-3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialdezeromqconpython-3</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialdezeromqconpython-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialdezeromqconpython-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialdezeromqconpython-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialdezeromqconpython-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialdepyqtdesarrolloconqtdesigner2ventanas-12</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialdepyqtdesarrolloconqtdesigner2ventanas-12</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialdepyqtdesarrolloconqtdesigner-11</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialdepyqtdesarrolloconqtdesigner-11</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/sqliteconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/sqliteconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/sqlalchemyyelixirabstracciondebasesdedatosenpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/sqlalchemyyelixirabstracciondebasesdedatosenpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/sistemademensajeriadecolasconzeromqypythoncharlafudconlatamvalencia2012</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/sistemademensajeriadecolasconzeromqypythoncharlafudconlatamvalencia2012</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/simulaciondecircuitoselectricosconpythoneispice</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/simulaciondecircuitoselectricosconpythoneispice</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/servidorproxydnsconpdnsd</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/servidorproxydnsconpdnsd</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/separarcodigodepruebasdeladocumentaciondoctest2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/separarcodigodepruebasdeladocumentaciondoctest2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/resoluciondesistemasdeecuacionesconnumpy</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/resoluciondesistemasdeecuacionesconnumpy</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pythonenandroidfudconvalencia2012</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pythonenandroidfudconvalencia2012</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pyproceessingunambienteparacreargraficosconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pyproceessingunambienteparacreargraficosconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pruebasunitariasenpythonconunittest</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pruebasunitariasenpythonconunittest</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/profilingdeunscriptpythoncontimeit</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/profilingdeunscriptpythoncontimeit</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/profilingdeunscriptpythonconlineprofiler</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/profilingdeunscriptpythonconlineprofiler</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/probarcodigocondoctest</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/probarcodigocondoctest</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/obtenerinformaciondelasinterfacesderedconpythonnetifaces</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/obtenerinformaciondelasinterfacesderedconpythonnetifaces</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/noasopaypipa</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/noasopaypipa</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/modificarimagenconsimplecvbinarizacion-3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/modificarimagenconsimplecvbinarizacion-3</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/holamundocondjango-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/holamundocondjango-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/geolocalizaciondedireccionesipydominiosdeinternetcongeoipenpython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/geolocalizaciondedireccionesipydominiosdeinternetcongeoipenpython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/frameworkdedesarrollowebdjango-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/frameworkdedesarrollowebdjango-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/felizano2012</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/felizano2012</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/emulandolanavegacionenpythonconmechanize-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/emulandolanavegacionenpythonconmechanize-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/ejecutarunatareaenunafechaproximaapscheduler</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/ejecutarunatareaenunafechaproximaapscheduler</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/desplegarinformacionviawebcondjango-3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/desplegarinformacionviawebcondjango-3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/depurarcodigopythonconpudb</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/depurarcodigopythonconpudb</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/depurarcodigopythonconipython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/depurarcodigopythonconipython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearmetapaqueteconequivsincorporandoarchivospostinstyprerm</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearmetapaqueteconequivsincorporandoarchivospostinstyprerm</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/crearllavegpgdesdepython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/crearllavegpgdesdepython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/creaciondegrafosconnetworkx-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/creaciondegrafosconnetworkx-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/configurarpantallatouchbematechendebian</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/configurarpantallatouchbematechendebian</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/conectarsealrepositoriodebitbucketdesdepython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/conectarsealrepositoriodebitbucketdesdepython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/cifrareltraficodednsenlinuxcondnscryptyopendns</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/cifrareltraficodednsenlinuxcondnscryptyopendns</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/capturadevideoconpythonysimplecv-4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/capturadevideoconpythonysimplecv-4</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/capturadeimagendesdewebcamconelframeworksimplecv-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/capturadeimagendesdewebcamconelframeworksimplecv-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/capturadeimagendesdelawebcamconelframeworksimplecv-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/capturadeimagendesdelawebcamconelframeworksimplecv-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/calculodedireccionesipconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/calculodedireccionesipconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/apidemercurialparapython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/apidemercurialparapython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/analizarcodigopythonconpyflakes</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/analizarcodigopythonconpyflakes</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/analizandocodigopythonconpylint</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/analizandocodigopythonconpylint</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/agendartareasconpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/agendartareasconpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/abstracciondelmotordebasededatosconelormsqlalchemyypython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/abstracciondelmotordebasededatosconelormsqlalchemyypython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid9</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid9</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetsandroid8</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid8</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid17</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid17</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetsandroid16</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid16</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid15</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid15</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetsandroid14</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid14</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid13</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid13</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetsandroid12</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid12</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid11</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid11</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetsandroid10</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid10</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade12</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade12</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade11</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade11</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/smslinux</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/smslinux</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/qtadb</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/qtadb</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pythoncodigoqr</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pythoncodigoqr</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pyqt9</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pyqt9</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pyqt8</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pyqt8</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pyqt7</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pyqt7</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pyqt6</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pyqt6</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pyqt5</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pyqt5</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pyqt4</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pyqt4</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pyqt10</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pyqt10</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/matplotlib13</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/matplotlib13</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/matplotlib12</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/matplotlib12</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/matplotlib11</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/matplotlib11</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/matplotlib10</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/matplotlib10</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/linux-mercurial-server</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/linux-mercurial-server</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/linux-libpamusb</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/linux-libpamusb</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/linux-etckeeper</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/linux-etckeeper</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/linux-dnsmasq</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/linux-dnsmasq</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/linux-cifrardd</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/linux-cifrardd</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/lazarillo</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/lazarillo</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/generarunagraficaenpythonconpyqwt-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/generarunagraficaenpythonconpyqwt-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/flisol1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/flisol1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/diadebian</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/diadebian</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearllavesshparalaautenticacionengithubgitoriusybitbucket</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearllavesshparalaautenticacionengithubgitoriusybitbucket</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/creaciondepaquetedebianquecontieneunarchivocronconconfigpackagedev</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/creaciondepaquetedebianquecontieneunarchivocronconconfigpackagedev</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/corrigiendolosreportesgeneradosporlintiandeunmetapaquete</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/corrigiendolosreportesgeneradosporlintiandeunmetapaquete</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/consultassnmp</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/consultassnmp</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/consultadns1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/consultadns1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/compartirrepositoriosmercurialporssh</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/compartirrepositoriosmercurialporssh</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/comocrearunmetapaquetedeconfiguracionconconfigpackagedev</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/comocrearunmetapaquetedeconfiguracionconconfigpackagedev</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/comocrearunmetapaquete-2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/comocrearunmetapaquete-2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/comocrearunmetapaquete-1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/comocrearunmetapaquete-1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/comandosremotos</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/comandosremotos</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/bicentenario</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/bicentenario</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/accesibilida-squeeze</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/accesibilida-squeeze</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/2010</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/2010</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid7</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid7</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetsandroid6</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid6</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid5</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid5</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetsandroid4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid4</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/widgetsandroid2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/widgetsandroid1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/widgetsandroid1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialpythonqt2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythonqt2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialpythonqt1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythonqt1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade9</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade9</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade10</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade10</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialpygame1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialpygame1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/reproduciendotextopython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/reproduciendotextopython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/obtenerposicioncelularandroidenlinux</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/obtenerposicioncelularandroidenlinux</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/obtenerinfobateriaandroidlinux</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/obtenerinfobateriaandroidlinux</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/mejoragui-gconf-gnome</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/mejoragui-gconf-gnome</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/mejora-gconf-gnome</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/mejora-gconf-gnome</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/manejarsmsandroidlinux</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/manejarsmsandroidlinux</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/instalarpythonenandroid</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/instalarpythonenandroid</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalacionsdkandroiddebian</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalacionsdkandroiddebian</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/escaneadoredeswifipythonandroid</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/escaneadoredeswifipythonandroid</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/enviaresmsconpythonandroid</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/enviaresmsconpythonandroid</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/enviaremailconpythonandroid</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/enviaremailconpythonandroid</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/ejecucionremotaaandroid2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/ejecucionremotaaandroid2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/ejecucionremotaaandroid</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/ejecucionremotaaandroid</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/crearpaquetepython</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/crearpaquetepython</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/conexionesremotasssh</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/conexionesremotasssh</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/conectarseinternetandoird-proxoid</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/conectarseinternetandoird-proxoid</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/conectarseinternetandoird-azilink</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/conectarseinternetandoird-azilink</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/compartirscriptandroid</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/compartirscriptandroid</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/comandosbasicosadb</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/comandosbasicosadb</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/codigobarraspythonandroid</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/codigobarraspythonandroid</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/charladiadebian</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/charladiadebian</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/capturandopdf</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/capturandopdf</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/videotutorialesaccesibilidad</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/videotutorialesaccesibilidad</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/videostutorialesaccesibilidad2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/videostutorialesaccesibilidad2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/twitter</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/twitter</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade8</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade8</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade7</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade7</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade6</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade6</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade5</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade5</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade4</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialpythongtkglade1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialpythongtkglade1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialmatplotlib6</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialmatplotlib6</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialmatplotlib5</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialmatplotlib5</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialmatplotlib4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialmatplotlib4</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialmatplotlib3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialmatplotlib3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/tutorialmatplotlib2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/tutorialmatplotlib2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/tutorialmatplotlib1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/tutorialmatplotlib1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/teclasrapidas-python</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/teclasrapidas-python</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/symbian</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/symbian</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/subirpaquetedebianrepositorio</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/subirpaquetedebianrepositorio</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/script-gnome-gconf</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/script-gnome-gconf</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pythonenandroid</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pythonenandroid</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/python-accesibilidad</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/python-accesibilidad</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/pruebasnokian810</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/pruebasnokian810</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/pingfm</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/pingfm</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/paquetedebianconmercurial</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/paquetedebianconmercurial</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/odfpython</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/odfpython</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalardebian-asus</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalardebian-asus</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/gui-gconf-gnome</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/gui-gconf-gnome</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/gconf-gnome</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/gconf-gnome</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/cvmercurial</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/cvmercurial</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/creacionrepositoriodebian</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/creacionrepositoriodebian</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/copiarxandrosusb</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/copiarxandrosusb</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/comohacerlivecdaccesible</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/comohacerlivecdaccesible</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/comocrearmetapaquete</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/comocrearmetapaquete</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/xmlrpc</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/xmlrpc</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/instalardebian-macbook-3</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/instalardebian-macbook-3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalardebian-macbook-2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalardebian-macbook-2</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/instalardebian-macbook-1</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/instalardebian-macbook-1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/instalandomaemosdk</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/instalandomaemosdk</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/instalando-asterisk</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/instalando-asterisk</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/iniciandoblog</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/iniciandoblog</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/holamundomaemo2</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/holamundomaemo2</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/holamundomaemo1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/holamundomaemo1</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/extensionessip-asterisk</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/extensionessip-asterisk</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/consola-asterisk</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/consola-asterisk</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/configuracion-motorola-asterisk</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/es/blog/configuracion-motorola-asterisk</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/actualizandonokian810</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/actualizandonokian810</loc>
   </url>
 </urlset>

@@ -1,0 +1,1 @@
+import{O as e}from"./createLucideIcon-jAatZucn.js";import{tn as t}from"./web-DwEIdr4u.js";var n=t(e);export{n as t};
