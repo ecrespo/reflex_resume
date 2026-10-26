@@ -11,6 +11,9 @@ from ..dev_dashboard_data import (
     PERIODS,
     PROFILE_POINTS,
     REPO_DETAILS,
+    es_list,
+    es_rows,
+    es_term,
     get_slice,
 )
 
@@ -19,6 +22,11 @@ _DEFAULT = get_slice(DEFAULT_PERIOD, DEFAULT_PROFILE)
 # Rows drawn by the compact charts, so the whole dashboard fits one screen.
 CHART_ROWS = 12
 IMPACT_ROWS = 8
+
+
+def _es_number(value: int) -> str:
+    """3,119 → 3.119."""
+    return f"{value:,}".replace(",", ".")
 
 
 class DevDashboardState(rx.State):
@@ -105,6 +113,73 @@ class DevDashboardState(rx.State):
             {"label": "Technologies", "value": d["techs"]},
             {"label": "Stack", "value": d["stack"]},
             {"label": "Profiles", "value": d["profiles"]},
+        ]
+
+    # ------------------------------------------------------------------ #
+    # The same rows in Spanish, for `/es/dev-dashboard-stats`
+    # ------------------------------------------------------------------ #
+
+    @rx.var
+    def kpis_es(self) -> dict[str, Any]:
+        return {**self.kpis, "commits": str(self.kpis["commits"]).replace(",", ".")}
+
+    @rx.var
+    def weekly_es(self) -> list[dict]:
+        return es_rows(self.weekly, "week")
+
+    @rx.var
+    def weekday_es(self) -> list[dict]:
+        return es_rows(self.weekday, "day")
+
+    @rx.var
+    def heatmap_es(self) -> list[dict]:
+        return es_rows(self.heatmap, "day")
+
+    @rx.var
+    def tech_tree_es(self) -> list[dict]:
+        return es_rows(self.tech_tree, "name")
+
+    @rx.var
+    def tech_top_es(self) -> list[dict]:
+        return es_rows(self.tech_top, "tech", "label")
+
+    @rx.var
+    def stack_top_es(self) -> list[dict]:
+        return es_rows(self.stack_top, "category")
+
+    @rx.var
+    def stack_categories_es(self) -> list[dict]:
+        return es_rows(self.stack_categories, "name")
+
+    @rx.var
+    def profile_mix_es(self) -> list[dict]:
+        return es_rows(self.profile_mix, "profile", "label")
+
+    @rx.var
+    def impact_top_es(self) -> list[dict]:
+        return es_rows(self.impact_top, "project", "trajectory", "profiles_text", "label")
+
+    @rx.var
+    def profile_points_es(self) -> list[dict]:
+        return es_rows(self.profile_points, "profile", "map_quadrant", "visibility_quadrant")
+
+    @rx.var
+    def repo_facts_es(self) -> list[dict]:
+        d = self.repo_detail
+        if not d:
+            return []
+        return [
+            {"label": "Commits", "value": _es_number(d["commits"])},
+            {"label": "Días activos", "value": str(d["active_days"])},
+            {"label": "Primero → último", "value": f"{d['first']} → {d['last']}"},
+            {"label": "Duración", "value": f"{_es_number(d['span_days'])} días"},
+            {"label": "Trayectoria", "value": es_term(d["trajectory"])},
+            {"label": "Lenguaje", "value": d["language"]},
+            {"label": "Etiquetas / merges", "value": f"{d['tags']} / {d['merges']}"},
+            {"label": "En PyPI", "value": "Sí" if d["pypi"] else "No"},
+            {"label": "Tecnologías", "value": d["techs"]},
+            {"label": "Stack", "value": d["stack"]},
+            {"label": "Perfiles", "value": es_list(d["profiles"])},
         ]
 
     @rx.var

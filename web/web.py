@@ -20,73 +20,92 @@ from web.components.resume_sections import (
 )
 from web.components.skills_chart import skills_chart_section
 from web.components.theme import themed
+from web.i18n import LANGS, localize, page_title, t
 
 # --------------------------------------------------------------------------- #
-# Pages: one per navbar entry, each on its own route.
+# Pages: one per navbar entry, each on its own route, in English and in Spanish
+# (see `web/i18n.py`).
 # --------------------------------------------------------------------------- #
 
 
-def home_page() -> rx.Component:
+def home_page(lang: str = "en") -> rx.Component:
     """`/` — a profile summary and the main projects."""
-    return page_shell(profile_section(), projects_section(), active="/")
+    return page_shell(profile_section(lang), projects_section(lang), active="/", lang=lang)
 
 
 _RESUME_SECTIONS = [
-    ("Education", "#education"),
-    ("Work Experience", "#work-experience"),
-    ("Skills", "#skills-list"),
-    ("Social Media", "#social-media"),
-    ("Certifications", "#certifications"),
+    ({"en": "Education", "es": "Educación"}, "#education"),
+    ({"en": "Work Experience", "es": "Experiencia laboral"}, "#work-experience"),
+    ({"en": "Skills", "es": "Habilidades"}, "#skills-list"),
+    ({"en": "Social Media", "es": "Redes sociales"}, "#social-media"),
+    ({"en": "Certifications", "es": "Certificaciones"}, "#certifications"),
 ]
 
 
-def _resume_contents() -> rx.Component:
+def _resume_contents(lang: str) -> rx.Component:
     """In-page links to the sections of the resume."""
     return rx.el.nav(
         *[
             rx.el.a(
-                text,
+                text[lang],
                 href=anchor,
                 class_name="text-[#2F6F86] hover:text-[#1F3D36] hover:underline whitespace-nowrap",
             )
             for text, anchor in _RESUME_SECTIONS
         ],
-        aria_label="Resume sections",
+        aria_label=t(lang, "Resume sections", "Secciones del currículum"),
         class_name="flex flex-wrap gap-x-5 gap-y-1 text-sm mb-10",
     )
 
 
-def resume_page() -> rx.Component:
+def resume_page(lang: str = "en") -> rx.Component:
     """`/resume` — education, work experience, skills, social media and certifications."""
     return page_shell(
         rx.el.div(
-            rx.el.h1("Resume", class_name="text-4xl font-bold text-gray-800 mb-3"),
-            _resume_contents(),
-            education_section(),
-            work_experience_section(),
-            skills_list_section(),
-            skills_chart_section(),
-            social_media_section(),
+            rx.el.h1(
+                t(lang, "Resume", "Currículum"), class_name="text-4xl font-bold text-gray-800 mb-3"
+            ),
+            _resume_contents(lang),
+            education_section(lang),
+            work_experience_section(lang),
+            skills_list_section(lang),
+            skills_chart_section(lang),
+            social_media_section(lang),
             class_name="container mx-auto",
         ),
         # The certifications timeline is wider than the other sections on desktop.
         rx.el.div(
-            certifications_section(),
+            certifications_section(lang),
             class_name="container mx-auto px-4 md:px-8 lg:px-16",
         ),
         active="/resume",
+        lang=lang,
         content_class="w-full",
     )
 
 
 def not_found_page() -> rx.Component:
-    """The 404 page, inside the site's layout so it keeps the navbar and the footer."""
+    """The 404 page, inside the site's layout so it keeps the navbar and the footer.
+
+    Reflex serves one 404 page for every unknown path, in either language, so it
+    says it in both and offers the way home in each.
+    """
     return page_shell(
         rx.el.section(
             rx.el.p("404", class_name="text-6xl font-bold text-[#2F6F86] mb-2"),
-            rx.el.h1("Page not found", class_name="text-3xl font-bold text-gray-800 mb-4"),
+            rx.el.h1("Page not found", class_name="text-3xl font-bold text-gray-800 mb-1"),
+            rx.el.p(
+                "Página no encontrada",
+                lang="es",
+                class_name="text-2xl italic text-gray-600 mb-4",
+            ),
             rx.el.p(
                 "The page you are looking for does not exist or has moved.",
+                class_name="text-gray-700",
+            ),
+            rx.el.p(
+                "La página que buscas no existe o cambió de dirección.",
+                lang="es",
                 class_name="text-gray-700 mb-8",
             ),
             rx.el.div(
@@ -98,24 +117,40 @@ def not_found_page() -> rx.Component:
                     href="/dev-dashboard-stats",
                     label="Go to the GitHub dashboard",
                 ),
+                class_name="flex flex-wrap gap-3 mb-3",
+            ),
+            rx.el.div(
+                sp_button("Inicio", href="/es", label="Ir a la página de inicio"),
+                sp_button("Currículum", href="/es/resume", label="Ir al currículum"),
+                sp_button("Portafolio", href="/es/portfolio", label="Ir al portafolio"),
+                sp_button(
+                    "Estadísticas de desarrollo",
+                    href="/es/dev-dashboard-stats",
+                    label="Ir al dashboard de GitHub",
+                ),
+                lang="es",
                 class_name="flex flex-wrap gap-3",
             ),
             class_name="py-16",
         ),
         active="",
+        route="/",
     )
 
 
-def portfolio_page() -> rx.Component:
+def portfolio_page(lang: str = "en") -> rx.Component:
     """`/portfolio` — notebooks, then the repositories."""
-    return page_shell(portfolio_section(), repositories_section(), active="/portfolio")
+    return page_shell(
+        portfolio_section(lang), repositories_section(lang), active="/portfolio", lang=lang
+    )
 
 
-def dev_dashboard_page() -> rx.Component:
+def dev_dashboard_page(lang: str = "en") -> rx.Component:
     """`/dev-dashboard-stats` — the GitHub EDA as an interactive, filterable dashboard."""
     return page_shell(
-        dev_dashboard(),
+        dev_dashboard(lang),
         active="/dev-dashboard-stats",
+        lang=lang,
         # Tighter than the other pages: the dashboard is sized to fit one screen.
         main_class="px-3 pt-3 pb-1 md:px-6 md:pt-4 md:pb-1 w-full",
         content_class="w-full max-w-[1800px] mx-auto",
@@ -260,24 +295,46 @@ app.extra_app_wraps[(10, "SilverpointProvider")] = lambda _stateful: themed()
 # without it the component stays disabled.
 rga.install(app)
 
-# Main pages
-_TITLE = "Seraph's Resume"
+# Every page in both languages: English at its route, Spanish under `/es`.
+# (route, page function, English title, Spanish title); an empty title is the site's.
+_PAGES = [
+    ("/", home_page, "", ""),
+    ("/resume", resume_page, "Resume", "Currículum"),
+    ("/portfolio", portfolio_page, "Portfolio", "Portafolio"),
+    (
+        "/dev-dashboard-stats",
+        dev_dashboard_page,
+        "Dev Dashboard Stats",
+        "Estadísticas de desarrollo",
+    ),
+    ("/blog", blog_list_page, "Blog", "Blog"),
+    ("/blog/archives", archives_page, "Blog Archives", "Archivo del blog"),
+    ("/blog/categories", categories_page, "Blog Categories", "Categorías del blog"),
+    ("/blog/tags", tags_page, "Blog Tags", "Etiquetas del blog"),
+]
 
-app.add_page(home_page, route="/", title=_TITLE)
-app.add_page(resume_page, route="/resume", title=f"Resume | {_TITLE}")
-app.add_page(portfolio_page, route="/portfolio", title=f"Portfolio | {_TITLE}")
+
+def _in_language(page, lang: str):
+    """`page` bound to `lang`, named after both (Reflex names compiled pages after them)."""
+
+    def localized_page() -> rx.Component:
+        return page(lang)
+
+    localized_page.__name__ = f"{page.__name__}_{lang}"
+    return localized_page
+
+
+for _route, _page, _title_en, _title_es in _PAGES:
+    for _lang in LANGS:
+        app.add_page(
+            _in_language(_page, _lang),
+            route=localize(_route, _lang),
+            title=page_title(_lang, _title_en, _title_es),
+        )
+
 # Reflex serves the "404" route for every unknown path.
-app.add_page(not_found_page, route="404", title=f"Page not found | {_TITLE}")
-app.add_page(
-    dev_dashboard_page,
-    route="/dev-dashboard-stats",
-    title=f"Dev Dashboard Stats | {_TITLE}",
-)
-app.add_page(blog_list_page, route="/blog", title="Blog | Seraph's Resume")
-app.add_page(archives_page, route="/blog/archives", title="Blog Archives")
-app.add_page(categories_page, route="/blog/categories", title="Blog Categories")
-app.add_page(tags_page, route="/blog/tags", title="Blog Tags")
+app.add_page(not_found_page, route="404", title="Page not found | Página no encontrada")
 
 # Register all blog post pages (statically generated - same pattern as Reflex official blog)
-for route, page_fn, title in blog_post_routes:
+for route, page_fn, title, _post_lang in blog_post_routes:
     app.add_page(page_fn, route=route, title=f"Blog | {title}")

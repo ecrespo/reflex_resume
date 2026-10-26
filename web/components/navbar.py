@@ -1,16 +1,17 @@
 import reflex as rx
 from reflex_silverpoint_react import sp_button
 
+from ..i18n import localize, t
 from ..states.resume_state import ResumeState
 
 
-def menu_button() -> rx.Component:
+def menu_button(lang: str = "en") -> rx.Component:
     """Opens the profile drawer on mobile."""
     return rx.el.div(
         sp_button(
-            "Menu",
+            t(lang, "Menu", "Menú"),
             size="sm",
-            label="Open profile menu",
+            label=t(lang, "Open profile menu", "Abrir el menú del perfil"),
             on_click=ResumeState.toggle_mobile_menu,
         ),
         class_name="md:hidden flex-shrink-0",
@@ -37,12 +38,13 @@ def navbar_link(text: str, url: str = "#", active: bool = False) -> rx.Component
     return rx.el.a(text, href=url, class_name=_LINK)
 
 
-# One entry per page of the resume; every entry is its own route.
+# One entry per page of the resume; every entry is its own route. Routes are the
+# English ones; `localize` gives the Spanish route.
 NAV_ITEMS = [
-    ("Home", "/"),
-    ("Resume", "/resume"),
-    ("Portfolio", "/portfolio"),
-    ("Dev Dashboard Stats", "/dev-dashboard-stats"),
+    ({"en": "Home", "es": "Inicio"}, "/"),
+    ({"en": "Resume", "es": "Currículum"}, "/resume"),
+    ({"en": "Portfolio", "es": "Portafolio"}, "/portfolio"),
+    ({"en": "Dev Dashboard Stats", "es": "Estadísticas de desarrollo"}, "/dev-dashboard-stats"),
 ]
 
 
@@ -68,26 +70,33 @@ def blog_navbar_link(text: str, url: str) -> rx.Component:
     return navbar_link(text, url)
 
 
-def blog_navbar() -> rx.Component:
+_BLOG_ITEMS = [
+    ({"en": "HOME", "es": "INICIO"}, "/"),
+    ({"en": "BLOG", "es": "BLOG"}, "/blog"),
+    ({"en": "ARCHIVES", "es": "ARCHIVO"}, "/blog/archives"),
+    ({"en": "CATEGORIES", "es": "CATEGORÍAS"}, "/blog/categories"),
+    ({"en": "TAGS", "es": "ETIQUETAS"}, "/blog/tags"),
+    ({"en": "ATOM", "es": "ATOM"}, "/feed.xml"),
+    ({"en": "DEV DASHBOARD STATS", "es": "ESTADÍSTICAS DE DESARROLLO"}, "/dev-dashboard-stats"),
+]
+
+
+def blog_navbar(lang: str = "en") -> rx.Component:
     """The navigation bar for the blog section."""
     return _silverpoint_nav(
         # Menu button for mobile (reusing state)
-        menu_button(),
-        # Navigation links
-        blog_navbar_link("HOME", url="/"),
-        blog_navbar_link("BLOG", url="/blog"),
-        blog_navbar_link("ARCHIVES", url="/blog/archives"),
-        blog_navbar_link("CATEGORIES", url="/blog/categories"),
-        blog_navbar_link("TAGS", url="/blog/tags"),
-        blog_navbar_link("ATOM", url="/feed.xml"),
-        blog_navbar_link("DEV DASHBOARD STATS", url="/dev-dashboard-stats"),
+        menu_button(lang),
+        *[blog_navbar_link(text[lang], url=localize(url, lang)) for text, url in _BLOG_ITEMS],
     )
 
 
-def navbar(active: str = "") -> rx.Component:
-    """The top navigation bar; `active` is the route of the page it sits on."""
+def navbar(active: str = "", lang: str = "en") -> rx.Component:
+    """The top navigation bar; `active` is the English route of the page it sits on."""
     return _silverpoint_nav(
         # Menu button for mobile
-        menu_button(),
-        *[navbar_link(text, url=url, active=url == active) for text, url in NAV_ITEMS],
+        menu_button(lang),
+        *[
+            navbar_link(text[lang], url=localize(url, lang), active=url == active)
+            for text, url in NAV_ITEMS
+        ],
     )

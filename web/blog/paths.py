@@ -123,12 +123,20 @@ class BlogPost:
         """Return formatted date string."""
         return self.date.strftime("%B %d, %Y")
 
+    @property
+    def formatted_date_es(self) -> str:
+        """The date in Spanish: `5 de marzo de 2024`."""
+        from web.i18n import format_day
+
+        return format_day(self.date.year, self.date.month, self.date.day, "es", long=True)
+
     def to_dict(self) -> dict:
         """Convert to dictionary for state management."""
         return {
             "title": self.title,
             "date": self.date_str,
             "formatted_date": self.formatted_date,
+            "formatted_date_es": self.formatted_date_es,
             "category": self.category,
             "tags": self.tags,
             "author": self.author,

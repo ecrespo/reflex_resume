@@ -4,13 +4,11 @@ import reflex as rx
 from reflex_silverpoint_react import sp_badge, sp_tag
 
 from web.blog.paths import sorted_posts
-from web.components.footer import site_footer
+from web.components.layout import site_shell
 from web.components.navbar import blog_navbar
-from web.components.sidebar import sidebar
+from web.i18n import t
 
 # Constants
-MAIN_LAYOUT_CLASS = "flex min-h-screen bg-[#f5f5dc]"
-CONTENT_AREA_CLASS = "flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"
 MAIN_PADDING_CLASS = "p-4 md:p-8 lg:p-16 w-full"
 
 
@@ -30,36 +28,38 @@ class CategoriesState(rx.State):
         return sorted(counts.items())
 
 
-def category_entry(item: tuple[str, int]) -> rx.Component:
+def category_entry(item: tuple[str, int], lang: str = "en") -> rx.Component:
     return rx.el.li(
         sp_tag(item[0], tone=2),
-        sp_badge(count=item[1], max=999, label="posts"),
+        sp_badge(count=item[1], max=999, label=t(lang, "posts", "artículos")),
         class_name="inline-flex items-center gap-1",
     )
 
 
-def categories_page() -> rx.Component:
-    return rx.el.div(
-        sidebar(),
-        rx.el.div(
-            blog_navbar(),
-            rx.el.main(
-                rx.el.div(
-                    rx.el.header(
-                        rx.el.h1("Categories", class_name="text-4xl font-light text-gray-800 mb-8"),
-                        class_name="mb-8",
+def categories_page(lang: str = "en") -> rx.Component:
+    return site_shell(
+        rx.el.main(
+            rx.el.div(
+                rx.el.header(
+                    rx.el.h1(
+                        t(lang, "Categories", "Categorías"),
+                        class_name="text-4xl font-light text-gray-800 mb-8",
                     ),
-                    rx.el.ul(
-                        rx.foreach(CategoriesState.categories_with_counts, category_entry),
-                        class_name="list-none flex flex-wrap gap-3",
-                    ),
-                    class_name="container mx-auto max-w-5xl",
+                    class_name="mb-8",
                 ),
-                class_name=MAIN_PADDING_CLASS,
+                rx.el.ul(
+                    rx.foreach(
+                        CategoriesState.categories_with_counts,
+                        lambda item: category_entry(item, lang),
+                    ),
+                    class_name="list-none flex flex-wrap gap-3",
+                ),
+                class_name="container mx-auto max-w-5xl",
             ),
-            site_footer(),
-            class_name=CONTENT_AREA_CLASS,
-            id="content-area",
+            class_name=MAIN_PADDING_CLASS,
         ),
-        class_name=MAIN_LAYOUT_CLASS,
+        top=blog_navbar(lang),
+        lang=lang,
+        route="/blog/categories",
+        id="content-area",
     )
