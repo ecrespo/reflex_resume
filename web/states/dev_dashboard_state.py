@@ -11,6 +11,7 @@ from ..dev_dashboard_data import (
     PERIODS,
     PROFILE_POINTS,
     REPO_DETAILS,
+    TECH_SERIES_ES,
     es_list,
     es_rows,
     es_term,
@@ -59,6 +60,13 @@ class DevDashboardState(rx.State):
     stack: list[dict] = _DEFAULT["stack"]
     stack_categories: list[dict] = _DEFAULT["stack_categories"]
     profile_mix: list[dict] = _DEFAULT["profile_mix"]
+    daily: list[dict] = _DEFAULT["daily"]
+    tech_by_year: list[dict] = _DEFAULT["tech_by_year"]
+    tech_year_keys: list[str] = _DEFAULT["tech_year_keys"]
+
+    # The table of every repository (all time) and how it is sorted.
+    repo_sort_key: str = "commits"
+    repo_sort_order: str = "desc"
 
     # Constant across filters.
     profile_points: list[dict] = PROFILE_POINTS
@@ -183,6 +191,54 @@ class DevDashboardState(rx.State):
         ]
 
     @rx.var
+    def tech_year_names_es(self) -> list[str]:
+        return [TECH_SERIES_ES.get(key, key) for key in self.tech_year_keys]
+
+    @rx.var
+    def impact_rows_es(self) -> list[dict]:
+        return es_rows(self.impact_rows, "project", "trajectory", "profiles_text")
+
+    # ------------------------------------------------------------------ #
+    # Every repository, sortable
+    # ------------------------------------------------------------------ #
+
+    @rx.var
+    def repo_table(self) -> list[dict]:
+        key, reverse = self.repo_sort_key, self.repo_sort_order == "desc"
+        rows = [
+            {
+                "repo": detail["repo"],
+                "commits": detail["commits"],
+                "active_days": detail["active_days"],
+                "span_days": detail["span_days"],
+                "first": detail["first"],
+                "last": detail["last"],
+                "language": detail["language"],
+                "trajectory": detail["trajectory"],
+            }
+            for detail in REPO_DETAILS.values()
+        ]
+
+        def order(row: dict) -> tuple:
+            value = row[key]
+            return (value.lower() if isinstance(value, str) else value, row["repo"].lower())
+
+        return sorted(rows, key=order, reverse=reverse)
+
+    @rx.var
+    def repo_table_es(self) -> list[dict]:
+        return es_rows(self.repo_table, "trajectory")
+
+    @rx.event
+    def sort_repos(self, key: str):
+        """A header of the repository table was used: sort by it, or flip its order."""
+        if key == self.repo_sort_key:
+            self.repo_sort_order = "asc" if self.repo_sort_order == "desc" else "desc"
+        else:
+            self.repo_sort_key = key
+            self.repo_sort_order = "asc" if key in ("repo", "language", "trajectory") else "desc"
+
+    @rx.var
     def filter_summary(self) -> str:
         period = {p["key"]: p["label"] for p in PERIODS}.get(self.period, self.period)
         return f"{period} · {self.profile}"
@@ -209,6 +265,9 @@ class DevDashboardState(rx.State):
         self.stack = data["stack"]
         self.stack_categories = data["stack_categories"]
         self.profile_mix = data["profile_mix"]
+        self.daily = data["daily"]
+        self.tech_by_year = data["tech_by_year"]
+        self.tech_year_keys = data["tech_year_keys"]
         # A drilled-into technology group may not exist in the new slice.
         self.tech_root = None
 
@@ -279,4 +338,5 @@ class DevDashboardState(rx.State):
 
     @rx.event
     def on_day_link(self, link: dict | None):
-        self.linked_day = link["value"] if link else ""
+        """The day marked in the rhythm charts; the dashboard clears it with `{"value": None}`."""
+        self.linked_day = str((link or {}).get("value") or "")

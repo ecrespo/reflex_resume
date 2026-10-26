@@ -52,6 +52,7 @@ from ..dev_dashboard_data import (
 )
 from ..i18n import format_iso_day, t
 from ..states.dev_dashboard_state import DevDashboardState as S
+from .dev_dashboard_sections import SECTIONS
 
 _HOUR_LABELS = [f"{hour:02d}" for hour in range(24)]
 _NOTE = "text-xs text-gray-600"
@@ -602,7 +603,16 @@ def _panel(key: str, lang: str) -> rx.Component:
     # Only the open tab mounts its charts, so a hidden grid never measures a
     # zero width and a slice change only redraws what is on screen.
     return sp_tab_panel(
-        rx.cond(S.tab == key, rx.el.div(_VIEWS[key](lang), class_name="pt-2"), rx.fragment()),
+        rx.cond(
+            S.tab == key,
+            rx.el.div(
+                _VIEWS[key](lang),
+                # What did not fit the screen: more charts and tables under the grid.
+                SECTIONS[key](lang) if key in SECTIONS else rx.fragment(),
+                class_name="pt-2",
+            ),
+            rx.fragment(),
+        ),
         value=key,
     )
 
