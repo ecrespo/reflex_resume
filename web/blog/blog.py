@@ -1,15 +1,17 @@
 """Blog pages - using static route generation like Reflex official blog."""
 
 import reflex as rx
+from reflex_silverpoint_react import sp_button, sp_card, sp_pagination, sp_tag
 
 from web.blog.paths import blog_data
+from web.components.footer import site_footer
 from web.components.navbar import blog_navbar
 from web.components.sidebar import sidebar
 from web.states.blog_state import BlogState
 
 # Common CSS classes
-MAIN_LAYOUT_CLASS = "flex min-h-screen font-['Inter'] bg-[#f5f5dc]"
-CONTENT_AREA_CLASS = "flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"
+MAIN_LAYOUT_CLASS = "flex min-h-screen bg-[#f5f5dc]"
+CONTENT_AREA_CLASS = "flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"
 MAIN_PADDING_CLASS = "p-4 md:p-8 lg:p-16 w-full"
 META_SEPARATOR = "text-gray-400 mx-2"
 
@@ -18,15 +20,11 @@ def post_card(post) -> rx.Component:
     """Card for displaying a post in the blog list."""
     return rx.el.article(
         rx.link(
-            rx.el.div(
-                rx.el.h3(
-                    post["title"],
-                    class_name="text-xl font-bold text-gray-900 mb-2 group-hover:text-[#4a9bba] transition-colors",
-                ),
+            sp_card(
                 rx.el.div(
                     rx.el.span(post["formatted_date"], class_name="text-sm text-gray-500"),
                     rx.el.span(" • ", class_name=META_SEPARATOR),
-                    rx.el.span(post["category"], class_name="text-sm text-[#4a9bba] font-medium"),
+                    sp_tag(post["category"], tone=2, size="sm"),
                     rx.el.span(" • ", class_name=META_SEPARATOR),
                     rx.el.span(post["author"], class_name="text-sm text-gray-600"),
                     class_name="flex items-center flex-wrap mb-3",
@@ -37,48 +35,32 @@ def post_card(post) -> rx.Component:
                 ),
                 rx.el.span(
                     "Leer más →",
-                    class_name="text-[#4a9bba] font-medium text-sm group-hover:underline",
+                    class_name="text-[#2F6F86] font-medium text-sm group-hover:underline",
                 ),
-                class_name="p-6",
+                title=post["title"],
+                class_name="h-full",
             ),
             href="/blog/" + post["slug"].to(str),
-            class_name="block",
+            class_name="block h-full",
         ),
-        class_name="bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow border border-gray-200 overflow-hidden group",
+        class_name="group hover:shadow-md transition-shadow rounded-lg",
     )
 
 
 def pagination() -> rx.Component:
     """Pagination controls."""
     return rx.el.div(
-        rx.button(
-            "← Anterior",
-            on_click=BlogState.previous_page,
-            disabled=~BlogState.has_previous_page,
-            class_name=rx.cond(
-                BlogState.has_previous_page,
-                "px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium cursor-pointer",
-                "px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed font-medium",
-            ),
+        sp_pagination(
+            total=BlogState.total_posts,
+            page_size=BlogState.posts_per_page,
+            current=BlogState.current_page,
+            on_change=BlogState.go_to_page,
+            label="Páginas del blog",
+            previous_label="Anterior",
+            next_label="Siguiente",
+            page_label="Página",
         ),
-        rx.el.span(
-            "Página ",
-            BlogState.current_page,
-            " de ",
-            BlogState.total_pages,
-            class_name="text-gray-700 font-medium mx-4",
-        ),
-        rx.button(
-            "Siguiente →",
-            on_click=BlogState.next_page,
-            disabled=~BlogState.has_next_page,
-            class_name=rx.cond(
-                BlogState.has_next_page,
-                "px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium cursor-pointer",
-                "px-4 py-2 bg-gray-300 text-gray-500 rounded-lg cursor-not-allowed font-medium",
-            ),
-        ),
-        class_name="flex items-center justify-center gap-2 mt-8 mb-4",
+        class_name="flex items-center justify-center mt-8 mb-4",
     )
 
 
@@ -99,7 +81,7 @@ def blog_list_page() -> rx.Component:
                         ),
                         rx.el.div(
                             rx.el.span(
-                                BlogState.total_posts, class_name="font-bold text-[#4a9bba]"
+                                BlogState.total_posts, class_name="font-bold text-[#2F6F86]"
                             ),
                             " artículos publicados",
                             class_name="text-sm text-gray-500 mt-2",
@@ -117,6 +99,7 @@ def blog_list_page() -> rx.Component:
                 ),
                 class_name=MAIN_PADDING_CLASS,
             ),
+            site_footer(),
             class_name=CONTENT_AREA_CLASS,
             id="content-area",
         ),
@@ -133,12 +116,9 @@ def create_post_page(post_data: dict) -> rx.Component:
             rx.el.main(
                 rx.el.div(
                     # Back button
-                    rx.link(
-                        rx.el.span(
-                            "← Volver al Blog",
-                            class_name="inline-flex items-center px-4 py-2 bg-[#4a9bba] text-white rounded-lg hover:bg-[#3a8baa] transition-colors font-medium mb-6",
-                        ),
-                        href="/blog",
+                    rx.el.div(
+                        sp_button("← Volver al Blog", href="/blog"),
+                        class_name="mb-6",
                     ),
                     # Header
                     rx.el.header(
@@ -149,9 +129,7 @@ def create_post_page(post_data: dict) -> rx.Component:
                         rx.el.div(
                             rx.el.span(post_data["formatted_date"], class_name="text-gray-500"),
                             rx.el.span(" • ", class_name=META_SEPARATOR),
-                            rx.el.span(
-                                post_data["category"], class_name="text-[#4a9bba] font-medium"
-                            ),
+                            sp_tag(post_data["category"], tone=2, size="sm"),
                             rx.el.span(" • ", class_name=META_SEPARATOR),
                             rx.el.span("Por ", class_name="text-gray-600"),
                             rx.el.span(post_data["author"], class_name="text-gray-800 font-medium"),
@@ -171,6 +149,7 @@ def create_post_page(post_data: dict) -> rx.Component:
                 ),
                 class_name=MAIN_PADDING_CLASS,
             ),
+            site_footer(),
             class_name=CONTENT_AREA_CLASS,
         ),
         class_name=MAIN_LAYOUT_CLASS,
