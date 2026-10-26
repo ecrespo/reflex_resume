@@ -5,7 +5,7 @@
 | **Status** | `IMPLEMENTED 2026-10-25` |
 | **Author** | Ernesto Crespo |
 | **Date** | 2026-10-25 |
-| **Route** | `/dev-dashboard-stats` — "Dev Dashboard Stats \| Seraph's Resume" |
+| **Route** | `/dev-dashboard-stats` — "Dev Dashboard Stats \| Seraph" |
 
 ## 1. Goal
 
