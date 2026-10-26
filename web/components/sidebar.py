@@ -55,6 +55,7 @@ def sidebar_content() -> rx.Component:
             rx.el.ul(
                 skill_item("Electrical Engineer."),
                 skill_item("Python Developer."),
+                skill_item("AI Engineer."),
                 skill_item("Data analyst."),
                 skill_item("Data Engineer."),
                 skill_item("AWS Cloud Engineer."),

@@ -78,6 +78,20 @@ PROJECTS = [
         ],
     },
     {
+        "name": "Silverpoint",
+        "tagline": "Charts for React and Angular drawn in the manner of a Renaissance silverpoint drawing.",
+        "tags": ["TypeScript", "React", "Angular", "D3", "MCP", "Reflex"],
+        "facts": [
+            "187 commits in 40 days (September–October 2026)",
+            "An MCP server documents every chart and component for AI assistants",
+            "reflex-silverpoint-react on PyPI: the Reflex wrapper this site is built with",
+        ],
+        "links": [
+            ("Site", "https://silverpointweb.vercel.app/"),
+            ("GitHub", "https://github.com/ecrespo/silverpoint"),
+        ],
+    },
+    {
         "name": "LangChain",
         "tagline": "LLM applications with LangChain: local models, agents and APIs.",
         "tags": ["LangChain", "Ollama", "CrewAI", "FastAPI"],

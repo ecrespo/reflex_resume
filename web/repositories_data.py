@@ -789,7 +789,7 @@ REPOSITORIES = [
         "tags": ["TypeScript", "Angular", "D3", "MCP", "Next.js"],
         "links": [
             ("GitHub", "https://github.com/ecrespo/silverpoint"),
-            ("Site", "https://silverpoint-pi.vercel.app"),
+            ("Site", "https://silverpointweb.vercel.app/"),
         ],
     },
     {
