@@ -108,6 +108,22 @@ backend; only the slice on screen is state.
 Charts, ids and props were chosen and checked with the silverpoint MCP (`recommend_chart`,
 `get_chart`, `validate_props`, `render_chart`) against reflex-silverpoint-react 0.8.1.
 
+### Under each grid
+
+What did not fit the screen scrolls below the tab's grid (`web/components/dev_dashboard_sections.py`):
+
+| Tab | Section | Data |
+|---|---|---|
+| Activity | Commits per day, last 365 days of the period (`activity_grid`, 53 weeks; levels 1–4 by quartile of the active days) | slice `daily` |
+| Rhythm | — (the grid already holds every chart of the analysis) | |
+| Repositories | Every repository, sortable by any column (`sp_table`; `sort_repos`), all time | `repo_details` |
+| Technology & stack | Commits per technology and year, the period's top six (`stacked_bar_chart`) | slice `tech_by_year`, `tech_year_keys` |
+| Profiles & impact | The two quadrants with names, dividers and quadrant labels (inline SVG, `components/quadrant_chart.py`); profiles and opportunities; the full impact ranking (filtered by profile) | `profile_points`, `profiles_table`, `impact` |
+
+`daily`, `tech_by_year`, `tech_year_keys`, `profiles_table` and the extra impact columns
+(`active_days`, `merges`, `forks`, `first`, `last`) are added to `dev_dashboard.json` by the EDA
+pipeline's `augment.py`.
+
 ## 5. Acceptance (verified 2026-10-25, `API_URL=http://localhost:8000 uv run reflex run`)
 
 1. Period "Past year" → commits 3,119 → 1,680; profile "AI Engineer" → 1,060; Reset → 3,119.

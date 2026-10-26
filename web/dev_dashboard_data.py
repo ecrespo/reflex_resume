@@ -150,6 +150,10 @@ IMPACT: list[dict[str, Any]] = [
     for project in _impact
 ]
 
+# Profiles and opportunities: one row per profile, with its main repositories and
+# the opportunity read from its commits (all time).
+PROFILES_TABLE: list[dict[str, Any]] = _DATA["profiles_table"]
+
 DEFAULT_PERIOD = "all"
 DEFAULT_PROFILE = "all"
 DEFAULT_TOP_N = 15
@@ -219,6 +223,7 @@ ES_TERMS = {
     "Established core": "Núcleo consolidado",
     "Hidden strength": "Fortaleza oculta",
     "Showcase": "Vitrina",
+    "Showcase & growing": "Vitrina en crecimiento",
     "Emerging": "Emergente",
     "Supporting": "De apoyo",
     "Latent": "Latente",
@@ -287,3 +292,35 @@ PERIODS_ES: list[dict[str, str]] = [{**p, "label": es_term(p["label"])} for p in
 PROFILE_ITEMS_ES: list[dict[str, str]] = [
     {"key": profile, "label": es_term(profile)} for profile in PROFILE_OPTIONS
 ]
+
+# Technology names in the "technology by year" legend that change in Spanish.
+TECH_SERIES_ES = {"Data (CSV)": "Datos (CSV)", "Go templates": "Plantillas de Go"}
+
+# The opportunity of each profile, in Spanish.
+OPPORTUNITY_ES = {
+    "AI Engineer": (
+        "El mayor impulso y la menor exposición para su tamaño: publicar Prismal en PyPI, "
+        "etiquetar versiones de Umbral y convertir los 104 notebooks de LangChain/LangGraph en "
+        "artículos públicos."
+    ),
+    "Full-stack Engineer": (
+        "Ya es la cara pública (34 paquetes de Reflex en PyPI). El siguiente paso es la adopción: "
+        "demos, documentación y estrellas para la suite de componentes."
+    ),
+    "Backend Engineer": (
+        "Crece dentro de Prismal y vigia-eew pero apenas se publica: lanzar prismal-server y "
+        "prismal-sdk como paquetes con documentación de su API."
+    ),
+    "DevOps / Platform": (
+        "uv, Ruff, pytest y GitHub Actions ya vienen en cada repositorio nuevo. Vale la pena "
+        "mostrarlo como disciplina de versiones y de cadena de suministro."
+    ),
+    "Data Engineer / Scientist": (
+        "Reactivado por la capa de datos de Prismal (Polars, DuckDB, SQLAlchemy). Un caso de "
+        "estudio público lo haría visible otra vez."
+    ),
+    "Systems & Linux": (
+        "Umbral (Go) y vigia-eew (alertas de escritorio multiplataforma) retomaron esta línea de "
+        "trabajo. Versiones etiquetadas de Umbral la harían visible."
+    ),
+}
