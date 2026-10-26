@@ -43,7 +43,14 @@ from reflex_silverpoint_react import (
     ui_item,
 )
 
-from ..dev_dashboard_data import DATA_AS_OF, PERIODS, PROFILE_OPTIONS
+from ..dev_dashboard_data import (
+    DATA_AS_OF,
+    PERIODS,
+    PERIODS_ES,
+    PROFILE_ITEMS_ES,
+    PROFILE_OPTIONS,
+)
+from ..i18n import format_iso_day, t
 from ..states.dev_dashboard_state import DevDashboardState as S
 
 _HOUR_LABELS = [f"{hour:02d}" for hour in range(24)]
@@ -57,12 +64,17 @@ _VIEW_HEIGHT = 2 * _ROW_HEIGHT + _GAP
 _COLUMNS = {"sm": 1, "md": 2, "lg": 4}
 
 _TABS = [
-    ("activity", "Activity"),
-    ("rhythm", "Rhythm"),
-    ("repositories", "Repositories"),
-    ("technology", "Technology & stack"),
-    ("profiles", "Profiles & impact"),
+    ("activity", {"en": "Activity", "es": "Actividad"}),
+    ("rhythm", {"en": "Rhythm", "es": "Ritmo"}),
+    ("repositories", {"en": "Repositories", "es": "Repositorios"}),
+    ("technology", {"en": "Technology & stack", "es": "Tecnología y stack"}),
+    ("profiles", {"en": "Profiles & impact", "es": "Perfiles e impacto"}),
 ]
+
+
+def _rows(lang: str, english, spanish):
+    """The state var a chart reads: the English rows, or the same rows in Spanish."""
+    return spanish if lang == "es" else english
 
 
 def _grid(*cells: rx.Component, grid_id: str, label: str, layout: list, **props) -> rx.Component:
@@ -81,14 +93,21 @@ def _grid(*cells: rx.Component, grid_id: str, label: str, layout: list, **props)
 # --------------------------------------------------------------------------- #
 
 
-def _header() -> rx.Component:
+def _header(lang: str) -> rx.Component:
     return rx.el.div(
         rx.el.div(
             rx.el.h1(
-                "Dev Dashboard Stats", class_name="text-2xl font-bold text-gray-800 leading-tight"
+                t(lang, "Dev Dashboard Stats", "Estadísticas de desarrollo"),
+                class_name="text-2xl font-bold text-gray-800 leading-tight",
             ),
             rx.el.p(
-                f"3,119 hand-written commits · ecrespo + prismal-ai · as of {DATA_AS_OF}",
+                t(
+                    lang,
+                    f"3,119 hand-written commits · ecrespo + prismal-ai · as of "
+                    f"{format_iso_day(DATA_AS_OF, lang)}",
+                    f"3.119 commits escritos a mano · ecrespo + prismal-ai · al "
+                    f"{format_iso_day(DATA_AS_OF, lang)}",
+                ),
                 class_name=_NOTE + " whitespace-nowrap",
             ),
             class_name="min-w-0 mr-auto",
@@ -98,9 +117,9 @@ def _header() -> rx.Component:
         rx.el.div(
             rx.el.div(
                 sp_segmented(
-                    label="Period",
+                    label=t(lang, "Period", "Periodo"),
                     name="period",
-                    items=[ui_item(p["key"], p["label"]) for p in PERIODS],
+                    items=[ui_item(p["key"], p["label"]) for p in _rows(lang, PERIODS, PERIODS_ES)],
                     value=S.period,
                     on_change=S.set_period,
                     size="sm",
@@ -109,16 +128,21 @@ def _header() -> rx.Component:
             ),
             rx.el.div(
                 sp_select(
-                    PROFILE_OPTIONS,
+                    _rows(lang, PROFILE_OPTIONS, PROFILE_ITEMS_ES),
                     value=S.profile,
                     on_change=S.set_profile,
-                    label="Profile",
+                    label=t(lang, "Profile", "Perfil"),
                     width="100%",
                     id="dashboard-profile",
                 ),
                 class_name="w-full sm:w-52",
             ),
-            sp_button("Reset", size="sm", on_click=S.reset_filters, label="Reset filters"),
+            sp_button(
+                t(lang, "Reset", "Restablecer"),
+                size="sm",
+                on_click=S.reset_filters,
+                label=t(lang, "Reset filters", "Restablecer los filtros"),
+            ),
             class_name="flex flex-wrap lg:flex-nowrap items-end gap-3 min-w-0",
         ),
         class_name="flex flex-wrap items-end gap-x-4 gap-y-2 mb-3",
@@ -132,17 +156,18 @@ def _kpi(title: str, value, suffix: str | None = None) -> rx.Component:
     )
 
 
-def _kpis() -> rx.Component:
+def _kpis(lang: str) -> rx.Component:
+    kpis = _rows(lang, S.kpis, S.kpis_es)
     return sp_card(
         rx.el.div(
-            _kpi("Commits", S.kpis["commits"]),
-            _kpi("Active days", S.kpis["active_days"]),
-            _kpi("Repositories", S.kpis["repos"]),
-            _kpi("Streak", S.kpis["streak"], " days"),
-            _kpi("Per active day", S.kpis["per_active_day"]),
-            _kpi("Weekend", S.kpis["weekend"], "%"),
-            _kpi("Peak hour", S.kpis["peak_hour"]),
-            _kpi("Conventional", S.kpis["conventional"], "%"),
+            _kpi("Commits", kpis["commits"]),
+            _kpi(t(lang, "Active days", "Días activos"), kpis["active_days"]),
+            _kpi(t(lang, "Repositories", "Repositorios"), kpis["repos"]),
+            _kpi(t(lang, "Streak", "Racha"), kpis["streak"], t(lang, " days", " días")),
+            _kpi(t(lang, "Per active day", "Por día activo"), kpis["per_active_day"]),
+            _kpi(t(lang, "Weekend", "Fin de semana"), kpis["weekend"], "%"),
+            _kpi(t(lang, "Peak hour", "Hora pico"), kpis["peak_hour"]),
+            _kpi(t(lang, "Conventional", "Convencionales"), kpis["conventional"], "%"),
             class_name="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8",
         ),
         size="sm",
@@ -155,14 +180,14 @@ def _kpis() -> rx.Component:
 # --------------------------------------------------------------------------- #
 
 
-def _activity() -> rx.Component:
+def _activity(lang: str) -> rx.Component:
     return _grid(
         dashboard_cell(
             line_chart(
                 data=S.monthly,
                 x_key="month",
                 value_key="commits",
-                title="Commits per month",
+                title=t(lang, "Commits per month", "Commits por mes"),
                 unit="commits",
                 tooltip=tooltip_template("{datum.month} · {value} commits"),
                 id="dash-monthly",
@@ -174,8 +199,8 @@ def _activity() -> rx.Component:
                 data=S.day_sizes,
                 x_key="size",
                 value_key="days",
-                title="Active days by commits",
-                unit="days",
+                title=t(lang, "Active days by commits", "Días activos según sus commits"),
+                unit=t(lang, "days", "días"),
                 id="dash-day-sizes",
             ),
             cell="sizes",
@@ -185,7 +210,7 @@ def _activity() -> rx.Component:
                 data=S.yearly,
                 x_key="year",
                 value_key="commits",
-                title="Commits per year",
+                title=t(lang, "Commits per year", "Commits por año"),
                 unit="commits",
                 id="dash-yearly",
             ),
@@ -193,18 +218,28 @@ def _activity() -> rx.Component:
         ),
         dashboard_cell(
             bar_chart(
-                data=S.weekly,
+                data=_rows(lang, S.weekly, S.weekly_es),
                 x_key="week",
                 value_key="commits",
-                title="Commits per week (last 52 weeks of the period)",
+                title=t(
+                    lang,
+                    "Commits per week (last 52 weeks of the period)",
+                    "Commits por semana (últimas 52 semanas del periodo)",
+                ),
                 unit="commits",
-                tooltip=tooltip_template("Week of {datum.start} · {value} commits"),
+                tooltip=tooltip_template(
+                    t(
+                        lang,
+                        "Week of {datum.start} · {value} commits",
+                        "Semana del {datum.start} · {value} commits",
+                    )
+                ),
                 id="dash-weekly",
             ),
             cell="weekly",
         ),
         grid_id="dash-activity",
-        label="Activity",
+        label=t(lang, "Activity", "Actividad"),
         layout=[
             dashboard_cell_layout("monthly", col_span={"md": 2, "lg": 3}),
             dashboard_cell_layout("sizes", col_span={"md": 2, "lg": 1}),
@@ -214,14 +249,14 @@ def _activity() -> rx.Component:
     )
 
 
-def _rhythm() -> rx.Component:
+def _rhythm(lang: str) -> rx.Component:
     return _grid(
         dashboard_cell(
             bar_chart(
-                data=S.weekday,
+                data=_rows(lang, S.weekday, S.weekday_es),
                 x_key="day",
                 value_key="commits",
-                title="By day of the week",
+                title=t(lang, "By day of the week", "Por día de la semana"),
                 unit="commits",
                 id="dash-weekday",
             ),
@@ -232,7 +267,7 @@ def _rhythm() -> rx.Component:
                 data=S.hours,
                 x_key="hour",
                 value_key="commits",
-                title="By hour of day (local time)",
+                title=t(lang, "By hour of day (local time)", "Por hora del día (hora local)"),
                 unit="commits",
                 tooltip=tooltip_template("{datum.hour}:00 · {value} commits"),
                 id="dash-hours",
@@ -241,20 +276,28 @@ def _rhythm() -> rx.Component:
         ),
         dashboard_cell(
             heatmap_chart(
-                data=S.heatmap,
+                data=_rows(lang, S.heatmap, S.heatmap_es),
                 label_key="day",
                 values_key="hours",
                 scale_max=S.heatmap_max,
                 column_labels=_HOUR_LABELS,
-                title="Weekday × hour — point at a day to mark it in both charts",
-                description="Rows are days, Monday to Sunday; columns are hours, 00 to 23.",
+                title=t(
+                    lang,
+                    "Weekday × hour — point at a day to mark it in both charts",
+                    "Día × hora — señala un día para marcarlo en ambos gráficos",
+                ),
+                description=t(
+                    lang,
+                    "Rows are days, Monday to Sunday; columns are hours, 00 to 23.",
+                    "Las filas son los días, de lunes a domingo; las columnas, las horas, de 00 a 23.",
+                ),
                 unit="commits",
                 id="dash-heatmap",
             ),
             cell="heatmap",
         ),
         grid_id="dash-rhythm",
-        label="Rhythm",
+        label=t(lang, "Rhythm", "Ritmo"),
         layout=[
             dashboard_cell_layout("weekday", col_span={"md": 1, "lg": 1}),
             dashboard_cell_layout("hours", col_span={"md": 1, "lg": 3}),
@@ -265,17 +308,21 @@ def _rhythm() -> rx.Component:
     )
 
 
-def _repo_detail() -> rx.Component:
+def _repo_detail(lang: str) -> rx.Component:
     return rx.cond(
         S.selected_repo != "",
         sp_card(
-            sp_descriptions(S.repo_facts, columns=3),
+            sp_descriptions(_rows(lang, S.repo_facts, S.repo_facts_es), columns=3),
             rx.el.div(
                 line_chart(
                     data=S.repo_monthly,
                     x_key="month",
                     value_key="commits",
-                    title="Commits per month, whole history",
+                    title=t(
+                        lang,
+                        "Commits per month, whole history",
+                        "Commits por mes, toda la historia",
+                    ),
                     unit="commits",
                     height=150,
                     id="dash-repo-monthly",
@@ -284,24 +331,33 @@ def _repo_detail() -> rx.Component:
             ),
             title=S.selected_repo,
             extra=sp_button(
-                "Close", size="sm", on_click=S.clear_repo, label="Close repository detail"
+                t(lang, "Close", "Cerrar"),
+                size="sm",
+                on_click=S.clear_repo,
+                label=t(lang, "Close repository detail", "Cerrar el detalle del repositorio"),
             ),
             size="sm",
             class_name="h-full",
         ),
         rx.el.div(
-            sp_empty(description="Click a repository bar to open its figures and monthly series."),
+            sp_empty(
+                description=t(
+                    lang,
+                    "Click a repository bar to open its figures and monthly series.",
+                    "Haz clic en la barra de un repositorio para ver sus cifras y su serie mensual.",
+                )
+            ),
             class_name="h-full flex items-center justify-center",
         ),
     )
 
 
-def _repositories() -> rx.Component:
+def _repositories(lang: str) -> rx.Component:
     return rx.el.div(
         rx.el.div(
             rx.el.div(
                 sp_slider(
-                    label="Repositories shown",
+                    label=t(lang, "Repositories shown", "Repositorios mostrados"),
                     min=5,
                     max=25,
                     step=1,
@@ -317,7 +373,11 @@ def _repositories() -> rx.Component:
                 x_key="label",
                 value_key="commits",
                 orientation="rows",
-                title="Commits per repository — click a bar for its detail",
+                title=t(
+                    lang,
+                    "Commits per repository — click a bar for its detail",
+                    "Commits por repositorio — haz clic en una barra para ver su detalle",
+                ),
                 unit="commits",
                 tooltip=tooltip_template("{datum.repo} · {value} commits"),
                 height=_VIEW_HEIGHT - 180,
@@ -328,7 +388,7 @@ def _repositories() -> rx.Component:
         ),
         # The detail scrolls inside its own column, so the page never grows.
         rx.el.div(
-            _repo_detail(),
+            _repo_detail(lang),
             class_name="min-w-0 overflow-y-auto",
             style={"max_height": f"{_VIEW_HEIGHT + 60}px"},
         ),
@@ -337,19 +397,23 @@ def _repositories() -> rx.Component:
     )
 
 
-def _technology() -> rx.Component:
+def _technology(lang: str) -> rx.Component:
     return rx.el.div(
         _grid(
             dashboard_cell(
                 squarified_treemap(
-                    data=S.tech_tree,
+                    data=_rows(lang, S.tech_tree, S.tech_tree_es),
                     id_key="id",
                     parent_key="parent",
                     label_key="name",
                     value_key="commits",
                     root_id=S.tech_root,
                     on_root_change=S.set_tech_root,
-                    title="Technologies by group — click one to open its group",
+                    title=t(
+                        lang,
+                        "Technologies by group — click one to open its group",
+                        "Tecnologías por grupo — haz clic en una para abrir su grupo",
+                    ),
                     unit="commits",
                     id="dash-tech-tree",
                 ),
@@ -357,24 +421,28 @@ def _technology() -> rx.Component:
             ),
             dashboard_cell(
                 donut_chart(
-                    data=S.stack_categories,
+                    data=_rows(lang, S.stack_categories, S.stack_categories_es),
                     name_key="name",
                     value_key="value",
-                    center_label="categories",
+                    center_label=t(lang, "categories", "categorías"),
                     center_value=S.stack_categories.length(),
                     legend=True,
-                    title="Commits by stack category",
+                    title=t(lang, "Commits by stack category", "Commits por categoría del stack"),
                     id="dash-stack-categories",
                 ),
                 cell="categories",
             ),
             dashboard_cell(
                 bar_chart(
-                    data=S.tech_top,
+                    data=_rows(lang, S.tech_top, S.tech_top_es),
                     x_key="label",
                     value_key="commits",
                     orientation="rows",
-                    title="Commits touching each technology (top 12)",
+                    title=t(
+                        lang,
+                        "Commits touching each technology (top 12)",
+                        "Commits que tocan cada tecnología (top 12)",
+                    ),
                     unit="commits",
                     tooltip=tooltip_template("{datum.tech} · {value} commits"),
                     id="dash-tech",
@@ -383,11 +451,15 @@ def _technology() -> rx.Component:
             ),
             dashboard_cell(
                 bar_chart(
-                    data=S.stack_top,
+                    data=_rows(lang, S.stack_top, S.stack_top_es),
                     x_key="label",
                     value_key="commits",
                     orientation="rows",
-                    title="Stack components by commits (top 12)",
+                    title=t(
+                        lang,
+                        "Stack components by commits (top 12)",
+                        "Componentes del stack por commits (top 12)",
+                    ),
                     unit="commits",
                     tooltip=tooltip_template(
                         "{datum.component} · {datum.category} · {value} commits"
@@ -397,7 +469,7 @@ def _technology() -> rx.Component:
                 cell="stack",
             ),
             grid_id="dash-technology",
-            label="Technology and stack",
+            label=t(lang, "Technology and stack", "Tecnología y stack"),
             layout=[
                 dashboard_cell_layout("tree", col_span={"md": 2, "lg": 2}),
                 dashboard_cell_layout("categories", col_span={"md": 2, "lg": 2}),
@@ -409,10 +481,10 @@ def _technology() -> rx.Component:
             S.tech_root,
             rx.el.div(
                 sp_button(
-                    "Back to all groups",
+                    t(lang, "Back to all groups", "Volver a todos los grupos"),
                     size="sm",
                     on_click=S.set_tech_root(None),
-                    label="Back to all groups",
+                    label=t(lang, "Back to all groups", "Volver a todos los grupos"),
                 ),
                 class_name="absolute top-3 right-3 z-10",
             ),
@@ -422,31 +494,38 @@ def _technology() -> rx.Component:
     )
 
 
-def _bubbles(x_key: str, title: str, chart_id: str) -> rx.Component:
+def _bubbles(x_key: str, title: str, chart_id: str, lang: str) -> rx.Component:
     return bubble_chart(
-        data=S.profile_points,
+        data=_rows(lang, S.profile_points, S.profile_points_es),
         x_key=x_key,
         y_key="momentum",
         size_key="commits",
         size_range=[120, 900],
         title=title,
         tooltip=tooltip_template(
-            "{datum.profile} · depth {datum.depth}% · momentum {datum.momentum}% · "
-            "visibility {datum.visibility} · {datum.map_quadrant} / {datum.visibility_quadrant}"
+            t(
+                lang,
+                "{datum.profile} · depth {datum.depth}% · momentum {datum.momentum}% · "
+                "visibility {datum.visibility} · {datum.map_quadrant} / {datum.visibility_quadrant}",
+                "{datum.profile} · profundidad {datum.depth}% · impulso {datum.momentum}% · "
+                "visibilidad {datum.visibility} · {datum.map_quadrant} / {datum.visibility_quadrant}",
+            )
         ),
         id=chart_id,
     )
 
 
-def _profiles() -> rx.Component:
+def _profiles(lang: str) -> rx.Component:
     return _grid(
         dashboard_cell(
             bar_chart(
-                data=S.profile_mix,
+                data=_rows(lang, S.profile_mix, S.profile_mix_es),
                 x_key="label",
                 value_key="commits",
                 orientation="rows",
-                title="Commits per profile in the period",
+                title=t(
+                    lang, "Commits per profile in the period", "Commits por perfil en el periodo"
+                ),
                 unit="commits",
                 tooltip=tooltip_template("{datum.profile} · {value} commits"),
                 id="dash-profile-mix",
@@ -455,11 +534,15 @@ def _profiles() -> rx.Component:
         ),
         dashboard_cell(
             bullet_chart(
-                data=S.impact_top,
+                data=_rows(lang, S.impact_top, S.impact_top_es),
                 title_key="project",
                 actual_key="impact",
                 target_key="median",
-                title="Impact score, 0–100 (marker: the median project)",
+                title=t(
+                    lang,
+                    "Impact score, 0–100 (marker: the median project)",
+                    "Puntaje de impacto, 0–100 (marca: el proyecto mediano)",
+                ),
                 tooltip=tooltip_template(
                     "{datum.project} · {value} · {datum.trajectory} · {datum.profiles_text}"
                 ),
@@ -468,14 +551,29 @@ def _profiles() -> rx.Component:
             cell="impact",
         ),
         dashboard_cell(
-            _bubbles("depth", "Depth × momentum (all time)", "dash-quad-depth"), cell="depth"
+            _bubbles(
+                "depth",
+                t(lang, "Depth × momentum (all time)", "Profundidad × impulso (todo el historial)"),
+                "dash-quad-depth",
+                lang,
+            ),
+            cell="depth",
         ),
         dashboard_cell(
-            _bubbles("visibility", "Visibility × momentum (all time)", "dash-quad-visibility"),
+            _bubbles(
+                "visibility",
+                t(
+                    lang,
+                    "Visibility × momentum (all time)",
+                    "Visibilidad × impulso (todo el historial)",
+                ),
+                "dash-quad-visibility",
+                lang,
+            ),
             cell="visibility",
         ),
         grid_id="dash-profiles",
-        label="Profiles and impact",
+        label=t(lang, "Profiles and impact", "Perfiles e impacto"),
         layout=[
             dashboard_cell_layout("mix", col_span={"md": 1, "lg": 2}),
             dashboard_cell_layout(
@@ -500,24 +598,24 @@ _VIEWS = {
 }
 
 
-def _panel(key: str) -> rx.Component:
+def _panel(key: str, lang: str) -> rx.Component:
     # Only the open tab mounts its charts, so a hidden grid never measures a
     # zero width and a slice change only redraws what is on screen.
     return sp_tab_panel(
-        rx.cond(S.tab == key, rx.el.div(_VIEWS[key](), class_name="pt-2"), rx.fragment()),
+        rx.cond(S.tab == key, rx.el.div(_VIEWS[key](lang), class_name="pt-2"), rx.fragment()),
         value=key,
     )
 
 
-def dev_dashboard() -> rx.Component:
-    """The whole `/dev-dashboard-stats` body."""
+def dev_dashboard(lang: str = "en") -> rx.Component:
+    """The whole `/dev-dashboard-stats` body, in `lang`."""
     return rx.el.section(
-        _header(),
-        _kpis(),
+        _header(lang),
+        _kpis(lang),
         sp_tabs(
-            *[_panel(key) for key, _ in _TABS],
-            items=[ui_item(key, label) for key, label in _TABS],
-            label="Dashboard views",
+            *[_panel(key, lang) for key, _ in _TABS],
+            items=[ui_item(key, label[lang]) for key, label in _TABS],
+            label=t(lang, "Dashboard views", "Vistas del dashboard"),
             value=S.tab,
             on_change=S.set_tab,
             size="sm",
