@@ -12,16 +12,16 @@ API_URL = os.environ.get("API_URL", "https://api.seraph.to")
 class VitePrebundlePlugin(rx.plugins.Plugin):
     """Pre-bundle npm deps that Vite would otherwise discover mid-session.
 
-    The rosencharts, timeline and GitHub calendar components are NoSSR, so
-    their packages (d3 above all) are only imported dynamically once a page
-    mounts them. The dev server then re-optimizes its dependencies and bumps
-    every `?v=` hash, and an in-flight `import("…/.vite/deps/d3.js?v=<old>")`
-    fails with "error loading dynamically imported module": the charts stay
-    blank. Listing them in `optimizeDeps.include` bundles them at startup.
+    silverpoint's `SpTimeline` imports TimelineJS dynamically, once a page
+    mounts it. The dev server then re-optimizes its dependencies and bumps
+    every `?v=` hash, and an in-flight
+    `import("…/.vite/deps/@knight-lab_timelinejs.js?v=<old>")` fails with
+    "error loading dynamically imported module": the timeline stays blank.
+    Listing it in `optimizeDeps.include` bundles it at startup.
     Only affects `reflex run`; production builds do not use the optimizer.
     """
 
-    include: tuple[str, ...] = ("d3", "react-github-calendar", "@knight-lab/timelinejs")
+    include: tuple[str, ...] = ("@knight-lab/timelinejs",)
 
     def pre_compile(self, **context):
         context["add_modify_task"]("vite.config.js", self._add_optimize_deps)
@@ -46,26 +46,20 @@ config = rx.Config(
         rx.plugins.SitemapPlugin(),
         # `darkMode: "class"` keeps the `dark:` variants tied to the `.dark`
         # class instead of the OS setting: the app is pinned to the light Radix
-        # appearance, and third-party components that ship `dark:` classes (the
-        # reflex-rosencharts radars, for one) would otherwise render dark on a
-        # light page for visitors whose system theme is dark. Note the plugin
-        # config — not the root tailwind.config.js — is what generates
-        # .web/tailwind.config.js, so the typography plugin has to be repeated.
-        # `content` keeps Reflex's defaults (app/, utils/) and adds two paths.
-        # public/external/ is where custom components such as reflex-rosencharts
-        # ship their .tsx sources; without it their Tailwind classes (fills,
-        # strokes, max-w-[18rem]) are never generated and the radars render as
-        # huge black shapes. app_components/ is where Reflex compiles the class
-        # names written in Python, so utilities used only there — the gradient
-        # `from-*`/`to-*` strings the dev-stats charts pass as data, for one —
-        # are otherwise missing from the production CSS.
+        # appearance, so visitors whose system theme is dark still get the
+        # light page. Note the plugin config — not the root tailwind.config.js —
+        # is what generates .web/tailwind.config.js, so the typography plugin
+        # has to be repeated. `content` keeps Reflex's defaults (app/, utils/)
+        # and adds app_components/, where Reflex compiles the class names
+        # written in Python, so utilities used only there are not missing from
+        # the production CSS. The silverpoint charts and components ship their
+        # own stylesheets and need no Tailwind.
         rx.plugins.TailwindV4Plugin(
             config={
                 "content": [
                     "./app/**/*.{js,ts,jsx,tsx}",
                     "./app_components/**/*.{js,ts,jsx,tsx}",
                     "./utils/**/*.{js,ts,jsx,tsx}",
-                    "./public/external/**/*.{js,ts,jsx,tsx}",
                 ],
                 "darkMode": "class",
                 "plugins": ["@tailwindcss/typography@0.5.20"],

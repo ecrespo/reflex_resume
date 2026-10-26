@@ -1,56 +1,62 @@
 import reflex as rx
-import reflex_rosencharts as rxc
+from reflex_silverpoint_react import radar_chart, sp_select
 
 from web.states.resume_state import ResumeState
 
-# The rosencharts radar draws its axis labels outside the circle, so the card
-# needs room around it.
-_CHART_CARD = "mb-12 w-full bg-white rounded-lg shadow-md px-6 py-10 md:px-16 md:py-14"
+# Skill levels run from 1 to 5; a fixed domain keeps every category on the same
+# radial scale instead of stretching each one to its own maximum.
+_LEVEL_DOMAIN = [0, 5]
 
 
 def skills_chart_section() -> rx.Component:
-    """Interactive skills radar charts (reflex-rosencharts)."""
+    """Interactive skills radar charts (silverpoint)."""
     return rx.el.section(
         rx.el.h2(
             "Skills",
             class_name="text-3xl font-bold text-gray-800 mb-8 border-b-2 border-gray-200 pb-2",
         ),
-        # Skill selector dropdown
         rx.el.div(
-            rx.el.label(
-                "Select Skill Category:",
-                class_name="block text-lg font-semibold text-gray-700 mb-3",
-            ),
-            rx.select(
+            sp_select(
                 ResumeState.skill_categories,
                 value=ResumeState.selected_skill,
                 on_change=ResumeState.set_selected_skill,
-                class_name="w-full md:w-96 px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-blue-500",
+                label="Select Skill Category",
+                width="100%",
+                id="skill-category",
             ),
-            class_name="mb-8",
+            class_name="mb-8 w-full md:w-96",
         ),
-        # One axis per skill of the selected category.
+        # One spoke per skill of the selected category.
         rx.el.div(
-            rx.el.h3(
-                ResumeState.selected_skill,
-                class_name="text-xl font-semibold text-gray-700 text-center",
+            radar_chart(
+                data=ResumeState.current_skill_radar,
+                subject_key="topic",
+                value_key="value",
+                domain=_LEVEL_DOMAIN,
+                title=ResumeState.selected_skill,
+                description="Self-assessed level of each skill, from 1 to 5.",
+                height=360,
+                id="skills-radar",
             ),
-            rxc.radar_chart_rounded(data=ResumeState.current_skill_radar),
-            class_name=_CHART_CARD,
+            class_name="mb-12 w-full",
         ),
-        # Comparative chart title
         rx.el.h3(
             "Comparative View",
             class_name="text-2xl font-bold text-gray-700 mb-4 mt-8",
         ),
-        # One axis per category, valued by the average level of its skills.
+        # One spoke per category, valued by the average level of its skills.
         rx.el.div(
-            rx.el.h3(
-                "Average level per category",
-                class_name="text-xl font-semibold text-gray-700 text-center",
+            radar_chart(
+                data=ResumeState.category_average_radar,
+                subject_key="topic",
+                value_key="value",
+                domain=_LEVEL_DOMAIN,
+                title="Average level per category",
+                description="Mean self-assessed level of the skills in each category.",
+                height=360,
+                id="skills-category-radar",
             ),
-            rxc.radar_chart_rounded(data=ResumeState.category_average_radar),
-            class_name=_CHART_CARD,
+            class_name="mb-12 w-full",
         ),
         id="skills",
         class_name="mb-12 scroll-mt-24",

@@ -1,14 +1,18 @@
-ARG PYTHON_VERSION=3.13.15
-ARG UV_VERSION=0.12.13
+ARG UBUNTU_VERSION=26.04
+ARG PYTHON_VERSION=3.13.17
+ARG UV_VERSION=0.13.5
 
 # UV stage to allow static --from references (no ARG expansion in --from)
 FROM ghcr.io/astral-sh/uv:${UV_VERSION} AS uv
 
 # Build stage: Install dependencies and compile Reflex app
-FROM python:${PYTHON_VERSION}-slim-trixie AS builder
+FROM ubuntu:${UBUNTU_VERSION} AS builder
+
+ARG PYTHON_VERSION
 
 # Install system dependencies required for Reflex compilation
 RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
     unzip \
     curl \
     && rm -rf /var/lib/apt/lists/*
@@ -19,8 +23,16 @@ COPY --from=uv /uv /uvx /bin/
 # Set working directory
 WORKDIR /app
 
-# Never install the dev dependency group (lint/security tools) in the image
-ENV UV_NO_DEV=1
+# Never install the dev dependency group (lint/security tools) in the image.
+# Ubuntu does not ship Python 3.13, so uv installs a managed interpreter in
+# /opt/python; the runtime stage copies it to the same path the venv points to.
+ENV UV_NO_DEV=1 \
+    UV_LINK_MODE=copy \
+    UV_PYTHON=${PYTHON_VERSION} \
+    UV_PYTHON_INSTALL_DIR=/opt/python \
+    UV_PYTHON_PREFERENCE=only-managed
+
+RUN uv python install --no-cache
 
 # Copy dependency files first for better layer caching
 COPY pyproject.toml uv.lock ./
@@ -38,20 +50,32 @@ ENV PATH="/app/.venv/bin:$PATH"
 RUN uv run reflex init
 
 # Runtime stage: Minimal production image
-FROM python:${PYTHON_VERSION}-slim-trixie
+FROM ubuntu:${UBUNTU_VERSION}
+
+ARG PYTHON_VERSION
 
 LABEL authors="Ernesto Crespo <ecrespo@gmail.com>"
 LABEL description="Reflex Resume"
 
-ENV UV_NO_DEV=1
+ENV UV_NO_DEV=1 \
+    UV_PYTHON=${PYTHON_VERSION} \
+    UV_PYTHON_INSTALL_DIR=/opt/python \
+    UV_PYTHON_PREFERENCE=only-managed
 
-# Create non-root user
-RUN useradd -m -u 1000 appuser
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    ca-certificates \
+    && rm -rf /var/lib/apt/lists/*
+
+# Create non-root user (the Ubuntu image already has an "ubuntu" user with UID 1000)
+RUN userdel --remove ubuntu && useradd -m -u 1000 appuser
 
 WORKDIR /app
 
 # Copy uv for runtime
 COPY --from=uv /uv /bin/
+
+# Copy the uv-managed Python interpreter the virtual environment links to
+COPY --from=builder /opt/python /opt/python
 
 # Copy virtual environment from builder
 COPY --from=builder --chown=appuser:appuser /app/.venv /app/.venv

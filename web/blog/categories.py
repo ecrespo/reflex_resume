@@ -1,14 +1,16 @@
 from collections import defaultdict
 
 import reflex as rx
+from reflex_silverpoint_react import sp_badge, sp_tag
 
 from web.blog.paths import sorted_posts
+from web.components.footer import site_footer
 from web.components.navbar import blog_navbar
 from web.components.sidebar import sidebar
 
 # Constants
-MAIN_LAYOUT_CLASS = "flex min-h-screen font-['Inter'] bg-[#f5f5dc]"
-CONTENT_AREA_CLASS = "flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-96"
+MAIN_LAYOUT_CLASS = "flex min-h-screen bg-[#f5f5dc]"
+CONTENT_AREA_CLASS = "flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"
 MAIN_PADDING_CLASS = "p-4 md:p-8 lg:p-16 w-full"
 
 
@@ -29,15 +31,10 @@ class CategoriesState(rx.State):
 
 
 def category_entry(item: tuple[str, int]) -> rx.Component:
-    category = item[0]
-    count = item[1]
     return rx.el.li(
-        rx.link(
-            rx.el.span(category, class_name="text-[#d05040] hover:underline"),
-            f" ({count})",
-            href="#",
-            class_name="text-gray-700 block py-1",
-        )
+        sp_tag(item[0], tone=2),
+        sp_badge(count=item[1], max=999, label="posts"),
+        class_name="inline-flex items-center gap-1",
     )
 
 
@@ -54,12 +51,13 @@ def categories_page() -> rx.Component:
                     ),
                     rx.el.ul(
                         rx.foreach(CategoriesState.categories_with_counts, category_entry),
-                        class_name="list-none space-y-2",
+                        class_name="list-none flex flex-wrap gap-3",
                     ),
                     class_name="container mx-auto max-w-5xl",
                 ),
                 class_name=MAIN_PADDING_CLASS,
             ),
+            site_footer(),
             class_name=CONTENT_AREA_CLASS,
             id="content-area",
         ),

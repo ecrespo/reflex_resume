@@ -4,12 +4,12 @@ Este documento describe el proceso completo para agregar un nuevo certificado o 
 
 ## Tecnología Utilizada
 
-El timeline utiliza **TimelineJS** de Knight Lab a través de
-[`reflex-knightlab-timeline`](https://github.com/ecrespo/reflex-knightlab-timeline),
-un componente nativo de Reflex que envuelve la librería (sin iframe ni HTML estático).
+El timeline utiliza **TimelineJS** de Knight Lab a través de `sp_timeline`, de
+[`reflex-silverpoint-react`](https://github.com/ecrespo/reflex-silverpoint-react):
+la misma librería, dibujada con la piel de silverpoint (sin iframe ni HTML estático).
 
 - Documentación oficial: [TimelineJS](https://timeline.knightlab.com/)
-- Componente: [PyPI](https://pypi.org/project/reflex-knightlab-timeline/) · [GitHub](https://github.com/ecrespo/reflex-knightlab-timeline)
+- Componente: [PyPI](https://pypi.org/project/reflex-silverpoint-react/) · [GitHub](https://github.com/ecrespo/reflex-silverpoint-react)
 - Los datos se almacenan en formato JSON
 
 ---
@@ -233,7 +233,25 @@ Usa estos nombres para mantener consistencia:
 
 ---
 
-## Paso 5: Reiniciar la Aplicación
+## Paso 5: Descargar la Imagen del Certificado
+
+El timeline no muestra el visor de Google Drive (que añade franjas negras y no
+se puede estilizar), sino una copia local del certificado en
+`assets/certificates/<ID_DEL_ARCHIVO>.jpg`, enlazada al archivo de Drive. Google
+bloquea (HTTP 429) cargar sus miniaturas directamente desde otra web, por eso se
+descargan una vez:
+
+```bash
+uv run python utils/fetch_certificates.py
+```
+
+El script solo descarga las imágenes que faltan (JPEG de 800 px, ~40 KB). Un
+certificado sin copia local sigue mostrándose con el visor de Drive. Haz commit
+de las imágenes nuevas junto con `timeline.json`.
+
+---
+
+## Paso 6: Reiniciar la Aplicación
 
 Después de modificar el archivo JSON, reinicia el servidor de Reflex:
 
@@ -314,9 +332,9 @@ TimelineJS soporta campos adicionales que puedes usar:
 
 ### Error al cargar el timeline
 
-1. Revisa la consola del navegador (F12 → Console) — el componente registra sus
-   errores con el prefijo `[reflex-knightlab-timeline]`
-2. Revisa la salida de `reflex run`: si el JSON no valida, `load_timeline_data`
+1. Revisa la consola del navegador (F12 → Console) — si TimelineJS no carga,
+   silverpoint avisa con el código `SP025` y muestra el estado vacío del componente
+2. Revisa la salida de `reflex run`: si el JSON no es válido, `web/timeline_data.py`
    falla al arrancar la aplicación
 3. Valida la sintaxis JSON
 
@@ -337,8 +355,9 @@ TimelineJS soporta campos adicionales que puedes usar:
 | 3 | Agregar nuevo objeto JSON al inicio del array `events` |
 | 4 | Llenar campos: `start_date`, `media`, `text` |
 | 5 | Validar que el JSON sea correcto |
-| 6 | Guardar y reiniciar Reflex: `reflex run` |
-| 7 | Verificar en el timeline que aparece el nuevo certificado |
+| 6 | Descargar la imagen: `uv run python utils/fetch_certificates.py` |
+| 7 | Guardar y reiniciar Reflex: `reflex run` |
+| 8 | Verificar en el timeline que aparece el nuevo certificado |
 
 ---
 
