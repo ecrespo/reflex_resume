@@ -938,3 +938,195 @@ REPOSITORIES = [
         ],
     },
 ]
+
+# --------------------------------------------------------------------------- #
+# Spanish
+# --------------------------------------------------------------------------- #
+
+CATEGORY_TITLES_ES = {
+    "ai": "IA agéntica y aplicaciones de LLM",
+    "labs": "Laboratorios de LangChain y LangGraph",
+    "reflex": "Componentes personalizados de Reflex",
+    "viz": "Visualización de datos",
+    "data": "Ciencia de datos y EDAs",
+    "tools": "Herramientas y escritorio",
+    "sites": "Sitios",
+}
+
+# Repository (`owner/name`) → its description in Spanish.
+DESCRIPTIONS_ES = {
+    "prismal-ai/prismal": (
+        "Framework de orquestación multiagente inspirado en un prisma, construido sobre "
+        "LangGraph: la seguridad primero, agnóstico del proveedor y componible."
+    ),
+    "ecrespo/umbral": (
+        "Terminal agéntica local-first escrita en Go, con herramientas MCP y proveedores "
+        "Anthropic / OpenAI."
+    ),
+    "prismal-ai/prismal-server": "Servidor de API REST, WebSocket y SSE para el framework Prismal.",
+    "ecrespo/chatbot": (
+        "Chatbot en Reflex sobre reflex-assistant-ui que habla con cualquier servidor compatible "
+        "con la API de OpenAI (OpenAI, Ollama y otros)."
+    ),
+    "prismal-ai/prismal-sdk": "Cliente en Python para prismal-server sobre REST, WebSocket y SSE.",
+    "ecrespo/onlyVans": (
+        "Asistente de análisis de datos: un agente de LangGraph sobre PostgreSQL con una "
+        "interfaz de chat en Reflex."
+    ),
+    "ecrespo/skills": (
+        "Siete Agent Skills para flujos de ingeniería de software: evaluación de arquitectura, "
+        "scaffolding, revisiones y más."
+    ),
+    "ecrespo/recruitment_agency": (
+        "Aplicación de LangGraph que evalúa candidatos frente a un perfil de puesto, con "
+        "interfaz web en Reflex."
+    ),
+    "prismal-ai/prisma-notebooks": "Notebooks de Jupyter con ejemplos resueltos del framework Prismal.",
+    "ecrespo/demo_mcp_agent": (
+        "Demo de un agente de LangGraph que llama herramientas MCP, con backend en FastAPI e "
+        "interfaz en Reflex."
+    ),
+    "prismal-ai/prismal-chatbot": "Conectores que ponen los agentes de Prismal detrás de bots de chat externos.",
+    "prismal-ai/prismal-dashboard": "Dashboard web de administración de Prismal.",
+    "prismal-ai/prismal-tui": "Interfaz de terminal para Prismal.",
+    "prismal-ai/prismal-webchat": "Chat web para los agentes de Prismal.",
+    "ecrespo/Langgraph_tutorials": (
+        "Notebooks prácticos de LangGraph con Claude: estado tipado, checkpoints, ramificación, "
+        "supervisores multiagente, RAG agéntico, agentes de uso de computadora y "
+        "human-in-the-loop."
+    ),
+    "ecrespo/langchain_tutorials": (
+        "61 ejercicios progresivos de LangChain: prompts, herramientas, salida estructurada, "
+        "memoria y flujos completos."
+    ),
+    "ecrespo/crewai_ollama_langchain": "Agentes de CrewAI con modelos locales de Ollama a través de LangChain.",
+    "ecrespo/fastapi_ollama_langchain": (
+        "Servicio en FastAPI que sirve un LLM de Ollama a través de LangChain, con caché en Redis."
+    ),
+    "ecrespo/streamlit_whisper_gpt": (
+        "App en Streamlit que transcribe audio con Whisper y procesa el texto con GPT."
+    ),
+    "ecrespo/reflex-mapcn": "Mapas de mapcn para Reflex: componentes de mapa listos para usar y personalizables.",
+    "ecrespo/reflex-rosencharts": "Port de rosencharts (D3 + Tailwind) a Reflex: 43 gráficos en Python puro.",
+    "ecrespo/reflex-silverpoint-react": (
+        "Gráficos Silverpoint para Reflex: gráficos trazados a la manera de un dibujo "
+        "renacentista a punta de plata."
+    ),
+    "ecrespo/reflex-perspective": (
+        "FINOS Perspective para Reflex: tablas de datos en streaming y gráficos dinámicos para "
+        "grandes volúmenes de datos."
+    ),
+    "ecrespo/reflex-react-player": (
+        "react-player v3 para Reflex: YouTube, Vimeo, HLS, DASH, Mux, Spotify, Twitch y más."
+    ),
+    "ecrespo/reflex-react-flow": (
+        "React Flow v12 para Reflex: editores de nodos y diagramas de flujo en Python puro."
+    ),
+    "ecrespo/reflex-threejs": (
+        "three.js para Reflex con React Three Fiber y drei: escenas 3D en Python puro."
+    ),
+    "ecrespo/reflex-hairline": "Hairline para Reflex: seis figuras isométricas de líneas que siguen al puntero.",
+    "ecrespo/reflex-plasma-ui": "Plasma UI para Reflex: paneles de vidrio líquido.",
+    "ecrespo/reflex-charts": "Chart.js para Reflex, sobre react-chartjs-2.",
+    "ecrespo/reflex-icd11ect": (
+        "Herramienta de clasificación integrada CIE-11 de la OMS para Reflex: búsqueda y "
+        "codificación de diagnósticos."
+    ),
+    "ecrespo/reflex-reactbits": (
+        "React Bits para Reflex: componentes de interfaz y fondos animados e interactivos."
+    ),
+    "ecrespo/reflex-knightlab-timeline": (
+        "TimelineJS de Knight Lab para Reflex: líneas de tiempo interactivas para contar historias."
+    ),
+    "ecrespo/reflex-mapgl-maplibre": (
+        "Mapas de MapLibre GL JS para Reflex con react-map-gl: marcadores, popups, capas "
+        "GeoJSON, agrupamiento y mapas de calor."
+    ),
+    "ecrespo/reflex-mermaidjs": (
+        "Mermaid para Reflex: diagramas de flujo, de secuencia y más a partir de texto similar a "
+        "Markdown."
+    ),
+    "ecrespo/reflex-nivo": (
+        "nivo para Reflex: un amplio conjunto de componentes de visualización de datos basados "
+        "en D3."
+    ),
+    "ecrespo/reflex-pragmatic-drag-and-drop": (
+        "Pragmatic drag and drop de Atlassian para Reflex: listas ordenables y tableros Kanban."
+    ),
+    "ecrespo/reflex-map3d": "Mapas 3D de ciudades para Reflex, hechos con React Three Fiber.",
+    "ecrespo/reflex-react-github-calendar": (
+        "react-github-calendar v5 para Reflex: un calendario de contribuciones al estilo de GitHub."
+    ),
+    "ecrespo/reflex-monocharts": (
+        "Monocharts para Reflex: 30 gráficos monocromáticos hechos con geometría de esquinas "
+        "redondeadas."
+    ),
+    "ecrespo/reflex-ohif-viewer": (
+        "Visor DICOM OHIF, sin instalación, para Reflex, con el Lesion Tracker de oncología."
+    ),
+    "ecrespo/reflex-react-globe-gl": "react-globe-gl para Reflex: datos sobre un globo 3D interactivo.",
+    "ecrespo/reflex-schedule-x": (
+        "Schedule-X para Reflex: un calendario de eventos moderno, alternativa a FullCalendar."
+    ),
+    "ecrespo/reflex-ant-design": "Componentes React de Ant Design (antd) como componentes de Reflex.",
+    "ecrespo/reflex-blossom-carousel": (
+        "Blossom Carousel para Reflex: un carrusel con desplazamiento nativo y arrastre con el "
+        "puntero."
+    ),
+    "ecrespo/reflex-resium": "Resium para Reflex: globos y mapas 3D de Cesium.",
+    "ecrespo/reflex-gravityui-graph": (
+        "@gravity-ui/graph para Reflex: grafos en canvas de alto rendimiento, diagramas de flujo "
+        "y editores de nodos."
+    ),
+    "ecrespo/reflex-jupyter-renderer-react": (
+        "Renderizador de notebooks de Jupyter para Reflex: muestra archivos .ipynb con sus "
+        "salidas en una página."
+    ),
+    "ecrespo/reflex-tanstack-charts": (
+        "TanStack Charts para Reflex: una gramática de visualización adaptable y accesible."
+    ),
+    "ecrespo/reflex-pdfslick": "PDFSlick para Reflex: visualiza documentos PDF e interactúa con ellos.",
+    "ecrespo/reflex-react-joyride": "react-joyride para Reflex: recorridos guiados para tus aplicaciones.",
+    "ecrespo/reflex-xtermjs": "xterm.js para Reflex: una terminal para la web.",
+    "ecrespo/reflex-google-analytics-reactjs": (
+        "Seguimiento con Google Analytics para aplicaciones de Reflex, sobre React."
+    ),
+    "ecrespo/reflex-assistant-ui": (
+        "assistant-ui para Reflex: un port de la librería de React para interfaces de chat con IA."
+    ),
+    "ecrespo/silverpoint": (
+        "Gráficos para React y Angular cuyo lenguaje visual son las técnicas históricas de "
+        "dibujo, con un servidor MCP para asistentes de IA."
+    ),
+    "ecrespo/streamlit-covid-19-vzla": (
+        "Dashboard en Streamlit que siguió los casos de COVID-19 en Venezuela."
+    ),
+    "ecrespo/data_science_portfoliio": (
+        "17 notebooks: cambio climático, COVID-19, minoristas de EE. UU., Stanford Open "
+        "Policing, Netflix, Spotify, videojuegos, un recomendador de películas y más."
+    ),
+    "ecrespo/signals_fft_streamlit": (
+        "App en Streamlit que explora señales y su transformada rápida de Fourier."
+    ),
+    "ecrespo/tutorial_streamlit": (
+        "Tutorial multipágina de Streamlit: gráficos, dashboards, exploración de datos, "
+        "formularios y una página con un LLM."
+    ),
+    "ecrespo/magnetic_fields": "App web en Streamlit sobre campos magnéticos, con gráficos interactivos.",
+    "ecrespo/analisisobesidad-uk": "Análisis de los datos de obesidad registrados en Inglaterra hasta 2014.",
+    "ecrespo/articulos-cienciadedatos": (
+        "Notebooks de artículos del blog sobre ciencia de datos, como las cotizaciones del dólar "
+        "desde Quandl."
+    ),
+    "ecrespo/vigia-eew": (
+        "Agente de escritorio multiplataforma de alerta sísmica temprana en tiempo real: avisos "
+        "por WebSocket del EMSC con respaldo REST del USGS."
+    ),
+    "ecrespo/omagnome": (
+        "Escritorio de desarrollo opinado, reversible y centrado en el teclado para Ubuntu + GNOME."
+    ),
+    "ecrespo/reflex_resume": (
+        "Este sitio: currículum, portafolio, blog y dashboard de GitHub, hecho con Reflex."
+    ),
+    "ecrespo/silverpoint_web": "Sitio de documentación y muestra de Silverpoint, hecho con Reflex.",
+}

@@ -4,13 +4,11 @@ import reflex as rx
 from reflex_silverpoint_react import sp_card
 
 from web.blog.paths import sorted_posts
-from web.components.footer import site_footer
+from web.components.layout import site_shell
 from web.components.navbar import blog_navbar
-from web.components.sidebar import sidebar
+from web.i18n import localize, t
 
 # Constants
-MAIN_LAYOUT_CLASS = "flex min-h-screen bg-[#f5f5dc]"
-CONTENT_AREA_CLASS = "flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"
 MAIN_PADDING_CLASS = "p-4 md:p-8 lg:p-16 w-full"
 META_SEPARATOR = "text-gray-400 mx-2"
 
@@ -59,40 +57,42 @@ class ArchivesState(rx.State):
         return [p.to_dict() for p in sorted_posts]
 
 
-def archive_entry(post: dict) -> rx.Component:
+def archive_entry(post: dict, lang: str = "en") -> rx.Component:
+    date_field = "formatted_date_es" if lang == "es" else "formatted_date"
     return rx.el.div(
-        rx.el.div(post["formatted_date"], class_name="text-gray-700 font-medium mb-1"),
+        rx.el.div(post[date_field], class_name="text-gray-700 font-medium mb-1"),
         rx.link(
             post["title"],
-            href="/blog/" + post["slug"].to(str),
+            href=localize("/blog/", lang) + post["slug"].to(str),
             class_name="text-[#2F6F86] hover:underline text-lg block mb-4 ml-4",
         ),
         class_name="mb-2",
     )
 
 
-def archives_page() -> rx.Component:
-    return rx.el.div(
-        sidebar(),
-        rx.el.div(
-            blog_navbar(),
-            rx.el.main(
-                rx.el.div(
-                    rx.el.header(
-                        rx.el.h1("Archives", class_name="text-4xl font-light text-gray-800 mb-8"),
-                        class_name="mb-8",
+def archives_page(lang: str = "en") -> rx.Component:
+    return site_shell(
+        rx.el.main(
+            rx.el.div(
+                rx.el.header(
+                    rx.el.h1(
+                        t(lang, "Archives", "Archivo"),
+                        class_name="text-4xl font-light text-gray-800 mb-8",
                     ),
-                    sp_card(
-                        rx.foreach(ArchivesState.all_posts_flat, archive_entry),
-                        class_name="max-w-4xl",
-                    ),
-                    class_name="container mx-auto max-w-5xl",
+                    class_name="mb-8",
                 ),
-                class_name=MAIN_PADDING_CLASS,
+                sp_card(
+                    rx.foreach(
+                        ArchivesState.all_posts_flat, lambda post: archive_entry(post, lang)
+                    ),
+                    class_name="max-w-4xl",
+                ),
+                class_name="container mx-auto max-w-5xl",
             ),
-            site_footer(),
-            class_name=CONTENT_AREA_CLASS,
-            id="content-area",
+            class_name=MAIN_PADDING_CLASS,
         ),
-        class_name=MAIN_LAYOUT_CLASS,
+        top=blog_navbar(lang),
+        lang=lang,
+        route="/blog/archives",
+        id="content-area",
     )

@@ -11,6 +11,7 @@ from datetime import date
 
 import reflex as rx
 
+from ..i18n import t
 from ..resume_data import social_media_data
 
 OWNER = "Ernesto Crespo"
@@ -71,7 +72,7 @@ def _brand_icon(name: str) -> rx.Component:
     return rx.icon(_LUCIDE_FALLBACK.get(name, "link"), size=18, aria_hidden="true")
 
 
-def _social_link(name: str, url: str) -> rx.Component:
+def _social_link(name: str, url: str, lang: str) -> rx.Component:
     """An icon-only link; the network's name is its tooltip and accessible name."""
     return rx.el.a(
         _brand_icon(name),
@@ -79,7 +80,9 @@ def _social_link(name: str, url: str) -> rx.Component:
         target="_blank",
         rel="noopener noreferrer",
         title=name,
-        aria_label=f"{name} (opens in a new tab)",
+        aria_label=t(
+            lang, f"{name} (opens in a new tab)", f"{name} (se abre en una pestaña nueva)"
+        ),
         class_name=_ICON_LINK,
     )
 
@@ -95,7 +98,7 @@ def _inline_links(items: list[tuple[str, str]]) -> list[rx.Component]:
     return out
 
 
-def site_footer() -> rx.Component:
+def site_footer(lang: str = "en") -> rx.Component:
     """The footer at the bottom of every page: two compact rows."""
     year = date.today().year
     return rx.el.footer(
@@ -107,23 +110,23 @@ def site_footer() -> rx.Component:
                     rx.icon("mail", size=16, aria_hidden="true"),
                     rx.el.span(EMAIL),
                     href=f"mailto:{EMAIL}",
-                    aria_label=f"Send an e-mail to {EMAIL}",
+                    aria_label=t(lang, f"Send an e-mail to {EMAIL}", f"Enviar un correo a {EMAIL}"),
                     class_name=f"flex items-center gap-1.5 {_LINK}",
                 ),
                 class_name="flex flex-wrap items-center gap-x-4 gap-y-1",
             ),
             # The stack.
             rx.el.p(
-                rx.el.span("Built with "),
+                rx.el.span(t(lang, "Built with ", "Hecho con ")),
                 *_inline_links(BUILT_WITH),
-                rx.el.span(" · hosted on "),
+                rx.el.span(t(lang, " · hosted on ", " · alojado en ")),
                 *_inline_links(HOSTED_ON),
                 class_name="text-sm text-gray-700",
             ),
             # Social networks.
             rx.el.nav(
-                *[_social_link(name, url) for name, url in social_media_data],
-                aria_label="Social networks",
+                *[_social_link(name, url, lang) for name, url in social_media_data],
+                aria_label=t(lang, "Social networks", "Redes sociales"),
                 class_name="flex items-center gap-4",
             ),
             class_name=(
@@ -131,11 +134,17 @@ def site_footer() -> rx.Component:
             ),
         ),
         rx.el.div(
-            rx.el.span(f"© {year} {OWNER}. All rights reserved."),
             rx.el.span(
-                "Source code under the ",
+                t(
+                    lang,
+                    f"© {year} {OWNER}. All rights reserved.",
+                    f"© {year} {OWNER}. Todos los derechos reservados.",
+                )
+            ),
+            rx.el.span(
+                t(lang, "Source code under the ", "Código fuente bajo la "),
                 rx.el.a(
-                    "Apache 2.0 License",
+                    t(lang, "Apache 2.0 License", "licencia Apache 2.0"),
                     href=LICENSE_URL,
                     target="_blank",
                     rel="noopener noreferrer",
@@ -143,7 +152,7 @@ def site_footer() -> rx.Component:
                 ),
                 " · ",
                 rx.el.a(
-                    "View the source",
+                    t(lang, "View the source", "Ver el código"),
                     href=SOURCE_URL,
                     target="_blank",
                     rel="noopener noreferrer",

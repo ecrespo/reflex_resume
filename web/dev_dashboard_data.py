@@ -165,3 +165,125 @@ def get_slice(period: str, profile: str) -> dict[str, Any]:
     return (
         SLICES.get(slice_key(period, profile)) or SLICES[slice_key(DEFAULT_PERIOD, DEFAULT_PROFILE)]
     )
+
+
+# --------------------------------------------------------------------------- #
+# Spanish
+#
+# The JSON is in English. The Spanish page reads the same slice through
+# `DevDashboardState`'s `*_es` vars, which pass the rows through `es_rows`:
+# names of days, profiles, groups, categories, quadrants and trajectories change,
+# technology and repository names stay. Keys (`id`, `key`, `repo`) never change,
+# so filters and drill-downs work the same in both languages.
+# --------------------------------------------------------------------------- #
+
+ES_TERMS = {
+    # Periods
+    "All time": "Todo",
+    "Past year": "Último año",
+    # Profiles
+    "All profiles": "Todos los perfiles",
+    "AI Engineer": "Ingeniero de IA",
+    "Full-stack Engineer": "Ingeniero full-stack",
+    "Backend Engineer": "Ingeniero backend",
+    "DevOps / Platform": "DevOps / Plataforma",
+    "Data Engineer / Scientist": "Ingeniero / científico de datos",
+    "Systems & Linux": "Sistemas y Linux",
+    # Days
+    "Mon": "lun",
+    "Tue": "mar",
+    "Wed": "mié",
+    "Thu": "jue",
+    "Fri": "vie",
+    "Sat": "sáb",
+    "Sun": "dom",
+    # Technology groups and technologies
+    "Commits": "Commits",
+    "Code": "Código",
+    "Config & build": "Configuración y build",
+    "Data": "Datos",
+    "Docs": "Documentación",
+    "Markup & UI": "Marcado e interfaz",
+    "Data (CSV)": "Datos (CSV)",
+    "Go templates": "Plantillas de Go",
+    # Stack categories
+    "AI / LLM": "IA / LLM",
+    "Data / ML": "Datos / ML",
+    "Data store": "Almacenamiento",
+    "Desktop": "Escritorio",
+    "Python tooling": "Herramientas de Python",
+    "Runtime": "Entorno de ejecución",
+    "Web framework": "Framework web",
+    # Quadrants
+    "Core & accelerating": "Núcleo en aceleración",
+    "Established core": "Núcleo consolidado",
+    "Hidden strength": "Fortaleza oculta",
+    "Showcase": "Vitrina",
+    "Emerging": "Emergente",
+    "Supporting": "De apoyo",
+    "Latent": "Latente",
+    # Trajectories
+    "Accelerating": "En aceleración",
+    "Active": "Activo",
+    "Maintained": "Mantenido",
+    "Dormant": "Inactivo",
+    # Projects
+    "Reflex component suite": "Suite de componentes Reflex",
+    "Prismal ecosystem": "Ecosistema Prismal",
+    "LangChain / LangGraph labs": "Laboratorios de LangChain / LangGraph",
+}
+
+# Short row labels that change in Spanish (the English ones come from `short_label`).
+_ES_LABELS = {
+    "AI": "IA",
+    "Data": "Datos",
+    "Systems": "Sistemas",
+    "Full-stack Engineer": "Fullstack",
+    "Reflex component suite": "Reflex",
+    "Prismal ecosystem": "Prismal",
+}
+
+_MONTH_ABBR = {
+    "Jan": "ene", "Feb": "feb", "Mar": "mar", "Apr": "abr", "May": "may", "Jun": "jun",
+    "Jul": "jul", "Aug": "ago", "Sep": "sept", "Oct": "oct", "Nov": "nov", "Dec": "dic",
+}  # fmt: skip
+
+
+def es_term(text: str) -> str:
+    """One English term in Spanish (unchanged when it is a name)."""
+    return ES_TERMS.get(text, text)
+
+
+def es_list(text: str) -> str:
+    """A comma-separated list of terms in Spanish."""
+    return ", ".join(es_term(part.strip()) for part in text.split(","))
+
+
+def es_week(label: str) -> str:
+    """`Oct 27` → `27 oct`."""
+    month, _, day = label.partition(" ")
+    return f"{day} {_MONTH_ABBR.get(month, month)}" if day else label
+
+
+def es_rows(rows: list[dict[str, Any]], *fields: str) -> list[dict[str, Any]]:
+    """The rows with `fields` in Spanish; `label` becomes the Spanish short label."""
+    out = []
+    for row in rows:
+        new = dict(row)
+        for field in fields:
+            if field == "label":
+                new["label"] = _ES_LABELS.get(row["label"], row["label"])
+            elif field == "week":
+                new["week"] = es_week(row["week"])
+            elif field == "profiles_text":
+                new["profiles_text"] = es_list(row["profiles_text"])
+            elif isinstance(row.get(field), str):
+                new[field] = es_term(row[field])
+        out.append(new)
+    return out
+
+
+PERIODS_ES: list[dict[str, str]] = [{**p, "label": es_term(p["label"])} for p in PERIODS]
+PROFILE_ITEMS_ES: list[dict[str, str]] = [
+    {"key": profile, "label": es_term(profile)} for profile in PROFILE_OPTIONS
+]
