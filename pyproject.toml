@@ -5,11 +5,11 @@ description = "Ernesto Crespo's web site"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
-    "reflex>=0.9.11",
+    "reflex>=0.10.0",
     "flexdown>=0.3.0",
-    "reflex-knightlab-timeline>=0.1.2",
-    "reflex-rosencharts>=0.2.4",
-    "reflex-react-github-calendar>=0.1.0",
+    "reflex-silverpoint-react>=0.8.1",
+    "reflex-google-analytics-reactjs>=0.1.0",
+    "httpx>=0.28.1",
 ]
 
 [dependency-groups]

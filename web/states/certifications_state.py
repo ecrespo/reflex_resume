@@ -6,7 +6,7 @@ from ..timeline_data import certification_headlines
 class CertificationsState(rx.State):
     """Tracks which slide of the certifications timeline is on screen."""
 
-    # Slide id reported by TimelineJS through the component's `on_change` event.
+    # Slide id reported by `sp_timeline`'s `on_change` event.
     current_slide_id: str = ""
 
     @rx.var

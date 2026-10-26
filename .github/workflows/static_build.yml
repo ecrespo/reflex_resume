@@ -15,7 +15,7 @@ concurrency:
 jobs:
   build:
     if: github.repository == 'ecrespo/reflex_resume'
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
 
     permissions:
       contents: write
@@ -30,14 +30,24 @@ jobs:
           ssh-key: ${{ secrets.STATIC_BUILD_DEPLOY_KEY }}
 
       - name: Setup uv
-        uses: astral-sh/setup-uv@v10.1.0
+        uses: astral-sh/setup-uv@v10.3.2
         with:
-          version: "0.12.13"
+          version: "0.13.5"
           enable-cache: true
           cache-dependency-glob: uv.lock
 
+      # Reflex runs the Vite build with the Node.js on PATH; pin it to Node 24.
+      - name: Setup Node.js
+        uses: actions/setup-node@v7.1.0
+        with:
+          node-version: "24"
+
       - name: Run build script
         run: bash remote_build.sh
+        env:
+          # GA4 measurement id (Settings > Secrets and variables > Actions >
+          # Variables). Empty leaves Google Analytics disabled in the export.
+          GOOGLE_ANALYTICS_MEASUREMENT_ID: ${{ vars.GOOGLE_ANALYTICS_MEASUREMENT_ID }}
 
       # On pull requests only validate that the export works; publish only on push to main.
       - name: Add public folder to git
@@ -46,7 +56,7 @@ jobs:
 
       - name: Commit and Push changes
         if: github.event_name == 'push'
-        uses: stefanzweifel/git-auto-commit-action@v7
+        uses: stefanzweifel/git-auto-commit-action@v7.2.1
         with:
           commit_message: Update static build [skip ci]
           # reflex init also rewrites files like AGENTS.md/CLAUDE.md; only publish the export.

@@ -1,0 +1,10 @@
+# Google Analytics 4 (reflex-google-analytics-reactjs), read when the app is
+# compiled. The measurement id is not kept here: set it with the
+# GOOGLE_ANALYTICS_MEASUREMENT_ID environment variable (the Static Build
+# workflow reads it from the repository variable of the same name). Without an
+# id the component stays disabled and loads nothing.
+
+# Test mode (nothing sent to Google) under `reflex run`; real hits only from
+# `reflex export` / `--env prod`.
+only_in_production = true
+track_page_views = true

@@ -15,6 +15,11 @@ class ResumeState(rx.State):
         """Close mobile menu."""
         self.mobile_menu_open = False
 
+    @rx.event
+    def set_mobile_menu_open(self, value: bool):
+        """Follow the drawer when it closes itself (Escape, backdrop, close button)."""
+        self.mobile_menu_open = value
+
     # Skills data structure for radar charts
     skills_data = {
         "Programming": {"Python": 5, "R": 3, "Golang": 4, "Javascript": 3, "Julia": 3, "Nestjs": 2},
