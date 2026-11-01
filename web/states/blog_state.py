@@ -12,32 +12,30 @@ class BlogState(rx.State):
     current_page: int = 1
     posts_per_page: int = 10
 
-    def _get_all_posts(self) -> list[dict]:
-        """Helper to get all posts as dictionaries."""
-        return [post.to_dict() for post in sorted_posts]
-
-    @rx.var
-    def all_posts(self) -> list[dict]:
-        """Get all posts as dictionaries."""
-        return self._get_all_posts()
-
     @rx.var
     def total_posts(self) -> int:
         """Get total number of posts."""
-        return len(self._get_all_posts())
+        return len(sorted_posts)
 
     @rx.var
     def total_pages(self) -> int:
         """Calculate total number of pages."""
-        total = len(self._get_all_posts())
-        return max(1, (total + self.posts_per_page - 1) // self.posts_per_page)
+        return max(1, (len(sorted_posts) + self.posts_per_page - 1) // self.posts_per_page)
+
+    def _page(self, lang: str) -> list[dict]:
+        """The current page's cards in `lang` (no bodies: the list never shows them)."""
+        start = (self.current_page - 1) * self.posts_per_page
+        return [post.card(lang) for post in sorted_posts[start : start + self.posts_per_page]]
 
     @rx.var
     def current_page_posts(self) -> list[dict]:
-        """Get posts for the current page."""
-        start = (self.current_page - 1) * self.posts_per_page
-        end = start + self.posts_per_page
-        return self.all_posts[start:end]
+        """The current page's posts in English."""
+        return self._page("en")
+
+    @rx.var
+    def current_page_posts_es(self) -> list[dict]:
+        """The current page's posts in Spanish."""
+        return self._page("es")
 
     @rx.var
     def has_previous_page(self) -> bool:

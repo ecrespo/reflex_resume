@@ -28,7 +28,8 @@ def generate_rss_feed():
     link_self.set("rel", "self")
 
     link_alt = ET.SubElement(feed, "link")
-    link_alt.set("href", f"{SITE}/blog")
+    # The feed carries the Spanish originals, so it links to the Spanish pages.
+    link_alt.set("href", f"{SITE}/es/blog")
     link_alt.set("rel", "alternate")
 
     ET.SubElement(feed, "id").text = f"{SITE}/blog"
@@ -56,8 +57,9 @@ def generate_rss_feed():
 
         post_url = f"{SITE}/blog/{post.slug}"
         link = ET.SubElement(entry, "link")
-        link.set("href", post_url)
+        link.set("href", f"{SITE}/es/blog/{post.slug}")
 
+        # The id stays the post's first URL, so feed readers do not see new entries.
         ET.SubElement(entry, "id").text = post_url
 
         dt = post.date

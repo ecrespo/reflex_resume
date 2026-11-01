@@ -482,7 +482,7 @@ Ahora se agregarán unos posts:
 >>> p = models.Post(cuerpo='mi primer post!', timestamp=datetime.datetime.utcnow(), author=u)            
 >>> db.session.add(p)                               
 >>> db.session.commit()
-```python
+```
 
 
 Se sale del interprete de comandos.

@@ -1,4 +1,12 @@
-"""Blog data loading module using flexdown."""
+"""The blog's posts, loaded at import time.
+
+The posts are written in Spanish (`content/posts/`). Each one has an English
+translation with the same file name in `content/posts_en/` (same `Slug`,
+`Date`, `Category` and `Tags`; title, summary and body translated). The English
+pages show the translation and the Spanish pages the original; a post without
+a translation shows the original on both. Categories and tags are translated
+in `web/blog/terms.py`.
+"""
 
 import os
 import re
@@ -7,6 +15,7 @@ from pathlib import Path
 
 # Path to blog posts directory
 POSTS_PATH = "content/posts/"
+POSTS_EN_PATH = "content/posts_en/"
 IMAGES_PATH = "content/images/"
 
 
@@ -111,6 +120,8 @@ class BlogPost:
         raw_slug = metadata.get("slug", self._generate_slug())
         self.slug = sanitize_slug(raw_slug)
         self.lang = metadata.get("lang", "es")
+        # The English translation: title, summary and body, or None.
+        self.en: dict[str, str] | None = None
 
     def _generate_slug(self) -> str:
         """Generate slug from filename if not provided."""
@@ -132,21 +143,29 @@ class BlogPost:
 
         return format_day(self.date.year, self.date.month, self.date.day, "es", long=True)
 
-    def to_dict(self) -> dict:
-        """Convert to dictionary for state management."""
+    def card(self, lang: str = "es") -> dict:
+        """The post's fields as shown in `lang`, without the body (lists and indexes)."""
+        from web.blog.terms import category_in, tag_in
+
+        text = self.en if lang == "en" and self.en else {}
         return {
-            "title": self.title,
+            "title": text.get("title") or self.title,
             "date": self.date_str,
-            "formatted_date": self.formatted_date,
-            "formatted_date_es": self.formatted_date_es,
-            "category": self.category,
-            "tags": self.tags,
+            "formatted_date": self.formatted_date_es if lang == "es" else self.formatted_date,
+            "category": category_in(self.category, lang),
+            "tags": [tag_in(tag, lang) for tag in self.tags],
             "author": self.author,
-            "summary": self.summary,
+            "summary": text.get("summary") or self.summary,
             "slug": self.slug,
             "filename": self.filename,
-            "content": self.content,
+            # The language the text is written in (a post without translation stays Spanish).
+            "lang": "en" if text else "es",
         }
+
+    def to_dict(self, lang: str = "es") -> dict:
+        """`card(lang)` plus the body, for the post's own page."""
+        text = self.en if lang == "en" and self.en else {}
+        return self.card(lang) | {"content": text.get("content") or self.content}
 
 
 def get_markdown_files(directory: str) -> list[Path]:
@@ -189,6 +208,14 @@ def get_blog_data() -> dict[str, BlogPost]:
         post = load_blog_post(filepath)
         if post:
             posts[post.slug] = post
+            translation = Path(POSTS_EN_PATH) / filepath.name
+            if translation.exists():
+                metadata, body = parse_pelican_metadata(translation.read_text(encoding="utf-8"))
+                post.en = {
+                    "title": metadata.get("title", ""),
+                    "summary": metadata.get("summary", ""),
+                    "content": body,
+                }
 
     return posts
 

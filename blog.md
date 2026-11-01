@@ -39,6 +39,22 @@ Crear el archivo en:
 content/posts/
 ```
 
+### Traducción al inglés
+
+Cada post tiene su versión en inglés en `content/posts_en/` con **el mismo nombre de archivo**. Las páginas en inglés (`/blog/...`) muestran la traducción y las de español (`/es/blog/...`) el original; si falta la traducción, ambas muestran el original.
+
+En la traducción:
+
+- se traducen `Title`, `Summary` y el texto del post, y se pone `lang: en`;
+- `Slug`, `Date`, `Category`, `Tags` y `Authors` quedan iguales (las categorías y etiquetas se traducen en `web/blog/terms.py`; agrega allí las nuevas que estén en español);
+- los bloques de código, el código en línea, las URLs y las imágenes no cambian.
+
+Valídala con:
+
+```bash
+uv run python utils/check_translations.py 20250812-regreso.md
+```
+
 ---
 
 ## Paso 2: Definir los Metadatos
