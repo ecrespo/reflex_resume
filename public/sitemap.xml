@@ -631,10 +631,10 @@
     <loc>http://localhost:3000/es/blog/proveerunclustercondockerswarmydockermachine</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/blog/profilingdeunscriptpythonconcprofile</loc>
+    <loc>http://localhost:3000/blog/profilingdeunscriptpythonconcprofile-2016</loc>
   </url>
   <url>
-    <loc>http://localhost:3000/es/blog/profilingdeunscriptpythonconcprofile</loc>
+    <loc>http://localhost:3000/es/blog/profilingdeunscriptpythonconcprofile-2016</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/montarunaplataformacomoserviciopaascondokkudocker</loc>
@@ -1535,6 +1535,12 @@
   </url>
   <url>
     <loc>http://localhost:3000/es/blog/profilingdeunscriptpythonconlineprofiler</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/blog/profilingdeunscriptpythonconcprofile</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/profilingdeunscriptpythonconcprofile</loc>
   </url>
   <url>
     <loc>http://localhost:3000/blog/probarcodigocondoctest</loc>
