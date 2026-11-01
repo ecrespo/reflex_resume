@@ -24,9 +24,9 @@ A continuación dejo un vídeo de [ArjanCodes](https://www.youtube.com/watch?v=p
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pTB30aXS77U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Los artículos anteriores:
-* [Principio de responsabilidad única (enlace roto)](https://www.seraph.to/python_solid1.html#python_solid1).
-* [Principio abierto/cerrado (enlace roto)](https://www.seraph.to/python_solid2.html#python_solid2).
-* [Principio de sustitución Liskov (enlace roto)](https://www.seraph.to/python_solid3.html#python_solid3).
+* [Principio de responsabilidad única](/blog/python_solid1).
+* [Principio abierto/cerrado](/blog/python_solid2).
+* [Principio de sustitución Liskov](/blog/python_solid3).
 
 
 El [Principio de segregación de la interfaz](https://es.wikipedia.org/wiki/Principio_de_segregaci%C3%B3n_de_la_interfaz) establece que los clientes de un programa dado solo deberían conocer de este aquellos métodos que realmente usan y no aquellos que no necesitan usar. El ISP se aplica a una interfaz amplia y compleja para escindirla en otras más pequeñas y específicas, de tal forma que cada cliente use solo aquella que necesite, pudiendo así ignorar al resto. A este tipo de interfaz reducida se le llama interfaces de rol.

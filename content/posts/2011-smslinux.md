@@ -5,7 +5,7 @@ Tags: Linux,Python,Android,Debian,
 lang: es
 translation: true
 
-En el artículo de ejecución remota de script versión conectado por [USB (enlace roto)](https://www.seraph.to/ejecucion-remota-de-scripts-python-desde-linux-a-un-celular-con-android-version-conectado-el-celular-por-usb.html) y la versión por [wifi (enlace roto)](https://www.seraph.to/ejecucion-remota-de-scripts-python-desde-linux-a-un-celular-con-android.html), se  explica  en el primer caso como enviar mensajes de texto y en el segundo como ejecutar una aplicación remotamente en el celular.
+En el artículo de ejecución remota de script versión conectado por [USB](/blog/ejecucionremotaaandroid2) y la versión por [wifi](/blog/ejecucionremotaaandroid), se  explica  en el primer caso como enviar mensajes de texto y en el segundo como ejecutar una aplicación remotamente en el celular.
 
 En este caso se fusionará ambos tipos de conexiones para enviar mensajes de texto tanto por USB como por wifi.
 

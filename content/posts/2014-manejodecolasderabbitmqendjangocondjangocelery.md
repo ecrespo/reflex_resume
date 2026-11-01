@@ -5,7 +5,7 @@ Tags: Canaima,Debian,Python,Ubuntu,Django,Django-Celery
 lang: es    
 translation: true  
  
-[Hace un tiempo escribí unos 3 artículos sobre Django (enlace roto)](https://www.seraph.to/tag/django.html), ahora se tocará un tema algo más complejo pero útil cuando se requiere rendimiento en procesos.
+[Hace un tiempo escribí unos 3 artículos sobre Django](/blog/tags), ahora se tocará un tema algo más complejo pero útil cuando se requiere rendimiento en procesos.
 
 A continuación paso a explicar un proceso sencillo de manejo de colas de `RabbitMQ` por medio de `Django-Celery`.
 

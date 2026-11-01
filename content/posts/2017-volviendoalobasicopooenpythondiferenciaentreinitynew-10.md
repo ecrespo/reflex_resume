@@ -5,7 +5,7 @@ Tags: Python,POO
 lang: es
 translation: true
 
-Continuando con la serie de [artículos volviendo a lo básico POO (enlace roto)](https://www.seraph.to/tag/poo.html), en este artículo se toca el tema de las diferencias entre `__init__` y `__new__`.
+Continuando con la serie de [artículos volviendo a lo básico POO](/blog/tags), en este artículo se toca el tema de las diferencias entre `__init__` y `__new__`.
 
 Este artículo se baja en un artículo en [inglés entendiendo new e init (enlace roto)](http://spyhce.com/blog/understanding-new-and-init) .
 

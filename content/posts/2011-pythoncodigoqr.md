@@ -7,7 +7,7 @@ translation: true
 
 En los artículos que he escrito sobre script en python para Android siempre he dejado una imagen que contiene una especie de código de barras pero en 2 dimensiones, este código se llama Código QR (Quick Response Barcode), más información sobre esté código lo pueden leer en [wikipedia](http://es.wikipedia.org/wiki/Codigo_QR).
 
-En el artículo de como compartir script en Android hay un [enlace (enlace roto)](https://www.seraph.to/compartir-scripts-para-android.html) de una página que permite generar el código QR a partir de una información dada.
+En el artículo de como compartir script en Android hay un [enlace](/blog/compartirscriptandroid) de una página que permite generar el código QR a partir de una información dada.
 
 La idea es crear el código desde Linux y el programa que permite hacerlo se llama qrencode.
 

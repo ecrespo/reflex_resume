@@ -5,7 +5,7 @@ Tags: Android, Python
 lang: es
 translation: true
 
-Continuando con los [widgets del API de ASE para el lenguaje python (enlace roto)](https://www.seraph.to/category/tutorial-python-en-android.html) se hará un script que muestra 3 botones y se mostrará el mensaje del resultado de darle clip al botón.
+Continuando con los [widgets del API de ASE para el lenguaje python](/blog/categories) se hará un script que muestra 3 botones y se mostrará el mensaje del resultado de darle clip al botón.
 
 
 El código del programa es el siguiente:

@@ -7,7 +7,7 @@ translation: true
 
 En el artículo anterior ([Extracción de datos de páginas web con scrapy](/blog/extracciondedatosdepaginaswebconscrapy) se hizo una introducción del uso de scrapy basándose en el tutorial de la página del proyecto.
 
-Este artículo continua la serie de artículos sobre extracción de datos de páginas web ([webscraping (enlace roto)](https://www.seraph.to/tag/webscraping.html).
+Este artículo continua la serie de artículos sobre extracción de datos de páginas web ([webscraping](/blog/tags).
 
 En el artículo [anterior](/blog/extracciondedatosdepaginaswebconscrapy) se extrajo información de la página [dmoz.org (enlace roto)](http://www.dmoz.org/), en este caso se usará la misma página, pero está vez basandose en el 
 artículo en Inglés [Web scraping with scrapy and MongoDB](https://realpython.com/web-scraping-with-scrapy-and-mongodb/?utm_source=Python+Weekly+Newsletter&utm_campaign=3387594e10-Python_Weekly_Issue_172_January_1_2015&utm_medium=email&utm_term=0_9e26887fc5-3387594e10-312675721). 

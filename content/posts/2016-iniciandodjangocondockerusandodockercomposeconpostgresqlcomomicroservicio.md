@@ -10,8 +10,8 @@ En este artículo se tomará lo visto en el artículo de microservicios con dock
 Dejo a continuación la lista de artículos sobre docker que se ha tocado en el blog:
 
 1. [Instalar Docker en Debian Jessie (enlace roto)](/blog/instalardockerendebianjessie)  
-2. [Uso de Docker en Debian Jessie (parte 1) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html#uso-de-docker-en-debian-jessie-parte-1)  
-3. [Uso de Docker en Debian Jessie (parte 2) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-2.html#uso-de-docker-en-debian-jessie-parte-2)  
+2. [Uso de Docker en Debian Jessie (parte 1)](/blog/usodedockerendebianjessie-1)  
+3. [Uso de Docker en Debian Jessie (parte 2)](/blog/usodedockerendebianjessie-2)  
 4. [Crear una imagen Docker a partir de un archivo Dockerfile (enlace roto)](/blog/crearunaimagendockerapartirdeunarchivodockerfile)  
 5. [Iniciando Django usando Docker (enlace roto)](/blog/iniciandodjangousandodocker)  
 6. [Instalar Gitlab por medio de Docker (enlace roto)](/blog/instalargitlabpormediodedocker)  
@@ -295,7 +295,7 @@ Y la figura de los logs de la ejecución de Django:
 
 Como se vió en el artículo se puede ejecutar los comandos del manage.py desde fuera del contenedor que estos comandos se ejecutarán en el contenedor.
 
-Ya con esto se pueden realizar configuraciones más complejas como incorporar redis o rabbitMQ (con Django Celery, explicado en un [artículo anterior (enlace roto)](https://blog.crespo.org.ve/search/label/Django-celery)) y lo mejor es que la configuración es simplemente adaptar lo que existe a las necesidades puntuales del proyecto.
+Ya con esto se pueden realizar configuraciones más complejas como incorporar redis o rabbitMQ (con Django Celery, explicado en un [artículo anterior](/blog/tags)) y lo mejor es que la configuración es simplemente adaptar lo que existe a las necesidades puntuales del proyecto.
 
 Referencias:
 

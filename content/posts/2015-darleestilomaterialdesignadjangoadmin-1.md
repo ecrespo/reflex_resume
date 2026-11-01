@@ -5,7 +5,7 @@ Tags: Canaima,Debian,Python,Ubuntu,Django, Material design
 lang: es  
 translation: true  
 
-Continuando con los artículos sobre [Django (enlace roto)](https://www.seraph.to/tag/django.html).
+Continuando con los artículos sobre [Django](/blog/tags).
 
 En este caso se tocará el tema de usar en el admin y formularios un estilo llamado [Material Design](https://en.wikipedia.org/wiki/Material_design) ([desarrollado por Google para Android](https://material.io/design/introduction/)), la idea es que nuestro backend tenga ese estilo. Para ello se tiene una aplicación de Django llamada [Django-material](http://demo.viewflow.io/).
 

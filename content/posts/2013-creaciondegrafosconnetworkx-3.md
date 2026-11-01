@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,Linux,matplotlib,Python,Ubuntu
 lang: es
 translation: true
 
-En el [artículo anterior se muestra como crear grafos a partir del contenido de un archivo (enlace roto)](https://www.seraph.to/creacion-de-grafos-con-networkx-parte-2.html#creacion-de-grafos-con-networkx-parte-2), [en el primero se explica lo básico en la creación de grafos (enlace roto)](https://www.seraph.to/creacion-de-grafos-con-networkx-parte-1.html#creacion-de-grafos-con-networkx-parte-1), en este se tocará el tema de analizar los grafos, de extraer información de los mismos.
+En el [artículo anterior se muestra como crear grafos a partir del contenido de un archivo](/blog/creaciondegrafosconnetworkx-2), [en el primero se explica lo básico en la creación de grafos](/blog/creaciondegrafosconnetworkx-1), en este se tocará el tema de analizar los grafos, de extraer información de los mismos.
 
 El ejemplo a continuación se crea un grafo con varios nodos (de la "a" a la "z"), se enlazan todos los nodos, luego se muestra la cantidad de nodos, la cantidad de relaciones entre nodos, se le asigna un atributo a un nodo, un atributo entre 2 nodos, se averigua los vecinos de un nodo, el valor del atributo de un nodo, entre 2 nodos, se muestra también la ruta más corta para llegar del nodo m al b; cual es el promedio de la ruta más corta, se muestra la relación de los nodos con respecto a m, cual es la ruta más corta utilizando el [Algoritmo de Dijkstra](https://es.wikipedia.org/wiki/Algoritmo_de_Dijkstra)  entre m y b. Para terminar se genera el grafo con varios métodos (espectral, aleatoria, circular y normal).
 

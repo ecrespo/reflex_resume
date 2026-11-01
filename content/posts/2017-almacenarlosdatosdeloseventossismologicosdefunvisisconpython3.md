@@ -5,7 +5,7 @@ Tags: Python,Webscraping,BeautifulSoup,Request,MongoDB,Pymongo
 lang: es
 translation: true
 
-En el artículo sobre la [captura de datos de eventos sismológicos de funvisis (enlace roto)](https://www.seraph.to/obtener-datos-de-eventos-sismologicos-de-funvisis-con-python3-segunda-version.html)  solamente se trabajó el orenamiento de los datos, pero hace falta almacenar la información en una base de datos, este es el tema del artículo.
+En el artículo sobre la [captura de datos de eventos sismológicos de funvisis](/blog/obtenerdatosdeeventossismologicosdefunvisisconpython3-2)  solamente se trabajó el orenamiento de los datos, pero hace falta almacenar la información en una base de datos, este es el tema del artículo.
 
 Ahora se tienen varios módulos:
 
@@ -15,7 +15,7 @@ Ahora se tienen varios módulos:
 - `sismux_apirest.py`: Es el módulo que implementa un API rest(próximo artículo).  
 - `sismux_graphql.py`: Es el módulo que implementa un API con GraphQL (próximo artículo).  
 
-Del artículo anterior [artículo anterior (enlace roto)](https://www.seraph.to/obtener-datos-de-eventos-sismologicos-de-funvisis-con-python3-segunda-version.html) se muestra el código de `sismux_getdata.py`:
+Del artículo anterior [artículo anterior](/blog/obtenerdatosdeeventossismologicosdefunvisisconpython3-2) se muestra el código de `sismux_getdata.py`:
 
 ```python
 

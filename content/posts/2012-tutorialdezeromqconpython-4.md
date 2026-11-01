@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,Linux,Python,ZeroMQ
 lang: es
 translation: true
 
-Continuando con los [tutoriales sobre ZeroMQ (enlace roto)](https://www.seraph.to/tag/zeromq.html) ahora se muestra como usar Publicar/Suscribir (Publish/subscribe).
+Continuando con los [tutoriales sobre ZeroMQ](/blog/tags) ahora se muestra como usar Publicar/Suscribir (Publish/subscribe).
 
 En el patrón pub/sub los componentes son pobremente acompladas, será de gran ayuda para escalar ya que no hay necesidad de preocuparse por los suscriptores.  Sin embargo, este acoplamiento puede conducir a un comportamiento inesperado cuando no se entienden completamente.
 

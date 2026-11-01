@@ -15,7 +15,7 @@ Se muestra la interfaz creada con glade en la siguiente figura:
 
 El código del programa es el siguiente:
 
-![Código](./imagenes/tutorialpythongtkglade2-codigo.png)
+![Código](./images/tutorialpythongtkglade2-codigo.png)
 
 Al ejecutar el programa se muestra la figura:
 ![Tutorial 2 Glade 2](./images/tutorialpythongtkglade2-2.png)

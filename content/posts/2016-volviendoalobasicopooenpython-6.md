@@ -5,7 +5,7 @@ Tags: Python,POO
 lang: es  
 translation: true
 
-Continuando con la serie de artículos sobre [Programación Orientada a Objetos en Python (enlace roto)](https://www.seraph.to/tag/poo.html).
+Continuando con la serie de artículos sobre [Programación Orientada a Objetos en Python](/blog/tags).
 
 En este artículo se explica el uso del decorador `classmethod` el cual se le pasa como argumentos la clase. 
 

@@ -23,7 +23,7 @@ A continuación dejo un vídeo de [ArjanCodes](https://www.youtube.com/watch?v=p
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pTB30aXS77U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-El [artículo anterior (enlace roto)](https://www.seraph.to/python_solid1.html#python_solid1) sobre el principio de responsabilidad única.
+El [artículo anterior](/blog/python_solid1) sobre el principio de responsabilidad única.
 
 
 El [principio abierto/cerrado](https://es.wikipedia.org/wiki/Principio_de_abierto/cerrado) establece que una entidad de software (clase, módulo, función, etc) debe quedarse abierta para su extensión, pero cerrado para su modificación. Es decir, se debe poner extender el comportamiento de tal entidad pero sin modificar su código fuente.  

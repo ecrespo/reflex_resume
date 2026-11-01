@@ -7,9 +7,9 @@ translation: true
 
 Continuando con la serie de tutorial de flask, ahora se explicará el uso de plantillas html.
 
-En el [primer artículo (enlace roto)](https://www.seraph.to/tutorial-de-flask-parte-1.html#tutorial-de-flask-parte-1) se explicó como usar docker y docker-compose. 
+En el [primer artículo](/blog/tutorialdeflask-1) se explicó como usar docker y docker-compose. 
 
-La serie de artículos de flask lo pueden revisar en el siguiente [enlace (enlace roto)](https://www.seraph.to/tag/flask.html).
+La serie de artículos de flask lo pueden revisar en el siguiente [enlace](/blog/tags).
 
 Este artículo se basa en el segundo artículo del blog de [Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-ii-templates).
 

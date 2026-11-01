@@ -9,13 +9,13 @@ Continuando con la serie de tutoriales sobre flask, en este caso se usará lo vi
 
 Los artículos anteriores son:
 
-1. [Tutorial de Flask parte 1. (enlace roto)](https://www.seraph.to/tutorial-de-flask-parte-1.html#tutorial-de-flask-parte-1)
+1. [Tutorial de Flask parte 1.](/blog/tutorialdeflask-1)
 
-2. [Tutorial de Flask parte 2 (plantilla html). (enlace roto)](https://www.seraph.to/tutorial-de-flask-parte-2-plantillas-html.html#tutorial-de-flask-parte-2-plantillas-html)
+2. [Tutorial de Flask parte 2 (plantilla html).](/blog/tutorialdeflask-2)
 
-3. [Tutorial de Flask parte 3 (formulario web). (enlace roto)](https://www.seraph.to/tutorial-de-flask-parte-3-formulario-web.html#tutorial-de-flask-parte-3-formulario-web)
+3. [Tutorial de Flask parte 3 (formulario web).](/blog/tutorialdeflask-3)
 
-4. [Tutorial de Flask parte 4 (Base de datos). (enlace roto)](https://www.seraph.to/tutorial-de-flask-parte-4-base-de-datos-sqlite3.html)
+4. [Tutorial de Flask parte 4 (Base de datos).](/blog/tutorialdeflask-4)
 
 Este artículo se basa en el artículo en Inglés de [The Flask Mega tutorial, Part V: User Logins](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-v-user-logins).
 

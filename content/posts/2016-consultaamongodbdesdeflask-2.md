@@ -7,13 +7,13 @@ translation: true
 
 Continuando con la serie de artículos sobre acceso a mongodb desde Flask. 
 
-El artículo anterior [hace una consulta incial a la base de datos. (enlace roto)](https://www.seraph.to/consulta-a-mongodb-desde-flask-parte-1.html)
+El artículo anterior [hace una consulta incial a la base de datos.](/blog/consultaamongodbdesdeflask-1)
 
 Para revisar los artículos relacionados a este artículo pueden ver:
 
-- [Artículos sobre Docker (enlace roto)](https://www.seraph.to/tag/docker.html)
-- [Artículos sobre MongoDB (enlace roto)](https://www.seraph.to/tag/mongodb.html)
-- [Artículos sobre Flask (enlace roto)](https://www.seraph.to/tag/flask.html)
+- [Artículos sobre Docker](/blog/tags)
+- [Artículos sobre MongoDB](/blog/tags)
+- [Artículos sobre Flask](/blog/tags)
 
 En la base de datos mongodb se tiene lo siguientes datos de los empleados:
 ```

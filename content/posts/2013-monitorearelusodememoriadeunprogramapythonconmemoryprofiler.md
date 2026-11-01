@@ -14,7 +14,7 @@ easy_install -U memory_profiler
 ```
 pip install -U memory_profiler
 ```
-Se muestra el código del artículo sobre profiling publicado [antes (enlace roto)](http://blog.crespo.org.ve/2012/12/profiling-de-un-script-python-con.html):
+Se muestra el código del artículo sobre profiling publicado [antes](/blog/profilingdeunscriptpythoncontimeit):
 ```python
 #!/usr/bin/env python
 

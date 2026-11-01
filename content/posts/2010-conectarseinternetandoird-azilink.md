@@ -20,7 +20,7 @@ aptitude install openvpn-blacklist openvpn
 Los pasos son los siguientes:
 1. Habilitar el modo depuración del USB en el teléfono. En el home de las apliaciones del celular ir a Configuración->Aplicaciones->Desarrollo->USB debugging.
 
-2. Instale el SDK de Android, el procedimiento lo consigue en este [enlace (enlace roto)](http://ernesto-ecrespo.blogspot.com/2010/05/instalacion-del-sdk-de-android-en-linux.html).
+2. Instale el SDK de Android, el procedimiento lo consigue en este [enlace](/blog/instalacionsdkandroiddebian).
 3. Instalar AziLink desde el market del celular.
 4. En el computador hacer el redireccionamiento de puertos:
 

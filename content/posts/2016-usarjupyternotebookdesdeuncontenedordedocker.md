@@ -12,9 +12,9 @@ La idea es ejecutar `jupyter notebook` desde un contenedor docker donde se guard
 Los artículos anteriores sobre docker son:  
 1. [Instalar Docker en Debian Jessie](/blog/instalardockerendebianjessie)  
 
-2. [Uso de Docker en Debian Jessie (parte 1) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html)  
+2. [Uso de Docker en Debian Jessie (parte 1)](/blog/usodedockerendebianjessie-1)  
 
-3. [Uso de Docker en Debian Jessie (parte 2) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-2.html)  
+3. [Uso de Docker en Debian Jessie (parte 2)](/blog/usodedockerendebianjessie-2)  
 
 4. [Crear una imagen Docker a partir de un archivo Dockerfile](/blog/crearunaimagendockerapartirdeunarchivodockerfile)  
 
@@ -36,7 +36,7 @@ Los artículos anteriores sobre docker son:
 
 13. [Usar Anaconda desde un contenedor Docker.](/blog/usaranacondadesdeuncontenedordocker)  
 
-14. [Crear un entorno de Integración y Despligue continue con Docker para node.js. (enlace roto)](https://www.seraph.to/crear-un-entorno-de-integracion-y-despligue-continue-con-docker-para-nodejs.html#crear-un-entorno-de-integracion-y-despligue-continue-con-docker-para-nodejs)  
+14. [Crear un entorno de Integración y Despligue continue con Docker para node.js.](/blog/crearunentornodeintegracionydespliguecontinuocondockerparanodejs)  
 
 Existe varias imagenes de Docker de la gente de jupyter, la que se va a usar es la de [jupyter notebook (enlace roto)](https://hub.docker.com/r/jupyter/notebook/).  
 

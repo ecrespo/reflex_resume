@@ -5,7 +5,7 @@ Tags: Debian,Linux,Python,requests,BeautifulSoup,Webscraping
 lang: es   
 translation: true  
 
-Retomando los artículos sobre webscraping (pueden visitarlos en el siguiente [enlace (enlace roto)](https://www.seraph.to/tag/webscraping.html)).
+Retomando los artículos sobre webscraping (pueden visitarlos en el siguiente [enlace](/blog/tags)).
 
 Se tiene la página de la Asamblea Nacional,  donde se alojan las memorias y cuentas del Ejecutivo Nacional, pueden visitar el sitio en el siguiente [enlace (enlace roto)](http://www.asambleanacional.gob.ve//documento/show2/id/64).
 

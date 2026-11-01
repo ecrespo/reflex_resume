@@ -5,9 +5,9 @@ Tags: Python
 lang: es  
 translation: true  
 
-Hace unos años escribí un artículo que explicaba como crear un paquete python ([Crear un paquete python de un programa (enlace roto)](https://www.seraph.to/crear-un-paquete-python-de-un-programa.html#crear-un-paquete-python-de-un-programa)). 
+Hace unos años escribí un artículo que explicaba como crear un paquete python ([Crear un paquete python de un programa](/blog/crearpaquetepython)). 
 
-En este artículo se empaquetará el módulo `python pywrapper_config` el cual fue tema del siguiente artículo ([Módulo que permite acceder a archivos de configuración (enlace roto)](https://www.seraph.to/modulo-que-permite-acceder-a-archivos-de-configuracion-ini-usando-configparser-en-python.html#modulo-que-permite-acceder-a-archivos-de-configuracion-ini-usando-configparser-en-python)).
+En este artículo se empaquetará el módulo `python pywrapper_config` el cual fue tema del siguiente artículo ([Módulo que permite acceder a archivos de configuración](/blog/moduloquepermiteaccederaarchivosdeconfiguracioniniusandoconfigparserenpython)).
 
 La diferencia con el primer artículo será que en este caso se tocará como subir el paquete a los repositorios de paquetes de Python, donde se podrá usar el comando pip para instalar dicho módulo.
 

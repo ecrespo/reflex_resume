@@ -5,7 +5,7 @@ Tags: Python,Webscraping,Pandas,Wikipedia
 lang: es  
 translation: true  
 
-Continuando con la serie de artículos sobre [Pandas (enlace roto)](https://www.seraph.to/tag/pandas.html), en este artículo se muestra un proceso de extracción de datos web de la [página que contiene información sobre  los Estados de Venezuela de Wikipedia](https://es.wikipedia.org/wiki/Estados_de_Venezuela).
+Continuando con la serie de artículos sobre [Pandas](/blog/tags), en este artículo se muestra un proceso de extracción de datos web de la [página que contiene información sobre  los Estados de Venezuela de Wikipedia](https://es.wikipedia.org/wiki/Estados_de_Venezuela).
 
 En los procesos anteriores de WebScraping se trabajaba practicamente a mano para indentificar  las secciones del código html donde se encuentra la información útil, para el caso con Pandas este abstrae ese proceso.
 

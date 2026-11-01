@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,Python,Ubuntu,ZeroMQ
 lang: es
 translation: true
 
-Siguiendo con la serie sobre [ZeroMQ (enlace roto)](https://www.seraph.to/tag/zeromq.html).
+Siguiendo con la serie sobre [ZeroMQ](/blog/tags).
 
 En este artículo se explica el funcionamiento de PUSH y PULL.
 

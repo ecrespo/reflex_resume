@@ -6,7 +6,7 @@ lang: es
 translation: true
 
 
-Para cambiar un poco la temática sobre Android volveré a tocar un programa que explique en el [siguiente artículo (enlace roto)](https://www.seraph.to/script-en-python-que-configura-los-accesos-rapidos-de-teclado-a-aplicaciones-en-gnome-con-gconf.html).
+Para cambiar un poco la temática sobre Android volveré a tocar un programa que explique en el [siguiente artículo](/blog/script-gnome-gconf).
 
 
 El programa lo pueden bajar desde google code y tiene el nombre de [configGconf.py (enlace roto)](http://python-config-accesskey-gnome.googlecode.com/hg/configGconf.py).
@@ -268,7 +268,7 @@ if __name__ == "__main__":
 ```
 
 
-En el siguiente artículo se explicará los cambios que se hicieron en la interfaz gráfica del artículo [Desarrollo de interfaz gráfica para la configuración de accesos rápidos del teclado (enlace roto)](https://www.seraph.to/desarrollo-de-interfaz-grafica-para-la-configuracion-de-accesos-rapidos-de-teclado-para-gconf.html).
+En el siguiente artículo se explicará los cambios que se hicieron en la interfaz gráfica del artículo [Desarrollo de interfaz gráfica para la configuración de accesos rápidos del teclado](/blog/gui-gconf-gnome).
 Luego se explicará como se crea un paquete python y como se crea un paquete para Debian a partir del paquete python.
 
 

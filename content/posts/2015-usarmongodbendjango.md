@@ -5,11 +5,11 @@ Tags: Canaima,Debian,Python,Ubuntu,Mongodb,Django
 lang: es
 translation: true
 
-En artículos anteriores se ha tocado el tema de [mongodb (enlace roto)](https://www.seraph.to/tag/mongodb.html) y el tema de [Django (enlace roto)](https://www.seraph.to/tag/django.html).
+En artículos anteriores se ha tocado el tema de [mongodb](/blog/tags) y el tema de [Django](/blog/tags).
 
 En este caso se tocará el tema de crear un blog con Django usando mongodb, este artículo se basa en un artículo en Inglés del sitio [Developers Work de IBM](https://developer.ibm.com/tutorials/os-django-mongo/) .
 
-En este caso se tendrá un formulario para crear post, actualizarlos y borrarlos. Se usará la plantilla de material design para Django explicado en el artículo [anterior (enlace roto)](https://www.seraph.to/darle-estilo-material-design-a-django-parte-1-el-admin.html#darle-estilo-material-design-a-django-parte-1-el-admin).
+En este caso se tendrá un formulario para crear post, actualizarlos y borrarlos. Se usará la plantilla de material design para Django explicado en el artículo [anterior](/blog/darleestilomaterialdesignadjangoadmin-1).
 
 Para poder desarrollar la aplicación en Django y con mongodb se tiene que instalar `Django`, `mongodb` y `mongoengine` a continuación se muestra la instalación a lo Debian:
 ```
@@ -61,7 +61,7 @@ Es necesario agregar en las primeras líneas del `settings.py` el nombre de la b
 ```
 DBNAME = 'blongo'
 ```
-Agregar en las aplicaciones posts y el soporte a material-design que se explico en artículo [anterior (enlace roto)](http://blog.crespo.org.ve/2015/04/darle-estilo-material-desing-django.html).
+Agregar en las aplicaciones posts y el soporte a material-design que se explico en artículo [anterior](/blog/darleestilomaterialdesignadjangoadmin-1).
 ```python
 INSTALLED_APPS = (
     'material',

@@ -1,130 +1,219 @@
-import glob
-import os
+"""Check and fix the links of the blog posts in `content/posts/`.
+
+    uv run python utils/validate_links.py             # fix internal links in place, report the rest
+    uv run python utils/validate_links.py --check     # report only, write nothing (exit 1 if broken)
+    uv run python utils/validate_links.py --external  # also curl every external link and mark
+                                                      # the dead ones "(enlace roto)"
+
+The blog now lives at `www.seraph.to/blog/<slug>` (the slug the app gives each
+post: `Slug:` or the file name, see `web/blog/paths.py`). Older posts link to
+where the blog used to be, and those links are rewritten to the current route:
+
+- Pelican on `www.seraph.to` / `ecrespo.github.io`: `/<title-slug>.html`,
+  `/tag/<tag>.html`, `/category/<name>.html`;
+- Blogger on `blog.crespo.org.ve` / `ernesto-ecrespo.blogspot.com`:
+  `/YYYY/MM/<truncated-title>.html` and `/search/label/<label>`.
+
+It also repairs references the page cannot follow: external links written
+without `https://` (a browser takes them as paths of this site), image paths
+in quotes or in `./imagenes/`. Fenced code blocks are left alone.
+"""
+
+from __future__ import annotations
+
+import argparse
+import difflib
 import re
-
-# subprocess is only used to invoke curl with a fixed argv (no shell).
 import subprocess  # nosec B404
+import sys
+import unicodedata
+from pathlib import Path
 
-# Configuration
-CONTENT_DIR = "content/posts"
-SLUG_MAP = {}
-NORMALIZED_MAP = {}
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT))
+
+from web.blog.paths import blog_data  # noqa: E402
+
+POSTS = ROOT / "content" / "posts"
+IMAGES = {p.name for p in (ROOT / "assets" / "blog" / "images").iterdir()}
+
+# Domains where the blog lived. Only post, tag, category and label URLs are
+# rewritten; a bare domain (a historical mention) is reported, not changed.
+OLD_BLOG = re.compile(
+    r"^(https?:)?//(www\.seraph\.to|seraph\.to|blog\.seraph\.to|ecrespo\.github\.io|"
+    r"blog\.crespo\.org\.ve|ernesto-ecrespo\.blogspot\.com)(?=/|$)",
+    re.I,
+)
+BROKEN_MARK = " (enlace roto)"
+# Blog index pages that are routes of their own, not posts.
+BLOG_PAGES = {"archives", "categories", "tags"}
+# A host-like start: `pypi.python.org/…`, `www.cencoex.gob.ve`.
+SCHEMELESS = re.compile(
+    r"^(www\.|[a-z0-9-]+(\.[a-z0-9-]+)*\.(org|com|net|ve|io|ch|gov|edu)\b)", re.I
+)
+
+MD_LINK = re.compile(
+    r"(!?\[(?P<text>[^\]]*)\])\((?P<url>[^)\s]+|\"[^\"]*\"|<[^>]*>)(?P<title>\s+\"[^\"]*\")?\)"
+)
+HTML_ATTR = re.compile(r"(?P<attr>\b(?:href|src)\s*=\s*)(?P<q>[\"'])(?P<url>[^\"']+)(?P=q)")
+FENCE = re.compile(r"^\s*(```|~~~)")
 
 
-def get_slug_from_filename(filename):
-    """Generate slug from filename similar to the blog module."""
-    # Logic matched from web/blog/paths.py
-    name = os.path.basename(filename)
-    name = re.sub(r"^\d{4,8}-?", "", name)
-    name = name.replace(".md", "")
-    return name.lower().replace(" ", "-")
+def slugify(text: str) -> str:
+    """Pelican's slug of a title."""
+    text = unicodedata.normalize("NFKD", text).encode("ascii", "ignore").decode().lower()
+    text = re.sub(r"[^\w\s-]", "", text)
+    return re.sub(r"[-\s_]+", "-", text).strip("-")
 
 
-def build_slug_map():
-    """Map slugs to filenames."""
-    print("Building slug map...")
-    files = glob.glob(os.path.join(CONTENT_DIR, "*.md"))
-    for f in files:
-        slug = get_slug_from_filename(f)
-        SLUG_MAP[slug] = f
-        # Create normalized version (remove hyphens) to match legacy URLs that might have hyphens
-        # where the filename doesn't (or vice versa)
-        norm_slug = slug.replace("-", "")
-        NORMALIZED_MAP[norm_slug] = f
-
-    print(f"Mapped {len(SLUG_MAP)} posts.")
+def _key(text: str) -> str:
+    return re.sub(r"[^a-z0-9]", "", text.lower())
 
 
-def check_url(url):
-    """Check if a URL is reachable using curl."""
-    try:
-        # -I: head only, -L: follow redirects, --fail: fail on error code
-        # --max-time 5: 5 seconds timeout
-        # Fixed argv list (no shell); url is only passed as a curl argument.
-        subprocess.check_call(  # nosec B603 B607
-            ["curl", "-I", "-L", "--max-time", "5", "--fail", "-s", "-o", "/dev/null", url],
-            stderr=subprocess.DEVNULL,
+def _title_key(post) -> str:
+    return _key(slugify(post.title))
+
+
+KEYS: dict[str, str] = {}
+for _slug, _post in blog_data.items():
+    for _k in (_title_key(_post), _key(_post.metadata.get("slug", "")), _key(_slug)):
+        if _k:
+            KEYS.setdefault(_k, _slug)
+
+
+def resolve_old(url: str) -> str | None:
+    """The current route for a URL of the old blog, or None."""
+    path = OLD_BLOG.sub("", url).split("#")[0].split("?")[0].strip("/")
+    if not path:
+        return None
+    if path.startswith(("tag/", "search/label/")):
+        return "/blog/tags"
+    if path.startswith("category/"):
+        return "/blog/categories"
+    base = _key(path.rsplit("/", 1)[-1].removesuffix(".html"))
+    if base in KEYS:
+        return f"/blog/{KEYS[base]}"
+    # Blogger: /YYYY/MM/<title truncated to ~40 characters>.html
+    month = re.match(r"(\d{4})/(\d{2})/", path)
+    if not month or len(base) < 10:
+        return None
+    candidates = [
+        (slug, _title_key(post))
+        for slug, post in blog_data.items()
+        if post.date.strftime("%Y/%m") == f"{month[1]}/{month[2]}"
+    ]
+    scored = [
+        (difflib.SequenceMatcher(None, base, key[: len(base) + 5]).ratio(), slug)
+        for slug, key in candidates
+    ]
+    score, slug = max(scored, default=(0.0, ""))
+    return f"/blog/{slug}" if score >= 0.85 else None
+
+
+def fix_url(url: str, text: str) -> tuple[str, str | None]:
+    """(new url, problem): the URL the page can follow, or the problem left to report."""
+    bare = url.strip('"<>')
+    if OLD_BLOG.match(bare):
+        new = resolve_old(bare)
+        return (new, None) if new else (bare, "old blog URL without a match")
+    if bare.startswith("/blog/"):
+        slug = bare[len("/blog/") :].split("#")[0].rstrip("/")
+        if slug.startswith("images/"):
+            return bare, None if slug[7:] in IMAGES else "missing image"
+        return bare, None if slug in blog_data or slug in BLOG_PAGES else "unknown post"
+    for prefix in ("./images/", "images/", "./imagenes/", "imagenes/"):
+        if bare.startswith(prefix):
+            name = bare[len(prefix) :]
+            if name in IMAGES:
+                return f"./images/{name}", None
+            return bare, "missing image"
+    if SCHEMELESS.match(bare):
+        return f"https://{bare}", None
+    return bare, None
+
+
+def fix_text(text: str, path: Path, problems: list[str]) -> str:
+    def md(m: re.Match) -> str:
+        label, url = m["text"], m["url"]
+        new, problem = fix_url(url, label)
+        if problem:
+            problems.append(f"{path.name}: {problem}: {url}")
+            return m[0]
+        if new == url:
+            return m[0]
+        head = m[1]
+        if BROKEN_MARK in label:
+            head = head.replace(BROKEN_MARK, "")
+        return f"{head}({new}{m['title'] or ''})"
+
+    def html(m: re.Match) -> str:
+        new, problem = fix_url(m["url"], "")
+        if problem:
+            problems.append(f"{path.name}: {problem}: {m['url']}")
+        return f"{m['attr']}{m['q']}{new}{m['q']}"
+
+    out, block, fenced = [], [], False
+    for line in text.splitlines(keepends=True):
+        if FENCE.match(line):
+            if not fenced:
+                out.append(HTML_ATTR.sub(html, MD_LINK.sub(md, "".join(block))))
+                block = []
+            fenced = not fenced
+            out.append(line)
+        elif fenced:
+            out.append(line)
+        else:
+            block.append(line)
+    out.append(HTML_ATTR.sub(html, MD_LINK.sub(md, "".join(block))))
+    return "".join(out)
+
+
+def check_external(text: str, path: Path) -> str:
+    """Mark external links that do not answer as "(enlace roto)"."""
+
+    def md(m: re.Match) -> str:
+        url, label = m["url"], m["text"]
+        if not url.startswith("http") or BROKEN_MARK in label or "localhost" in url:
+            return m[0]
+        ok = (
+            subprocess.run(  # nosec B603 B607
+                ["curl", "-I", "-L", "--max-time", "8", "--fail", "-s", "-o", "/dev/null", url],
+                check=False,
+            ).returncode
+            == 0
         )
-        return True
-    except subprocess.CalledProcessError:
-        return False
-    except OSError as e:
-        print(f"Error checking {url}: {e}")
-        return False
+        if ok:
+            return m[0]
+        print(f"{path.name}: dead external link: {url}")
+        return m[0].replace(f"[{label}]", f"[{label}{BROKEN_MARK}]", 1)
+
+    return MD_LINK.sub(md, text)
 
 
-def process_file(filepath):
-    """Process a single markdown file."""
-    with open(filepath, encoding="utf-8") as f:
-        content = f.read()
+def main() -> int:
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--check", action="store_true", help="report only, write nothing")
+    parser.add_argument("--external", action="store_true", help="also curl external links")
+    args = parser.parse_args()
 
-    original_content = content
-
-    # Regex to find links: [text](url)
-    link_pattern = re.compile(r"\[([^\]]+)\]\(([^)]+)\)")
-
-    def replace_link(match):
-        text = match.group(1)
-        url = match.group(2)
-
-        # 1. Internal Link Fix (seraph.to or blog.crespo.org.ve)
-        if "seraph.to" in url or "blog.crespo.org.ve" in url:
-            # Clean URL: remove anchor, protocol, domain
-            clean_url = url.split("#")[0]
-            base = clean_url.split("/")[-1].replace(".html", "")
-
-            target_file = None
-            if base in SLUG_MAP:
-                target_file = SLUG_MAP[base]
+    changed, problems = 0, []
+    for path in sorted(POSTS.glob("*.md")):
+        text = path.read_text(encoding="utf-8")
+        new = fix_text(text, path, problems)
+        if args.external:
+            new = check_external(new, path)
+        if new != text:
+            changed += 1
+            if args.check:
+                print(f"{path.name}: needs fixing")
             else:
-                # Try normalized match
-                norm_base = base.replace("-", "")
-                if norm_base in NORMALIZED_MAP:
-                    target_file = NORMALIZED_MAP[norm_base]
-
-            if target_file:
-                # Use the slug that the APP expects for this file
-                correct_slug = get_slug_from_filename(target_file)
-                new_url = f"/blog/{correct_slug}"
-                print(f"[{os.path.basename(filepath)}] Replacing internal link: {url} -> {new_url}")
-                return f"[{text}]({new_url})"
-            else:
-                print(
-                    f"[{os.path.basename(filepath)}] WARNING: Internal link target not found: {url} (base: {base})"
-                )
-
-        # 2. External Link Validation
-        if url.startswith("http") and "localhost" not in url and "127.0.0.1" not in url:
-            # Skip if already marked
-            if "(enlace roto)" in text:
-                return match.group(0)
-
-            print(f"[{os.path.basename(filepath)}] Checking external link: {url}")
-            if not check_url(url):
-                print(f"[{os.path.basename(filepath)}] BROKEN LINK: {url}")
-                return f"[{text} (enlace roto)]({url})"
-
-        return match.group(0)
-
-    try:
-        new_content = link_pattern.sub(replace_link, content)
-    except (re.error, OSError) as e:
-        print(f"Error processing regex in {filepath}: {e}")
-        return
-
-    if new_content != original_content:
-        # Write back (ensure we don't lose data if write fails)
-        with open(filepath, "w", encoding="utf-8") as f:
-            f.write(new_content)
-
-
-def main():
-    build_slug_map()
-    files = glob.glob(os.path.join(CONTENT_DIR, "*.md"))
-
-    for f in files:
-        process_file(f)
+                path.write_text(new, encoding="utf-8")
+    verb = "need fixing" if args.check else "fixed"
+    print(f"{changed} posts {verb}; {len(problems)} links left to review")
+    for problem in problems:
+        print("  " + problem)
+    return 1 if args.check and (changed or problems) else 0
 
 
 if __name__ == "__main__":
-    main()
+    raise SystemExit(main())

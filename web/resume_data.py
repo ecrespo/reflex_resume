@@ -249,7 +249,7 @@ social_media_data = [
     ["Twitter", "https://twitter.com/_seraph1"],
     ["GitHub", "https://github.com/ecrespo"],
     ["GitLab", "https://gitlab.com/ecrespo"],
-    ["Blog", "https://blog.seraph.to"],
+    ["Blog", "https://www.seraph.to/blog"],
 ]
 
 # --------------------------------------------------------------------------- #

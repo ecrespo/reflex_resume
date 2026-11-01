@@ -5,7 +5,7 @@ Tags: Python,Flask,Docker
 lang: es  
 translation: true 
 
-Continuando con la serie de [artículos sobre tutorial de Flask (enlace roto)](https://www.seraph.to/tag/flask.html), basado en los artículos en inglés de [Flask by Example](https://realpython.com/flask-by-example-part-1-project-setup/) y de [Flask mega tutorial parte III:  web forms](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iii-web-forms).
+Continuando con la serie de [artículos sobre tutorial de Flask](/blog/tags), basado en los artículos en inglés de [Flask by Example](https://realpython.com/flask-by-example-part-1-project-setup/) y de [Flask mega tutorial parte III:  web forms](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-iii-web-forms).
 
 En este caso se mostrará un formulario con flask.
 

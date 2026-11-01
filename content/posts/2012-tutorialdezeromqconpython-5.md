@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,Python,Ubuntu,ZeroMQ
 lang: es
 translation: true
 
-Continuando con los [artículos sobre ZeroMQ (enlace roto)](https://www.seraph.to/tag/zeromq.html).
+Continuando con los [artículos sobre ZeroMQ](/blog/tags).
 
 En la revista [Linux Magazine versión en español](http://www.linux-magazine.com/) publicaron un artículo sobre `ZeroMQ` con Python.
 

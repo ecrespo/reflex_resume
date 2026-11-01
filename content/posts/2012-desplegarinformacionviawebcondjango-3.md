@@ -5,7 +5,7 @@ Tags: Canaima,Debian,Django,Python,Ubuntu
 lang: es
 translation: true
 
-En el artículo [anterior (enlace roto)](https://www.seraph.to/hola-mundo-con-django-parte-2.html#hola-mundo-con-django-parte-2) se explicó como mostrar un resultado en una página web por medio de `Django`, ahora se mostrará una serie de información como página html normal y luego usando las plantillas de `Django`.
+En el artículo [anterior](/blog/holamundocondjango-2) se explicó como mostrar un resultado en una página web por medio de `Django`, ahora se mostrará una serie de información como página html normal y luego usando las plantillas de `Django`.
 
 La idea es desplegar una serie de actividades mostrando el nivel de prioridad que tiene cada actividad.
 
@@ -208,7 +208,7 @@ Luego al iniciar el servidor web de Django se obtiene el resultado de la lista d
 
 ![](./images/desplegarinformacionviawebcondjango-3.png) 
 
-Pueden bajar el archivo comprimido del código en este [enlace](www.debian.org.ve/varios/pruebas-django.tar.gz).
+Pueden bajar el archivo comprimido del código en este [enlace](https://www.debian.org.ve/varios/pruebas-django.tar.gz).
 
 ##  ##
 ¡Haz tu donativo!

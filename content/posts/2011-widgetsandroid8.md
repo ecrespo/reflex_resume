@@ -5,7 +5,7 @@ Tags: Android, Python
 lang: es
 translation: true
 
-Continuando con los artículos sobre los [widgets de Android (enlace roto)](https://www.seraph.to/category/tutorial-python-en-android.html), ahora se agregará una mejora al de [selección simple (enlace roto)](https://www.seraph.to/widgets-en-android-con-python-parte-7-seleccion-simple.html#widgets-en-android-con-python-parte-7-seleccion-simple). Se le incluirá 2 botones, uno de seleccionar y otro para salir.
+Continuando con los artículos sobre los [widgets de Android](/blog/categories), ahora se agregará una mejora al de [selección simple](/blog/widgetsandroid7). Se le incluirá 2 botones, uno de seleccionar y otro para salir.
 
 
 El ejemplo muestra una serie de ciudades, se selecciona una y luego se le da el botón seleccionar, al final se muestra la ciudad que se ha seleccionado.

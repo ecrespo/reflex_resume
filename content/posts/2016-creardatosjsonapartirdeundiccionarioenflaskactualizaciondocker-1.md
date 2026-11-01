@@ -5,11 +5,11 @@ Tags: Python,Flask, json
 lang: es  
 translation: true  
 
-El artículo original lo pueden revisar [acá (enlace roto)](https://www.seraph.to/crear-datos-json-a-partir-de-un-diccionario-en-flask-parte-1.html).
+El artículo original lo pueden revisar [acá](/blog/creardatosjsonapartirdeundiccionarioenflask-1).
 
 El repositorio donde se encuentra el código en [gitlab en la rama json1](https://gitlab.com/ecrespo/tutorial-flask/tree/json1).
 
-Los artículos sobre Flask lo pueden revisar en el enlace de [artículos sobre flask (enlace roto)](https://www.seraph.to/tag/flask.html). 
+Los artículos sobre Flask lo pueden revisar en el enlace de [artículos sobre flask](/blog/tags). 
 
 ### Archivo Dockerfile
 

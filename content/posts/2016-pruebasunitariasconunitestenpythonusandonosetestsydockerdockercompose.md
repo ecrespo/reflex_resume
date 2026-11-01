@@ -5,7 +5,7 @@ Tags: Docker,Docker-compose,nosetests,Prueba de cobertura,Pruebas unitarias,unit
 lang: es
 translation: true
 
-Ya se han tocado en el blog el tema de pruebas unitarias, y usando Docker, los artículos anteriores lo pueden encontrar en la etiqueta [unittest (enlace roto)](https://www.seraph.to/tag/unittest.html).
+Ya se han tocado en el blog el tema de pruebas unitarias, y usando Docker, los artículos anteriores lo pueden encontrar en la etiqueta [unittest](/blog/tags).
 
 En este artículo se mostrará una clase calculadora que hace una suma y raíz cuadrada, y se tiene la clase para las pruebas unitarias.
 
@@ -529,7 +529,7 @@ tutorialespruebas_pruebas_1 exited with code 0
 
 Como se ve el módulo calculadora cubre un 57% de cobertura.
 
-El código de este proyecto se encuentra en el [repo tutoriales de pruebas en la rama nosetests](gitlab.com/ecrespo/tutoriales-pruebas/tree/nosetests).
+El código de este proyecto se encuentra en el [repo tutoriales de pruebas en la rama nosetests](https://gitlab.com/ecrespo/tutoriales-pruebas/tree/nosetests).
 
 ## ##
 

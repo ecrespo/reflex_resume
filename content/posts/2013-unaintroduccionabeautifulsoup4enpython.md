@@ -7,7 +7,7 @@ translation: true
 
 `Beautiful Soup` es una librería de Python que facilita la extracción de datos de archivos html y xml.
 
-Este artículo se basa en el artículo de [Python For Beginners](www.pythonforbeginners.com/python-on-the-web/beautifulsoup-4-python/) .
+Este artículo se basa en el artículo de [Python For Beginners](https://www.pythonforbeginners.com/python-on-the-web/beautifulsoup-4-python/) .
 
 La documentación oficial se puede leer en el siguiente [enlace](https://www.crummy.com/software/BeautifulSoup/bs4/doc/).
 
@@ -191,7 +191,7 @@ Nuevas radios
  Placed at the end of the document so the pages load faster
 ```
 
-Esta es la base para realizar [webscraping](es.wikipedia.org/wiki/Web_scraping) que se explicará en el siguiente artículo.
+Esta es la base para realizar [webscraping](https://es.wikipedia.org/wiki/Web_scraping) que se explicará en el siguiente artículo.
 
 ##  ##
 ¡Haz tu donativo!

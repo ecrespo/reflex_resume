@@ -6,7 +6,7 @@ lang: es
 translation: true
 
 
-Continuando con los artículos sobre Programación Orientada a Objetos en Python, en este caso se usará lo que se vió en la [parte 4 de la serie (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-4.html), donde se creó una clase `Punto2D` y se creó una clase hija `Punto3D` que heredaba de la `Punto2D`.
+Continuando con los artículos sobre Programación Orientada a Objetos en Python, en este caso se usará lo que se vió en la [parte 4 de la serie](/blog/volviendoalobasicopooenpython-4), donde se creó una clase `Punto2D` y se creó una clase hija `Punto3D` que heredaba de la `Punto2D`.
 
 En este caso se incorporarán nuevos conceptos:  
 - meta clases (clase abstracta)

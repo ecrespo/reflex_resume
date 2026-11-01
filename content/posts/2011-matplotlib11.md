@@ -7,7 +7,7 @@ translation: true
 
 A partir de este artículo las gráficas con matplotlib se explicarán con la librería gráfica PyQT. Para ello en otros artículos se reiniciará la serie sobre pyQT.
 
-En este artículo se tomará las funciones creadas en el [artículo anterior (enlace roto)](https://www.seraph.to/generando-una-grafica-en-python-con-matplotlib-parte-10.html#generando-una-grafica-en-python-con-matplotlib-parte-10) para calcular la trayectoria del lanzamiento de proyectil y se creará un objeto basandose en las librerías PyQT.
+En este artículo se tomará las funciones creadas en el [artículo anterior](/blog/matplotlib10) para calcular la trayectoria del lanzamiento de proyectil y se creará un objeto basandose en las librerías PyQT.
 
 
 ```python

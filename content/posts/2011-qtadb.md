@@ -14,7 +14,7 @@ Es necesario instalar el paquete [apk](http://www.mediafire.com/file/ck36odjkkqg
 La página de qtadb se encuentra en el siguiente [enlace](http://qtadb.wordpress.com/).
 
 
-El procedimiento para instalar el SDK de Android en Linux lo pueden seguir [acá (enlace roto)](https://www.seraph.to/instalacion-del-sdk-de-android-en-linux.html).
+El procedimiento para instalar el SDK de Android en Linux lo pueden seguir [acá](/blog/instalacionsdkandroiddebian).
 
 Al tener instalado el SDK de Android en Linux se conecta el celular y se inicia el servicio de adb:
 

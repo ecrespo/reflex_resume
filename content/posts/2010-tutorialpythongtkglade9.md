@@ -6,7 +6,7 @@ lang: es
 translation: true
 
 
-Continuando con los artículos de desarrollo de aplicaciones con python y gtk. Ahora uniré los artículos relacionados con [matplotlib (enlace roto)](https://www.seraph.to/tag/matplotlib.html) y gtk.
+Continuando con los artículos de desarrollo de aplicaciones con python y gtk. Ahora uniré los artículos relacionados con [matplotlib](/blog/tags) y gtk.
 Se diseño una ventana de dialogo con una gráfica en el centro, 2 botones, uno para cargar la curva en la gráfica y el otro botón para cerrar la aplicación.
 La figura muestra el diseño de la interfaz con glade.
 

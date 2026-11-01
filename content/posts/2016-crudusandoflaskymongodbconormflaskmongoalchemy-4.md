@@ -9,15 +9,15 @@ Continuando con la serie de artículos sobre acceso a mongodb desde Flask.
 
 Los artículos anteriores son:  
 
-- [Consulta a MongoDB desde Flask (parte 1) (enlace roto)](https://www.seraph.to/consulta-a-mongodb-desde-flask-parte-1.html) 
-- [Consulta a MongoDB desde Flask (parte 2 - paginación) (enlace roto)](https://www.seraph.to/consulta-a-mongodb-desde-flask-parte-2-paginacion.html)
-- [CRUD usando Flask para MongoDB  (parte 3) (enlace roto)](https://www.seraph.to/crud-usando-flask-para-mongodb-parte-3.html) 
+- [Consulta a MongoDB desde Flask (parte 1)](/blog/consultaamongodbdesdeflask-1) 
+- [Consulta a MongoDB desde Flask (parte 2 - paginación)](/blog/consultaamongodbdesdeflask-2)
+- [CRUD usando Flask para MongoDB  (parte 3)](/blog/crudusandoflaskparamongodb-3) 
 
 Para revisar los artículos relacionados a este artículo pueden ver:
 
-- [Artículos sobre Docker (enlace roto)](https://www.seraph.to/tag/docker.html)
-- [Artículos sobre MongoDB (enlace roto)](https://www.seraph.to/tag/mongodb.html)
-- [Artículos sobre Flask (enlace roto)](https://www.seraph.to/tag/flask.html)
+- [Artículos sobre Docker](/blog/tags)
+- [Artículos sobre MongoDB](/blog/tags)
+- [Artículos sobre Flask](/blog/tags)
 
 
 La base de datos sigue manteniendo el formato de los artículos anteriores.

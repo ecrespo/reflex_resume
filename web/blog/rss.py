@@ -10,6 +10,9 @@ sys.path.append(os.getcwd())
 
 from web.blog.paths import sorted_posts
 
+# The blog lives under the main site since the move off blog.seraph.to.
+SITE = "https://www.seraph.to"
+
 
 def generate_rss_feed():
     """Generate Atom feed for the blog using standard library."""
@@ -21,14 +24,14 @@ def generate_rss_feed():
     ET.SubElement(feed, "title").text = "Blog de Seraph/Lille"
 
     link_self = ET.SubElement(feed, "link")
-    link_self.set("href", "https://blog.seraph.to/feeds/all.atom.xml")
+    link_self.set("href", f"{SITE}/feed.xml")
     link_self.set("rel", "self")
 
     link_alt = ET.SubElement(feed, "link")
-    link_alt.set("href", "https://blog.seraph.to")
+    link_alt.set("href", f"{SITE}/blog")
     link_alt.set("rel", "alternate")
 
-    ET.SubElement(feed, "id").text = "https://blog.seraph.to/"
+    ET.SubElement(feed, "id").text = f"{SITE}/blog"
 
     # Updated time (use latest post or now)
     updated_time = datetime.now(UTC)
@@ -51,7 +54,7 @@ def generate_rss_feed():
 
         ET.SubElement(entry, "title").text = post.title
 
-        post_url = f"https://blog.seraph.to/blog/{post.slug}"
+        post_url = f"{SITE}/blog/{post.slug}"
         link = ET.SubElement(entry, "link")
         link.set("href", post_url)
 

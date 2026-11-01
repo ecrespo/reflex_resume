@@ -5,7 +5,7 @@ Tags: Linux,  accesibilidad, gconf, glade, gnome, gtk, Linux, python, tiflotecno
 lang: es
 translation: true
 
-En el [anterior artículo (enlace roto)](https://www.seraph.to/script-en-python-que-configura-los-accesos-rapidos-de-teclado-a-aplicaciones-en-gnome-con-gconf.html#script-en-python-que-configura-los-accesos-rapidos-de-teclado-a-aplicaciones-en-gnome-con-gconf) se mostró el desarrollo de una aplicación en python que configura vía línea de comandos los accesos rápidos de teclado para gnome por medio de gconf.
+En el [anterior artículo](/blog/script-gnome-gconf) se mostró el desarrollo de una aplicación en python que configura vía línea de comandos los accesos rápidos de teclado para gnome por medio de gconf.
 
 La interfáz gráfica de la aplicación la pueden bajar del siguiente [enlace (enlace roto)](http://python-config-accesskey-gnome.googlecode.com/hg/ui.glade) , el código python de la aplicación lo pueden bajar [acá (enlace roto)](http://python-config-accesskey-gnome.googlecode.com/hg/pyconfig-accessgnome-ui.py) y el módulo [configGconf.py (enlace roto)](http://python-config-accesskey-gnome.googlecode.com/hg/configGconf.py).
 

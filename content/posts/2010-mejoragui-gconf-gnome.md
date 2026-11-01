@@ -5,7 +5,7 @@ Tags: Linux,  accesibilidad, gconf, glade, gnome, gtk, Linux, python, tiflotecno
 lang: es
 translation: true
 
-En el artículo anterior se explico la mejora del script que permite cambiar las configuraciones de las teclas rápidas en gnome, ahora se explicará la mejora del programa mencionado en este [artículo (enlace roto)](https://www.seraph.to/desarrollo-de-interfaz-grafica-para-la-configuracion-de-accesos-rapidos-de-teclado-para-gconf.html).
+En el artículo anterior se explico la mejora del script que permite cambiar las configuraciones de las teclas rápidas en gnome, ahora se explicará la mejora del programa mencionado en este [artículo](/blog/gui-gconf-gnome).
 
 La captura de pantalla de la imagen muestra con respecto al artículo anterior un combobox que está deshabilitado en este momento, dicho combobox permitirá elegir entre 3 distribuciones Debian, Ubuntu o Canaima.
 

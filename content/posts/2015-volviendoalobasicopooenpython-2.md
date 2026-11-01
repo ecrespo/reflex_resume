@@ -5,7 +5,7 @@ Tags: Python,POO
 lang: es
 translation: true
 
-Continuando con la serie de artículos sobre programación orientada objetos con python, les dejo el enlace del [primer artículo (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-1.html#volviendo-a-lo-basico-poo-en-python-parte-1).
+Continuando con la serie de artículos sobre programación orientada objetos con python, les dejo el enlace del [primer artículo](/blog/volviendoalobasicopooenpython-1).
 
 El siguiente artículo se basa en un artículo de un blog publicado en [www.toptal.com (enlace roto)](https://www.toptal.com/python/python-class-attributes-an-overly-thorough-guide).
 

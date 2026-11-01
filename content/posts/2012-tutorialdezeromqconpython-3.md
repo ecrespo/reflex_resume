@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,Linux,Python,Ubuntu,ZeroMQ
 lang: es
 translation: true
 
-Tomando como base el artículo de [ZeroMQ parte 1 (enlace roto)](https://www.seraph.to/tutorial-de-zeromq-con-python-parte-1.html#tutorial-de-zeromq-con-python-parte-1), se puede crear varios servidores (como cluster de aplicación). 
+Tomando como base el artículo de [ZeroMQ parte 1](/blog/tutorialdezeromqconpython-1), se puede crear varios servidores (como cluster de aplicación). 
 
 Está vez se crean 3 scripts servidores, pueden estar en el mismo equipo o en equipos diferentes. Lo único que cambié en cada script es el puerto donde escucha para el servicio.
 

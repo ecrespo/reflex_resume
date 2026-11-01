@@ -5,14 +5,14 @@ Tags: Canaima,Debian,General,Python,Ubuntu,ZeroMQ
 lang: es
 translation: true
 
-Siguiendo con los [ejemplos sobre ZeroMQ (enlace roto)](https://www.seraph.to/tag/zeromq.html). Este artículo muestra el uso del patrón PUB/SUB como en el [artículo de zeroMQ parte 4 (enlace roto)](https://www.seraph.to/tutorial-de-zeromq-con-pythonpubsub-parte-4.html#tutorial-de-zeromq-con-pythonpubsub-parte-4) .
+Siguiendo con los [ejemplos sobre ZeroMQ](/blog/tags). Este artículo muestra el uso del patrón PUB/SUB como en el [artículo de zeroMQ parte 4](/blog/tutorialdezeromqconpython-4) .
 
-La diferencia está en la definición del transporte, en la parte 4 se usa tcp y en este caso se usará [epgm](api.zeromq.org/2-1:zmq-epgm) que se usa para multicast.
+La diferencia está en la definición del transporte, en la parte 4 se usa tcp y en este caso se usará [epgm](https://api.zeromq.org/2-1:zmq-epgm) que se usa para multicast.
 
-El ejemplo que se mostrará se basa en el artículo de Saghul Ibarra en su blog [Saghul Ibarra en su blog](code.saghul.net/implementing-a-pubsub-based-application-with).
+El ejemplo que se mostrará se basa en el artículo de Saghul Ibarra en su blog [Saghul Ibarra en su blog](https://code.saghul.net/implementing-a-pubsub-based-application-with).
 El productor crea una línea de comandos donde se pasa el texto al consumidor, el consumidor recibe el texto y sólo se muestra en pantalla el texto que está definido en la subscripción.
 
-En el productor se define unas opciones en el socket, en el sitio de ZeroMQ tiene una explicación de las [opciones para crear el socket](api.zeromq.org/2-1:zmq-setsockopt). LINGER con parámetro cero define que se descarte mensajes que no son enviados.
+En el productor se define unas opciones en el socket, en el sitio de ZeroMQ tiene una explicación de las [opciones para crear el socket](https://api.zeromq.org/2-1:zmq-setsockopt). LINGER con parámetro cero define que se descarte mensajes que no son enviados.
 
 El código del productor se muestra a continuación:
 ```python
