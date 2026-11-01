@@ -90,8 +90,14 @@ def blog_navbar(lang: str = "en", active: str = "/blog") -> rx.Component:
             navbar_link(text[lang], url=localize(url, lang), active=url == active)
             for text, url in _BLOG_ITEMS
         ],
-        # The feed is a file, not a page: never localized.
-        navbar_link("Atom", url="/feed.xml"),
+        # The feed is a file, not a page: `reload_document` makes the browser load it,
+        # instead of React Router looking for a route and showing the 404 page.
+        rx.el.a(
+            "Atom",
+            href="/es/feed.xml" if lang == "es" else "/feed.xml",
+            reload_document=True,
+            class_name=_LINK,
+        ),
     )
 
 
