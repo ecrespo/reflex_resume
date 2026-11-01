@@ -49,8 +49,9 @@ from ..dev_dashboard_data import (
     PERIODS_ES,
     PROFILE_ITEMS_ES,
     PROFILE_OPTIONS,
+    TOTAL_COMMITS,
 )
-from ..i18n import format_iso_day, t
+from ..i18n import format_iso_day, format_number, t
 from ..states.dev_dashboard_state import DevDashboardState as S
 from .dev_dashboard_sections import SECTIONS
 
@@ -104,9 +105,10 @@ def _header(lang: str) -> rx.Component:
             rx.el.p(
                 t(
                     lang,
-                    f"3,119 hand-written commits · ecrespo + prismal-ai · as of "
-                    f"{format_iso_day(DATA_AS_OF, lang)}",
-                    f"3.119 commits escritos a mano · ecrespo + prismal-ai · al "
+                    f"{format_number(TOTAL_COMMITS, 'en')} hand-written commits · "
+                    f"ecrespo + prismal-ai · as of {format_iso_day(DATA_AS_OF, lang)}",
+                    f"{format_number(TOTAL_COMMITS, 'es')} commits escritos a mano · "
+                    f"ecrespo + prismal-ai · al "
                     f"{format_iso_day(DATA_AS_OF, lang)}",
                 ),
                 class_name=_NOTE + " whitespace-nowrap",
