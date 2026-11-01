@@ -45,7 +45,7 @@ def tags_page(lang: str = "en") -> rx.Component:
                 rx.el.header(
                     rx.el.h1(
                         t(lang, "Tags", "Etiquetas"),
-                        class_name="text-4xl font-light text-gray-800 mb-8",
+                        class_name="text-4xl font-light text-[#1F3D36] mb-8",
                     ),
                     class_name="mb-8",
                 ),
@@ -57,7 +57,7 @@ def tags_page(lang: str = "en") -> rx.Component:
             ),
             class_name=MAIN_PADDING_CLASS,
         ),
-        top=blog_navbar(lang),
+        top=blog_navbar(lang, active="/blog/tags"),
         lang=lang,
         route="/blog/tags",
         id="content-area",

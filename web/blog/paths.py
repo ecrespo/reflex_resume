@@ -103,7 +103,9 @@ class BlogPost:
         self.date = parse_date(self.date_str) or datetime.now()
         self.category = metadata.get("category", "General")
         self.tags = [t.strip() for t in metadata.get("tags", "").split(",") if t.strip()]
-        self.author = metadata.get("authors", "Unknown")
+        # Most posts carry no author line: the blog has one author.
+        author = metadata.get("authors") or metadata.get("author") or ""
+        self.author = re.sub(r"\s*<[^>]*>", "", author).strip() or "Ernesto Crespo"
         self.summary = metadata.get("summary", "")
         # Sanitize slug to ensure valid route
         raw_slug = metadata.get("slug", self._generate_slug())

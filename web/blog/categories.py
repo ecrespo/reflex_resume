@@ -43,7 +43,7 @@ def categories_page(lang: str = "en") -> rx.Component:
                 rx.el.header(
                     rx.el.h1(
                         t(lang, "Categories", "Categorías"),
-                        class_name="text-4xl font-light text-gray-800 mb-8",
+                        class_name="text-4xl font-light text-[#1F3D36] mb-8",
                     ),
                     class_name="mb-8",
                 ),
@@ -58,7 +58,7 @@ def categories_page(lang: str = "en") -> rx.Component:
             ),
             class_name=MAIN_PADDING_CLASS,
         ),
-        top=blog_navbar(lang),
+        top=blog_navbar(lang, active="/blog/categories"),
         lang=lang,
         route="/blog/categories",
         id="content-area",
