@@ -16,9 +16,9 @@ El siguiente vídeo es una demostración de la herramienta:
 
 [https://youtu.be/-C-hXn2RY3M](https://youtu.be/-C-hXn2RY3M) 
 
-Con matplotlib en Python también se pueden crear gráficas de burbuja, el artículo se basa en un artículo en Inglés llamado "[How to make Bubble charts with matplotlib](glowingpython.blogspot.com/2011/11/how-to-make-bubble-charts-with.html) ". 
+Con matplotlib en Python también se pueden crear gráficas de burbuja, el artículo se basa en un artículo en Inglés llamado "[How to make Bubble charts with matplotlib](https://glowingpython.blogspot.com/2011/11/how-to-make-bubble-charts-with.html) ". 
 
-Los datos se obtendrán de un archivo csv, estos datos son de estadística del crimen en los Estados Unidos por estado del año 2005. El archivo csv se puede bajar [aquí](datasets.flowingdata.com/crimeRatesByState2005.csv). 
+Los datos se obtendrán de un archivo csv, estos datos son de estadística del crimen en los Estados Unidos por estado del año 2005. El archivo csv se puede bajar [aquí](https://datasets.flowingdata.com/crimeRatesByState2005.csv). 
 
 La información en el archivo csv se tiene de la siguiente forma (se muestra las primeras líneas del archivo):
 

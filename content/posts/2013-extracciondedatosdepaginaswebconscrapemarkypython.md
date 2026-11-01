@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,Linux,Python,Ubuntu,webscraping, Scrapermark
 lang: es
 translation: true
 
-Continuando con los artículos sobre [webscraping (enlace roto)](https://www.seraph.to/tag/webscraping.html), ahora es el turno de `scrapermark`.
+Continuando con los artículos sobre [webscraping](/blog/tags), ahora es el turno de `scrapermark`.
 
 Se sigue usando como página de ejemplo timeanddate.com. `Scrapermark` usa expresiones regulares internamente lo que le da velocidad en la busqueda, utiliza un lenguaje parecido al HTML.
 
@@ -27,7 +27,7 @@ Luego se cambia al directorio y se ejecuta la instalación por medio del `setup.
 
 En el siguiente [enlace](https://arshaw.com/scrapemark/) se muestra un ejemplo de como se usa, para más ejemplos puede visitar este [enlace](https://arshaw.com/scrapemark/docs/examples/).
 
-En este [artículo (enlace roto)](http://blog.crespo.org.ve/2013/10/webscraping-o-extraccion-de-datos-de.html) se explica como buscar la información que se necesita extraer de la página antes [mencionada](www.timeanddate.com/worldclock/astronomy.html?n=58).
+En este [artículo](/blog/webscrapingoextracciondedatosdepaginaswebconbeautifulsoup4ypython) se explica como buscar la información que se necesita extraer de la página antes [mencionada](https://www.timeanddate.com/worldclock/astronomy.html?n=58).
 
 La idea es extraer las hora de salida y ocultamiento del sol para Venezuela.
 A continuación se muestra el código:

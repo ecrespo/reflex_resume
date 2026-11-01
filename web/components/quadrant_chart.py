@@ -20,7 +20,7 @@ _INK = "#1F3D36"
 _MUTED = "#5C7B71"
 _RULE = "#5C7B71"
 # One ink per profile, in the order of the data (muted, legible on the cream ground).
-_COLORS = ["#2F6F86", "#A3542C", "#2C6355", "#9A7414", "#7A4E8C", "#4F6D2F"]
+_COLORS = ["#2F6F86", "#A3542C", "#2C6355", "#9A7414", "#7A4E8C", "#4F6D2F", "#8C3B4F"]
 
 _FONT = 14
 _CHAR = 7.0  # Average glyph width at _FONT, for label placement.

@@ -5,7 +5,7 @@ Tags: Python,Flask
 lang: es  
 translation: true  
 
-Continuando con la serie de [artículos (enlace roto)](https://www.seraph.to/tag/flask.html) sobre el microframework de desarrollo web flask, ahora se mostrará como crear un sitio estático.
+Continuando con la serie de [artículos](/blog/tags) sobre el microframework de desarrollo web flask, ahora se mostrará como crear un sitio estático.
 
 Este artículo se basa en un artículo en inglés llamado [Introduction to Flask, Part 1 - Setting up a static site](https://realpython.com/introduction-to-flask-part-1-setting-up-a-static-site/).
 

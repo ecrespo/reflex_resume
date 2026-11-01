@@ -6,7 +6,7 @@ lang: es
 translation: true
 
 Existen varias herramientas en python para obtener información de PDF.
-En este caso visite la página de [Cencoex](www.cencoex.gob.ve), en la sección de Cencoex en cifras hay un enlace a un pdf a [Liquidaciones a Empresas Agremiadas del Sector Salud (Ordinarias + ALADI + SUCRE) (enlace roto)](http://www.cencoex.gob.ve/images/stories/pdfs/estadisticas/Salud.pdf).
+En este caso visite la página de [Cencoex](https://www.cencoex.gob.ve), en la sección de Cencoex en cifras hay un enlace a un pdf a [Liquidaciones a Empresas Agremiadas del Sector Salud (Ordinarias + ALADI + SUCRE) (enlace roto)](http://www.cencoex.gob.ve/images/stories/pdfs/estadisticas/Salud.pdf).
 
 Para este primer artículo se usará [pycurl](http://pycurl.io/) para bajar el pdf y [peepdf (enlace roto)](http://eternal-todo.com/tools/peepdf-pdf-analysis-tool) para analizarlo. Para descargar peepdf se puede hacer desde el repositorio del proyecto en [github](https://github.com/jesparza/peepdf).
 

@@ -5,7 +5,7 @@ Tags: Canaima,Debian,Empaquetado,General,Linux,Ubuntu
 lang: es
 translation: true
 
-Este artículo es una actualización del artículo sobre **como crear un metapaquete** que lo pueden leer [acá (enlace roto)](http://blog.crespo.org.ve/2009/03/como-crear-un-metapaquete.html).
+Este artículo es una actualización del artículo sobre **como crear un metapaquete** que lo pueden leer [acá](/blog/comocrearmetapaquete).
 
 En este artículo se agregará el archivo `changelog` y `copyright` para el metapaquete `canaima-caribay-radio`.
 

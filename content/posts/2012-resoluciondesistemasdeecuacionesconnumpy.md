@@ -51,7 +51,7 @@ El resultado de ejecutar el script se muestra a continuación:
         [ -4.],
         [ 20.]]))
 ```
-Hay un problema a la hora de calcular la matriz inversa y es que no todas las matrices pueden ser invertidas, así que está solución no funciona para todos los casos. La solución es usar la función [numpy.linalg.svd](docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.svd.html).
+Hay un problema a la hora de calcular la matriz inversa y es que no todas las matrices pueden ser invertidas, así que está solución no funciona para todos los casos. La solución es usar la función [numpy.linalg.svd](https://docs.scipy.org/doc/numpy/reference/generated/numpy.linalg.svd.html).
 
 El código siguiente en vez de usar la clase matrix usará la clase array y usar la función `numpy.linalg.svd`.
 ```python

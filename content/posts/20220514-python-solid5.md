@@ -24,10 +24,10 @@ A continuación dejo un vídeo de [ArjanCodes](https://www.youtube.com/watch?v=p
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pTB30aXS77U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Los artículos anteriores:
-* [Principio de responsabilidad única (enlace roto)](https://www.seraph.to/python_solid1.html#python_solid1).
-* [Principio abierto/cerrado (enlace roto)](https://www.seraph.to/python_solid2.html#python_solid2).
-* [Principio de sustitución Liskov (enlace roto)](https://www.seraph.to/python_solid3.html#python_solid3).
-* [Principio de segregación de la interfaz (enlace roto)](https://www.seraph.to/python_solid4.html#python_solid4.
+* [Principio de responsabilidad única](/blog/python_solid1).
+* [Principio abierto/cerrado](/blog/python_solid2).
+* [Principio de sustitución Liskov](/blog/python_solid3).
+* [Principio de segregación de la interfaz](/blog/python_solid4).
 
 El [Principio de inversión de la dependencia](https://es.wikipedia.org/wiki/Principio_de_inversi%C3%B3n_de_la_dependencia) es una forma específica de desacoplar módulos de software. Al seguir el principio, las relaciones de dependencia convencionales establecidas desde los módulos de alto nivel de establecimiento de políticas a los módulos de depencia de bajo nivel se invierten, lo que hace que los módulos de alto nivel sean independientes de los detalles de implementación del módulo de bajo nivel, el principio establece: 
  

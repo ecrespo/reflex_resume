@@ -5,13 +5,13 @@ Tags: General,Python
 lang: es
 translation: true
  
-Hace tiempo explique como crear unas tablas para la base de datos `sqlite3`, insertar datos, removerlos y consultarlos,el artículo se llama [Abstracción del motor de Base de Datos con el ORM Sqlalchemy y python (enlace roto)](http://blog.crespo.org.ve/2012/04/abstraccion-del-motor-de-base-de-datos.html).
+Hace tiempo explique como crear unas tablas para la base de datos `sqlite3`, insertar datos, removerlos y consultarlos,el artículo se llama [Abstracción del motor de Base de Datos con el ORM Sqlalchemy y python](/blog/abstracciondelmotordebasededatosconelormsqlalchemyypython).
 
 Antes de comenzar a probar lo que se escribe en este artículo es necesario que realicen pruebas con el artículo mencionado anteriormente para que tengan la base de datos con sus datos listas para ser utilizadas en este artículo.
 
 Ahora se explica como usar unas tablas con sus datos ya creada, creando una sesión para la base de datos.
 
-Este artículo se basa en un [tutorial en inglés de sqlalchemy](mapfish.org/doc/tutorials/sqlalchemy.html) o el [tutorial paso a paso de sqlalchemy (enlace roto)](http://www.rmunn.com/sqlalchemy-tutorial/tutorial.html).
+Este artículo se basa en un [tutorial en inglés de sqlalchemy](https://mapfish.org/doc/tutorials/sqlalchemy.html) o el [tutorial paso a paso de sqlalchemy (enlace roto)](http://www.rmunn.com/sqlalchemy-tutorial/tutorial.html).
 
 Lo primero que se hará es crear un archivo `model.py` que contendrá el modelo de la base de datos.
 ```python

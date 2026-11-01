@@ -22,7 +22,7 @@ Se importa el módulo:
 Se crea la instancia del objeto:
 ```python
 >>> gs = goslate.Goslate()
-```python
+```
 
 Se traduce hello world a alemán, español e italiano:
 ```python

@@ -8,8 +8,8 @@ translation: true
 En los artículos anteriores sobre docker se tiene:
 
 1. [Instalar Docker en Debian Jessie](/blog/instalardockerendebianjessie)  
-2. [Uso de Docker en Debian Jessie (parte 1) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html#uso-de-docker-en-debian-jessie-parte-1)  
-3. [Uso de Docker en Debian Jessie (parte 2) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-2.html#uso-de-docker-en-debian-jessie-parte-2)  
+2. [Uso de Docker en Debian Jessie (parte 1)](/blog/usodedockerendebianjessie-1)  
+3. [Uso de Docker en Debian Jessie (parte 2)](/blog/usodedockerendebianjessie-2)  
 
 En este artículo se muestra como construir una imagen Docker a partir de un archivo llamado Dockerfile.
 

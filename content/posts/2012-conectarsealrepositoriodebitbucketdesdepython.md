@@ -6,7 +6,7 @@ lang: es
 translation: true
 
 
-Para tener un proyecto con control de versiones mercurial sólo veo 2 opciones usar [Google Code ](https://code.google.com/) o [Bitbucket](https://bitbucket.org/product/).  Para el caso de Google Code se puede acceder vía el api para usar mercurial con python como se explico en artículo [anterior](https://ecrespo.github.io/api-de-mercurial-para-python.html#api-de-mercurial-para-python).
+Para tener un proyecto con control de versiones mercurial sólo veo 2 opciones usar [Google Code ](https://code.google.com/) o [Bitbucket](https://bitbucket.org/product/).  Para el caso de Google Code se puede acceder vía el api para usar mercurial con python como se explico en artículo [anterior](/blog/apidemercurialparapython).
 
 Para Bitbucket se tiene un API para acceder a la información del repositorio que en python se llama [python-bitbucket. (enlace roto)](https://bitbucket.org/jmoiron/python-bitbucket/).  
 

@@ -6,7 +6,7 @@ lang: es
 translation: true
 
 En el post anterior explique como ejecutar script python en un celular con Android de forma remota desde Linux por wifi, ahora explicaré como hacerlo por cable USB, en realidad es más sencillo que el artículo anterior.
-Me basaré en lo explicado en el post [anterior (enlace roto)](https://www.seraph.to/ejecucion-remota-de-scripts-python-desde-linux-a-un-celular-con-android.html#ejecucion-remota-de-scripts-python-desde-linux-a-un-celular-con-android) y en el post sobre [envío de mensajes de texto (enlace roto)](https://www.seraph.to/enviar-mensajes-de-texto-desde-android-con-python.html).
+Me basaré en lo explicado en el post [anterior](/blog/ejecucionremotaaandroid) y en el post sobre [envío de mensajes de texto](/blog/enviaresmsconpythonandroid).
 
 Lo primero que se necesita hacer es conectar el celular al computador por USB, activar el modo depuración y la conexión USB a Portal y Herramientas.
 

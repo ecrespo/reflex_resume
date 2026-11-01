@@ -5,7 +5,7 @@ Tags: Linux,Debian, Ubuntu, Canaima,dnsmasq
 lang: es
 translation: true
 
-En el [artículo anterior](https://ecrespo.github.io/mejorando-la-velocidad-de-consultas-de-dns-con-dnsmasq-y-probar-pruebas-de-diagnostico.html) explicaba como mejorar las consultas de DNS del equipo con dnsmaq.
+En el [artículo anterior](/blog/consultadns1) explicaba como mejorar las consultas de DNS del equipo con dnsmaq.
 
 También se puede agregar equipos con su IP como de un servidor de DNS con Bind9 en funcionamiento.
 

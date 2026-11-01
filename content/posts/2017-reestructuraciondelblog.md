@@ -10,7 +10,7 @@ Tengo varios días sin escribir algo en el blog, primero está la situación loc
 Los blogs que tengo son:
 
 - [ernestocrespo.blogspot.com](http://ernestocrespo.blogspot.com/): Blog en inglés que lo tengo algo descuidado. Este blog lo pienso migrar de primero al url [http://blog2.crespo.org.ve (enlace roto)](http://blog2.crespo.org.ve) y usaré [pelican](http://github.com/getpelican/pelican) para el contenido.   
-- [blog.crespo.org.ve (enlace roto)](http://blog.crespo.org.ve/): Versión en Español del blog, que tiene más de 300 posts. Como este blog es el que tiene más contenido, la migración será por etapas teniendo una versión beta con nombre [blog3.crespo.org.ve (enlace roto)](http://blog3.crespo.org.ve/), cuando esté lista la migración pasará a ser [blog.crespo.org.ve (enlace roto)](http://blog.crespo.org.ve/).    
+- [blog.crespo.org.ve](/blog): Versión en Español del blog, que tiene más de 300 posts. Como este blog es el que tiene más contenido, la migración será por etapas teniendo una versión beta con nombre [blog3.crespo.org.ve (enlace roto)](http://blog3.crespo.org.ve/), cuando esté lista la migración pasará a ser [blog.crespo.org.ve](/blog).    
 - [Medium (enlace roto)](http://medium.com/@_seraph1): Este blog será para temas generales no técnicos o algunos técnicos (muy pocos).     
 - [ernestocrespo13.wordpress.com](http://ernestocrespo13.wordpress.com/): Este normalmente es un respaldo del blog en Español,  ahora manejará los posts de ambos blogs en inglés y español como respaldo.
 

@@ -5,7 +5,7 @@ Tags: Debian,Python,Ubuntu,Mongodb
 lang: es  
 translation: true  
 
-En artículos anteriores se ha tocado [el tema de una base de datos mongodb con python (enlace roto)](https://www.seraph.to/tag/mongodb.html), ahora en esté artículo se tocará el tema de un archivo binario que almacene documentos JSON en vez de usar un servidor mongodb.
+En artículos anteriores se ha tocado [el tema de una base de datos mongodb con python](/blog/tags), ahora en esté artículo se tocará el tema de un archivo binario que almacene documentos JSON en vez de usar un servidor mongodb.
 
 Lo primero que se hará es crear un archivo con extensión bson donde se guardará un diccionario (json) con datos aleatorios y luego se busca la información del archivo.
 

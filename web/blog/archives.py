@@ -1,5 +1,3 @@
-from collections import defaultdict
-
 import reflex as rx
 from reflex_silverpoint_react import sp_card
 
@@ -10,60 +8,16 @@ from web.i18n import localize, t
 
 # Constants
 MAIN_PADDING_CLASS = "p-4 md:p-8 lg:p-16 w-full"
-META_SEPARATOR = "text-gray-400 mx-2"
-
-
-class ArchivesState(rx.State):
-    """State for archives page."""
-
-    @rx.var
-    def posts_by_date(self) -> list[tuple[str, list[dict]]]:
-        """Group posts by Year-Month."""
-        groups = defaultdict(list)
-
-        for post in sorted_posts:
-            # Group keys like "September 2023"
-            key = post.date.strftime("%B %Y")
-            # Sort keys by date descending essentially relies on sorted_posts being sorted
-            groups[key].append(post.to_dict())
-
-        # Since sorted_posts is already sorted by date descending,
-        # the groups will be populated in that order if we iterate linearly.
-        # However, defaultdict doesn't maintain order.
-        # Let's use a list of tuples to keep order.
-
-        ordered_groups = []
-        current_key = None
-        current_list = []
-
-        for post in sorted_posts:
-            date_key = post.date.strftime("%B %Y")
-            if date_key != current_key:
-                if current_key is not None:
-                    ordered_groups.append((current_key, current_list))
-                current_key = date_key
-                current_list = []
-
-            current_list.append(post.to_dict())
-
-        if current_key is not None:
-            ordered_groups.append((current_key, current_list))
-
-        return ordered_groups
-
-    @rx.var
-    def all_posts_flat(self) -> list[dict]:
-        """Return all posts for flat listing if needed (User screenshot shows simple list by date)."""
-        return [p.to_dict() for p in sorted_posts]
+META_SEPARATOR = "text-[#5C7B71] mx-2"
 
 
 def archive_entry(post: dict, lang: str = "en") -> rx.Component:
-    date_field = "formatted_date_es" if lang == "es" else "formatted_date"
+    """One post of the archive, built at compile time (`BlogPost.card(lang)`)."""
     return rx.el.div(
-        rx.el.div(post[date_field], class_name="text-gray-700 font-medium mb-1"),
+        rx.el.div(post["formatted_date"], class_name="text-[#3E6A5E] font-medium mb-1"),
         rx.link(
             post["title"],
-            href=localize("/blog/", lang) + post["slug"].to(str),
+            href=localize(f"/blog/{post['slug']}", lang),
             class_name="text-[#2F6F86] hover:underline text-lg block mb-4 ml-4",
         ),
         class_name="mb-2",
@@ -77,21 +31,19 @@ def archives_page(lang: str = "en") -> rx.Component:
                 rx.el.header(
                     rx.el.h1(
                         t(lang, "Archives", "Archivo"),
-                        class_name="text-4xl font-light text-gray-800 mb-8",
+                        class_name="text-4xl font-light text-[#1F3D36] mb-8",
                     ),
                     class_name="mb-8",
                 ),
                 sp_card(
-                    rx.foreach(
-                        ArchivesState.all_posts_flat, lambda post: archive_entry(post, lang)
-                    ),
+                    *[archive_entry(post.card(lang), lang) for post in sorted_posts],
                     class_name="max-w-4xl",
                 ),
                 class_name="container mx-auto max-w-5xl",
             ),
             class_name=MAIN_PADDING_CLASS,
         ),
-        top=blog_navbar(lang),
+        top=blog_navbar(lang, active="/blog/archives"),
         lang=lang,
         route="/blog/archives",
         id="content-area",

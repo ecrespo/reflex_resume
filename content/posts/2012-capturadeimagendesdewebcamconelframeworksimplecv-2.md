@@ -5,7 +5,7 @@ Tags: Camara,Canaima,Debian,gnome,Linux,Python,Ubuntu,SimpleCV
 lang: es
 translation: true
 
-En el [artículo anterior (enlace roto)](https://www.seraph.to/captura-de-imagen-desde-la-webcam-con-el-framework-simplecv-parte-1.html#captura-de-imagen-desde-la-webcam-con-el-framework-simplecv-parte-1) se explica como usar la webcam del equipo para capturar una imágen, en este caso se explicará como definir el tamaño de la imágen, ahora se muestra como manejar 2 webcam al mismo tiempo.
+En el [artículo anterior](/blog/capturadeimagendesdelawebcamconelframeworksimplecv-1) se explica como usar la webcam del equipo para capturar una imágen, en este caso se explicará como definir el tamaño de la imágen, ahora se muestra como manejar 2 webcam al mismo tiempo.
 
 
 La idea es capturar imágenes de ambas webcam y luego salvarlas en formato png.

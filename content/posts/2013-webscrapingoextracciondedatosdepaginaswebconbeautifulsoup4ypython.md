@@ -11,7 +11,7 @@ Para Python existen varias herramientas:
 
 - `urllib` y `urlopen`.
 - `Beautiful Soup 4` ([introducción en artículo anterior](/blog/unaintroduccionabeautifulsoup4enpython)).
-- `Python Mechanize` ([un artículo inicial (enlace roto)](https://www.seraph.to/emulando-la-navegacion-en-python-con-mechanize-parte-1.html) y espero publicar algunos más).
+- `Python Mechanize` ([un artículo inicial](/blog/emulandolanavegacionenpythonconmechanize-1) y espero publicar algunos más).
 - [Scrapy](https://scrapy.org/).
 - `Selenium`.
 - `pyquery`.

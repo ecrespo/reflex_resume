@@ -11,7 +11,7 @@ La charla Sistema de Mensajeria de colas con ZeroMQ y Python del FUDcon Latam Va
 
 [Sistema de Mensajería de colas](https://www.slideshare.net/ecrespo/sistema-de-mensajeria-de-colas-con-zeromq-y-python?ref=) 
  
-[Sistema de Mensajeria de Colas con ZeroMQ y Python (enlace roto)](https://www.seraph.to/tag/zeromq.html) from [Ernesto Crespo](https://www.slideshare.net/ecrespo)
+[Sistema de Mensajeria de Colas con ZeroMQ y Python](/blog/tags) from [Ernesto Crespo](https://www.slideshare.net/ecrespo)
 
 ##  ##
 ¡Haz tu donativo!

@@ -8,7 +8,7 @@ Slug: python-clean-python-code
 Authors: Ernesto Crespo
 Summary: Este artículo explica el uso de varias herramientas de aseguramiento de la calidad y como usarlas antes de hacer un commit con pre-commit.
 
-En artículo anterior ([Herramientas de Python para desarrollar código seguro y de calidad (enlace roto)](https://www.seraph.to/python-tools-security-quality-code.html#python-tools-security-quality-code)) se tocó el tema de herramientas que facilitan a cumplir el PEP8 de Python, mejoras de seguridad del código y formateo del mismo, en este caso se usa circle-ci para las evaluaciones. 
+En artículo anterior ([Herramientas de Python para desarrollar código seguro y de calidad](/blog/python-tools-security-quality-code)) se tocó el tema de herramientas que facilitan a cumplir el PEP8 de Python, mejoras de seguridad del código y formateo del mismo, en este caso se usa circle-ci para las evaluaciones. 
 
 En este artículo se usará la evaluación antes de subir código a un repositorio de git. El artículo se basa en los siguientes artículos:
 

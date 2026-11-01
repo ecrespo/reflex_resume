@@ -15,7 +15,7 @@ El muestreo a una tasa inferior a la tasa de Nyquist se denomina submuestreo, se
 
 Si se desea más información sobre el Teorema de Muestreo se puede consultar a [wikipedia](https://es.wikipedia.org/wiki/Teorema_de_muestreo_de_Nyquist-Shannon).
 
-Este artículo se basa en un artículo en Inglés "[The sampling theorem explained with numpy](glowingpython.blogspot.com/2011/09/sampling-theorem-explained-with-numpy.html)".
+Este artículo se basa en un artículo en Inglés "[The sampling theorem explained with numpy](https://glowingpython.blogspot.com/2011/09/sampling-theorem-explained-with-numpy.html)".
 
 El código se muestra a continuación:
 

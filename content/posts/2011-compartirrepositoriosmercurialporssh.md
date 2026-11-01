@@ -5,11 +5,11 @@ Tags: Canaima,Control de versiones,Debian,Linux,mercurial,ssh,Ubuntu
 lang: es
 translation: true
 
-[En artículo anterior (enlace roto)](https://www.seraph.to/compartir-repositorios-de-mercurial-con-mercurial-server.html) se explica como compartir un repositorio mercurial con `mercurial-server`, ahora se explicará como hacerlo usando `ssh` con claves públicas.
+[En artículo anterior](/blog/linux-mercurial-server) se explica como compartir un repositorio mercurial con `mercurial-server`, ahora se explicará como hacerlo usando `ssh` con claves públicas.
 
 Lo que primero se va a hacer es crear la clave pública para `ssh` y distribuirlo al equipo o los equipos, luego se verifica el funcionamiento del `ssh` con la clave pública.
 
-La idea es mantener respaldado la configuración de un equipo que está con control de versiones con mercurial usando [etckeeper (enlace roto)](https://www.seraph.to/gestionar-los-archivos-de-configuracion-en-etc-con-etckeeper-y-mercurial.html).
+La idea es mantener respaldado la configuración de un equipo que está con control de versiones con mercurial usando [etckeeper](/blog/linux-etckeeper).
 
 En el servidor es necesario instalar `etckeeper`, `mercurial` y `ssh`.
 

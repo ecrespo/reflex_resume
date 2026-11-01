@@ -9,7 +9,7 @@ translation: true
 
 Este artículo explicará como instalar python en Android desde el emulador para poder mostrar las capturas de pantalla y ese procedimiento es el mismo para instalar python desde el celular.
 
-Lo primero que se necesita hacer es iniciar el emulador como se explico en el artículo de [instalación del SDK de Android (enlace roto)](https://www.seraph.to/instalacion-del-sdk-de-android-en-linux.html#instalacion-del-sdk-de-android-en-linux).
+Lo primero que se necesita hacer es iniciar el emulador como se explico en el artículo de [instalación del SDK de Android](/blog/instalacionsdkandroiddebian).
 
 
 Al ejecutar adb devices encontrarán un dispositivo virtual funcionando.

@@ -5,7 +5,7 @@ Tags: Debian,General,Python,pdf scraping
 lang: es
 translation: true
 
-En el primer artículo de la serie se explicó el uso de [peepdf (enlace roto)](https://www.seraph.to/extraccion-de-informacion-de-pdfs-con-python-parte-1.html#extraccion-de-informacion-de-pdfs-con-python-parte-1), en este caso se utilizará [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/index.html).
+En el primer artículo de la serie se explicó el uso de [peepdf](/blog/extracciondeinformaciondepdfsconpython-1), en este caso se utilizará [pdfminer](http://www.unixuser.org/~euske/python/pdfminer/index.html).
 
 En el siguiente enlace consiguen un tutorial de como [usarlo](http://www.unixuser.org/~euske/python/pdfminer/programming.html), u [otro](https://www.binpress.com/manipulate-pdf-python/), y [otro más](https://quantcorner.wordpress.com/2014/03/16/parsing-pdf-files-with-python-and-pdfminer/).
 

@@ -12,8 +12,8 @@ Para poder lograr el manejo de varios contenedores existe docker-compose, para e
 Los artículos anteriores que tratan el tema de docker son:
 
 1. [Instalar Docker en Debian Jessie](/blog/instalardockerendebianjessie)  
-2. [Uso de Docker en Debian Jessie (parte 1) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html#uso-de-docker-en-debian-jessie-parte-1)  
-3. [Uso de Docker en Debian Jessie (parte 2) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-2.html#uso-de-docker-en-debian-jessie-parte-2)  
+2. [Uso de Docker en Debian Jessie (parte 1)](/blog/usodedockerendebianjessie-1)  
+3. [Uso de Docker en Debian Jessie (parte 2)](/blog/usodedockerendebianjessie-2)  
 4. [Crear una imagen Docker con un archivo Dockerfile](/blog/crearunaimagendockerapartirdeunarchivodockerfile)  
 5. [Iniciando Django usando Docker](/blog/iniciandodjangousandodocker)  
 6. [Iniciando Gitlab por medio de Docker](/blog/instalargitlabpormediodedocker)  

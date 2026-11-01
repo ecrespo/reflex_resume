@@ -9,13 +9,13 @@ He usado `dnsmasq` como `dns cache` de las consultas de `opendns` o de los DNS d
 
 Los artículos anteriores que hablan de `dnsmasq` son:
 
-1. [Usar dnsmasq como servidor DNS cache y local (enlace roto)](https://www.seraph.to/usar-dnsmasq-como-servidor-dns-cache-y-local.html)  
-2. [Mejorando la velocidad de consultas de DNS con dnsmasq y probar pruebas de diagnostico (enlace roto)](https://www.seraph.to/mejorando-la-velocidad-de-consultas-de-dns-con-dnsmasq-y-probar-pruebas-de-diagnostico.html)   
+1. [Usar dnsmasq como servidor DNS cache y local](/blog/linux-dnsmasq)  
+2. [Mejorando la velocidad de consultas de DNS con dnsmasq y probar pruebas de diagnostico](/blog/consultadns1)   
 
 Y ahora se usará DNSCrypt como lo muestra los siguientes artículos:
 
 1. [Cifrar el tráfico de DNS en Linux con DNSCrypt y OpenDNS](/blog/cifrareltraficodednsenlinuxcondnscryptyopendns)   
-2. [Cifrar el tráfico de DNS en Debian 9 Stretch (actualización 2017) (enlace roto)](https://www.seraph.to/cifrar-el-trafico-de-dns-en-debian-9-stretch-actualizacion-2017.html) 
+2. [Cifrar el tráfico de DNS en Debian 9 Stretch (actualización 2017)](/blog/cifrareltraficodednsendebian9stretchactualizacion2017) 
 
 Para iniciar se instalará `dnsmasq`:
 ```

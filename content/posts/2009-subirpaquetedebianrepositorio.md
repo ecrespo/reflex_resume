@@ -113,7 +113,7 @@ quota: 340.8 KB in use, 150.0 MB available (0.22% used)
 Ya en este punto el paquete se encuentra en el servidor de repositorios mercurial.
 
 
-![pyching](./imagenes/pyching.png)
+![pyching](./images/pyching.png)
 
 Ahora se crea un directorio temporal para trabajar con los fuentes para empaquetarlo:
 

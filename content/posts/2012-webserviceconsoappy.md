@@ -5,7 +5,7 @@ Tags: Debian,General,Linux,Python,Ubuntu
 lang: es
 translation: true
 
-Hace ya mucho tiempo escribí un ejemplo de como usar [xml-rpc ](https://ecrespo.github.io/ejemplo-xml-rpc-en-python.html) desde python como webservice.
+Hace ya mucho tiempo escribí un ejemplo de como usar [xml-rpc ](/blog/xmlrpc) desde python como webservice.
 En este caso se explicará el uso de otro protocolo que deriva de `xml-rpc` que se llama `SOAP` (Simple Object Access Protocol).
 
 `SOAP` es un protocolo estándar que define cómo dos objetos en diferentes procesos pueden comunicarse por medio del intercambio de datos `XML`. Pueden conseguir más información en la página de [wikipedia](https://es.wikipedia.org/wiki/SOAP).

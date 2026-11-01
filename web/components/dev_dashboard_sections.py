@@ -198,8 +198,8 @@ def _quadrants(lang: str) -> rx.Component:
                 x=Axis(
                     "depth",
                     0,
-                    50,
-                    [0, 10, 20, 30, 40, 50],
+                    60,
+                    [0, 10, 20, 30, 40, 50, 60],
                     25,
                     t(lang, "Depth: % of all commits", "Profundidad: % de todos los commits"),
                 ),

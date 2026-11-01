@@ -5,11 +5,11 @@ Tags: Python,Profiling,cProfile
 lang: es  
 translation: true  
   
-Hace un tiempo toque el tema de herramientas de profiling para Python ([ver enlace (enlace roto)](https://www.seraph.to/tag/profiling.html)).
+Hace un tiempo toque el tema de herramientas de profiling para Python ([ver enlace](/blog/tags)).
 
 Hay otras herramientas como cProfile que se pueden usar y son menos invasiva que las de los artículos anteriores, quiero decir, no necesitan modificar el código de la aplicación para que sea utilizada.
 
-Como script de prueba usaré el mismo de raíz cuadrada que se encuentra en mi repo en [github](https://github.com/ecrespo/raizcuadrada), el mismo de los artículos sobre [pruebas unitarias](/blog/pruebasunitariasenpythonconunittest), [pruebas unitarias con docker](/blog/ejecutarunapruebadeunittestenpythonconuncontenedordocker), [pruebas de documentación (enlace roto)](https://www.seraph.to/separar-codigo-de-pruebas-de-la-documentacion-doctest-2da-parte.html), [pruebas de documentación con docker](/blog/ejecutarunapruebadedoctestconuncontenedordocker)  y el de [pylint con docker](/blog/analizarcodigopythonconpylintdesdedocker).
+Como script de prueba usaré el mismo de raíz cuadrada que se encuentra en mi repo en [github](https://github.com/ecrespo/raizcuadrada), el mismo de los artículos sobre [pruebas unitarias](/blog/pruebasunitariasenpythonconunittest), [pruebas unitarias con docker](/blog/ejecutarunapruebadeunittestenpythonconuncontenedordocker), [pruebas de documentación](/blog/separarcodigodepruebasdeladocumentaciondoctest2), [pruebas de documentación con docker](/blog/ejecutarunapruebadedoctestconuncontenedordocker)  y el de [pylint con docker](/blog/analizarcodigopythonconpylintdesdedocker).
 
 No se necesita instalar nada para usar `cProfile`.
 

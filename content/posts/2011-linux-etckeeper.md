@@ -9,7 +9,7 @@ Continuando con los artículos de control de versiones distribuido con Mercurial
 
 La mayoria de los artículos que se consiguen sobre etckeeper es usando git o bazaar.
 
-Para esta guía es necesario tener conocimientos básicos de mercurial, pueden leer el artículo de control de [versiones con mercurial de este blog](https://ecrespo.github.io/control-de-versiones-con-mercurial.html).
+Para esta guía es necesario tener conocimientos básicos de mercurial, pueden leer el artículo de control de [versiones con mercurial de este blog](/blog/cvmercurial).
 
 Es necesario llevar un histórico de los archivos dentro del directorio /etc/, es esencial para un sistema saludable. Los beneficios rastrear cambios en los archivos dentro de /etc incluye:
 

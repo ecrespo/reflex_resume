@@ -10,8 +10,8 @@ translation: true
 En los artículos anteriores sobre Docker se ha tocado el manejo de imágenes, ahora se explicará como importar un contenedor desde Python, este artículo se basa en el [siguiente artículo en inglés](https://blog.deepgram.com/import-a-docker-container-in-python/).
 
 1. [Instalar Docker en Debian Jessie](/blog/instalardockerendebianjessie)  
-2. [Uso de Docker en Debian Jessie (parte 1) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html)  
-3. [Uso de Docker en Debian Jessie (parte 2) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-2.html)  
+2. [Uso de Docker en Debian Jessie (parte 1)](/blog/usodedockerendebianjessie-1)  
+3. [Uso de Docker en Debian Jessie (parte 2)](/blog/usodedockerendebianjessie-2)  
 4. [Crear una imagen Docker a partir de un archivo Dockerfile](/blog/crearunaimagendockerapartirdeunarchivodockerfile)  
 5. [Iniciando Django usando Docker](/blog/iniciandodjangousandodocker)  
 6. [Instalar Gitlab por medio de Docker](/blog/instalargitlabpormediodedocker)  

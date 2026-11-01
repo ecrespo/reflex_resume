@@ -5,7 +5,7 @@ Tags: Linux,Debian,Ubuntu, Docker
 lang: es
 translation: true
 
-El primer artículo de la [serie  de artículos sobre Docker (enlace roto)](https://www.seraph.to/tag/docker.html) fue, el de la [Instalación de Docker en Debian Jessie](/blog/instalardockerendebianjessie), ahora explicaré el proceso de instalación de Docer CE para Debian Stretch. La guía en inglés de instalación de docker para Debian la pueden encontrar en el siguiente [enlace](https://docs.docker.com/engine/installation/linux/docker-ce/debian/).
+El primer artículo de la [serie  de artículos sobre Docker](/blog/tags) fue, el de la [Instalación de Docker en Debian Jessie](/blog/instalardockerendebianjessie), ahora explicaré el proceso de instalación de Docer CE para Debian Stretch. La guía en inglés de instalación de docker para Debian la pueden encontrar en el siguiente [enlace](https://docs.docker.com/engine/installation/linux/docker-ce/debian/).
 
 El procedimiento es el siguiente:
 

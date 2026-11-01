@@ -7,7 +7,7 @@ translation: true
 
 En este artículo se explica como encontrar la intercepción de 2 funciones, en este caso una función senoidal con una cosenoidal.
 
-El artículo se basa en uno en Inglés que se llama "[How to find the intersection of two functions](Graficar la intercepción de 2 funciones) ".
+El artículo se basa en uno en Inglés que se llama "[How to find the intersection of two functions](https://glowingpython.blogspot.com/2011/05/hot-to-find-intersection-of-two.html) ".
 
 La gráfica mostrará la intercepción de las funciones sin(x) y cos(x) desde el valor inicial de x igual a cero. Se utilizará la función fsolve la cual devuelve la raíz de una ecuación (no lineal ) definida por func(x) = 0.
 

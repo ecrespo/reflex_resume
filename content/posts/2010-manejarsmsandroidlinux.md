@@ -10,7 +10,7 @@ Para continuar con los scripts que se ejecutan de forma remota en el celular, ah
 
 La idea es buscar todos los mensajes de un número celular dado, presentar el mensaje en la consola y borrar dichos mensajes.
 
-Se sigue el procedimiento de ejecución remota explicado en el [post anterior (enlace roto)](https://www.seraph.to/ejecucion-remota-de-scripts-python-desde-linux-a-un-celular-con-android-version-conectado-el-celular-por-usb.html#ejecucion-remota-de-scripts-python-desde-linux-a-un-celular-con-android-version-conectado-el-celular-por-usb).
+Se sigue el procedimiento de ejecución remota explicado en el [post anterior](/blog/ejecucionremotaaandroid2).
 
 
 

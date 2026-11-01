@@ -6,7 +6,7 @@ lang: es
 translation: true  
 
 
-Los artículos anteriores sobre el microframework Flask lo pueden revisar en el siguiente [enlace (enlace roto)](https://www.seraph.to/tag/flask.html).
+Los artículos anteriores sobre el microframework Flask lo pueden revisar en el siguiente [enlace](/blog/tags).
 
 Este artículo se basa en un artículo  en inglés que se títula: [How to create JSON in Python flask (enlace roto)](https://codehandbook.org/create-json-using-python-flask/).
 

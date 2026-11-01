@@ -5,7 +5,7 @@ Tags: Debian,Linux,Python,Ubuntu,Webscraping
 lang: es
 translation: true
 
-En artículos [anteriores (enlace roto)](https://www.seraph.to/tag/webscraping.html) se ha tocado el tema de webscraping, ahora se usará el framework scrapy que permite automatizar la extracción de los datos.
+En artículos [anteriores](/blog/tags) se ha tocado el tema de webscraping, ahora se usará el framework scrapy que permite automatizar la extracción de los datos.
 
 Scrapy es un framework para el rastreo y extraccion de datos estructurados  de páginas web. Los datos pueden ser usados para data mining, procesamiento de datos o historicos de información.
 

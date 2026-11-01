@@ -6,7 +6,7 @@ lang: es
 translation: true
 
 
-Retomando los [artículos de numpy y matplotlib (enlace roto)](https://www.seraph.to/tag/matplotlib.html), en este caso se mostrará una gráfica del cálculo del vapor de agua entre -100 a 100 grados centigrados.
+Retomando los [artículos de numpy y matplotlib](/blog/tags), en este caso se mostrará una gráfica del cálculo del vapor de agua entre -100 a 100 grados centigrados.
 
 La ecuación de vapor es la siguiente:
 

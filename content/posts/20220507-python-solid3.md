@@ -24,8 +24,8 @@ A continuación dejo un vídeo de [ArjanCodes](https://www.youtube.com/watch?v=p
 <iframe width="560" height="315" src="https://www.youtube.com/embed/pTB30aXS77U" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
 Los artículos anteriores:
-* [Principio de responsabilidad única (enlace roto)](https://www.seraph.to/python_solid1.html#python_solid1).
-* [Principio abierto/cerrado (enlace roto)](https://www.seraph.to/python_solid2.html#python_solid2)
+* [Principio de responsabilidad única](/blog/python_solid1).
+* [Principio abierto/cerrado](/blog/python_solid2)
 
 El [principio de sustitución de Liskov](https://es.wikipedia.org/wiki/Principio_de_sustituci%C3%B3n_de_Liskov) se define como: Cada clase que hereda de otra puede usarse como su padre sin necesidad de conocer las diferencias entre ellas.
 

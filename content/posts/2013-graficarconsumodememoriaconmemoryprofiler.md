@@ -5,7 +5,7 @@ Tags: General,numpy,Python
 lang: es
 translation: true
 
-En el [artículo anterior (enlace roto)](https://www.seraph.to/monitorear-el-uso-de-memoria-de-un-programa-python-con-memory_profiler.html#monitorear-el-uso-de-memoria-de-un-programa-python-con-memory_profiler) se explica como usar memory_profiler para evaluar el consumo de memoria de un programa Python, a continuación se explicará como graficar ese consumo utilizando matplotlib.
+En el [artículo anterior](/blog/monitorearelusodememoriadeunprogramapythonconmemoryprofiler) se explica como usar memory_profiler para evaluar el consumo de memoria de un programa Python, a continuación se explicará como graficar ese consumo utilizando matplotlib.
 
 Este artículo se basa en el artículo [Memory plots with memory_profiler (enlace roto)](http://fseoane.net/blog/2013/memory-plots-with-memory_profiler/).
 

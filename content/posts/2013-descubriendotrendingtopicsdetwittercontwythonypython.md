@@ -9,7 +9,7 @@ Siguiendo con los artículos sobre [librerías de python para twitter](/blog/twi
 
 El script mostrará la conexión a twitter, luego despliega los identificadores de las ciudades que tienen Trending Topics en Venezuela y por último se despliega los Trending Topics de Venezuela en este momento.
 
-Para saber como obtener el valor del token de la aplicación o de acceso se recomienda revisar el [artículo anterior (enlace roto)](http://blog.crespo.org.ve/2013/09/probando-la-libreria-twython-para.html).
+Para saber como obtener el valor del token de la aplicación o de acceso se recomienda revisar el [artículo anterior](/blog/probandolalibreriatwythonparatwitter).
 
 El código se muestra a continuación:
 ```python

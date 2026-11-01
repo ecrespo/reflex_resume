@@ -13,9 +13,9 @@ Este módulo es de propósito general y no debería estar incorporado en una apl
 
 La segunda versión de dicho módulo toma conceptos de los artículos de programación orientada a objetos de artículos anteriores:
 
-1. [Volviendo a lo básico, POO en Python (parte 1) (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-1.html#volviendo-a-lo-basico-poo-en-python-parte-1)  
-2. [Volviendo a lo básico, POO en Python (parte 2) (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-2.html#volviendo-a-lo-basico-poo-en-python-parte-2)  
-3. [Volviendo a lo básico, POO en Python (parte 3) (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-3.html#volviendo-a-lo-basico-poo-en-python-parte-3)
+1. [Volviendo a lo básico, POO en Python (parte 1)](/blog/volviendoalobasicopooenpython-1)  
+2. [Volviendo a lo básico, POO en Python (parte 2)](/blog/volviendoalobasicopooenpython-2)  
+3. [Volviendo a lo básico, POO en Python (parte 3)](/blog/volviendoalobasicopooenpython-3)
 
 La primera versión del código la pueden ver a continuación:
 ```

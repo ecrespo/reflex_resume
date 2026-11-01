@@ -7,8 +7,8 @@ translation: true
 
 Continuando con algunos conceptos de POO en Python, se tienen los artículos anteriores:
 
-1. [Volviendo a lo básico, POO en Python (parte 1) (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-1.html#volviendo-a-lo-basico-poo-en-python-parte-1)
-2. [Volviendo a lo básico, POO en Python (parte 2) (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-2.html#volviendo-a-lo-basico-poo-en-python-parte-2)
+1. [Volviendo a lo básico, POO en Python (parte 1)](/blog/volviendoalobasicopooenpython-1)
+2. [Volviendo a lo básico, POO en Python (parte 2)](/blog/volviendoalobasicopooenpython-2)
 
 En esté artículo se muestra el uso de  __ `getattr`__  (se ejecuta al acceder a un atributo que no existe), como obtener valores y modificar valores, y como se simplifica con el uso del decorador `@property`.
 

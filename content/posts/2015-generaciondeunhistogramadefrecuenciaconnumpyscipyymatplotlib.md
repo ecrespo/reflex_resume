@@ -5,7 +5,7 @@ Tags: Debian,matplotlib,numpy,Python,Ubuntu
 lang: es  
 translation: true
 
-En el artículo de [creación de grafos se muestra como generar un histograma (enlace roto)](https://www.seraph.to/creacion-de-grafos-con-networkx-parte-2.html#creacion-de-grafos-con-networkx-parte-2), ahora se mostrará un histograma con datos generados.
+En el artículo de [creación de grafos se muestra como generar un histograma](/blog/creaciondegrafosconnetworkx-2), ahora se mostrará un histograma con datos generados.
 
 Se generarán datos de manera aleatoria, y con ella se generará el histograma con la función scipy.stats.histogram, luego se gráfica el histograma.
 

@@ -6,7 +6,7 @@ lang: es
 translation: true  
 
 
-Continuando con los [artículos de programación orientada a objetos con python (enlace roto)](https://www.seraph.to/tag/poo.html), en este caso se tocará el caso de multiple herencia.
+Continuando con los [artículos de programación orientada a objetos con python](/blog/tags), en este caso se tocará el caso de multiple herencia.
 
 La siguiente figura se muestra el diagrama UML:
 

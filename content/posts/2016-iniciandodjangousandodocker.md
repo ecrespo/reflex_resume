@@ -8,17 +8,17 @@ translation: true
 En el [artículo anterior (enlace roto)](/blog/crearunaimagendockerapartirdeunarchivodockerfile) 
 se tocó el tema de uso de un archivo Dockerfile para crear una imagen de docker que muestra una página estática por medio de apache.
 
-En este artículo se usará el framework django para mostrar el funcionamiento del admin de Django desde Docker ([artículos anteriores de Django (enlace roto)](http://blog.crespo.org.ve/search/label/Django)).
+En este artículo se usará el framework django para mostrar el funcionamiento del admin de Django desde Docker ([artículos anteriores de Django](/blog/tags)).
 
 A continuación los artículos anteriores:
 
 1. [Instalar Docker en Debian Jessie (enlace roto)](/blog/instalardockerendebianjessie)  
-2. [Uso de Docker en Debian Jessie (parte 1) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html#uso-de-docker-en-debian-jessie-parte-1)  
-3. [Uso de Docker en Debian Jessie (parte 2) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-2.html#uso-de-docker-en-debian-jessie-parte-2)  
+2. [Uso de Docker en Debian Jessie (parte 1)](/blog/usodedockerendebianjessie-1)  
+3. [Uso de Docker en Debian Jessie (parte 2)](/blog/usodedockerendebianjessie-2)  
 4. [Crear una imagen Docker con un archivo Dockerfile (enlace roto)](/blog/crearunaimagendockerapartirdeunarchivodockerfile) 
 
 
-En este caso se tiene creado un proyecto y una aplicación de Django con la siguientes directorios y archivos, se ha creado una cuenta de administrador ([artículo de creación de proyecto y aplicación (enlace roto)](http://blog.crespo.org.ve/2012/07/framework-de-desarrollo-web-django.html)):
+En este caso se tiene creado un proyecto y una aplicación de Django con la siguientes directorios y archivos, se ha creado una cuenta de administrador ([artículo de creación de proyecto y aplicación](/blog/frameworkdedesarrollowebdjango-1)):
 ```
 djangoapp
 ├── db.sqlite3

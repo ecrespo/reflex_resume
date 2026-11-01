@@ -5,7 +5,7 @@ Tags: Canaima,General,Linux,Python,Ubuntu,ZeroMQ
 lang: es
 translation: true
 
-Siguiendo con los [ejemplos sobre ZeroMQ (enlace roto)](https://www.seraph.to/tag/zeromq.html), ahora mostraré como usar diferentes tipos de transporte (antes se mostrada a tcp, ahora se usará `tcp` e `ipc` el cual es un modelo de comunicación interprocesos y puede ser de ayuda cuando se necesita baja latencia).
+Siguiendo con los [ejemplos sobre ZeroMQ](/blog/tags), ahora mostraré como usar diferentes tipos de transporte (antes se mostrada a tcp, ahora se usará `tcp` e `ipc` el cual es un modelo de comunicación interprocesos y puede ser de ayuda cuando se necesita baja latencia).
 
 Luego de escoger la capa de transporte se selecciona un patrón de mensaje, en artículos anteriores se ha mostrado los patrones REQ/REP, PUB/SUB y Pair, sólo queda por explicar su funcionamiento el patrón UPSTREAM/DOWNSTREAM.
 

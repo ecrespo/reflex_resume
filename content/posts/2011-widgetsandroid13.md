@@ -5,7 +5,7 @@ Tags: Android, Python
 lang: es
 translation: true
 
-En artículo anterior expliqué [como capturar información de la posición del celular en Linux (enlace roto)](https://www.seraph.to/capturar-la-ubicacion-del-celular-android-desde-linux.html), en este artículo más sencillo que la versión anterior lo hace directamente en android.
+En artículo anterior expliqué [como capturar información de la posición del celular en Linux](/blog/obtenerposicioncelularandroidenlinux), en este artículo más sencillo que la versión anterior lo hace directamente en android.
 
 En el artículo mencionado se captura la información de la posición del celular con la la función readLocation(), en esta versión se usará  función getLastKnownLocation() . Note diferencias entre una función y la otra, en la última si pude tomar la posición correcta que muestra googlemap, en cambio con la primera función marcaba la posición que donde el celular se encontraba hace unos días, es necesario investigar más de la API de SL4A  o de Android para ver la razón de esta característica.
 

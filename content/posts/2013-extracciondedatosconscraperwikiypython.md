@@ -5,7 +5,7 @@ Tags: General
 lang: es
 translation: true
 
-Continuando con los artículos sobre [webscraping con Python (enlace roto)](https://www.seraph.to/tag/webscraping.html), le toca el turno a [Scraperwiki](https://scraperwiki.com/help/code-in-your-browser/).
+Continuando con los artículos sobre [webscraping con Python](/blog/tags), le toca el turno a [Scraperwiki](https://scraperwiki.com/help/code-in-your-browser/).
 
 La documentación de Scraperwiki la pueden encontrar [acá (enlace roto)](https://classic.scraperwiki.com/docs/python/tutorials/).
 

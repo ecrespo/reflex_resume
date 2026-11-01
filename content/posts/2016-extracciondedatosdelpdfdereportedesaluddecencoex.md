@@ -13,9 +13,9 @@ La siguiente figura muestra el pdf antes mencionado:
 ![](./images/extracciondedatosdelpdfdereportedesaluddecencoex-1.png)
 
 Los artículos anteriores de extracción de pdf son:  
-1. [Extracción de información de PDFs con Python (parte 1). (enlace roto)](https://www.seraph.to/extraccion-de-informacion-de-pdfs-con-python-parte-1.html)  
-2. [Extracción de información de PDFs con Python (parte 2). (enlace roto)](https://www.seraph.to/extraccion-de-informacion-de-pdfs-con-python-parte-2.html)  
-3. [Extracción de Información de PDFs con Python (parte 3). (enlace roto)](https://www.seraph.to/extraccion-de-informacion-de-pdfs-con-python-parte-3.html)  
+1. [Extracción de información de PDFs con Python (parte 1).](/blog/extracciondeinformaciondepdfsconpython-1)  
+2. [Extracción de información de PDFs con Python (parte 2).](/blog/extracciondeinformaciondepdfsconpython-2)  
+3. [Extracción de Información de PDFs con Python (parte 3).](/blog/extracciondeinformaciondepdfsconpython-3)  
 
 En el caso del Pdf del reporte de Cencoex se tiene el script ya explicado anteriormente que guarda la información en una base de datos mongodb llamada `cencoex` en una colección llamada salud. 
 
@@ -23,7 +23,7 @@ La siguiente figura muestra los documentos de la colección:
 
 ![](./images/extracciondedatosdelpdfdereportedesaluddecencoex-2.png)
 
-Con está información almacenada en mongodb se creará un API Restful con Eve como se explico en los [artículos anteriores (enlace roto)](https://www.seraph.to/tag/eve.html).
+Con está información almacenada en mongodb se creará un API Restful con Eve como se explico en los [artículos anteriores](/blog/tags).
 
 La imagen anterior muestra que los documentos tienen los siguientes campos:  
 

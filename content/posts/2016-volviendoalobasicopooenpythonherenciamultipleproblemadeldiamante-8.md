@@ -5,7 +5,7 @@ Tags: Python,POO
 lang: es  
 translation: true  
 
-Continuando con los artículos sobre [programación orientada a objetos en python (enlace roto)](https://www.seraph.to/tag/poo.html).
+Continuando con los artículos sobre [programación orientada a objetos en python](/blog/tags).
 
 En el artículo anterior se explicó como trabajar con la herencia multiple. Ahora se  explicará el problema del diamante y como lo resuelve Python.
 
