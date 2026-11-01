@@ -8,12 +8,12 @@ translation: true
 Lo artículos anteriores de docker son los siguientes:
 
 1. [Instalar Docker en Debian Jessie](/blog/instalardockerendebianjessie)  
-2. [Uso de Docker en Debian Jessie (parte 1) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html#uso-de-docker-en-debian-jessie-parte-1)  
-3. [Uso de Docker en Debian Jessie (parte 2) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-2.html#uso-de-docker-en-debian-jessie-parte-2)  
+2. [Uso de Docker en Debian Jessie (parte 1)](/blog/usodedockerendebianjessie-1)  
+3. [Uso de Docker en Debian Jessie (parte 2)](/blog/usodedockerendebianjessie-2)  
 4. [Crear una imagen Docker con un archivo Dockerfile](/blog/crearunaimagendockerapartirdeunarchivodockerfile)  
 5. [Iniciando Django usando Docker](/blog/iniciandodjangousandodocker)  
 
-En el [primer artículo de uso de Docker en Debian Jessie (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html#uso-de-docker-en-debian-jessie-parte-1) se muestra al final como usar SonarQube por medio de Docker con dos instancias de la misma imagen.
+En el [primer artículo de uso de Docker en Debian Jessie](/blog/usodedockerendebianjessie-1) se muestra al final como usar SonarQube por medio de Docker con dos instancias de la misma imagen.
 
 
 En esté artículo se bajará la imagen Docker de Gitlab edición comunitaria. El sitio donde se aloja está en el siguiente [enlace](https://hub.docker.com/r/gitlab/gitlab-ce/) y la documentación  en inglés a la cual se basa esté artículo está en el siguiente enlace.

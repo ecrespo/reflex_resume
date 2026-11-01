@@ -1,8 +1,8 @@
 Title: Internet de las Cosas  
 Date: 2016-07-10 09:00  
 Category: Anuncios  
-Tags: Linux,Int
-lang: es  ernet de las cosas
+Tags: Linux,Internet de las cosas
+lang: es
 translation: true  
 
 Como lo explican en [wikipedia](https://es.wikipedia.org/wiki/Internet_de_las_cosas), internet de las cosas es un concepto que se refiere a la interconexión de objetos cotidianos a la Internet.

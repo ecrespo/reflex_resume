@@ -5,7 +5,7 @@ Tags: Debian, Django, Linux, python, Ubuntu
 lang: es
 translation: true
 
-En el [artículo de Framework de desarrollo web con `Django` parte 1 (enlace roto)](https://www.seraph.to/framework-de-desarrollo-web-django-parte-1.html#framework-de-desarrollo-web-django-parte-1) se explica como instalar `Django` 
+En el [artículo de Framework de desarrollo web con `Django` parte 1](/blog/frameworkdedesarrollowebdjango-1) se explica como instalar `Django` 
 e iniciar el servidor web que viene incorporado para realizar pruebas del desarrollo.
 
 Ahora se explicará como mostrar una página web con un mensaje "Hola Mundo".

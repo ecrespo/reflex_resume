@@ -10,12 +10,7 @@ from web.i18n import LANGS, localize, t
 from web.states.blog_state import BlogState
 
 MAIN_PADDING_CLASS = "p-4 md:p-8 lg:p-16 w-full"
-META_SEPARATOR = "text-gray-400 mx-2"
-
-
-def date_field(lang: str) -> str:
-    """The post field holding its date in `lang`."""
-    return "formatted_date_es" if lang == "es" else "formatted_date"
+META_SEPARATOR = "text-[#5C7B71] mx-2"
 
 
 def post_card(post, lang: str = "en") -> rx.Component:
@@ -24,16 +19,16 @@ def post_card(post, lang: str = "en") -> rx.Component:
         rx.link(
             sp_card(
                 rx.el.div(
-                    rx.el.span(post[date_field(lang)], class_name="text-sm text-gray-500"),
+                    rx.el.span(post["formatted_date"], class_name="text-sm text-[#3E6A5E]"),
                     rx.el.span(" • ", class_name=META_SEPARATOR),
                     sp_tag(post["category"], tone=2, size="sm"),
                     rx.el.span(" • ", class_name=META_SEPARATOR),
-                    rx.el.span(post["author"], class_name="text-sm text-gray-600"),
+                    rx.el.span(post["author"], class_name="text-sm text-[#3E6A5E]"),
                     class_name="flex items-center flex-wrap mb-3",
                 ),
                 rx.el.p(
                     post["summary"],
-                    class_name="text-gray-700 text-sm line-clamp-3 mb-4",
+                    class_name="text-[#1F3D36] text-sm line-clamp-3 mb-4",
                 ),
                 rx.el.span(
                     t(lang, "Read more →", "Leer más →"),
@@ -73,26 +68,30 @@ def blog_list_page(lang: str = "en") -> rx.Component:
             rx.el.div(
                 # Header
                 rx.el.header(
-                    rx.el.h1("Blog", class_name="text-3xl font-bold text-gray-900 mb-2"),
+                    rx.el.h1("Blog", class_name="text-3xl font-bold text-[#1F3D36] mb-2"),
                     rx.el.p(
                         t(
                             lang,
-                            "Articles on Python, software development, data science and more. "
-                            "The posts are written in Spanish.",
+                            "Articles on Python, software development, data science and more.",
                             "Artículos sobre Python, desarrollo de software, ciencia de datos y más.",
                         ),
-                        class_name="text-gray-600",
+                        class_name="text-[#3E6A5E]",
                     ),
                     rx.el.div(
                         rx.el.span(BlogState.total_posts, class_name="font-bold text-[#2F6F86]"),
                         t(lang, " published articles", " artículos publicados"),
-                        class_name="text-sm text-gray-500 mt-2",
+                        class_name="text-sm text-[#3E6A5E] mt-2",
                     ),
                     class_name="mb-8",
                 ),
                 # Posts grid
                 rx.el.div(
-                    rx.foreach(BlogState.current_page_posts, lambda post: post_card(post, lang)),
+                    rx.foreach(
+                        BlogState.current_page_posts_es
+                        if lang == "es"
+                        else BlogState.current_page_posts,
+                        lambda post: post_card(post, lang),
+                    ),
                     class_name="grid gap-6 grid-cols-1 lg:grid-cols-2",
                 ),
                 # Pagination
@@ -108,11 +107,18 @@ def blog_list_page(lang: str = "en") -> rx.Component:
     )
 
 
-def create_post_page(post_data: dict, lang: str = "en") -> rx.Component:
-    """Create a component for a specific blog post.
+def post_body(post_data: dict) -> str:
+    """The post's markdown, with image paths served from assets and without a leading
+    `# Title` that repeats the page heading."""
+    body = post_data["content"].replace("./images/", "/blog/images/").lstrip()
+    first, _, rest = body.partition("\n")
+    if first.startswith("# ") and first[2:].strip().lower() == post_data["title"].strip().lower():
+        body = rest.lstrip()
+    return body
 
-    The posts are written in Spanish; `lang` is the language of the page around them.
-    """
+
+def create_post_page(post_data: dict, lang: str = "en") -> rx.Component:
+    """The page of one post; `post_data` is the post in `lang` (`BlogPost.to_dict`)."""
     return site_shell(
         rx.el.main(
             rx.el.div(
@@ -128,27 +134,32 @@ def create_post_page(post_data: dict, lang: str = "en") -> rx.Component:
                 rx.el.header(
                     rx.el.h1(
                         post_data["title"],
-                        class_name="text-3xl md:text-4xl font-bold text-gray-900 mb-4",
+                        class_name="text-3xl md:text-4xl font-bold text-[#1F3D36] leading-tight mb-4",
                     ),
                     rx.el.div(
-                        rx.el.span(post_data[date_field(lang)], class_name="text-gray-500"),
+                        rx.el.span(post_data["formatted_date"], class_name="text-[#3E6A5E]"),
                         rx.el.span(" • ", class_name=META_SEPARATOR),
                         sp_tag(post_data["category"], tone=2, size="sm"),
                         rx.el.span(" • ", class_name=META_SEPARATOR),
-                        rx.el.span(t(lang, "By ", "Por "), class_name="text-gray-600"),
-                        rx.el.span(post_data["author"], class_name="text-gray-800 font-medium"),
+                        rx.el.span(
+                            t(lang, "By", "Por"),
+                            rx.el.span(
+                                post_data["author"], class_name="text-[#1F3D36] font-medium"
+                            ),
+                            class_name="text-[#3E6A5E] inline-flex gap-1",
+                        ),
                         class_name="flex items-center flex-wrap text-sm mb-6",
                     ),
-                    class_name="mb-8 pb-6 border-b border-gray-200",
+                    class_name="mb-8 pb-6 border-b border-[#5C7B71]/40",
                 ),
                 # Content
                 rx.el.article(
                     rx.markdown(
-                        post_data["content"].replace("./images/", "/blog/images/"),
+                        post_body(post_data),
                         class_name="prose prose-lg max-w-none",
                     ),
-                    # The post itself is in Spanish on both versions of the page.
-                    lang="es",
+                    # Spanish when the post has no English translation yet.
+                    lang=post_data["lang"],
                     class_name="post-content",
                 ),
                 class_name="container mx-auto max-w-4xl",
@@ -172,9 +183,9 @@ def get_blog_routes():
     routes = []
 
     for slug, post in blog_data.items():
-        post_data = post.to_dict()
         for lang in LANGS:
             route = localize(f"/blog/{slug}", lang)
+            post_data = post.to_dict(lang)
 
             # Create a closure to capture the post data for this specific route
             # This is the key pattern used by Reflex official blog

@@ -5,11 +5,11 @@ Tags: Python,POO
 lang: es  
 translation: true  
 
-Los artículos anteriores sobre Programación Orientada a Objetos los pueden revisar en el [enlace (enlace roto)](https://www.seraph.to/tag/poo.html).
+Los artículos anteriores sobre Programación Orientada a Objetos los pueden revisar en el [enlace](/blog/tags).
 
 En este artículo se tocará el tema de la herencia, la encapsulación, el uso de getter, setter y deleter, el uso de método estático y y classmethod.
 
-En el artículo de la [parte 3 de POO (enlace roto)](https://www.seraph.to/volviendo-a-lo-basico-poo-en-python-parte-3.html) se explica el uso de @property y @método.setter, falto explicar el deleter que sirve para borrar atributos del objeto.
+En el artículo de la [parte 3 de POO](/blog/volviendoalobasicopooenpython-3) se explica el uso de @property y @método.setter, falto explicar el deleter que sirve para borrar atributos del objeto.
 
 El @staticmethod se usa cuando no se está usando el argumento self en un método.
 

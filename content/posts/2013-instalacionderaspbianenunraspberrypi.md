@@ -26,7 +26,7 @@ Para poner a funcionar la placa es necesario lo siguiente:
 - Cargador de Celular microusb.
 - Una versión de Linux (para este caso Raspbian una versión de Debian Wheezy para Arquitectura ARM).
 
-Para bajar  Rasbian lo pueden hacer desde el siguiente [enlace](downloads.raspberrypi.org/images/raspbian/2012-12-16-wheezy-raspbian/2012-12-16-wheezy-raspbian.zip), el número SHA-1 para verificar la integridad del archivo es el siguiente:  `514974a5fcbbbea02151d79a715741c2159d4b0a`. 
+Para bajar  Rasbian lo pueden hacer desde el siguiente [enlace](https://downloads.raspberrypi.org/images/raspbian/2012-12-16-wheezy-raspbian/2012-12-16-wheezy-raspbian.zip), el número SHA-1 para verificar la integridad del archivo es el siguiente:  `514974a5fcbbbea02151d79a715741c2159d4b0a`. 
 
 El usuario del sistema es `pi` y la clave `raspberry`.
 

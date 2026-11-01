@@ -5,7 +5,7 @@ Tags: Linux, Android, Debian
 lang: es
 translation: true
 
-En el [artículo anterior (enlace roto)](https://www.seraph.to/instalacion-del-sdk-de-android-en-linux.html#instalacion-del-sdk-de-android-en-linux) se explico como instalar el SDK de Android en Debian, a continuación se explicará el comando que permite dar acceso al celular como ver la microsd, instalar aplicaciones en el celular desde el computador entre otras cosas. 
+En el [artículo anterior](/blog/instalacionsdkandroiddebian) se explico como instalar el SDK de Android en Debian, a continuación se explicará el comando que permite dar acceso al celular como ver la microsd, instalar aplicaciones en el celular desde el computador entre otras cosas. 
 
 Cambiarse al directorio tools del SDK de Android. 
 

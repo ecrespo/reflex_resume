@@ -44,6 +44,7 @@ NAV_ITEMS = [
     ({"en": "Home", "es": "Inicio"}, "/"),
     ({"en": "Resume", "es": "Currículum"}, "/resume"),
     ({"en": "Portfolio", "es": "Portafolio"}, "/portfolio"),
+    ({"en": "Blog", "es": "Blog"}, "/blog"),
     ({"en": "Dev Dashboard Stats", "es": "Estadísticas de desarrollo"}, "/dev-dashboard-stats"),
 ]
 
@@ -65,28 +66,32 @@ def _silverpoint_nav(*children: rx.Component) -> rx.Component:
     )
 
 
-def blog_navbar_link(text: str, url: str) -> rx.Component:
-    """Blog navbar link: the main navbar's style, with the old Pelican blog's sections."""
-    return navbar_link(text, url)
-
-
+# The blog's own sections, after the site's pages (the old Pelican blog's menu).
 _BLOG_ITEMS = [
-    ({"en": "HOME", "es": "INICIO"}, "/"),
-    ({"en": "BLOG", "es": "BLOG"}, "/blog"),
-    ({"en": "ARCHIVES", "es": "ARCHIVO"}, "/blog/archives"),
-    ({"en": "CATEGORIES", "es": "CATEGORÍAS"}, "/blog/categories"),
-    ({"en": "TAGS", "es": "ETIQUETAS"}, "/blog/tags"),
-    ({"en": "ATOM", "es": "ATOM"}, "/feed.xml"),
-    ({"en": "DEV DASHBOARD STATS", "es": "ESTADÍSTICAS DE DESARROLLO"}, "/dev-dashboard-stats"),
+    ({"en": "Archives", "es": "Archivo"}, "/blog/archives"),
+    ({"en": "Categories", "es": "Categorías"}, "/blog/categories"),
+    ({"en": "Tags", "es": "Etiquetas"}, "/blog/tags"),
 ]
 
 
-def blog_navbar(lang: str = "en") -> rx.Component:
-    """The navigation bar for the blog section."""
+def blog_navbar(lang: str = "en", active: str = "/blog") -> rx.Component:
+    """The site's navbar plus the blog's sections; `active` is the page's English route.
+
+    "Blog" stays underlined on every blog page; a section is underlined on its own page.
+    """
     return _silverpoint_nav(
-        # Menu button for mobile (reusing state)
         menu_button(lang),
-        *[blog_navbar_link(text[lang], url=localize(url, lang)) for text, url in _BLOG_ITEMS],
+        *[
+            navbar_link(text[lang], url=localize(url, lang), active=url == "/blog")
+            for text, url in NAV_ITEMS
+        ],
+        rx.el.span(class_name="h-5 w-px bg-[#5C7B71]/50 flex-shrink-0", aria_hidden="true"),
+        *[
+            navbar_link(text[lang], url=localize(url, lang), active=url == active)
+            for text, url in _BLOG_ITEMS
+        ],
+        # The feed is a file, not a page: never localized.
+        navbar_link("Atom", url="/feed.xml"),
     )
 
 

@@ -6,7 +6,7 @@ lang: es
 translation: true  
 
 
-Para terminar la serie de artículos sobre [programación orientada a objetos con python (enlace roto)](https://www.seraph.to/tag/poo.html), 
+Para terminar la serie de artículos sobre [programación orientada a objetos con python](/blog/tags), 
 
 La composición significa utilizar objetos dentro de otro objetos sin usar herencia.
 

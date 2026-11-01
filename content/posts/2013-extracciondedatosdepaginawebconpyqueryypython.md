@@ -5,9 +5,9 @@ Tags: Canaima,Debian,General,Linux,Python,Ubuntu,Webscraping
 lang: es
 translation: true
 
-Continuando con los [artículos de webscraping (enlace roto)](https://www.seraph.to/tag/webscraping.html) ahora toca el turno a [pyquery](https://pypi.org/project/pyquery/).
+Continuando con los [artículos de webscraping](/blog/tags) ahora toca el turno a [pyquery](https://pypi.org/project/pyquery/).
 
-Ya la explicación de ubicación de la información que se desea obtener fue explicada en este [artículo (enlace roto)](http://blog.crespo.org.ve/2013/10/webscraping-o-extraccion-de-datos-de.html) artículo.
+Ya la explicación de ubicación de la información que se desea obtener fue explicada en este [artículo](/blog/webscrapingoextracciondedatosdepaginaswebconbeautifulsoup4ypython) artículo.
 
 Pyqueary es una librería que permite hacer consultas de jquery y en documentos xml. 
 

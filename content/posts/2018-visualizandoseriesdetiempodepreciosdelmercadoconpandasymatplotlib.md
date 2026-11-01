@@ -9,7 +9,7 @@ translation: true
 En este artículo la fuente de datos  se usará la librería de Quandl directamente. La idea es obtener los precios de mercado de 3 Aerolineas (Delta con código DAL, Jet Blue con código JBLU y Southwest con código LUV).  Se gráfica  el historico de los precios de cierre, el volumen de ventas y movimientos promedios de estas tres aerolineas.
 
 
-Continuando con los artículos sobre [Pandas (enlace roto)](https://www.seraph.to/tag/pandas.html) y [Ciencia de Datos (enlace roto)](https://www.seraph.to/tag/ciencia-de-datos.html)[Data Science (enlace roto)](https://www.seraph.to/tag/data-science.html), en el artículo [anterior](/blog/comoobtenerdatosfinancierosdequandlconpythonypandas) se mostró como trabajar con Series de tiempo obteniendo datos desde Quandl.
+Continuando con los artículos sobre [Pandas](/blog/tags) y [Ciencia de Datos](/blog/tags)[Data Science](/blog/tags), en el artículo [anterior](/blog/comoobtenerdatosfinancierosdequandlconpythonypandas) se mostró como trabajar con Series de tiempo obteniendo datos desde Quandl.
 
 Este artículo se basa en un artículo en inglés que se títula [Visualizing Time Series Data of Stock Prices](http://byteacademy.co/blog/time-series-python) (en este artículo usan la librería `pandas_datareader`, pero está dando errores, así que se usará la librería `Quandl`).
 

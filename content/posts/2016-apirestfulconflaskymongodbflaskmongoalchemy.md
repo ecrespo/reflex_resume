@@ -5,7 +5,7 @@ Tags: Python,API restful,Flask,MongoDB,Flask-restful,Flask-MongoAlchemy,Docker,D
 lang: es
 translation: true
 
-En artículo [anterior (enlace roto)](https://www.seraph.to/crud-usando-flask-y-mongodb-con-orm-flask-mongoalchemy-parte-4.html) se hizo un CRUD para Flask con MongoDB usando Mongo-Alchemy, en dicho artículo se manejaron varios URL para hacer el CRUD.
+En artículo [anterior](/blog/crudusandoflaskymongodbconormflaskmongoalchemy-4) se hizo un CRUD para Flask con MongoDB usando Mongo-Alchemy, en dicho artículo se manejaron varios URL para hacer el CRUD.
 
 En este artículo se manejará el REST por medio de los URL y con Flask solamente, en próximos artículos se usará Flask-RESTful y Flask-Restless.  
 

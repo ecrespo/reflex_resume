@@ -5,7 +5,7 @@ Tags: Linux,Debian,Ubuntu,Docker,debootstrap
 lang: es
 translation: true
 
-Antes de empezar a tocar el tema sobre crear una imagen Docker a partir de debootstrap de Debian, les dejo el enlace de los [artículos sobre docker del blog (enlace roto)](https://www.seraph.to/tag/docker.html).
+Antes de empezar a tocar el tema sobre crear una imagen Docker a partir de debootstrap de Debian, les dejo el enlace de los [artículos sobre docker del blog](/blog/tags).
 
 Lo primero que se tiene que hacer es instalar `debootstrap`:
 ```

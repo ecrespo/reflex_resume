@@ -5,13 +5,13 @@ Tags: Python,Flask, Docker,
 lang: es  
 translation: true 
 
-Este artículo es la continuación del artículo anterior [Crear datos JSON a partir de un diccionario en Flask (parte 1) (actualización- Docker) (enlace roto)](https://www.seraph.to/crear-datos-json-a-partir-de-un-diccionario-en-flask-parte-1-actualizacion-docker.html).
+Este artículo es la continuación del artículo anterior [Crear datos JSON a partir de un diccionario en Flask (parte 1) (actualización- Docker)](/blog/creardatosjsonapartirdeundiccionarioenflaskactualizaciondocker-1).
 
 Este  artículo se basa del artículo en inglés: [Working with JSON in Python Flask (enlace roto)](http://codehandbook.org/working-with-json-in-python-flask/).
 
 El código fuente de este artículo lo pueden bajar de la [rama json2 en gitlab](https://gitlab.com/ecrespo/tutorial-flask/tree/json2).
 
-Los demás artículos sobre Flask lo pueden ver en enlace de la etiqueta [Flask (enlace roto)](http://blog.crespo.org.ve/search/label/flask).
+Los demás artículos sobre Flask lo pueden ver en enlace de la etiqueta [Flask](/blog/tags).
 
 
 #### Archivos Dockerfile y docker-compose.yml  

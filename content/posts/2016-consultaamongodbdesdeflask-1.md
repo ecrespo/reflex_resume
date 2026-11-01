@@ -9,9 +9,9 @@ En este artículo se usará Docker para construir la imagen que contiene el scri
 
 Para revisar los artículos relacionados a este artículo pueden ver:
 
-- [Artículos sobre Docker (enlace roto)](https://www.seraph.to/tag/docker.html)
-- [Artículos sobre MongoDB (enlace roto)](https://www.seraph.to/tag/mongodb.html)
-- [Artículos sobre Flask (enlace roto)](https://www.seraph.to/tag/flask.html) 
+- [Artículos sobre Docker](/blog/tags)
+- [Artículos sobre MongoDB](/blog/tags)
+- [Artículos sobre Flask](/blog/tags) 
 
 Se tiene una colección empleados en una base de datos empleados  con los siguientes datos:
 ```

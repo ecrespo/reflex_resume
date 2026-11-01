@@ -6,7 +6,7 @@ lang: es
 translation: true  
 
 
-En el primer [artículo (enlace roto)](https://www.seraph.to/api-rest-full-para-python-con-eve-parte-1.html#api-rest-full-para-python-con-eve-parte-1) se tocó el tema del api rest ful con eve de manera sencilla.
+En el primer [artículo](/blog/apirestfullparapythonconeve-1) se tocó el tema del api rest ful con eve de manera sencilla.
 
 En este artículo se toca el uso de mongodb para majejo del api rest con mongodb, el artículo se basa en la guía rápida de eve que se encuentra en su [sitio](https://docs.python-eve.org/en/stable/quickstart.html).
 

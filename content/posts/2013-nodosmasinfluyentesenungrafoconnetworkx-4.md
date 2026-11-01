@@ -5,7 +5,7 @@ Tags: General,Networkx,Python
 lang: es
 translation: true
 
-En la [parte 3 (enlace roto)](https://www.seraph.to/creacion-de-grafos-con-networkx-parte-3.html#creacion-de-grafos-con-networkx-parte-3) de creación de grafos se muestra los tipos de grafos que existen, en la [parte 2 (enlace roto)](http://blog.crespo.org.ve/2013/02/creacion-de-grafos-con-networkx-parte-2.html) se muestra como obtener los datos de un archivo que contiene las relaciones de los personajes de la novela Los miserables y en la [parte 1 (enlace roto)](http://blog.crespo.org.ve/2012/11/creacion-de-grafos-con-networkx-parte-1.html) se muestra la creación de grafos.
+En la [parte 3](/blog/creaciondegrafosconnetworkx-3) de creación de grafos se muestra los tipos de grafos que existen, en la [parte 2](/blog/creaciondegrafosconnetworkx-2) se muestra como obtener los datos de un archivo que contiene las relaciones de los personajes de la novela Los miserables y en la [parte 1](/blog/creaciondegrafosconnetworkx-1) se muestra la creación de grafos.
 
 En este artículo se toma el archivo de la parte 2 para obtener los nodos del grafo más influyentes, los que más se enlazan con otros personajes de la novela. 
 

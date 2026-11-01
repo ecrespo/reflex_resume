@@ -5,7 +5,7 @@ Tags: Canaima,Debian,Python,Ubuntu, pdf scraping
 lang: es
 translation: true
 
-Continuando con los artículos de extracción de información de PDF con Python, en este caso como en los artículos anteriores el pdf ha utilizar es un reporte que tiene Cencoex en su página sobre la asignación de dolares para las empresas del sector salud (extracción de información de PDFs [parte 1 (enlace roto)](https://www.seraph.to/extraccion-de-informacion-de-pdfs-con-python-parte-1.html#extraccion-de-informacion-de-pdfs-con-python-parte-1)  y [parte 2 (enlace roto)](https://www.seraph.to/extraccion-de-informacion-de-pdfs-con-python-parte-2.html#extraccion-de-informacion-de-pdfs-con-python-parte-2)).
+Continuando con los artículos de extracción de información de PDF con Python, en este caso como en los artículos anteriores el pdf ha utilizar es un reporte que tiene Cencoex en su página sobre la asignación de dolares para las empresas del sector salud (extracción de información de PDFs [parte 1](/blog/extracciondeinformaciondepdfsconpython-1)  y [parte 2](/blog/extracciondeinformaciondepdfsconpython-2)).
 
 En la parte 2 se logró extraer la información pero sin un patrón bien definido, en este caso ya se logra ordenar la información y guardar en una base de datos NoSQL como lo es MongoDB.
 

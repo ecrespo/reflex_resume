@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,Linux,Python,Twitter,Ubuntu
 lang: es
 translation: true
 
-Retomando los [artículos sobre librerías de python para acceder a twitter](/blog/twitter), en el último artículo explique como [descubrir trending topic con la librería python-twitter (enlace roto)](http://blog.crespo.org.ve/2013/04/descubriendo-trending-topics-de-twitter.html), ahora le toca el turno a twython.
+Retomando los [artículos sobre librerías de python para acceder a twitter](/blog/twitter), en el último artículo explique como [descubrir trending topic con la librería python-twitter](/blog/descubriendotrendingtopicsdetwitterconpythontwitter), ahora le toca el turno a twython.
 La página del proyecto se encuentra en [github](https://github.com/ryanmcgrath/twython).
 
 Twython soporta lo siguiente:

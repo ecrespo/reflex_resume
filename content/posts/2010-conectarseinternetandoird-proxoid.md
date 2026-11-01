@@ -14,7 +14,7 @@ La guía de instalación general lo pueden conseguir [aquí](http://code.google.
 
 
 1. Lo primero que hay que hacer es bajar el programa proxoid desde el market de Android.
-2. Al tener instalado el programa y tener configurado el udev en Linux y bajar el SDK para usar adb como se explicó en este [artículo (enlace roto)](http://ernesto-ecrespo.blogspot.com/2010/05/comandos-basicos-de-adb-android-debug.html).
+2. Al tener instalado el programa y tener configurado el udev en Linux y bajar el SDK para usar adb como se explicó en este [artículo](/blog/comandosbasicosadb).
 3. Crear el tunel. Se ejecuta adb para reenviar los paquetes, el comando es el siguiente:
 
 ```

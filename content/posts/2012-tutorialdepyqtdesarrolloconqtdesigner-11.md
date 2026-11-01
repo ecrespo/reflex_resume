@@ -5,7 +5,7 @@ Tags: Canaima,General,gnome,Linux,PyQt,Python,Ubuntu
 lang: es
 translation: true
 
-Para repasar los artículos sobre `pyQt` pueden revisar el siguiente [enlace (enlace roto)](https://www.seraph.to/tag/pyqt.html).
+Para repasar los artículos sobre `pyQt` pueden revisar el siguiente [enlace](/blog/tags).
 
 En este caso en vez de escribir todo el código de la intefaz gráfica se usará la herramienta `QtDesigner`.
 

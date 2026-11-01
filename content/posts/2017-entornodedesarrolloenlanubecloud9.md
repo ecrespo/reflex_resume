@@ -7,7 +7,7 @@ translation: true
 
 [Cloud9](http://en.wikipedia.org/wiki/Cloud9_IDE) es un Entorno Integrado de Desarrollo en línea, publicado como OpenSource desde la versión 3.0.
 
-Acá les dejo otros enlaces de artículos sobre [docker (enlace roto)](https://www.seraph.to/tag/docker.html).
+Acá les dejo otros enlaces de artículos sobre [docker](/blog/tags).
 
 La aplicación la pueden acceder en  [c9.io](http://c9.io/) .
 

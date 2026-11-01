@@ -55,9 +55,9 @@ PROFILE_STATS = [
     },
     {
         "label": {"en": "Hand-written commits", "es": "Commits escritos a mano"},
-        "value": {"en": "3,119", "es": "3.119"},
+        "value": {"en": "3,649", "es": "3.649"},
     },
-    {"label": {"en": "Packages on PyPI", "es": "Paquetes en PyPI"}, "value": "35"},
+    {"label": {"en": "Packages on PyPI", "es": "Paquetes en PyPI"}, "value": "40"},
     {"label": {"en": "Certifications", "es": "Certificaciones"}, "value": "178"},
     {"label": {"en": "Notebooks", "es": "Notebooks"}, "value": "104"},
 ]
@@ -76,12 +76,12 @@ PROJECTS = [
         "tags": ["Go", "MCP", "Anthropic SDK", "OpenAI SDK", "SQLite"],
         "facts": [
             {
-                "en": "223 commits in 43 days (September–October 2026)",
-                "es": "223 commits en 43 días (septiembre–octubre de 2026)",
+                "en": "276 commits in 50 days (September–October 2026)",
+                "es": "276 commits en 50 días (septiembre–octubre de 2026)",
             },
             {
-                "en": "117 merge commits: every change lands through a branch",
-                "es": "117 commits de merge: cada cambio entra por una rama",
+                "en": "140 merge commits: every change lands through a branch",
+                "es": "140 commits de merge: cada cambio entra por una rama",
             },
             {
                 "en": "Speaks MCP and both the Anthropic and OpenAI SDKs",
@@ -145,8 +145,8 @@ PROJECTS = [
         "tags": ["TypeScript", "React", "Angular", "D3", "MCP", "Reflex"],
         "facts": [
             {
-                "en": "187 commits in 40 days (September–October 2026)",
-                "es": "187 commits en 40 días (septiembre–octubre de 2026)",
+                "en": "242 commits in 50 days (September–November 2026)",
+                "es": "242 commits en 50 días (septiembre–noviembre de 2026)",
             },
             {
                 "en": "An MCP server documents every chart and component for AI assistants",
@@ -213,7 +213,7 @@ PROJECTS = [
 # --------------------------------------------------------------------------- #
 
 _MONTHLY = {
-    "Umbral": [0] * 32 + [99, 124],
+    "Umbral": [0] * 32 + [99, 177],
     "Prismal AI": [0] * 25 + [92, 119, 52, 59, 102, 44, 0, 0, 76],
     "Vigia EEW": [0] * 29 + [7, 40, 0, 64, 6],
     "LangChain": [0, 0, 8] + [0] * 15 + [1] + [0] * 7 + [6, 2] + [0] * 6,

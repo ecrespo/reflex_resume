@@ -7,9 +7,9 @@ translation: true
 
 En Diciembre se  publicó un [artículo](/blog/resoluciondesistemasdeecuacionesconnumpy) donde se explica como resolver sistemas de ecuaciones.
 
-Este artículo se basa de un artículo en Inglés [QR descomposition with numpy ](glowingpython.blogspot.com/2011/05/qr-decomposition-with-numpy.html).
+Este artículo se basa de un artículo en Inglés [QR descomposition with numpy ](https://glowingpython.blogspot.com/2011/05/qr-decomposition-with-numpy.html).
 
-Si se desea averiguar más sobre la descomposición QR se puede consultar a la página de [wikipedia](es.wikipedia.org/wiki/Descomposici%C3%B3n_QR) ó de la siguiente [página](rkb.home.cern.ch/rkb/AN16pp/node224.html#SECTION0002240000000000000000).
+Si se desea averiguar más sobre la descomposición QR se puede consultar a la página de [wikipedia](https://es.wikipedia.org/wiki/Descomposici%C3%B3n_QR) ó de la siguiente [página](https://rkb.home.cern.ch/rkb/AN16pp/node224.html#SECTION0002240000000000000000).
 
 Las ecuaciones que se usaron son:
 ```

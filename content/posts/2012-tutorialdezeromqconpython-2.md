@@ -5,7 +5,7 @@ Tags:  Canaima,Debian,General,Linux,Python,ZeroMQ
 lang: es
 translation: true
 
-Continuando con los artículos sobre [ZeroMQ (enlace roto)](https://www.seraph.to/tutorial-de-zeromq-con-python-parte-1.html#tutorial-de-zeromq-con-python-parte-1), en esta ocasión se muestra el uso del patrón de mensaje PAR (comunicación entre compañeros exclusivamente).
+Continuando con los artículos sobre [ZeroMQ](/blog/tutorialdezeromqconpython-1), en esta ocasión se muestra el uso del patrón de mensaje PAR (comunicación entre compañeros exclusivamente).
 
 Los artículos se basan en el artículo de Nicholas Piël, [una Introducción a ZeroMQ (enlace roto)](http://nichol.as/zeromq-an-introduction).
 

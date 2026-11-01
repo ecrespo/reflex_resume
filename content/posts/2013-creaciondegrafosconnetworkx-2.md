@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,matplotlib,Python,Ubuntu
 lang: es
 translation: true
 
-El [primer artículo sobre networkx (enlace roto)](https://www.seraph.to/creacion-de-grafos-con-networkx-parte-1.html#creacion-de-grafos-con-networkx-parte-1)  mostraba como crear los nodos y los enlaces de las redes (relación de Estados y Ciudades de Venezuela).
+El [primer artículo sobre networkx](/blog/creaciondegrafosconnetworkx-1)  mostraba como crear los nodos y los enlaces de las redes (relación de Estados y Ciudades de Venezuela).
 
 En este artículo se basa en un artículo del sitio "The Glowing Python[The Glowing Python](https://glowingpython.blogspot.com/)", este artículo se llama Primeros pasos con Networkx (en inglés). Este artículo usa como ejemplo las relaciones de los personajes de la novela Los Miserables. Usa un archivo con extensión gml que maneja las relaciones de los personajes, el archivo lo pueden descargar de [aquí (enlace roto)](https://gephi.org/datasets/lesmiserables.gml.zip).
 
@@ -168,7 +168,7 @@ plt.show()
 A continuación se muestra el grafo con los personajes más relevantes de la novela Los Miserables:
 
 ![](./images/creaciondegrafosconnetworkx2-3.png) 
-[Enhanced by Zemanta](www.zemanta.com/?px) 
+[Enhanced by Zemanta](https://www.zemanta.com/?px) 
 
 ##  ##
 ¡Haz tu donativo!

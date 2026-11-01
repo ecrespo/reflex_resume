@@ -9,7 +9,7 @@ Este artículo es gracias al código desarrollado por William Cabrera, donde en 
 
 Gracias William por esta herramienta de información que es el Canal en Telegram.
 
-Se usará [mechanize (enlace roto)](https://www.seraph.to/tag/mechanize.html) y [BeautifulSoup (enlace roto)](https://www.seraph.to/tag/beautifulsoup.html) para obtener la información del sitio de funvisis por medio de [WebScraping (enlace roto)](https://www.seraph.to/tag/webscraping.html).  La información que se quiere obtener se muestra en un recuadro en la siguiente figura:
+Se usará [mechanize](/blog/tags) y [BeautifulSoup](/blog/tags) para obtener la información del sitio de funvisis por medio de [WebScraping](/blog/tags).  La información que se quiere obtener se muestra en un recuadro en la siguiente figura:
 
 ![](./images/obtenerdatosdeeventossismologicosdefunvisisconpython-1.png)
 

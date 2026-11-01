@@ -5,7 +5,7 @@ Tags: Python,Debian,Linux,Ubuntu,GraphQL,Flask,Flask-graphql
 lang: es
 translation: true
 
-Continuando con los artículos sobre [Flask (enlace roto)](https://www.seraph.to/tag/flask.html), donde el último artículo fue de como [crear un API Restful con Flask y MongoDB (enlace roto)](https://www.seraph.to/api-rest-ful-con-flask-y-mongodb-flask-mongoalchemy-y-flask-restful.html) .
+Continuando con los artículos sobre [Flask](/blog/tags), donde el último artículo fue de como [crear un API Restful con Flask y MongoDB](/blog/apirestfulconflaskymongodb) .
 
 En este artículo se toca el uso de GraphQL para crear un API. GraphQL es un lenguaje de consulta de datos desarrollado por Facebook, es una alternativa a Rest (más información en [wikipedia](https://en.wikipedia.org/wiki/GraphQL)).
 

@@ -5,7 +5,7 @@ Tags: Linux,Debian, Ubuntu, Canaima,mercurial
 lang: es
 translation: true
 
-Se tienen varios artículos sobre mercurial en este blog, un [tutorial de mercurial (enlace roto)](https://www.seraph.to/control-de-versiones-con-mercurial.html) (viene una actualización), [como empaquetar para Debian con mercurial (enlace roto)](https://www.seraph.to/manteniendo-un-paquete-debian-con-mercurial.html) (viene una actualización) y el último [como gestionar la configuración con mercurial (enlace roto)](https://www.seraph.to/gestionar-los-archivos-de-configuracion-en-etc-con-etckeeper-y-mercurial.html).
+Se tienen varios artículos sobre mercurial en este blog, un [tutorial de mercurial](/blog/cvmercurial) (viene una actualización), [como empaquetar para Debian con mercurial](/blog/paquetedebianconmercurial) (viene una actualización) y el último [como gestionar la configuración con mercurial](/blog/linux-etckeeper).
 
 Este artículo explicará como compartir repositorios de Mercurial con mercurial-server, este artículo se basa en el [tutorial en inglés (enlace roto)](http://dev.lshift.net/paul/mercurial-server/docbook.html).
 

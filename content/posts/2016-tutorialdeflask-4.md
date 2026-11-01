@@ -11,11 +11,11 @@ Este artículo se basa en el artículo en Inglés de [The Flask Mega tutorial, P
 
 Los artículos anteriores son:
 
-1. [Tutorial de Flask parte 1. (enlace roto)](https://www.seraph.to/tutorial-de-flask-parte-1.html#tutorial-de-flask-parte-1)
+1. [Tutorial de Flask parte 1.](/blog/tutorialdeflask-1)
 
-2. [Tutorial de Flask parte 2 (plantilla html). (enlace roto)](https://www.seraph.to/tutorial-de-flask-parte-2-plantillas-html.html#tutorial-de-flask-parte-2-plantillas-html)
+2. [Tutorial de Flask parte 2 (plantilla html).](/blog/tutorialdeflask-2)
 
-3. [Tutorial de Flask parte 3 (formulario web). (enlace roto)](https://www.seraph.to/tutorial-de-flask-parte-3-formulario-web.html#tutorial-de-flask-parte-3-formulario-web)
+3. [Tutorial de Flask parte 3 (formulario web).](/blog/tutorialdeflask-3)
 
 
 ```
@@ -482,7 +482,7 @@ Ahora se agregarán unos posts:
 >>> p = models.Post(cuerpo='mi primer post!', timestamp=datetime.datetime.utcnow(), author=u)            
 >>> db.session.add(p)                               
 >>> db.session.commit()
-```python
+```
 
 
 Se sale del interprete de comandos.

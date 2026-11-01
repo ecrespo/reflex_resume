@@ -5,7 +5,7 @@ Tags: Canaima,Debian,Linux,Python,Ubuntu,Webscraping,Mechanize,Beautiful Soup
 lang: es
 translation: true
 
-Ahora se utilizará a [Python Mechanize (enlace roto)](https://www.seraph.to/emulando-la-navegacion-en-python-con-mechanize-parte-1.html)  con [BeautifulSoup4](/blog/unaintroduccionabeautifulsoup4enpython) para extraer la información de la salida y ocultamiento del sol en Venezuela con un breve cambio para mostrar el dinamismo que se le puede dar a la extracción de datos de una página web.
+Ahora se utilizará a [Python Mechanize](/blog/emulandolanavegacionenpythonconmechanize-1)  con [BeautifulSoup4](/blog/unaintroduccionabeautifulsoup4enpython) para extraer la información de la salida y ocultamiento del sol en Venezuela con un breve cambio para mostrar el dinamismo que se le puede dar a la extracción de datos de una página web.
 
 En este caso se extraerá información del mismo sitio [timeanddate](https://www.timeanddate.com/astronomy/venezuela/caracas), la diferencia es que en vez de sólo pasarle el código de Venezuela (58), se le pasará el mes y el año.
 

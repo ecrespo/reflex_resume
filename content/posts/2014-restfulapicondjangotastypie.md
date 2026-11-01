@@ -5,7 +5,7 @@ Tags: Canaima,Debian,General,Python,Ubuntu,Django
 lang: es  
 translation: true  
 
-[Siguiendo con la serie de artículos sobre django (enlace roto)](https://www.seraph.to/tag/django.html), ahora se  mostrará como crear un API restful con django tastypie, su documentación la pueden encontrar [acá](https://django-tastypie.readthedocs.io/en/latest/tutorial.html).
+[Siguiendo con la serie de artículos sobre django](/blog/tags), ahora se  mostrará como crear un API restful con django tastypie, su documentación la pueden encontrar [acá](https://django-tastypie.readthedocs.io/en/latest/tutorial.html).
 
 En el caso de Debian/Ubuntu y otras distribuciones basadas se instalarán los siguientes programas:
 

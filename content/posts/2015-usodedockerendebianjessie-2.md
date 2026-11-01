@@ -7,8 +7,8 @@ translation: true
 
 Los artículos anteriores sobre docker son:
 
-1. [Instalar Docker en Debian Jessie (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html#uso-de-docker-en-debian-jessie-parte-1)
-2. [Uso de Docker en Debian Jessie (parte 1). (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html#uso-de-docker-en-debian-jessie-parte-1)
+1. [Instalar Docker en Debian Jessie](/blog/usodedockerendebianjessie-1)
+2. [Uso de Docker en Debian Jessie (parte 1).](/blog/usodedockerendebianjessie-1)
 
 En este artículo se explicará como mantener ejecutando una instancia, como iniciar las instancias automáticamente, acceder a los servicios que se ejecutan en el contenedor y ejecutar la imagen desde diferentes máquinas al registrar el contenedor.
 

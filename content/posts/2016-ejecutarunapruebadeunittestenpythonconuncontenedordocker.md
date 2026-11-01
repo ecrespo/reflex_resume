@@ -12,9 +12,9 @@ La parte de pruebas unitarias se basa de un post anterior que se llama [Pruebas 
 Los artículos anteriores sobre docker son:  
 1. [Instalar Docker en Debian Jessie (enlace roto)](/blog/instalardockerendebianjessie)  
 
-2. [Uso de Docker en Debian Jessie (parte 1) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-1.html)  
+2. [Uso de Docker en Debian Jessie (parte 1)](/blog/usodedockerendebianjessie-1)  
 
-3. [Uso de Docker en Debian Jessie (parte 2) (enlace roto)](https://www.seraph.to/uso-de-docker-en-debian-jessie-parte-2.html)  
+3. [Uso de Docker en Debian Jessie (parte 2)](/blog/usodedockerendebianjessie-2)  
 
 4. [Crear una imagen Docker a partir de un archivo Dockerfile (enlace roto)](/blog/crearunaimagendockerapartirdeunarchivodockerfile)  
 
@@ -36,7 +36,7 @@ Los artículos anteriores sobre docker son:
 
 13. [Usar Anaconda desde un contenedor Docker. (enlace roto)](/blog/usaranacondadesdeuncontenedordocker)  
 
-14. [Crear un entorno de Integración y Despligue continue con Docker para node.js. (enlace roto)](https://www.seraph.to/crear-un-entorno-de-integracion-y-despligue-continue-con-docker-para-nodejs.html#crear-un-entorno-de-integracion-y-despligue-continue-con-docker-para-nodejs)  
+14. [Crear un entorno de Integración y Despligue continue con Docker para node.js.](/blog/crearunentornodeintegracionydespliguecontinuocondockerparanodejs)  
 
 15. [Usar Jupyter Notebook desde un contenedor Docker. (enlace roto)](/blog/usarjupyternotebookdesdeuncontenedordedocker)  
 
@@ -50,7 +50,7 @@ pruebas-doctest
 ├── raizcuadrada_test.py
 └── raizcuadrada.txt
 ```
-El Dockerfile, `raizcuadrada.py` y `raizcuadrada.txt` son los mismos del artículo [anterior (enlace roto)](http://blog.crespo.org.ve/2016/03/ejecutar-una-prueba-de-doctest-con-un.html).
+El Dockerfile, `raizcuadrada.py` y `raizcuadrada.txt` son los mismos del artículo [anterior](/blog/ejecutarunapruebadedoctestconuncontenedordocker).
 
 El archivo `raizcuadrada_test.py` tiene lo siguiente:
 ```python

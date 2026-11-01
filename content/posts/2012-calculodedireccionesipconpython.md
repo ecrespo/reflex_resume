@@ -9,7 +9,7 @@ Recuerdo cuando vi la materia de redes de computadoras que a uno le tocaba calcu
 
 Para python existe una librería que permite realizar los cálculos para definir una red, un segmento de red, o reconocer cuando una IP es de un segmento de red dado.
 
-La librería se llama `ipcalc`, se puede ver la descripción y un ejemplo en el siguiente [enlace](pypi.python.org/pypi/ipcalc/).
+La librería se llama `ipcalc`, se puede ver la descripción y un ejemplo en el siguiente [enlace](https://pypi.python.org/pypi/ipcalc/).
 
 Para instalarlo desde la paqueteria de python se puede usar `pip` o `easy_install`:  
 

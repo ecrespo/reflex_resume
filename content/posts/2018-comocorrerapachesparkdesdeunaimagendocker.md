@@ -6,7 +6,7 @@ lang: es
 translation: true 
 
 
-En este artículo se explicará la ejecución de Apache Spark usando un contenedor [Docker (enlace roto)](https://blog.crespo.org.ve/search/label/Docker), en vez de usar el procedimiento de [instalación de Spark](https://spark.apache.org/downloads.html) (instalar java, scala y spark).
+En este artículo se explicará la ejecución de Apache Spark usando un contenedor [Docker](/blog/tags), en vez de usar el procedimiento de [instalación de Spark](https://spark.apache.org/downloads.html) (instalar java, scala y spark).
 
 Apache Spark proporciona una interfaz para la programación de clusters completos con paralelismos de Datos implicito y tolerancia a fallos. Tiene la base de su arquitectura en el llamado RDD (Resilient Distributed Dataset, set de sólo lectura de datos distribuídos a lo largo de un cluster de máquinas que se mantiene en un entorno tolerante a fallos).
 

@@ -11,9 +11,9 @@ Summary: Conozca como usar la verificación del tipado estático y las mejores p
 
 Artículos anteriores se tocó el tema de uso de dataclass, pydantic y orjson y como usar el tipado, en este artículo se explicará las mejores prácticas:
 
-* [Dataclases en Python (enlace roto)](https://www.seraph.to/python_dataclass.html#python_dataclass)
-* [Validación de datos con Pydantic (enlace roto)](https://www.seraph.to/python_pydantic.html#python_pydantic)
-* [Introducción a orjson (enlace roto)](https://www.seraph.to/python_orjson.html#python_orjson)
+* [Dataclases en Python](/blog/python_dataclass)
+* [Validación de datos con Pydantic](/blog/python_pydantic)
+* [Introducción a orjson](/blog/python_orjson)
 
 La verificación de tipos aparte de ayudar a entender mejor el código facilita la detección de errores rapidamente y automáticamente usando por ejemplo mypy. La verificación de tipos se incorporó en Python desde la versión 3.5. 
 

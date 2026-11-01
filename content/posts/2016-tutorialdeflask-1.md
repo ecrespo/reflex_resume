@@ -9,13 +9,13 @@ Ya he escrito algunos artículos sobre flask:
 
 1. [Micro Framework de desarrollo web Flask](/blog/microframeworkdedesarrollowebflask)
 
-2. [Micro framework flask (parte 2) (enlace roto)](https://www.seraph.to/micro-framework-flask-parte-2.html#micro-framework-flask-parte-2)
+2. [Micro framework flask (parte 2)](/blog/microframeworkflask-2)
 
 3. [Configurando un sitio estático con flask](/blog/configurandounsitioestaticoconflask)
 
 4. [Ejecutando microsservicios con docker usando docker-compose](/blog/ejecutandomicrosservicioscondockerusandodockercompose)
 
-5. [Crear datos JSON a partir de un diccionario en Flask (parte 1) (enlace roto)](https://www.seraph.to/crear-datos-json-a-partir-de-un-diccionario-en-flask-parte-1-actualizacion-docker.html#crear-datos-json-a-partir-de-un-diccionario-en-flask-parte-1-actualizacion-docker) 
+5. [Crear datos JSON a partir de un diccionario en Flask (parte 1)](/blog/creardatosjsonapartirdeundiccionarioenflaskactualizaciondocker-1) 
 
 La idea es ir generando una secuencia de artículos basados en los artículos de [Flask by Example](https://realpython.com/blog/python/flask-by-example-part-1-project-setup/) y los artículos de [Flask mega tutorial de Miguel Grinberg](https://blog.miguelgrinberg.com/post/the-flask-mega-tutorial-part-i-hello-world). Ambos tutoriales en inglés como primer artículo usan virtualenv con pip, en el caso de esta serie se usará Docker.
 

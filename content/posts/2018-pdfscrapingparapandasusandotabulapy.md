@@ -7,7 +7,7 @@ translation: true
 
 Hace un tiempo quería hacer pruebas de extracción de datos de PDF que publica la Administración Pública en Venezuela, ya que el concepto de Datos Abiertos no está muy claro por acá, lo más que se logra son documentos en PDF donde pegan gráficas y tablas como capturas de pantalla.
 
-[Artículos sobre webscraping. (enlace roto)](https://www.seraph.to/tag/pdf-scraping.html)
+[Artículos sobre webscraping.](/blog/tags)
 
 Por cierto, existe un evento del día de los datos abiertos. Ese día fue el 3 de Marzo en este año. si le dan click al [mapa](https://opendataday.org/es_es/#map), aparece la lista de eventos de ese día por países.
 
@@ -32,7 +32,7 @@ Iniciativas de sitios de Datos Abiertos.
 
 <iframe width="560" height="315" src="https://www.youtube.com/embed/oh3g-iYAaDo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-Que tal que pueda hacer un scrapping y de una usar [Pandas (enlace roto)](https://www.seraph.to/tag/pandas.html) ([Introducción a pandas](/blog/introduccionapandas)) para Ciencia de Datos.
+Que tal que pueda hacer un scrapping y de una usar [Pandas](/blog/tags) ([Introducción a pandas](/blog/introduccionapandas)) para Ciencia de Datos.
 
 Existe una librería para Python llamada [tabula-py](https://github.com/chezou/tabula-py/tree/master/examples), en el github de tabula-py se encuentra un archivo llamado [data.pdf](https://github.com/chezou/tabula-py/blob/master/examples/data.pdf), ese será el archivo pdf que se va a extraer la información.
 

@@ -9,7 +9,7 @@ Se probará con un simple script como obtener metadatos EXIF de dos imágenes, s
 
 La idea es notar la diferencia de información que se obtiene de los metadatos de dos fotos idénticas para obtenidas de dos formas diferentes.
 
-Lo primero que se tiene que hacer es instalar el módulo python llamado `pyexiv2`. Su documentación la pueden encontrar [aquí](tilloy.net/dev/pyexiv2/index.html).
+Lo primero que se tiene que hacer es instalar el módulo python llamado `pyexiv2`. Su documentación la pueden encontrar [aquí](https://tilloy.net/dev/pyexiv2/index.html).
 Se puede instalar en Debian wheezy de la siguiente forma:
 ```
 #apt-get install python-pyexiv2 python-pyexiv2-doc
