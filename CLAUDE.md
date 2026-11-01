@@ -73,7 +73,7 @@ API_URL=http://localhost:8000 uv run reflex run   # …wired to the LOCAL backen
 uv run reflex export --frontend-only   # static frontend -> frontend.zip
 
 bash build_local.sh              # local static build into public/ (uv sync --frozen + reflex export)
-uv run python web/blog/rss.py    # regenerate assets/feed.xml (Atom) from content/posts — run from repo root
+uv run python web/blog/rss.py    # regenerate assets/feed.xml (English) and assets/es/feed.xml (Spanish) — run from repo root
 uv run python utils/validate_links.py  # REWRITES old-blog links (Pelican www.seraph.to/<title>.html, ecrespo.github.io, Blogger blog.crespo.org.ve/YYYY/MM/…) to /blog/<slug>, fixes scheme-less links and image paths; --check reports only (exit 1), --external also curl-checks external links
 uv run python utils/fetch_certificates.py  # downloads missing certificate images into assets/certificates/
 
@@ -111,7 +111,7 @@ Note: `uv.lock` is the only lockfile — both build scripts, CI and the Dockerfi
   - `blog.py` builds `blog_post_routes` — one statically generated page per post via closures (the Reflex official blog pattern). Adding/renaming a post requires restarting the app / re-exporting.
   - `archives.py`, `categories.py`, `tags.py` are index pages; `states/blog_state.py` handles list pagination.
   - Post markdown image refs `./images/x.png` are rewritten to `/blog/images/x.png`, served from `assets/blog/images/`. `content/images/` mirrors those images.
-  - `rss.py` is a standalone script, not wired into the app; the navbar links to `/feed.xml`. Every URL in the feed is under `https://www.seraph.to` (`SITE`): the blog moved off `blog.seraph.to`, whose post paths now answer 404. The feed carries the Spanish originals, so the alternate and entry links point at `/es/blog/…`; entry ids stay `{SITE}/blog/<slug>` so readers do not see duplicates.
+  - `rss.py` is a standalone script, not wired into the app: it writes one Atom feed per language, `assets/feed.xml` (English, the `/blog` pages) and `assets/es/feed.xml` (Spanish, `/es/blog`). Every URL is under `https://www.seraph.to` (`SITE`): the blog moved off `blog.seraph.to`, whose post paths now answer 404. Entry ids are the post's page in that language (the English ids are the ones the single feed always had). The blog navbar's "Atom" link points to the page's feed with `reload_document=True`: in this Reflex version `rx.el.a` is a React Router `Link`, and without it a click looks for a route and shows the 404 page.
   - `blog.md` (Spanish) is the full guide for adding a post.
-  - Navigation: "Blog" is an entry of `navbar.NAV_ITEMS`; blog pages use `navbar.blog_navbar(lang, active=...)` — the same entries ("Blog" underlined) plus Archives / Categories / Tags / Atom. Posts without an `Authors:` line show "Ernesto Crespo"; a leading `# Title` equal to the post title is dropped (`blog.post_body`).
+  - Navigation: "Blog" is an entry of `navbar.NAV_ITEMS`; blog pages use `navbar.blog_navbar(lang, active=...)` — the same entries ("Blog" underlined) plus Archives / Categories / Tags / Atom (the feed in the page's language). Posts without an `Authors:` line show "Ernesto Crespo"; a leading `# Title` equal to the post title is dropped (`blog.post_body`).
 - `.web/`, `.states/`, `public/` are generated.

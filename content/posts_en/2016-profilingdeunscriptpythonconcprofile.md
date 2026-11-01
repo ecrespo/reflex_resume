@@ -3,6 +3,7 @@ Date: 2016-06-13 12:00
 Category: Tutorial Python
 Tags: Python,Profiling,cProfile
 lang: en  
+Slug: profilingdeunscriptpythonconcprofile-2016
 translation: true  
   
 A while ago I covered profiling tools for Python ([see link](/blog/tags)).
