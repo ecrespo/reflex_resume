@@ -1,5 +1,6 @@
 import reflex as rx
 import reflex_google_analytics_reactjs as rga
+import reflex_vercel_analytics as rva
 from reflex_silverpoint_react import sp_button
 
 from web.blog.archives import archives_page
@@ -362,6 +363,11 @@ app.extra_app_wraps[(10, "SilverpointProvider")] = lambda _stateful: themed()
 # GOOGLE_ANALYTICS_MEASUREMENT_ID environment variable at export time, and
 # without it the component stays disabled.
 rga.install(app)
+
+# Vercel Web Analytics, mounted once above the pages: one page view per
+# navigation, reported with its route. Settings live in `vercel_analytics.toml`;
+# under `reflex run` it loads Vercel's debug script and sends nothing.
+rva.install(app)
 
 # Every page in both languages: English at its route, Spanish under `/es`.
 # (route, page function, English title, Spanish title); an empty title is the site's.
