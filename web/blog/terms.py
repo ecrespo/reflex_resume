@@ -34,6 +34,7 @@ CATEGORIES_EN = {
     "Tutorial Python": "Python tutorial",
     "Tutorial Python en Android": "Python on Android tutorial",
     "Tutorial Python y Linux": "Python and Linux tutorial",
+    "Tutorial Silverpoint": "Silverpoint tutorial",
     "Tutorial de Arduino": "Arduino tutorial",
     "Tutorial de Data Science": "Data science tutorial",
     "Tutorial de Docker": "Docker tutorial",
