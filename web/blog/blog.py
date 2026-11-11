@@ -17,6 +17,8 @@ SITE = "https://www.seraph.to"
 # The preview image of a post that has no image of its own.
 DEFAULT_PREVIEW_IMAGE = f"{SITE}/ec.jpg"
 FIRST_IMAGE = re.compile(r"!\[[^\]]*\]\(\s*\./images/([^)\s]+)")
+# Markdown links to another blog page, e.g. `](/blog/<slug>)`.
+BLOG_LINK = re.compile(r"\]\(\s*(/blog(?:/[^)\s]*)?)")
 META_SEPARATOR = "text-[#5C7B71] mx-2"
 
 
@@ -114,10 +116,12 @@ def blog_list_page(lang: str = "en") -> rx.Component:
     )
 
 
-def post_body(post_data: dict) -> str:
-    """The post's markdown, with image paths served from assets and without a leading
-    `# Title` that repeats the page heading."""
+def post_body(post_data: dict, lang: str = "en") -> str:
+    """The post's markdown, with image paths served from assets, links to other blog
+    pages in the page's language and without a leading `# Title` that repeats the page
+    heading."""
     body = post_data["content"].replace("./images/", "/blog/images/").lstrip()
+    body = BLOG_LINK.sub(lambda m: "](" + localize(m[1], lang), body)
     first, _, rest = body.partition("\n")
     if first.startswith("# ") and first[2:].strip().lower() == post_data["title"].strip().lower():
         body = rest.lstrip()
@@ -162,7 +166,7 @@ def create_post_page(post_data: dict, lang: str = "en") -> rx.Component:
                 # Content
                 rx.el.article(
                     rx.markdown(
-                        post_body(post_data),
+                        post_body(post_data, lang),
                         class_name="prose prose-lg max-w-none",
                     ),
                     # Spanish when the post has no English translation yet.
