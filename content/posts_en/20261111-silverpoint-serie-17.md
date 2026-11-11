@@ -559,7 +559,7 @@ app.add_page(index)
 
 The rows are written as tuples and turned into dictionaries with `FIELDS`. `sort_rows` sorts the same way as `uiSortRows`, so the table looks the same as in the other three frameworks.
 
-The trigger is an `rx.el.button`. The documentation allows a string, `trigger="Acknowledge an incident"`, which becomes a button drawn with `sp_trigger`; in the test, with Reflex 0.10.1 and `reflex-silverpoint-react` 0.9.1, the page failed with `SilverpointTrigger is not defined`, as it did with an explicit `sp_trigger`.
+The trigger is an `rx.el.button`. The documentation allows a string, `trigger="Acknowledge an incident"`, which becomes a button drawn with `sp_trigger`. But with Reflex 0.10.1 and `reflex-silverpoint-react` 0.9.1 that fails when the overlay is controlled from state, as here with `open` and `on_open_change`: the page breaks with `SilverpointTrigger is not defined`, as it does with an explicit `sp_trigger`. Reflex compiles the modal into a separate module that does not get the trigger's definition. An overlay without state takes the string with no problem. It is a [known bug](https://github.com/ecrespo/reflex-silverpoint-react/issues/44) that will be fixed in the package's next version; until then, an `rx.el.button` works in both cases.
 
 ## The keyboard
 
@@ -586,7 +586,7 @@ With them you complete an incident's detail: `SpDescriptions` for its fields, `S
 
 * **The table does not sort when the header is pressed.** That is expected: sort in `onSort` and pass it `sortKey` and `sortOrder`.
 * **The cells come out aligned to the right.** It is the `.sp-table td` rule in `styles.css` in 0.9.2. Add `.sp-ui-table td:not([data-align]) { text-align: start; }`.
-* **In Reflex, `SilverpointTrigger is not defined`.** The trigger is a string or an `sp_trigger`. Use `rx.el.button`.
+* **In Reflex, `SilverpointTrigger is not defined`.** The overlay is controlled from state and its trigger is a string or an `sp_trigger`. Use `rx.el.button` until the package's next version, which fixes it.
 * **The select's label is not shown.** `label` is the accessible name and is not drawn, as in `SpTextarea`.
 
 ## What's next
