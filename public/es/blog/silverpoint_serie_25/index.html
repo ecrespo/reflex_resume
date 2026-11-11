@@ -1,0 +1,866 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/silverpoint-serie-25.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="preload"/><title>Blog | Silverpoint, artículo 25: proyecto final en Angular, el panel de operaciones de principio a fin</title><meta content="El panel de operaciones completo en Angular 22 con silverpoint: tres páginas con el router, componentes standalone y signals, datos en vivo, paneles enlazados, exportación a SVG, una tabla de incidencias con modal y aviso, un formulario de alertas y un tema que cambia toda la aplicación desde el proveedor." name="description"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-25.png" property="og:image"/><meta content="article" property="og:type"/><meta content="Ernesto Crespo" property="og:site_name"/><meta content="Silverpoint, artículo 25: proyecto final en Angular, el panel de operaciones de principio a fin" property="og:title"/><meta content="https://www.seraph.to/es/blog/silverpoint_serie_25" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="Silverpoint, artículo 25: proyecto final en Angular, el panel de operaciones de principio a fin" name="twitter:title"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-25.png" name="twitter:image"/><meta content="El panel de operaciones completo en Angular 22 con silverpoint: tres páginas con el router, componentes standalone y signals, datos en vivo, paneles enlazados, exportación a SVG, una tabla de incidencias con modal y aviso, un formulario de alertas y un tema que cambia toda la aplicación desde el proveedor." property="og:description"/><meta content="El panel de operaciones completo en Angular 22 con silverpoint: tres páginas con el router, componentes standalone y signals, datos en vivo, paneles enlazados, exportación a SVG, una tabla de incidencias con modal y aviso, un formulario de alertas y un tema que cambia toda la aplicación desde el proveedor." name="twitter:description"/><link rel="modulepreload" href="/assets/manifest-01a3b3b4.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-BNrRPRpZ.js"/><link rel="modulepreload" href="/assets/createLucideIcon-b25sFGBl.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-Ddn1zX93.js"/><link rel="modulepreload" href="/assets/_es_._blog_._silverpoint_serie_25_._index-DgFYTOzl.js"/><link rel="modulepreload" href="/assets/rss-C7JOVRFB.js"/><link rel="modulepreload" href="/assets/one-dark-DBSD_jcZ.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || 'light';
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            body, .radix-themes {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --default-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --heading-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+            }
+            /* TimelineJS sets its own sans fonts; icons keep the tl-icons font. */
+            .tl-timeline :is(h1, h2, h3, h4, h5, h6, p, a, span, div, blockquote):not([class*="tl-icon"]),
+            .sp-timeline .tl-timeline h3.tl-headline-date {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif !important;
+            }
+            /* silverpoint's skin sets its display font on the slide arrows too,
+               which turns the tl-icons glyphs into empty boxes. */
+            .sp-timeline .tl-timeline div.tl-slidenav-icon {
+                font-family: 'tl-icons' !important;
+            }
+            /* silverpoint 0.8.0: the charts' screen-reader table and SpTable's
+               wrapper share the class `sp-table`, whose `th, td { text-align: right }`
+               then right-aligns every SpTable cell and defeats `align: "start"`. */
+            .sp-ui-table :is(th, td):not([data-align='end'], [data-align='center']) {
+                text-align: start;
+            }
+            /* Tags keep their hand-drawn frame but drop the hatched tone. */
+            .sp-tag > [part="sp-tone"] {
+                display: none;
+            }
+            /* Blog posts (`.post-content`): the site's inks on the cream page,
+               EB Garamond for prose, a monospace only for code. rx.markdown renders
+               Radix Themes elements (rt-Text, rt-Link, rt-Code) and the code
+               highlighter writes its colours inline, hence the specificity and the
+               few !important. Inks: theme.SITE_PALETTE. */
+            .post-content {
+                --post-ink: #1F3D36;
+                --post-muted: #3E6A5E;
+                --post-accent: #2F6F86;
+                --post-green: #2C6355;
+                --post-rule: #5C7B71;
+                --post-mint: #DFF1EC;
+                --post-paper: #FBF8EF;
+                color: var(--post-ink);
+                font-size: 1.125rem;
+                line-height: 1.75;
+                overflow-wrap: anywhere;
+            }
+            .post-content .prose {
+                max-width: none;
+            }
+            .post-content :is(h1, h2, h3, h4, h5, h6) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                color: var(--post-ink);
+                line-height: 1.25;
+                letter-spacing: normal;
+            }
+            .post-content h1 { font-size: 1.875rem; font-weight: 700; margin: 2.25rem 0 1rem; }
+            .post-content h2 {
+                font-size: 1.5rem; font-weight: 600; margin: 2rem 0 0.75rem;
+                padding-bottom: 0.35rem; border-bottom: 1px solid rgba(92, 123, 113, 0.35);
+            }
+            .post-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+            .post-content :is(h4, h5, h6) {
+                font-size: 1.1rem; font-weight: 600; font-style: italic; margin: 1.25rem 0 0.5rem;
+            }
+            .post-content :is(p, li, td, th, .rt-Text) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                font-size: 1.125rem;
+                line-height: 1.75;
+                color: var(--post-ink);
+            }
+            .post-content p { margin: 0 0 1.1rem; }
+            .post-content :is(strong, b) { font-weight: 600; color: var(--post-ink); }
+            .post-content :is(a, .rt-Link) {
+                color: var(--post-accent);
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+                text-decoration-color: rgba(47, 111, 134, 0.45);
+                transition: color 0.15s, text-decoration-color 0.15s;
+            }
+            .post-content :is(a, .rt-Link):hover {
+                color: var(--post-green);
+                text-decoration-color: currentColor;
+            }
+            .post-content :is(ul, ol) { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+            .post-content ul { list-style: disc; }
+            .post-content ol { list-style: decimal; }
+            .post-content li { margin: 0.3rem 0; padding-left: 0.25rem; }
+            .post-content li::marker { color: var(--post-green); }
+            .post-content li > :is(p, .rt-Text) { margin: 0; }
+            /* Inline code: a mint chip in the ink, without the backticks. */
+            .post-content :not(pre) > code,
+            .post-content .rt-Code {
+                font-family: 'Fira Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+                font-size: 0.8em;
+                font-weight: 400;
+                color: var(--post-ink);
+                background: var(--post-mint);
+                border: 1px solid rgba(92, 123, 113, 0.3);
+                border-radius: 3px;
+                padding: 0.05em 0.35em;
+            }
+            .post-content code::before,
+            .post-content code::after {
+                content: none !important;
+            }
+            /* Code blocks: paper with a hairline frame, like the site's cards. */
+            .post-content pre {
+                background: var(--post-paper) !important;
+                border: 1px solid var(--post-rule);
+                border-left: 3px solid var(--post-green);
+                border-radius: 4px !important;
+                padding: 1rem 1.25rem !important;
+                margin: 1.25rem 0 1.5rem !important;
+                font-size: 0.875rem;
+                line-height: 1.6 !important;
+                overflow-x: auto;
+            }
+            .post-content pre code {
+                background: transparent !important;
+                border: 0;
+                padding: 0;
+                font-size: inherit;
+                white-space: pre !important;
+            }
+            .post-content blockquote {
+                margin: 1.25rem 0;
+                padding: 0.5rem 1.25rem;
+                border-left: 3px solid var(--post-green);
+                background: rgba(223, 241, 236, 0.45);
+                color: var(--post-muted);
+                font-style: italic;
+            }
+            .post-content blockquote :is(p, .rt-Text) { color: var(--post-muted); margin: 0.25rem 0; }
+            .post-content img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+                background: #FFFFFF;
+            }
+            .post-content iframe {
+                display: block;
+                max-width: 100%;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+            }
+            .post-content table {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                border-collapse: collapse;
+                margin: 1.25rem 0 1.5rem;
+            }
+            .post-content :is(th, td) {
+                border: 1px solid rgba(92, 123, 113, 0.45);
+                padding: 0.4rem 0.75rem;
+                text-align: left;
+                vertical-align: top;
+                font-size: 1rem;
+            }
+            .post-content th { background: var(--post-mint); font-weight: 600; }
+            .post-content tr:nth-child(even) td { background: rgba(251, 248, 239, 0.7); }
+            .post-content hr {
+                border: 0;
+                border-top: 1px solid rgba(92, 123, 113, 0.45);
+                margin: 2rem 0;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/createLucideIcon-Be6mvhFH.css"/><link rel="stylesheet" href="/assets/rss-DuxHUQw5.css"/><link rel="stylesheet" href="/assets/one-dark-DEcVZfaU.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false" data-react-aria-top-layer="true"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen bg-[#f5f5dc]" lang="es"><div class="md:hidden"><dialog class="sp-ui sp-drawer sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="2" id="mobile-sidebar--dialog" aria-label="Perfil" data-state="closed" data-side="start" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-drawer-extent:15rem"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-overlay-header"><button type="button" class="sp-ui-icon-button" aria-label="Close"><svg part="sp-mark" data-glyph="cross" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5,4.5L11.5,11.5M11.5,4.5L4.5,11.5"></path></svg></button></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-overlay-body"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><style data-emotion="css 1qt3stu">.css-1qt3stu{hreflang:en;}</style><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_25" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></div></dialog></div><aside class="hidden md:flex w-60 min-h-screen bg-[#DFF1EC] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-[#5C7B71]/60"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_25" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"><nav class="w-full h-14 bg-[#DFF1EC] flex items-center flex-shrink-0 z-20 sticky top-0 border-b border-[#5C7B71]/60"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><div class="md:hidden flex-shrink-0"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" type="button" aria-label="Abrir el menú del perfil" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Menú</span></button></div><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es" data-discover="true">Inicio</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/resume" data-discover="true">Currículum</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/portfolio" data-discover="true">Portafolio</a><a aria-current="page" class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap underline decoration-2 text-[#2F6F86]" href="/es/blog" data-discover="true">Blog</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/dev-dashboard-stats" data-discover="true">Estadísticas de desarrollo</a><span aria-hidden="true" class="h-5 w-px bg-[#5C7B71]/50 flex-shrink-0"></span><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/archives" data-discover="true">Archivo</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/categories" data-discover="true">Categorías</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/tags" data-discover="true">Etiquetas</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/feed.xml" data-discover="true">Atom</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><div class="mb-6"><a class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" href="/es/blog" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">← Volver al blog</span></a></div><header class="mb-8 pb-6 border-b border-[#5C7B71]/40"><h1 class="text-3xl md:text-4xl font-bold text-[#1F3D36] leading-tight mb-4">Silverpoint, artículo 25: proyecto final en Angular, el panel de operaciones de principio a fin</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-[#3E6A5E]">11 de noviembre de 2026</span><span class="text-[#5C7B71] mx-2"> • </span><span class="sp-ui sp-tag sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" data-tone="2" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span part="sp-tone" data-tone="2" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label sp-ui-plate">Tutorial Silverpoint</span></span><span class="text-[#5C7B71] mx-2"> • </span><span class="text-[#3E6A5E] inline-flex gap-1">Por<span class="text-[#1F3D36] font-medium">Ernesto Crespo</span></span></div></header><article class="post-content" lang="es"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Los artículos anteriores de la serie sobre <style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" href="https://github.com/ecrespo/silverpoint" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint</a> enseñaron cada pieza por separado. Este las junta en una aplicación de Angular: Operations, el panel de operaciones del servicio web, con tres páginas.</p>
+<p class="rt-Text css-56tzch">Es la misma aplicación que los artículos 23 (React con Next.js), 24 (Vue) y 26 (Reflex). El 27 compara las cuatro. Aquí se construye con lo que Angular trae: el CLI, el router, componentes standalone y signals, sin librerías de estado.</p>
+<img src="/blog/images/silverpoint-serie-25.png" alt="La página Overview de Operations en Angular: dos tarjetas de indicadores, las visitas por hora en vivo con la hora 12 activa, los errores por hora enlazados, el mapa de calor de errores por día y las ventas por canal"/>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que vas a construir</h2>
+<table><thead><tr><th>Ruta</th><th>Página</th><th>Lo que usa</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/</code></td><td>Overview</td><td>Un panel con indicadores, visitas en vivo, errores enlazados por hora, mapa de calor y donut; la lectura de la hora activa; la descarga en SVG</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/incidents</code></td><td>Incidents</td><td>La tabla de incidencias ordenable y paginada, el modal para reconocer una y el aviso</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/settings</code></td><td>Settings</td><td>El formulario de la regla de alerta y el tema: paleta y estilo base</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Cada página reúne artículos anteriores:</p>
+<table><thead><tr><th>Pieza</th><th>Artículo</th></tr></thead><tbody><tr><td>El proyecto de Angular</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_5" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">05</a></td></tr><tr><td>El proveedor y los estilos base</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_9" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">09</a></td></tr><tr><td>El elemento activo</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_11" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">11</a></td></tr><tr><td>Paletas y cambio de tema</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_12" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">12</a></td></tr><tr><td>El panel y el enlace por hora</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_13" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">13</a></td></tr><tr><td>El formulario</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_16" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">16</a></td></tr><tr><td>Tabla, modal y aviso</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_17" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">17</a></td></tr><tr><td>La exportación a SVG</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_18" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">18</a></td></tr><tr><td>Los datos en vivo</td><td><a data-accent-color="" href="/es/blog/silverpoint_serie_20" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">20</a></td></tr></tbody></table>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que necesitas</h2>
+<p class="rt-Text css-56tzch">El proyecto de Angular del artículo 05, creado con el CLI de Angular 22 y con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/angular</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/grounds</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/fonts</code> 0.9.2. El router y los formularios reactivos vienen con el proyecto.</p>
+<p class="rt-Text css-56tzch">Añade el motor como dependencia propia:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npm install @silverpoint/core</code></pre>
+<p class="rt-Text css-56tzch">Ya estaba instalado, porque lo trae el adaptador. Pero la aplicación importa de él las paletas, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">uiSortRows</code> y algunos tipos, y lo que importas debe estar en tu <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">package.json</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">La estructura</h2>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">ops-panel
+├── angular.json
+├── package.json
+├── package-lock.json
+├── public
+│   └── favicon.ico
+├── README.md
+├── src
+│   ├── app
+│   │   ├── app.config.ts
+│   │   ├── app.routes.ts
+│   │   ├── app.ts
+│   │   ├── data
+│   │   │   ├── incidents.ts
+│   │   │   └── ops.ts
+│   │   ├── export-svg.ts
+│   │   ├── incident-log.ts
+│   │   ├── live-feed.ts
+│   │   ├── pages
+│   │   │   ├── alert-rule-form.ts
+│   │   │   ├── incidents.ts
+│   │   │   ├── overview.ts
+│   │   │   └── settings-page.ts
+│   │   └── settings.ts
+│   ├── index.html
+│   ├── main.ts
+│   ├── styles.css
+│   └── text-imports.d.ts
+├── tsconfig.app.json
+├── tsconfig.json
+└── tsconfig.spec.json</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">main.ts</code> e <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">index.html</code> son los del CLI; en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">index.html</code> solo cambia el título. Los datos de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/data/</code> son los de la serie: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops.ts</code>, del artículo 13, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">incidents.ts</code>, del 17, sin cambios. El resto se explica a continuación.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">1. Las rutas</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/app.routes.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Routes } from &#x27;@angular/router&#x27;;
+
+export const routes: Routes = [
+  {
+    path: &#x27;&#x27;,
+    title: &#x27;Overview · Operations&#x27;,
+    loadComponent: () =&gt; import(&#x27;./pages/overview&#x27;).then((m) =&gt; m.Overview),
+  },
+  {
+    path: &#x27;incidents&#x27;,
+    title: &#x27;Incidents · Operations&#x27;,
+    loadComponent: () =&gt; import(&#x27;./pages/incidents&#x27;).then((m) =&gt; m.Incidents),
+  },
+  {
+    path: &#x27;settings&#x27;,
+    title: &#x27;Settings · Operations&#x27;,
+    loadComponent: () =&gt; import(&#x27;./pages/settings-page&#x27;).then((m) =&gt; m.SettingsPage),
+  },
+  { path: &#x27;**&#x27;, redirectTo: &#x27;&#x27; },
+];</code></pre>
+<p class="rt-Text css-56tzch">Cada página se carga con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">loadComponent</code>, así que el CLI la pone en su propio archivo y el navegador la descarga la primera vez que la visitas. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">title</code> cambia el título de la pestaña. Cualquier otra ruta vuelve a Overview.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">2. Los ajustes: un servicio con signals</h2>
+<p class="rt-Text css-56tzch">El tema y la regla de alerta se usan en varias páginas. Viven en un servicio de toda la aplicación, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/settings.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Injectable, computed, effect, signal } from &#x27;@angular/core&#x27;;
+import type { GroundName, Palette } from &#x27;@silverpoint/core&#x27;;
+import { indigo, ironGall, sanguine, sepia, silverpoint, verdigris } from &#x27;@silverpoint/core/palettes&#x27;;
+
+export const PALETTES: { key: string; label: string; palette: Palette }[] = [
+  { key: &#x27;silverpoint&#x27;, label: &#x27;Silverpoint&#x27;, palette: silverpoint },
+  { key: &#x27;sanguine&#x27;, label: &#x27;Sanguine&#x27;, palette: sanguine },
+  { key: &#x27;sepia&#x27;, label: &#x27;Sepia&#x27;, palette: sepia },
+  { key: &#x27;iron-gall&#x27;, label: &#x27;Iron gall&#x27;, palette: ironGall },
+  { key: &#x27;verdigris&#x27;, label: &#x27;Verdigris&#x27;, palette: verdigris },
+  { key: &#x27;indigo&#x27;, label: &#x27;Indigo&#x27;, palette: indigo },
+];
+
+export type AlertRule = {
+  metric: string;
+  threshold: number;
+  channel: string;
+  active: boolean;
+  notes: string;
+};
+
+type Stored = { paletteKey: string; cyanotype: boolean };
+
+const KEY = &#x27;operations-theme&#x27;;
+const DEFAULTS: Stored = { paletteKey: &#x27;silverpoint&#x27;, cyanotype: false };
+
+// localStorage can be missing or blocked: the app then keeps the theme in memory.
+function load(): Stored {
+  try {
+    return { ...DEFAULTS, ...JSON.parse(localStorage.getItem(KEY) ?? &#x27;null&#x27;) };
+  } catch {
+    return DEFAULTS;
+  }
+}
+
+@Injectable({ providedIn: &#x27;root&#x27; })
+export class Settings {
+  readonly paletteKey = signal(load().paletteKey);
+  readonly cyanotype = signal(load().cyanotype);
+  readonly rule = signal&lt;AlertRule&gt;({
+    metric: &#x27;errors&#x27;,
+    threshold: 10,
+    channel: &#x27;email&#x27;,
+    active: true,
+    notes: &#x27;&#x27;,
+  });
+
+  readonly ground = computed&lt;GroundName&gt;(() =&gt; (this.cyanotype() ? &#x27;cyanotype&#x27; : &#x27;silverpoint&#x27;));
+  // Cyanotype prints with its own inks on Prussian blue: no palette on top.
+  readonly palette = computed(() =&gt;
+    this.cyanotype() ? undefined : PALETTES.find((p) =&gt; p.key === this.paletteKey())?.palette,
+  );
+
+  constructor() {
+    effect(() =&gt; {
+      const stored: Stored = { paletteKey: this.paletteKey(), cyanotype: this.cyanotype() };
+      try {
+        localStorage.setItem(KEY, JSON.stringify(stored));
+      } catch {
+        // Not saved: the theme lasts until the page is reloaded.
+      }
+    });
+  }
+}</code></pre>
+<p class="rt-Text css-56tzch">Un servicio con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">providedIn: &#x27;root&#x27;</code> existe una vez y dura lo que dura la página. No hace falta una librería de estado: los signals ya avisan a quien los lee.</p>
+<p class="rt-Text css-56tzch">El tema se guarda en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">localStorage</code>, dentro de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">try</code>/<code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">catch</code>. En una ventana privada o con el almacenamiento bloqueado, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">localStorage</code> puede lanzar un error; entonces el tema dura hasta que recargues. La regla de alerta solo se guarda en memoria, para la sesión.</p>
+<p class="rt-Text css-56tzch">Con el estilo base <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">cyanotype</code> no se aplica paleta: la cianotipia imprime con sus propias tintas sobre azul de Prusia, y una paleta pensada para papel claro no se leería.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">3. El proveedor que sigue al tema</h2>
+<p class="rt-Text css-56tzch">El artículo 09 configuraba el estilo de toda la aplicación con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">provideSilverpoint</code>. En Angular, esa función recibe un objeto fijo: no hay forma de cambiarle el estilo base después. Por eso el artículo 12 pasaba el tema a cada gráfico.</p>
+<p class="rt-Text css-56tzch">Aquí se usa otra vía. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/app.config.ts</code> registra el mismo token que usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">provideSilverpoint</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SILVERPOINT_CONFIG</code>, con un objeto cuyos campos leen los ajustes:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { ApplicationConfig, inject, provideBrowserGlobalErrorListeners } from &#x27;@angular/core&#x27;;
+import { provideRouter } from &#x27;@angular/router&#x27;;
+import type { ProviderConfig } from &#x27;@silverpoint/core&#x27;;
+import { SILVERPOINT_CONFIG } from &#x27;@silverpoint/angular/env&#x27;;
+import { routes } from &#x27;./app.routes&#x27;;
+import { Settings } from &#x27;./settings&#x27;;
+
+export const appConfig: ApplicationConfig = {
+  providers: [
+    provideBrowserGlobalErrorListeners(),
+    provideRouter(routes),
+    {
+      // provideSilverpoint() takes a fixed object. This provider reads the
+      // settings on every render, so every chart and component follows them.
+      provide: SILVERPOINT_CONFIG,
+      useFactory: (): ProviderConfig =&gt; {
+        const settings = inject(Settings);
+        return {
+          get ground() {
+            return settings.ground();
+          },
+          get palette() {
+            return settings.palette();
+          },
+        };
+      },
+    },
+  ],
+};</code></pre>
+<p class="rt-Text css-56tzch">Funciona porque los gráficos y los componentes de silverpoint leen el proveedor dentro de un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">computed</code>. Al leer <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ground</code>, el getter lee <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">settings.ground()</code>, y Angular anota esa dependencia. Cuando cambias el tema, cada gráfico y cada componente se vuelve a dibujar con el nuevo.</p>
+<p class="rt-Text css-56tzch">Lo comprobé quitando todas las demás vías: sin pasar el tema a ningún gráfico, los seis gráficos, la tabla, los botones y los controles cambian de paleta y de estilo base. Es un uso del token que la documentación no describe, así que compruébalo si actualizas silverpoint.</p>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SILVERPOINT_CONFIG</code> se importa de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/angular/env</code>. Desde <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/angular</code> también existe, pero arrastra unos 42 kB más al paquete inicial, y el CLI avisa de que se pasa del presupuesto de 500 kB.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">4. El marco de la aplicación</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/app.ts</code> es el componente raíz: la barra de navegación, el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">router-outlet</code> y los colores de la página.</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Component, computed, inject } from &#x27;@angular/core&#x27;;
+import { RouterLink, RouterLinkActive, RouterOutlet } from &#x27;@angular/router&#x27;;
+import { paletteStyle } from &#x27;@silverpoint/core/palettes&#x27;;
+import { Settings } from &#x27;./settings&#x27;;
+
+@Component({
+  selector: &#x27;app-root&#x27;,
+  imports: [RouterLink, RouterLinkActive, RouterOutlet],
+  template: `
+    &lt;div class=&quot;shell&quot; [class]=&quot;&#x27;sp-ground-&#x27; + settings.ground()&quot; data-substrate=&quot;cream&quot; [style]=&quot;inks()&quot;&gt;
+      &lt;header&gt;
+        &lt;strong&gt;Operations&lt;/strong&gt;
+        &lt;nav aria-label=&quot;Main&quot;&gt;
+          &lt;a routerLink=&quot;/&quot; routerLinkActive=&quot;current&quot; [routerLinkActiveOptions]=&quot;{ exact: true }&quot; ariaCurrentWhenActive=&quot;page&quot;&gt;Overview&lt;/a&gt;
+          &lt;a routerLink=&quot;/incidents&quot; routerLinkActive=&quot;current&quot; ariaCurrentWhenActive=&quot;page&quot;&gt;Incidents&lt;/a&gt;
+          &lt;a routerLink=&quot;/settings&quot; routerLinkActive=&quot;current&quot; ariaCurrentWhenActive=&quot;page&quot;&gt;Settings&lt;/a&gt;
+        &lt;/nav&gt;
+      &lt;/header&gt;
+      &lt;main&gt;
+        &lt;router-outlet /&gt;
+      &lt;/main&gt;
+    &lt;/div&gt;
+  `,
+  styles: `
+    .shell {
+      min-height: 100vh;
+      background: var(--sp-substrate);
+      color: var(--sp-text);
+      font-family: var(--sp-font-display);
+    }
+    header {
+      display: flex;
+      gap: 32px;
+      align-items: baseline;
+      padding: 16px 32px;
+      border-bottom: 1px solid var(--sp-rule);
+    }
+    nav {
+      display: flex;
+      gap: 20px;
+    }
+    a {
+      color: var(--sp-text-muted);
+      text-decoration: none;
+    }
+    a.current {
+      color: var(--sp-text);
+      text-decoration: underline;
+    }
+    main {
+      max-width: 1200px;
+      padding: 24px 32px;
+    }
+  `,
+})
+export class App {
+  protected readonly settings = inject(Settings);
+  // The palette as --sp-* properties, so the page itself takes its colours.
+  protected readonly inks = computed(() =&gt; paletteStyle(this.settings.palette()));
+}</code></pre>
+<p class="rt-Text css-56tzch">Los gráficos ya siguen al tema, pero el fondo de la página no es de silverpoint. Para que también cambie, el marco lleva la clase del estilo base, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-ground-silverpoint</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-ground-cyanotype</code>, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-substrate=&quot;cream&quot;</code>. Con ellas, la hoja de estilos de silverpoint le da las variables <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">--sp-*</code> del estilo base. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">paletteStyle</code> añade las de la paleta, y el CSS del marco usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">var(--sp-substrate)</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">var(--sp-text)</code>.</p>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">routerLinkActive</code> marca el enlace de la página actual, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ariaCurrentWhenActive</code> le añade <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">aria-current=&quot;page&quot;</code> para los lectores de pantalla. Overview necesita <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">exact: true</code>; si no, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/</code> estaría activo en todas las páginas.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">5. Los datos en vivo</h2>
+<p class="rt-Text css-56tzch">El artículo 20 movía una ventana de 24 horas cada 2 segundos. Aquí avanzan a la vez las visitas y los errores, porque las dos gráficas los comparten. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/live-feed.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Injectable, computed, signal } from &#x27;@angular/core&#x27;;
+import { takeUntilDestroyed } from &#x27;@angular/core/rxjs-interop&#x27;;
+import { interval } from &#x27;rxjs&#x27;;
+import { hourly, type HourRow } from &#x27;./data/ops&#x27;;
+
+// The next reading: the hour after the last one, taken from the day&#x27;s
+// profile with a small variation that changes from tick to tick.
+export function nextReading(last: HourRow, tick: number): HourRow {
+  const hour = (Number(last.hour) + 1) % 24;
+  return {
+    hour: String(hour).padStart(2, &#x27;0&#x27;),
+    hits: hourly[hour].hits + ((tick * 7) % 9) - 4,
+    errors: Math.max(0, hourly[hour].errors + ((tick * 5) % 3) - 1),
+  };
+}
+
+// A rolling window: drop the oldest hour and append the new one.
+export function advance(rows: readonly HourRow[], tick: number): HourRow[] {
+  return [...rows.slice(1), nextReading(rows[rows.length - 1], tick)];
+}
+
+const sum = (rows: readonly HourRow[], key: &#x27;hits&#x27; | &#x27;errors&#x27;) =&gt;
+  rows.reduce((total, row) =&gt; total + row[key], 0);
+
+// One feed for the whole app: it keeps running while you visit other pages.
+@Injectable({ providedIn: &#x27;root&#x27; })
+export class LiveFeed {
+  readonly rows = signal(hourly);
+  readonly hits = computed(() =&gt; sum(this.rows(), &#x27;hits&#x27;));
+  readonly errors = computed(() =&gt; sum(this.rows(), &#x27;errors&#x27;));
+
+  constructor() {
+    interval(2000)
+      .pipe(takeUntilDestroyed())
+      .subscribe((tick) =&gt; this.rows.update((current) =&gt; advance(current, tick + 1)));
+  }
+}</code></pre>
+<p class="rt-Text css-56tzch">El intervalo está en un servicio de toda la aplicación, no en la página. Si vas a Incidents y vuelves, la ventana sigue donde iba. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">takeUntilDestroyed</code> lo detiene si la aplicación se destruye.</p>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hits</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">errors</code> son los totales de la ventana: los indicadores de la página los muestran y cambian con cada lectura.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">6. La página Overview</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/pages/overview.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Component, computed, inject, signal, viewChild } from &#x27;@angular/core&#x27;;
+import type { ActiveItem } from &#x27;@silverpoint/core&#x27;;
+import { SpBarChart } from &#x27;@silverpoint/angular/bar-chart&#x27;;
+import { SpDashboard, SpDashboardCell, type DashboardLayout } from &#x27;@silverpoint/angular/dashboard&#x27;;
+import { SpDonutChart } from &#x27;@silverpoint/angular/donut-chart&#x27;;
+import { SpHeatmapChart } from &#x27;@silverpoint/angular/heatmap-chart&#x27;;
+import { SpKpiCard } from &#x27;@silverpoint/angular/kpi-card&#x27;;
+import { SpLineChart } from &#x27;@silverpoint/angular/line-chart&#x27;;
+import { SpButton } from &#x27;@silverpoint/angular/ui/button&#x27;;
+import { blocks, errorsByDay, sales } from &#x27;../data/ops&#x27;;
+import { downloadSvg } from &#x27;../export-svg&#x27;;
+import { LiveFeed } from &#x27;../live-feed&#x27;;
+import { Settings } from &#x27;../settings&#x27;;
+
+@Component({
+  selector: &#x27;app-overview&#x27;,
+  imports: [SpBarChart, SpButton, SpDashboard, SpDashboardCell, SpDonutChart, SpHeatmapChart, SpKpiCard, SpLineChart],
+  template: `
+    &lt;!-- The dashboard frame reads no provider: it takes the theme as inputs. --&gt;
+    &lt;sp-dashboard
+      id=&quot;ops&quot;
+      title=&quot;Overview&quot;
+      description=&quot;Traffic, errors and sales of the web service, updated every 2 seconds.&quot;
+      [layout]=&quot;layout&quot;
+      [link]=&quot;{ key: &#x27;hour&#x27; }&quot;
+      [ground]=&quot;settings.ground()&quot;
+      [palette]=&quot;settings.palette()&quot;
+    &gt;
+      &lt;sp-dashboard-cell cell=&quot;hits-today&quot;&gt;
+        &lt;sp-kpi-card title=&quot;Hits today&quot; [data]=&quot;feed.rows()&quot; valueKey=&quot;hits&quot; [value]=&quot;feed.hits()&quot; unit=&quot;thousand hits&quot; /&gt;
+      &lt;/sp-dashboard-cell&gt;
+      &lt;sp-dashboard-cell cell=&quot;errors-today&quot;&gt;
+        &lt;sp-kpi-card title=&quot;Errors today&quot; [data]=&quot;feed.rows()&quot; valueKey=&quot;errors&quot; [value]=&quot;feed.errors()&quot; unit=&quot;errors&quot; /&gt;
+      &lt;/sp-dashboard-cell&gt;
+      &lt;sp-dashboard-cell cell=&quot;traffic&quot;&gt;
+        &lt;sp-line-chart
+          #hits
+          title=&quot;Hits per hour&quot;
+          badge=&quot;Live&quot;
+          [data]=&quot;feed.rows()&quot;
+          xKey=&quot;hour&quot;
+          valueKey=&quot;hits&quot;
+          footerLeft=&quot;Thousands, last 24 hours&quot;
+          (activeChange)=&quot;active.set($event)&quot;
+        /&gt;
+      &lt;/sp-dashboard-cell&gt;
+      &lt;sp-dashboard-cell cell=&quot;errors-hour&quot;&gt;
+        &lt;sp-bar-chart title=&quot;Errors per hour&quot; [data]=&quot;feed.rows()&quot; xKey=&quot;hour&quot; valueKey=&quot;errors&quot; /&gt;
+      &lt;/sp-dashboard-cell&gt;
+      &lt;sp-dashboard-cell cell=&quot;errors-day&quot;&gt;
+        &lt;sp-heatmap-chart
+          title=&quot;Errors by day&quot;
+          [data]=&quot;errorsByDay&quot;
+          labelKey=&quot;day&quot;
+          valuesKey=&quot;values&quot;
+          [columnLabels]=&quot;blocks&quot;
+          [scaleMax]=&quot;40&quot;
+        /&gt;
+      &lt;/sp-dashboard-cell&gt;
+      &lt;sp-dashboard-cell cell=&quot;channels&quot;&gt;
+        &lt;sp-donut-chart title=&quot;Sales by channel&quot; [data]=&quot;sales&quot; nameKey=&quot;channel&quot; valueKey=&quot;sales&quot; centerLabel=&quot;thousand EUR&quot; /&gt;
+      &lt;/sp-dashboard-cell&gt;
+    &lt;/sp-dashboard&gt;
+    &lt;div class=&quot;actions&quot;&gt;
+      &lt;p aria-live=&quot;polite&quot;&gt;{{ readout() }}&lt;/p&gt;
+      &lt;button type=&quot;button&quot; spButton (click)=&quot;download()&quot;&gt;Download SVG&lt;/button&gt;
+    &lt;/div&gt;
+  `,
+  styles: `
+    .actions {
+      display: flex;
+      gap: 16px;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 16px;
+    }
+  `,
+})
+export class Overview {
+  protected readonly feed = inject(LiveFeed);
+  protected readonly settings = inject(Settings);
+  protected readonly errorsByDay = errorsByDay;
+  protected readonly blocks = blocks;
+  protected readonly sales = sales;
+  protected readonly layout: DashboardLayout = {
+    columns: { sm: 1, md: 2, lg: 4 },
+    rowHeight: 240,
+    gap: 16,
+    cells: [
+      { id: &#x27;hits-today&#x27; },
+      { id: &#x27;errors-today&#x27; },
+      { id: &#x27;traffic&#x27;, colSpan: { md: 2, lg: 2 } },
+      { id: &#x27;errors-hour&#x27;, colSpan: { md: 2, lg: 2 } },
+      { id: &#x27;errors-day&#x27; },
+      { id: &#x27;channels&#x27; },
+    ],
+  };
+
+  protected readonly active = signal&lt;ActiveItem | null&gt;(null);
+  protected readonly readout = computed(() =&gt; {
+    const item = this.active();
+    if (!item) return &#x27;Point at the hits chart to read an hour.&#x27;;
+    const { hour, hits, errors } = item.datum;
+    return `${hour}:00 · ${hits} thousand hits · ${errors} errors`;
+  });
+
+  private readonly hits = viewChild.required&lt;SpLineChart&gt;(&#x27;hits&#x27;);
+
+  protected download() {
+    downloadSvg(this.hits().toSVGString(), &#x27;hits-per-hour.svg&#x27;);
+  }
+}</code></pre>
+<p class="rt-Text css-56tzch">Lo que hay que saber de cada parte:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong>El panel</strong> es el del artículo 13, con la misma rejilla. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[link]=&quot;{ key: &#x27;hour&#x27; }&quot;</code> enlaza los gráficos por la hora: al pasar por una hora de las visitas, se marca la misma hora en los errores y en los indicadores.</li>
+<li class="css-jzlc08"><strong>El tema del panel.</strong> Los gráficos del panel siguen al proveedor, pero el marco del panel no lo lee: el adaptador de Angular, como el de React, solo usa el estilo que recibe el panel. Por eso <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[ground]</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[palette]</code> van en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-dashboard</code>. Sin ellos, el fondo y los bordes del panel se quedan con la paleta de silverpoint (<a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/17" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint#17</a>). Se corregirá en una próxima versión del paquete.</li>
+<li class="css-jzlc08"><strong>La lectura</strong> usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">(activeChange)</code> del gráfico de visitas, como en el artículo 11. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">item.datum</code> es la fila completa. La desestructuración, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">const { hour, hits, errors } = item.datum</code>, es válida con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">noPropertyAccessFromIndexSignature</code>; con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">item.datum.hour</code>, la compilación fallaría.</li>
+<li class="css-jzlc08"><strong>La descarga.</strong> <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">viewChild.required</code> encuentra el gráfico marcado con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">#hits</code> aunque esté dentro de una celda del panel, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code> devuelve su SVG.</li>
+</ul>
+<p class="rt-Text css-56tzch">Los gráficos no llevan <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code>: dentro de un panel, cada celda les da uno estable, como <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops--traffic</code>, y el trazo a mano no cambia entre lecturas.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">7. La exportación a SVG</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/export-svg.ts</code> junta las dos funciones del artículo 18:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import groundCss from &#x27;@silverpoint/grounds/styles.css&#x27; with { loader: &#x27;text&#x27; };
+
+// The SVG with the ground&#x27;s stylesheet inside, so it looks the same outside the app.
+export function standaloneSvg(svg: string): string {
+  const open = svg.indexOf(&#x27;&gt;&#x27;) + 1;
+  return `${svg.slice(0, open)}&lt;style&gt;&lt;![CDATA[${groundCss}]]&gt;&lt;/style&gt;${svg.slice(open)}`;
+}
+
+export function downloadSvg(svg: string, filename: string) {
+  const file = new Blob([standaloneSvg(svg)], { type: &#x27;image/svg+xml&#x27; });
+  const url = URL.createObjectURL(file);
+  const link = document.createElement(&#x27;a&#x27;);
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}</code></pre>
+<p class="rt-Text css-56tzch">El SVG lleva dentro la hoja de estilos del estilo base, entre <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;![CDATA[</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">]]&gt;</code>, para que se vea igual fuera de la aplicación (<a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/14" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint#14</a>). TypeScript necesita la declaración del artículo 18 para importar un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">.css</code> como texto, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/text-imports.d.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">declare module &#x27;*.css&#x27; {
+  const text: string;
+  export default text;
+}</code></pre>
+<p class="rt-Text css-56tzch">Hay un detalle que el artículo 18 no encontró, porque allí se comprobó con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ng build</code>. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ng serve</code>, el servidor de desarrollo preempaqueta las dependencias con Vite, y la importación con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">loader: &#x27;text&#x27;</code> ya no llega como texto. La página queda en blanco y la consola dice que <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">styles.css</code> «does not provide an export named &#x27;default&#x27;». Excluir <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/grounds</code> del preempaquetado no basta. Hay que desactivarlo en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">angular.json</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">        &quot;serve&quot;: {
+          &quot;builder&quot;: &quot;@angular/build:dev-server&quot;,
+          &quot;configurations&quot;: {
+            &quot;production&quot;: {
+              &quot;buildTarget&quot;: &quot;ops-panel:build:production&quot;
+            },
+            &quot;development&quot;: {
+              &quot;buildTarget&quot;: &quot;ops-panel:build:development&quot;
+            }
+          },
+          &quot;defaultConfiguration&quot;: &quot;development&quot;,
+          &quot;options&quot;: {
+            &quot;prebundle&quot;: false
+          }
+        },</code></pre>
+<p class="rt-Text css-56tzch">En esta aplicación, el arranque en frío de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ng serve</code> siguió en unos 3,2 segundos.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">8. La página Incidents</h2>
+<p class="rt-Text css-56tzch">La tabla, el modal y el aviso son los del artículo 17. Solo cambia dónde viven las incidencias. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/incident-log.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Injectable, computed, signal } from &#x27;@angular/core&#x27;;
+import { INCIDENTS } from &#x27;./data/incidents&#x27;;
+
+// The incidents live here, not in the page, so an acknowledgement
+// survives a visit to another page.
+@Injectable({ providedIn: &#x27;root&#x27; })
+export class IncidentLog {
+  readonly rows = signal(INCIDENTS);
+  readonly openIds = computed(() =&gt; this.rows().filter((row) =&gt; row.status === &#x27;open&#x27;).map((row) =&gt; row.id));
+
+  acknowledge(id: string) {
+    this.rows.update((rows) =&gt; rows.map((row) =&gt; (row.id === id ? { ...row, status: &#x27;acknowledged&#x27; } : row)));
+  }
+}</code></pre>
+<p class="rt-Text css-56tzch">Si reconoces una incidencia y cambias de página, sigue reconocida al volver. La plantilla de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/pages/incidents.ts</code> es la del artículo 17, con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">log.rows()</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">log.openIds()</code> en lugar de los signals locales, y un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">h1</code>. La clase:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">export class Incidents {
+  protected readonly log = inject(IncidentLog);
+  protected readonly columns = COLUMNS;
+  protected readonly pageSize = PAGE_SIZE;
+  protected readonly sortKey = signal(&#x27;opened&#x27;);
+  protected readonly sortOrder = signal&lt;&#x27;asc&#x27; | &#x27;desc&#x27;&gt;(&#x27;desc&#x27;);
+  protected readonly page = signal(1);
+  protected readonly open = signal(false);
+  protected readonly picked = signal&lt;string | null&gt;(null);
+  protected readonly acknowledged = signal(&#x27;&#x27;);
+  protected readonly toastOpen = signal(false);
+
+  protected readonly visible = computed(() =&gt;
+    uiSortRows(this.log.rows(), this.sortKey(), this.sortOrder()).slice(
+      (this.page() - 1) * PAGE_SIZE,
+      this.page() * PAGE_SIZE,
+    ),
+  );
+
+  protected sort(key: string) {
+    this.sortOrder.set(key === this.sortKey() &amp;&amp; this.sortOrder() === &#x27;asc&#x27; ? &#x27;desc&#x27; : &#x27;asc&#x27;);
+    this.sortKey.set(key);
+    this.page.set(1);
+  }
+
+  protected acknowledge() {
+    const picked = this.picked();
+    if (!picked) return;
+    this.log.acknowledge(picked);
+    this.acknowledged.set(picked);
+    this.picked.set(null);
+    this.open.set(false);
+    this.toastOpen.set(true);
+  }
+}</code></pre>
+<p class="rt-Text css-56tzch">El botón que abre el modal usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">var(--sp-rule)</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">var(--sp-text)</code> en sus estilos, así que también cambia con el tema. La corrección de la alineación de las celdas (<a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/12" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint#12</a>) está en los estilos globales.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">9. La página Settings</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/pages/settings-page.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Component, inject } from &#x27;@angular/core&#x27;;
+import { SpSelect } from &#x27;@silverpoint/angular/ui/select&#x27;;
+import { SpSwitch } from &#x27;@silverpoint/angular/ui/switch&#x27;;
+import { PALETTES, Settings } from &#x27;../settings&#x27;;
+import { AlertRuleForm } from &#x27;./alert-rule-form&#x27;;
+
+@Component({
+  selector: &#x27;app-settings-page&#x27;,
+  imports: [AlertRuleForm, SpSelect, SpSwitch],
+  template: `
+    &lt;h1&gt;Settings&lt;/h1&gt;
+    &lt;div class=&quot;columns&quot;&gt;
+      &lt;section aria-labelledby=&quot;theme-title&quot;&gt;
+        &lt;h2 id=&quot;theme-title&quot;&gt;Theme&lt;/h2&gt;
+        &lt;sp-select
+          label=&quot;Palette&quot;
+          [items]=&quot;palettes&quot;
+          [value]=&quot;settings.paletteKey()&quot;
+          (valueChange)=&quot;settings.paletteKey.set($event ?? &#x27;silverpoint&#x27;)&quot;
+          [disabled]=&quot;settings.cyanotype()&quot;
+        /&gt;
+        &lt;sp-switch
+          label=&quot;Cyanotype ground&quot;
+          [value]=&quot;settings.cyanotype()&quot;
+          (valueChange)=&quot;settings.cyanotype.set(!!$event)&quot;
+        /&gt;
+        &lt;p&gt;The theme applies to every page and is kept on this device.&lt;/p&gt;
+      &lt;/section&gt;
+      &lt;section aria-labelledby=&quot;alert-title&quot;&gt;
+        &lt;h2 id=&quot;alert-title&quot;&gt;Alert rule&lt;/h2&gt;
+        &lt;app-alert-rule-form /&gt;
+      &lt;/section&gt;
+    &lt;/div&gt;
+  `,
+  styles: `
+    .columns {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 48px;
+    }
+    section {
+      display: grid;
+      gap: 16px;
+      align-content: start;
+      justify-items: start;
+    }
+    h2 {
+      margin: 0;
+    }
+  `,
+})
+export class SettingsPage {
+  protected readonly settings = inject(Settings);
+  protected readonly palettes = PALETTES.map(({ key, label }) =&gt; ({ key, label }));
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-select</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-switch</code> reciben su valor con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[value]</code> y avisan con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">(valueChange)</code>. No uso <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[(value)]</code> porque sus modelos admiten <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">null</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">undefined</code>, y los signals de los ajustes no: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">$event ?? &#x27;silverpoint&#x27;</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">!!$event</code> hacen la conversión. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">cyanotype</code>, el selector de paleta se desactiva.</p>
+<p class="rt-Text css-56tzch">El formulario es el del artículo 16, con la misma plantilla. Cambia la clase de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/pages/alert-rule-form.ts</code>, que ahora empieza desde la regla guardada y la guarda en los ajustes:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">export class AlertRuleForm {
+  private readonly settings = inject(Settings);
+  protected readonly metrics = METRICS;
+  protected readonly channels = CHANNELS;
+  // The form starts from the saved rule, so it survives a visit to another page.
+  private readonly rule = this.settings.rule();
+  protected readonly form = new FormGroup({
+    metric: new FormControl(this.rule.metric, { nonNullable: true }),
+    threshold: new FormControl(this.rule.threshold, { nonNullable: true }),
+    channel: new FormControl(this.rule.channel, { nonNullable: true }),
+    active: new FormControl(this.rule.active, { nonNullable: true }),
+    notes: new FormControl(this.rule.notes, { nonNullable: true }),
+  });
+  protected readonly saved = computed(() =&gt; {
+    const { metric, threshold, channel, active, notes } = this.settings.rule();
+    return `Rule: ${metric} ≥ ${threshold}, by ${channel}, ${active ? &#x27;active&#x27; : &#x27;paused&#x27;}. Notes: ${notes || &#x27;—&#x27;}`;
+  });
+
+  protected save() {
+    this.settings.rule.set(this.form.getRawValue());
+  }
+}</code></pre>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">10. Los estilos globales</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/styles.css</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">@import &#x27;@silverpoint/fonts/fonts.css&#x27;;
+@import &#x27;@silverpoint/grounds/styles.css&#x27;;
+@import &#x27;@silverpoint/grounds/ui.css&#x27;;
+
+body {
+  margin: 0;
+}
+
+.sp-ui-table td:not([data-align]) {
+  text-align: start;
+}</code></pre>
+<p class="rt-Text css-56tzch">Las fuentes, la hoja de estilos de los gráficos, la de los componentes y la corrección de las celdas de la tabla. El resto de los estilos va en cada componente.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Ejecutar, compilar y desplegar</h2>
+<p class="rt-Text css-56tzch">En desarrollo:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npx ng serve</code></pre>
+<p class="rt-Text css-56tzch">La aplicación queda en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">http://localhost:4200</code>. Para producción:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npx ng build</code></pre>
+<p class="rt-Text css-56tzch">El resultado es una carpeta de archivos estáticos, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">dist/ops-panel/browser</code>. En mi máquina, la compilación limpia tardó unos 4 segundos y produjo esto:</p>
+<table><thead><tr><th>Archivo</th><th>Tamaño</th><th>Comprimido (gzip)</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">main</code> (Angular, router, marco, ajustes)</td><td>345,6 kB</td><td>109,2 kB</td></tr><tr><td>Página Overview</td><td>69,3 kB</td><td>21,3 kB</td></tr><tr><td>Dos trozos compartidos de silverpoint</td><td>81,5 kB</td><td>23,3 kB</td></tr><tr><td>Página Incidents</td><td>12,6 kB</td><td>4,2 kB</td></tr><tr><td>Página Settings</td><td>10,2 kB</td><td>2,8 kB</td></tr><tr><td>CSS</td><td>152,7 kB</td><td>14,7 kB</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">La primera visita a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/</code> descarga unos 157 kB comprimidos de JavaScript y CSS, más las tres fuentes. Las páginas Incidents y Settings llegan cuando las visitas.</p>
+<p class="rt-Text css-56tzch">Para desplegar, sube <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">dist/ops-panel/browser</code> a cualquier alojamiento estático. Hay una condición: el router de Angular navega en el navegador, pero si alguien recarga <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/incidents</code>, el servidor recibe esa ruta y no tiene ese archivo. El alojamiento debe responder con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">index.html</code> a las rutas que no existen. Vercel, Netlify, Cloudflare Pages y nginx lo permiten con una regla de reescritura. Para las pruebas usé un servidor estático de Node con esa regla.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Las comprobaciones</h2>
+<p class="rt-Text css-56tzch">Probé la aplicación en Chrome con Playwright, 38 comprobaciones, con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ng serve</code> y con la compilación de producción. Pasaron todas en los dos:</p>
+<table><thead><tr><th>Página</th><th>Lo comprobado</th></tr></thead><tbody><tr><td>Overview</td><td>Los seis gráficos llegan a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-status=&quot;ready&quot;</code>; la ventana avanza cada 2 segundos y mantiene 24 filas; el indicador cambia con ella; la lectura muestra la hora activa y se borra al salir; al pasar por las visitas se marcan los errores; el SVG descargado lleva la hoja de estilos</td></tr><tr><td>Navegación</td><td>Los enlaces cambian de página sin recargar; el enlace actual lleva <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">aria-current</code>; cada página tiene su título</td></tr><tr><td>Incidents</td><td>Cinco filas, las más recientes primero; orden por minutos en los dos sentidos; la página 3 tiene las dos últimas; el modal lista las cinco abiertas; el aviso nombra la incidencia; sigue reconocida al volver</td></tr><tr><td>Settings</td><td>El formulario guarda la regla; SMS está desactivado</td></tr><tr><td>Tema</td><td>Sanguina cambia el fondo de la página, los componentes, los seis gráficos y el marco del panel; la cianotipia cambia la página, los gráficos, la tabla y los botones; el tema sigue tras recargar</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Además, sin errores en la consola. El primer gráfico estuvo listo a los 235 ms de empezar a cargar la página, y los seis a los 279 ms (la mediana de tres cargas de la compilación de producción, en mi máquina).</p>
+<p class="rt-Text css-56tzch">Angular 22 crea los proyectos sin zone.js: la pantalla se actualiza en el siguiente fotograma, no dentro del clic. Una prueba que lee la página justo después de hacer clic ve el estado anterior. Mi primera ejecución falló cinco comprobaciones por eso; una espera corta después de cada acción lo resolvió.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Problemas comunes</h2>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong>Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ng serve</code>, la página queda en blanco y la consola habla de «export named &#x27;default&#x27;».</strong> Falta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&quot;prebundle&quot;: false</code> en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">angular.json</code>. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ng build</code> no pasa (<a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/19" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint#19</a>). Se corregirá en una próxima versión del paquete.</li>
+<li class="css-jzlc08"><strong>El tema cambia la página, pero no los gráficos.</strong> Se usó <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">provideSilverpoint</code> con un objeto fijo. Registra <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SILVERPOINT_CONFIG</code> con getters, como en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app.config.ts</code>.</li>
+<li class="css-jzlc08"><strong>Los gráficos cambian, pero el marco del panel no.</strong> Faltan <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[ground]</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[palette]</code> en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-dashboard</code>.</li>
+<li class="css-jzlc08"><strong>El CLI avisa de que el paquete inicial pasa de 500 kB.</strong> <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SILVERPOINT_CONFIG</code> se importó de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/angular</code>. Impórtalo de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/angular/env</code>.</li>
+<li class="css-jzlc08"><strong>Al dejar el puntero sobre un gráfico, puede aparecer también la descripción emergente del navegador.</strong> Angular copia los atributos con texto literal al elemento, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">title=&quot;Hits per hour&quot;</code> queda como atributo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">title</code> de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-line-chart</code>. Si te molesta, escríbelo como expresión, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[title]=&quot;&#x27;Hits per hour&#x27;&quot;</code>: el gráfico recibe el título y el elemento no lleva el atributo (<a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/18" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint#18</a>). Se corregirá en una próxima versión del paquete.</li>
+<li class="css-jzlc08"><strong>Al recargar <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/settings</code> en producción, el servidor responde 404.</strong> Falta la regla que devuelve <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">index.html</code>.</li>
+</ul>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que viene</h2>
+<p class="rt-Text css-56tzch">Operations ya funciona en Angular. El <a data-accent-color="" href="/es/blog/silverpoint_serie_26" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 26</a> construye la misma aplicación en Reflex, en Python, y le da datos reales: la latencia medida de servicios públicos.</p></div></article></div></main><footer class="mt-auto w-full bg-[#DFF1EC] border-t border-[#5C7B71]/60"><div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 px-4 md:px-8 lg:px-16 py-3"><div class="flex flex-wrap items-center gap-x-4 gap-y-1"><span class="font-semibold text-[#1F3D36]">Ernesto Crespo</span><a aria-label="Enviar un correo a ecrespo@gmail.com" class="flex items-center gap-1.5 text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" href="mailto:ecrespo@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg><span>ecrespo@gmail.com</span></a></div><p class="text-sm text-gray-700"><span>Hecho con </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://www.python.org" target="_blank">Python</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://reflex.dev" target="_blank">Reflex</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://pypi.org/project/reflex-silverpoint-react/" target="_blank">reflex-silverpoint-react</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://tailwindcss.com" target="_blank">Tailwind CSS</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://docs.astral.sh/uv/" target="_blank">uv</a><span> · alojado en </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://vercel.com" target="_blank">Vercel</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://railway.com" target="_blank">Railway</a></p><nav aria-label="Redes sociales" class="flex items-center gap-4"><a aria-label="Medium (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Medium" href="https://seraph13.medium.com/" target="_blank"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"></path></svg></a><a aria-label="LinkedIn (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="LinkedIn" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg></a><a aria-label="Twitter (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Twitter" href="https://twitter.com/_seraph1" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg></a><a aria-label="GitHub (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitHub" href="https://github.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg></a><a aria-label="GitLab (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitLab" href="https://gitlab.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"></path></svg></a><a aria-label="Blog (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Blog" href="https://www.seraph.to/blog" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></nav></div><div class="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs text-gray-600 px-4 md:px-8 lg:px-16 py-2 border-t border-[#5C7B71]/40"><span>© 2026 Ernesto Crespo. Todos los derechos reservados.</span><span>Código fuente bajo la <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume/blob/main/LICENSE" target="_blank">licencia Apache 2.0</a> · <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume" target="_blank">Ver el código</a></span></div></footer></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a aria-label="Built with Reflex" href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><span class="css-vq6poo">Built with Reflex</span></div></a></div><script>((storageKey, restoreKey) => {
+		if (!window.history.state || !window.history.state.key) {
+			let key = Math.random().toString(32).slice(2);
+			window.history.replaceState({ key }, "");
+		}
+		try {
+			let storedY = JSON.parse(sessionStorage.getItem(storageKey) || "{}")[restoreKey || window.history.state.key];
+			if (typeof storedY === "number") window.scrollTo(0, storedY);
+		} catch (error) {
+			console.error(error);
+			sessionStorage.removeItem(storageKey);
+		}
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-01a3b3b4.js";
+import * as route0 from "/assets/root-BNrRPRpZ.js";
+import * as route1 from "/assets/_es_._blog_._silverpoint_serie_25_._index-DgFYTOzl.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[es].[blog].[silverpoint_serie_25]._index":route1};
+
+import("/assets/entry.client-CQq5RwJx.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

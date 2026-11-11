@@ -1,0 +1,885 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/silverpoint-serie-23.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="preload"/><title>Blog | Silverpoint, article 23: final project in React with Next.js, the operations panel from start to finish</title><meta content="The complete operations panel as a Next.js application with the App Router: an overview with live data, linked charts and SVG download, an incidents page and a settings page that changes the theme of the whole application. What goes on the server, what on the client, how it is built and how it is deployed on Vercel." name="description"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-23.png" property="og:image"/><meta content="article" property="og:type"/><meta content="Ernesto Crespo" property="og:site_name"/><meta content="Silverpoint, article 23: final project in React with Next.js, the operations panel from start to finish" property="og:title"/><meta content="https://www.seraph.to/blog/silverpoint_serie_23" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="Silverpoint, article 23: final project in React with Next.js, the operations panel from start to finish" name="twitter:title"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-23.png" name="twitter:image"/><meta content="The complete operations panel as a Next.js application with the App Router: an overview with live data, linked charts and SVG download, an incidents page and a settings page that changes the theme of the whole application. What goes on the server, what on the client, how it is built and how it is deployed on Vercel." property="og:description"/><meta content="The complete operations panel as a Next.js application with the App Router: an overview with live data, linked charts and SVG download, an incidents page and a settings page that changes the theme of the whole application. What goes on the server, what on the client, how it is built and how it is deployed on Vercel." name="twitter:description"/><link rel="modulepreload" href="/assets/manifest-01a3b3b4.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-BNrRPRpZ.js"/><link rel="modulepreload" href="/assets/createLucideIcon-b25sFGBl.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-Ddn1zX93.js"/><link rel="modulepreload" href="/assets/_blog_._silverpoint_serie_23_._index-CaBqrAEe.js"/><link rel="modulepreload" href="/assets/rss-C7JOVRFB.js"/><link rel="modulepreload" href="/assets/one-dark-DBSD_jcZ.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || 'light';
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            body, .radix-themes {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --default-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --heading-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+            }
+            /* TimelineJS sets its own sans fonts; icons keep the tl-icons font. */
+            .tl-timeline :is(h1, h2, h3, h4, h5, h6, p, a, span, div, blockquote):not([class*="tl-icon"]),
+            .sp-timeline .tl-timeline h3.tl-headline-date {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif !important;
+            }
+            /* silverpoint's skin sets its display font on the slide arrows too,
+               which turns the tl-icons glyphs into empty boxes. */
+            .sp-timeline .tl-timeline div.tl-slidenav-icon {
+                font-family: 'tl-icons' !important;
+            }
+            /* silverpoint 0.8.0: the charts' screen-reader table and SpTable's
+               wrapper share the class `sp-table`, whose `th, td { text-align: right }`
+               then right-aligns every SpTable cell and defeats `align: "start"`. */
+            .sp-ui-table :is(th, td):not([data-align='end'], [data-align='center']) {
+                text-align: start;
+            }
+            /* Tags keep their hand-drawn frame but drop the hatched tone. */
+            .sp-tag > [part="sp-tone"] {
+                display: none;
+            }
+            /* Blog posts (`.post-content`): the site's inks on the cream page,
+               EB Garamond for prose, a monospace only for code. rx.markdown renders
+               Radix Themes elements (rt-Text, rt-Link, rt-Code) and the code
+               highlighter writes its colours inline, hence the specificity and the
+               few !important. Inks: theme.SITE_PALETTE. */
+            .post-content {
+                --post-ink: #1F3D36;
+                --post-muted: #3E6A5E;
+                --post-accent: #2F6F86;
+                --post-green: #2C6355;
+                --post-rule: #5C7B71;
+                --post-mint: #DFF1EC;
+                --post-paper: #FBF8EF;
+                color: var(--post-ink);
+                font-size: 1.125rem;
+                line-height: 1.75;
+                overflow-wrap: anywhere;
+            }
+            .post-content .prose {
+                max-width: none;
+            }
+            .post-content :is(h1, h2, h3, h4, h5, h6) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                color: var(--post-ink);
+                line-height: 1.25;
+                letter-spacing: normal;
+            }
+            .post-content h1 { font-size: 1.875rem; font-weight: 700; margin: 2.25rem 0 1rem; }
+            .post-content h2 {
+                font-size: 1.5rem; font-weight: 600; margin: 2rem 0 0.75rem;
+                padding-bottom: 0.35rem; border-bottom: 1px solid rgba(92, 123, 113, 0.35);
+            }
+            .post-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+            .post-content :is(h4, h5, h6) {
+                font-size: 1.1rem; font-weight: 600; font-style: italic; margin: 1.25rem 0 0.5rem;
+            }
+            .post-content :is(p, li, td, th, .rt-Text) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                font-size: 1.125rem;
+                line-height: 1.75;
+                color: var(--post-ink);
+            }
+            .post-content p { margin: 0 0 1.1rem; }
+            .post-content :is(strong, b) { font-weight: 600; color: var(--post-ink); }
+            .post-content :is(a, .rt-Link) {
+                color: var(--post-accent);
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+                text-decoration-color: rgba(47, 111, 134, 0.45);
+                transition: color 0.15s, text-decoration-color 0.15s;
+            }
+            .post-content :is(a, .rt-Link):hover {
+                color: var(--post-green);
+                text-decoration-color: currentColor;
+            }
+            .post-content :is(ul, ol) { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+            .post-content ul { list-style: disc; }
+            .post-content ol { list-style: decimal; }
+            .post-content li { margin: 0.3rem 0; padding-left: 0.25rem; }
+            .post-content li::marker { color: var(--post-green); }
+            .post-content li > :is(p, .rt-Text) { margin: 0; }
+            /* Inline code: a mint chip in the ink, without the backticks. */
+            .post-content :not(pre) > code,
+            .post-content .rt-Code {
+                font-family: 'Fira Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+                font-size: 0.8em;
+                font-weight: 400;
+                color: var(--post-ink);
+                background: var(--post-mint);
+                border: 1px solid rgba(92, 123, 113, 0.3);
+                border-radius: 3px;
+                padding: 0.05em 0.35em;
+            }
+            .post-content code::before,
+            .post-content code::after {
+                content: none !important;
+            }
+            /* Code blocks: paper with a hairline frame, like the site's cards. */
+            .post-content pre {
+                background: var(--post-paper) !important;
+                border: 1px solid var(--post-rule);
+                border-left: 3px solid var(--post-green);
+                border-radius: 4px !important;
+                padding: 1rem 1.25rem !important;
+                margin: 1.25rem 0 1.5rem !important;
+                font-size: 0.875rem;
+                line-height: 1.6 !important;
+                overflow-x: auto;
+            }
+            .post-content pre code {
+                background: transparent !important;
+                border: 0;
+                padding: 0;
+                font-size: inherit;
+                white-space: pre !important;
+            }
+            .post-content blockquote {
+                margin: 1.25rem 0;
+                padding: 0.5rem 1.25rem;
+                border-left: 3px solid var(--post-green);
+                background: rgba(223, 241, 236, 0.45);
+                color: var(--post-muted);
+                font-style: italic;
+            }
+            .post-content blockquote :is(p, .rt-Text) { color: var(--post-muted); margin: 0.25rem 0; }
+            .post-content img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+                background: #FFFFFF;
+            }
+            .post-content iframe {
+                display: block;
+                max-width: 100%;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+            }
+            .post-content table {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                border-collapse: collapse;
+                margin: 1.25rem 0 1.5rem;
+            }
+            .post-content :is(th, td) {
+                border: 1px solid rgba(92, 123, 113, 0.45);
+                padding: 0.4rem 0.75rem;
+                text-align: left;
+                vertical-align: top;
+                font-size: 1rem;
+            }
+            .post-content th { background: var(--post-mint); font-weight: 600; }
+            .post-content tr:nth-child(even) td { background: rgba(251, 248, 239, 0.7); }
+            .post-content hr {
+                border: 0;
+                border-top: 1px solid rgba(92, 123, 113, 0.45);
+                margin: 2rem 0;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/createLucideIcon-Be6mvhFH.css"/><link rel="stylesheet" href="/assets/rss-DuxHUQw5.css"/><link rel="stylesheet" href="/assets/one-dark-DEcVZfaU.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false" data-react-aria-top-layer="true"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen bg-[#f5f5dc]" lang="en"><div class="md:hidden"><dialog class="sp-ui sp-drawer sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="2" id="mobile-sidebar--dialog" aria-label="Profile" data-state="closed" data-side="start" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-drawer-extent:15rem"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-overlay-header"><button type="button" class="sp-ui-icon-button" aria-label="Close"><svg part="sp-mark" data-glyph="cross" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5,4.5L11.5,11.5M11.5,4.5L4.5,11.5"></path></svg></button></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-overlay-body"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Summary" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Summary</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AI Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Download Resume</span></button></div><nav aria-label="Language" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><span aria-current="true" aria-label="English (current language)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="English"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></span><style data-emotion="css 14p5ouv">.css-14p5ouv{hreflang:es;}</style><a aria-label="Read this page in Español" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-14p5ouv" title="Español" href="/es/blog/silverpoint_serie_23" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></a></nav></div></div></dialog></div><aside class="hidden md:flex w-60 min-h-screen bg-[#DFF1EC] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-[#5C7B71]/60"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Summary" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Summary</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Electrical Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Python Developer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AI Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data analyst.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">AWS Cloud Engineer.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Data Scientist.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">View LinkedIn Profile</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Download Resume</span></button></div><nav aria-label="Language" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><span aria-current="true" aria-label="English (current language)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="English"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></span><a aria-label="Read this page in Español" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-14p5ouv" title="Español" href="/es/blog/silverpoint_serie_23" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></a></nav></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"><nav class="w-full h-14 bg-[#DFF1EC] flex items-center flex-shrink-0 z-20 sticky top-0 border-b border-[#5C7B71]/60"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><div class="md:hidden flex-shrink-0"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" type="button" aria-label="Open profile menu" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Menu</span></button></div><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/" data-discover="true">Home</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/resume" data-discover="true">Resume</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/portfolio" data-discover="true">Portfolio</a><a aria-current="page" class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap underline decoration-2 text-[#2F6F86]" href="/blog" data-discover="true">Blog</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/dev-dashboard-stats" data-discover="true">Dev Dashboard Stats</a><span aria-hidden="true" class="h-5 w-px bg-[#5C7B71]/50 flex-shrink-0"></span><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/blog/archives" data-discover="true">Archives</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/blog/categories" data-discover="true">Categories</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/blog/tags" data-discover="true">Tags</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/feed.xml" data-discover="true">Atom</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><div class="mb-6"><a class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" href="/blog" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">← Back to the blog</span></a></div><header class="mb-8 pb-6 border-b border-[#5C7B71]/40"><h1 class="text-3xl md:text-4xl font-bold text-[#1F3D36] leading-tight mb-4">Silverpoint, article 23: final project in React with Next.js, the operations panel from start to finish</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-[#3E6A5E]">November 11, 2026</span><span class="text-[#5C7B71] mx-2"> • </span><span class="sp-ui sp-tag sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" data-tone="2" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span part="sp-tone" data-tone="2" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label sp-ui-plate">Silverpoint tutorial</span></span><span class="text-[#5C7B71] mx-2"> • </span><span class="text-[#3E6A5E] inline-flex gap-1">By<span class="text-[#1F3D36] font-medium">Ernesto Crespo</span></span></div></header><article class="post-content" lang="en"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Level 4 of the series on <style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" href="https://github.com/ecrespo/silverpoint" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint</a> brings everything together in a final project. The previous levels built the operations panel piece by piece: the grid dashboard, the UI components, the export, server rendering and live data. This article puts them together in a React application with <a data-accent-color="" href="https://nextjs.org/" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Next.js</a> and its App Router, with three pages and a shared theme.</p>
+<p class="rt-Text css-56tzch">Articles 24, 25 and 26 build the same application in Vue, Angular and Reflex, and 27 compares them. That is why the three pages are the same in all four.</p>
+<img src="/blog/images/silverpoint-serie-23.png" alt="The overview of the operations panel in Next.js: the indicators, live traffic per hour with the pointer at 11, the linked errors per hour, errors per day and sales by channel"/>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h2 class="rt-Heading rt-r-size-5 css-jzlc08">What you will build</h2>
+<table><thead><tr><th>Route</th><th>Page</th><th>Comes from</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/</code></td><td>The overview: indicators, live traffic, errors linked by hour, errors per day, sales by channel, a readout of the active hour and an SVG download button</td><td>Articles <a data-accent-color="" href="/blog/silverpoint_serie_11" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">11</a>, <a data-accent-color="" href="/blog/silverpoint_serie_13" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">13</a>, <a data-accent-color="" href="/blog/silverpoint_serie_18" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">18</a> and <a data-accent-color="" href="/blog/silverpoint_serie_20" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">20</a></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/incidents</code></td><td>The sortable, paginated incidents table, with the modal to acknowledge an incident and the toast</td><td>Article <a data-accent-color="" href="/blog/silverpoint_serie_17" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">17</a></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/settings</code></td><td>The theme, a ground and a palette that change the whole application, and the alert rule form</td><td>Articles <a data-accent-color="" href="/blog/silverpoint_serie_9" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">09</a>, <a data-accent-color="" href="/blog/silverpoint_serie_12" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">12</a> and <a data-accent-color="" href="/blog/silverpoint_serie_16" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">16</a></td></tr></tbody></table>
+<p class="rt-Text css-56tzch">A navigation bar with three links ties them together. The settings last for the session: as you go back and forth between pages, the theme and the saved rule are still there. Reloading the page brings back the defaults.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">What you need</h2>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<li class="css-jzlc08">Node.js 20.9 or later, the minimum for Next.js 16. I tested it with Node.js 24.</li>
+<li class="css-jzlc08">Next.js 16.4.6, React 19.3.0 and silverpoint 0.9.2.</li>
+</ul>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The project</h2>
+<p class="rt-Text css-56tzch">Create the application and install silverpoint:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npx create-next-app@latest ops-panel --ts --app --no-tailwind --no-eslint --no-src-dir --no-react-compiler --import-alias &quot;@/*&quot; --use-npm --yes
+cd ops-panel
+npm install @silverpoint/react @silverpoint/core @silverpoint/grounds @silverpoint/fonts</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/core</code> is installed separately because the code imports the palettes and the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ActiveItem</code> type from it, as in <a data-accent-color="" href="/blog/silverpoint_serie_12" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 12</a>. Delete <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/page.module.css</code> and the images in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">public/</code>, which the template ships as examples. When you are done, the project looks like this:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">ops-panel/
+├── app/
+│   ├── layout.tsx                server: stylesheets, title, navigation
+│   ├── globals.css
+│   ├── settings-provider.tsx     client: settings and SilverpointProvider
+│   ├── page.tsx                  server: the / route
+│   ├── overview.tsx              client: the dashboard
+│   ├── incidents/
+│   │   ├── page.tsx              server: the /incidents route
+│   │   └── incidents.tsx         client: table, modal and toast
+│   └── settings/
+│       ├── page.tsx              server: the /settings route
+│       ├── theme-form.tsx        client: ground and palette
+│       └── alert-rule-form.tsx   client: the alert rule
+├── lib/
+│   ├── ops.ts                    the panel&#x27;s data
+│   ├── live.ts                   the rolling window
+│   ├── incidents.ts              the 12 incidents
+│   ├── rule.ts                   the alert rule
+│   ├── download.ts               the SVG download
+│   └── standalone.ts             the stylesheet inside the SVG
+├── raw.d.ts
+├── next.config.ts
+├── package.json
+└── tsconfig.json</code></pre>
+<p class="rt-Text css-56tzch">Three files in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lib/</code> come unchanged from earlier articles: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lib/ops.ts</code> is the one from <a data-accent-color="" href="/blog/silverpoint_serie_13" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 13</a>, with the hourly rows, errors per day and sales by channel; <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lib/incidents.ts</code> is the one from <a data-accent-color="" href="/blog/silverpoint_serie_17" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 17</a>, and <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lib/download.ts</code>, the one from <a data-accent-color="" href="/blog/silverpoint_serie_18" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 18</a>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Server or client</h2>
+<p class="rt-Text css-56tzch">In the App Router, every file is a server component unless it starts with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&#x27;use client&#x27;</code>. A server component sends no JavaScript to the browser, but it cannot have state, effects or events, or read a React context.</p>
+<table><thead><tr><th>File</th><th>Where</th><th>Why</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/layout.tsx</code></td><td>Server</td><td>The stylesheets, the title and the navigation do not change</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/page.tsx</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/incidents/page.tsx</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/settings/page.tsx</code></td><td>Server</td><td>Each page&#x27;s title and headings</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/settings-provider.tsx</code></td><td>Client</td><td>It keeps the settings in state and shares them through a context</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/overview.tsx</code></td><td>Client</td><td>The live-data interval, the readout, the download and the theme</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/incidents/incidents.tsx</code></td><td>Client</td><td>The sort order, the page, the modal and the toast are state</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/settings/theme-form.tsx</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/settings/alert-rule-form.tsx</code></td><td>Client</td><td>They are forms</td></tr></tbody></table>
+<p class="rt-Text css-56tzch"><a data-accent-color="" href="/blog/silverpoint_serie_19" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Article 19</a> drew the charts with the server entries, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/react/server/...</code>. They do not work here: the theme lives in client state and arrives through the context of <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SilverpointProvider</code>, which a server component cannot read. A server chart would keep the default theme when you change it in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/settings</code>. That is why every chart is a client component.</p>
+<p class="rt-Text css-56tzch">That does not leave them out of the HTML. Next.js also renders client components at build time, and inside a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dashboard</code> every chart gets the size of its cell. Article 19 explained that a client chart without <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code> reaches the HTML as a placeholder with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-status=&quot;deferred&quot;</code>. Inside the dashboard that does not happen: the HTML of <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/</code> carries all six charts drawn, with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-status=&quot;ready&quot;</code>, before a single line of JavaScript loads.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The configuration</h2>
+<p class="rt-Text css-56tzch">The SVG download from <a data-accent-color="" href="/blog/silverpoint_serie_18" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 18</a> puts the ground&#x27;s stylesheet inside the file. In Vite the stylesheet was imported as text with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code>. Turbopack, the Next.js bundler, does not understand <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code> on its own: you tell it what to do with a rule in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">next.config.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import type { NextConfig } from &#x27;next&#x27;;
+
+const nextConfig: NextConfig = {
+  cacheComponents: true,
+  partialPrefetching: true,
+  turbopack: {
+    rules: {
+      // Any file imported with `?raw` is loaded as a string, as in Vite.
+      &#x27;*&#x27;: { condition: { query: &#x27;?raw&#x27; }, type: &#x27;text&#x27; },
+    },
+  },
+};
+
+export default nextConfig;</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">cacheComponents</code> and <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">partialPrefetching</code> come from the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">create-next-app</code> template. The new rule is <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">turbopack.rules</code>: any file imported with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code> is loaded as text.</p>
+<p class="rt-Text css-56tzch">With the rule, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lib/standalone.ts</code> is the one from article 18 with a different path:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import groundCss from &#x27;../node_modules/@silverpoint/grounds/dist/styles.css?raw&#x27;;
+
+export function standaloneSvg(svg: string): string {
+  const open = svg.indexOf(&#x27;&gt;&#x27;) + 1;
+  return `${svg.slice(0, open)}&lt;style&gt;&lt;![CDATA[${groundCss}]]&gt;&lt;/style&gt;${svg.slice(open)}`;
+}</code></pre>
+<p class="rt-Text css-56tzch">The package path, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/grounds/styles.css?raw</code>, does not work in Turbopack. The build fails with &quot;Module not found: Can&#x27;t resolve &#x27;@silverpoint/grounds/styles.css&#x27;&quot;, even though the same path without <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code> resolves fine in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/layout.tsx</code>. The path relative to the file inside <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">node_modules</code> works. If your project is in a monorepo with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">node_modules</code> at the root, adjust the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">../</code>.</p>
+<p class="rt-Text css-56tzch">TypeScript does not know <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code> either. In Vite it was declared by the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">vite/client</code> types; here <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">raw.d.ts</code>, at the project root, declares it:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">declare module &#x27;*?raw&#x27; {
+  const content: string;
+  export default content;
+}</code></pre>
+<p class="rt-Text css-56tzch">The SVG comes out without the ground&#x27;s stylesheet because <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code> does not include it. It is a library bug, filed as <a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/14" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">issue #14</a>, and it will be fixed in a coming version of the package.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The shared layout</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/layout.tsx</code> is the only place where the stylesheets are loaded: the fonts, the ground and the one for the UI components from <a data-accent-color="" href="/blog/silverpoint_serie_16" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 16</a>. It wraps every page in the settings and adds the navigation:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import type { Metadata } from &#x27;next&#x27;;
+import Link from &#x27;next/link&#x27;;
+import &#x27;@silverpoint/fonts/fonts.css&#x27;;
+import &#x27;@silverpoint/grounds/styles.css&#x27;;
+import &#x27;@silverpoint/grounds/ui.css&#x27;;
+import &#x27;./globals.css&#x27;;
+import { SettingsProvider } from &#x27;./settings-provider&#x27;;
+
+export const metadata: Metadata = {
+  title: { default: &#x27;Operations&#x27;, template: &#x27;%s · Operations&#x27; },
+  description: &#x27;Traffic, errors, incidents and alert rules of the web service.&#x27;,
+};
+
+export default function RootLayout({ children }: LayoutProps&lt;&#x27;/&#x27;&gt;) {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;body&gt;
+        &lt;SettingsProvider&gt;
+          &lt;nav aria-label=&quot;Main&quot;&gt;
+            &lt;Link href=&quot;/&quot;&gt;Overview&lt;/Link&gt;
+            &lt;Link href=&quot;/incidents&quot;&gt;Incidents&lt;/Link&gt;
+            &lt;Link href=&quot;/settings&quot;&gt;Settings&lt;/Link&gt;
+          &lt;/nav&gt;
+          &lt;main&gt;{children}&lt;/main&gt;
+        &lt;/SettingsProvider&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">LayoutProps&lt;&#x27;/&#x27;&gt;</code> is a global type that Next.js generates from the routes. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">title.template</code> makes the title of <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/incidents</code> read &quot;Incidents · Operations&quot;.</p>
+<p class="rt-Text css-56tzch">The navigation and <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">main</code> are server components, but they sit inside <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SettingsProvider</code>, which is a client component. Next.js allows it: a client component can receive server components as <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">children</code>. What you cannot do is import a server component from a client one.</p>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Link</code> navigates without reloading the page. The layout is not mounted again when the route changes, so the state of <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SettingsProvider</code> is kept.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The theme and the settings</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/settings-provider.tsx</code> keeps the settings in state: the ground, the palette and the alert rule. It shares them through a context and passes the theme to <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SilverpointProvider</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&#x27;use client&#x27;;
+
+import { createContext, useContext, useState, type CSSProperties, type ReactNode } from &#x27;react&#x27;;
+import type { GroundName, Palette } from &#x27;@silverpoint/core&#x27;;
+import { PALETTES, paletteStyle } from &#x27;@silverpoint/core/palettes&#x27;;
+import { SilverpointProvider } from &#x27;@silverpoint/react&#x27;;
+import { DEFAULT_RULE, type AlertRule } from &#x27;@/lib/rule&#x27;;
+
+export type Settings = {
+  ground: GroundName;
+  palette: string;
+  rule: AlertRule;
+};
+
+type SettingsContextValue = {
+  settings: Settings;
+  palette: Palette | undefined;
+  update: (change: Partial&lt;Settings&gt;) =&gt; void;
+};
+
+const SettingsContext = createContext&lt;SettingsContextValue | null&gt;(null);
+
+export function useSettings(): SettingsContextValue {
+  const value = useContext(SettingsContext);
+  if (!value) throw new Error(&#x27;useSettings() needs a &lt;SettingsProvider&gt; above it&#x27;);
+  return value;
+}
+
+// The palette&#x27;s --sp-* declarations as a React style object, so the page
+// itself is painted with the same substrate and text colours as the charts.
+function paletteVars(palette: Palette | undefined): CSSProperties {
+  const pairs = paletteStyle(palette)
+    .split(&#x27;;&#x27;)
+    .filter(Boolean)
+    .map((declaration) =&gt; declaration.split(&#x27;:&#x27;));
+  return Object.fromEntries(pairs);
+}
+
+export function SettingsProvider({ children }: { children: ReactNode }) {
+  const [settings, setSettings] = useState&lt;Settings&gt;({
+    ground: &#x27;silverpoint&#x27;,
+    palette: &#x27;silverpoint&#x27;,
+    rule: DEFAULT_RULE,
+  });
+
+  const update = (change: Partial&lt;Settings&gt;) =&gt; setSettings((current) =&gt; ({ ...current, ...change }));
+  // Cyanotype brings its own colours; a palette only applies to silverpoint.
+  const palette = settings.ground === &#x27;silverpoint&#x27; ? PALETTES[settings.palette] : undefined;
+
+  return (
+    &lt;SettingsContext value={{ settings, palette, update }}&gt;
+      &lt;SilverpointProvider ground={settings.ground} palette={palette}&gt;
+        &lt;div className={`shell sp-ground-${settings.ground}`} data-substrate=&quot;cream&quot; style={paletteVars(palette)}&gt;
+          {children}
+        &lt;/div&gt;
+      &lt;/SilverpointProvider&gt;
+    &lt;/SettingsContext&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch">Three decisions in this file:</p>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong>Cyanotype takes no palette.</strong> It brings its own colours, as <a data-accent-color="" href="/blog/silverpoint_serie_12" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 12</a> explained. With <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ground=&quot;cyanotype&quot;</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">palette</code> is <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">undefined</code>, and in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/settings</code> the palette select is disabled.</li>
+<li class="css-jzlc08"><strong>The page changes colour too.</strong> <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SilverpointProvider</code> draws no element: it only hands the configuration to the charts and components below it. So that the page background follows the theme, the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">div</code> that wraps the application carries the ground&#x27;s class, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-ground-silverpoint</code> or <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-ground-cyanotype</code>, and the palette&#x27;s <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">--sp-*</code> properties. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">paletteStyle</code> returns those declarations as text; <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">paletteVars</code> turns them into a React style object. With that, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">background: var(--sp-substrate)</code> in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">globals.css</code> paints the page with the theme&#x27;s substrate.</li>
+<li class="css-jzlc08"><strong>The context also provides the resolved palette.</strong> The overview dashboard needs it, as shown below.</li>
+</ul>
+<p class="rt-Text css-56tzch">The ground stylesheets declare their properties inside <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">:where()</code>, with no weight, precisely so that a rule of yours can change them. That is why the ground&#x27;s class also works on an element that is not a chart.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The styles</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/globals.css</code> in full:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">body {
+  margin: 0;
+}
+
+.shell {
+  min-height: 100vh;
+  padding: 24px 32px;
+  background: var(--sp-substrate);
+  color: var(--sp-text);
+  font-family: var(--sp-font-display);
+}
+
+nav {
+  display: flex;
+  gap: 24px;
+  margin-bottom: 24px;
+  font-size: 18px;
+}
+
+nav a {
+  color: inherit;
+}
+
+h1 {
+  margin: 0 0 16px;
+  font-weight: 500;
+}
+
+.toolbar {
+  display: flex;
+  gap: 16px;
+  align-items: center;
+  margin-top: 16px;
+}
+
+.stack {
+  display: grid;
+  gap: 16px;
+  align-content: start;
+  justify-items: start;
+  max-width: 720px;
+}
+
+.sp-table {
+  justify-self: stretch;
+}
+
+.sp-ui-table td:not([data-align]) {
+  text-align: start;
+}
+
+button[aria-haspopup=&#x27;dialog&#x27;] {
+  padding: 6px 14px;
+  border: 1px solid currentColor;
+  border-radius: 2px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+}
+
+form {
+  display: grid;
+  gap: 20px;
+  align-content: start;
+}
+
+.settings {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 48px;
+}
+
+h2 {
+  margin: 0;
+  font-weight: 500;
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">.stack</code> is a column for the incidents content and for each settings block. At first it was a rule on <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">section</code>, as in article 17, but <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dashboard</code> is a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">section</code> too: with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">max-width: 720px</code> the dashboard went from four columns to two.</p>
+<p class="rt-Text css-56tzch">The <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">.sp-ui-table td:not([data-align])</code> rule aligns the table cells to the left. Without it, a chart rule aligns them to the right. It is a library bug, filed as <a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/12" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">issue #12</a>, and it will be fixed in a coming version of the package.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Live data and the alert rule</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lib/live.ts</code> is the rolling window from <a data-accent-color="" href="/blog/silverpoint_serie_20" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 20</a>, now over the panel&#x27;s rows. Each new reading copies that hour&#x27;s row, with its errors, and changes the hits:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { hourly, type HourRow } from &#x27;./ops&#x27;;
+
+// The next reading: the hour after the last one, taken from the day&#x27;s
+// profile with a small variation that changes from tick to tick.
+export function nextReading(last: HourRow, tick: number): HourRow {
+  const hour = (Number(last.hour) + 1) % 24;
+  return { ...hourly[hour], hits: hourly[hour].hits + ((tick * 7) % 9) - 4 };
+}
+
+// A rolling window: drop the oldest hour and append the new one.
+export function advance(rows: readonly HourRow[], tick: number): HourRow[] {
+  return [...rows.slice(1), nextReading(rows[rows.length - 1], tick)];
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lib/rule.ts</code> describes the alert rule from <a data-accent-color="" href="/blog/silverpoint_serie_16" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 16</a>. It used to be the form&#x27;s state; now it is one more setting, so the saved rule is still there when you come back to <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/settings</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">export type AlertRule = {
+  metric: string;
+  threshold: number;
+  channel: string;
+  active: boolean;
+  notes: string;
+};
+
+export const DEFAULT_RULE: AlertRule = {
+  metric: &#x27;errors&#x27;,
+  threshold: 10,
+  channel: &#x27;email&#x27;,
+  active: true,
+  notes: &#x27;&#x27;,
+};
+
+export function describeRule(rule: AlertRule): string {
+  const state = rule.active ? &#x27;active&#x27; : &#x27;paused&#x27;;
+  return `${rule.metric} ≥ ${rule.threshold}, by ${rule.channel}, ${state}. Notes: ${rule.notes || &#x27;—&#x27;}`;
+}</code></pre>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The overview</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/page.tsx</code> is a server component that only renders the dashboard:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Overview } from &#x27;./overview&#x27;;
+
+export default function OverviewPage() {
+  return &lt;Overview /&gt;;
+}</code></pre>
+<p class="rt-Text css-56tzch">And <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/overview.tsx</code>, the dashboard from <a data-accent-color="" href="/blog/silverpoint_serie_13" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 13</a> with live data, the readout and the download:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&#x27;use client&#x27;;
+
+import { useEffect, useRef, useState } from &#x27;react&#x27;;
+import type { ActiveItem } from &#x27;@silverpoint/core&#x27;;
+import { BarChart } from &#x27;@silverpoint/react/bar-chart&#x27;;
+import { Dashboard, DashboardCell, type DashboardLayout } from &#x27;@silverpoint/react/dashboard&#x27;;
+import { DonutChart } from &#x27;@silverpoint/react/donut-chart&#x27;;
+import { HeatmapChart } from &#x27;@silverpoint/react/heatmap-chart&#x27;;
+import { KpiCard } from &#x27;@silverpoint/react/kpi-card&#x27;;
+import { LineChart, type ChartHandle } from &#x27;@silverpoint/react/line-chart&#x27;;
+import { SpButton } from &#x27;@silverpoint/react/ui/button&#x27;;
+import { downloadSvg } from &#x27;@/lib/download&#x27;;
+import { advance } from &#x27;@/lib/live&#x27;;
+import { blocks, errorsByDay, hourly, sales } from &#x27;@/lib/ops&#x27;;
+import { useSettings } from &#x27;./settings-provider&#x27;;
+
+const layout: DashboardLayout = {
+  columns: { sm: 1, md: 2, lg: 4 },
+  rowHeight: 240,
+  gap: 16,
+  cells: [
+    { id: &#x27;hits-today&#x27; },
+    { id: &#x27;errors-today&#x27; },
+    { id: &#x27;traffic&#x27;, colSpan: { md: 2, lg: 2 } },
+    { id: &#x27;errors-hour&#x27;, colSpan: { md: 2, lg: 2 } },
+    { id: &#x27;errors-day&#x27; },
+    { id: &#x27;channels&#x27; },
+  ],
+};
+
+export function Overview() {
+  const { settings, palette } = useSettings();
+  const [rows, setRows] = useState(hourly);
+  const [active, setActive] = useState&lt;ActiveItem | null&gt;(null);
+  const chart = useRef&lt;ChartHandle&gt;(null);
+
+  useEffect(() =&gt; {
+    let tick = 0;
+    const timer = setInterval(() =&gt; {
+      tick += 1;
+      setRows((current) =&gt; advance(current, tick));
+    }, 2000);
+    return () =&gt; clearInterval(timer);
+  }, []);
+
+  const last = rows[rows.length - 1];
+
+  const exportChart = () =&gt; {
+    const svg = chart.current?.toSVGString();
+    if (svg) downloadSvg(svg, &#x27;hits-per-hour.svg&#x27;);
+  };
+
+  return (
+    &lt;&gt;
+      &lt;Dashboard
+        id=&quot;ops&quot;
+        title=&quot;Operations&quot;
+        description=&quot;Traffic, errors and sales of the web service today.&quot;
+        layout={layout}
+        link={{ key: &#x27;hour&#x27; }}
+        ground={settings.ground}
+        palette={palette}
+      &gt;
+        &lt;DashboardCell cell=&quot;hits-today&quot;&gt;
+          &lt;KpiCard title=&quot;Hits today&quot; data={hourly} valueKey=&quot;hits&quot; value={886} unit=&quot;thousand hits&quot; delta={4.2} /&gt;
+        &lt;/DashboardCell&gt;
+        &lt;DashboardCell cell=&quot;errors-today&quot;&gt;
+          &lt;KpiCard title=&quot;Errors today&quot; data={hourly} valueKey=&quot;errors&quot; value={103} unit=&quot;errors&quot; delta={-12} /&gt;
+        &lt;/DashboardCell&gt;
+        &lt;DashboardCell cell=&quot;traffic&quot;&gt;
+          &lt;LineChart
+            ref={chart}
+            id=&quot;live-hits&quot;
+            title=&quot;Hits per hour&quot;
+            badge=&quot;Live&quot;
+            data={rows}
+            xKey=&quot;hour&quot;
+            valueKey=&quot;hits&quot;
+            footerLeft=&quot;Thousands&quot;
+            footerRight={`Updated at ${last.hour}:00`}
+            onActiveChange={setActive}
+          /&gt;
+        &lt;/DashboardCell&gt;
+        &lt;DashboardCell cell=&quot;errors-hour&quot;&gt;
+          &lt;BarChart title=&quot;Errors per hour&quot; data={hourly} xKey=&quot;hour&quot; valueKey=&quot;errors&quot; /&gt;
+        &lt;/DashboardCell&gt;
+        &lt;DashboardCell cell=&quot;errors-day&quot;&gt;
+          &lt;HeatmapChart
+            title=&quot;Errors by day&quot;
+            data={errorsByDay}
+            labelKey=&quot;day&quot;
+            valuesKey=&quot;values&quot;
+            columnLabels={blocks}
+            scaleMax={40}
+          /&gt;
+        &lt;/DashboardCell&gt;
+        &lt;DashboardCell cell=&quot;channels&quot;&gt;
+          &lt;DonutChart title=&quot;Sales by channel&quot; data={sales} nameKey=&quot;channel&quot; valueKey=&quot;sales&quot; centerLabel=&quot;thousand EUR&quot; /&gt;
+        &lt;/DashboardCell&gt;
+      &lt;/Dashboard&gt;
+      &lt;div className=&quot;toolbar&quot;&gt;
+        &lt;SpButton onClick={exportChart}&gt;Download SVG&lt;/SpButton&gt;
+        &lt;p&gt;{active ? `${String(active.datum.hour)}:00, ${active.value}k hits` : &#x27;Point at an hour&#x27;}&lt;/p&gt;
+      &lt;/div&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch">What each part does:</p>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong>Live data.</strong> The interval from article 20 adds a reading every 2 seconds and drops the oldest one. The traffic chart has <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id=&quot;live-hits&quot;</code>, a stable identifier: without it, each render could change the seed and the stroke would wobble differently on every reading. The footer gives the hour of the latest reading.</li>
+<li class="css-jzlc08"><strong>Linked charts.</strong> With <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">link={{ key: &#x27;hour&#x27; }}</code>, the pointer on an hour of the traffic marks the same hour in the errors and in the curves of the two indicators, and the other way round. Errors per day and sales by channel do not have the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hour</code> field: they show no mark and in development warn with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP016</code>, as article 13 explained.</li>
+<li class="css-jzlc08"><strong>The readout.</strong> The traffic chart&#x27;s <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onActiveChange</code> stores the active item, as in <a data-accent-color="" href="/blog/silverpoint_serie_11" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 11</a>, and the paragraph writes &quot;11:00, 62k hits&quot;. It only follows the traffic chart: the marks the link adds do not change it. To follow the linked value, use <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onLinkChange</code>, from article 13.</li>
+<li class="css-jzlc08"><strong>The download.</strong> <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ref</code> gives the chart&#x27;s handle, and <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code> the SVG, as in article 18. The file carries the palette of the chosen theme.</li>
+<li class="css-jzlc08"><strong>The dashboard theme.</strong> <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ground</code> and <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">palette</code> are passed to the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dashboard</code>, on top of arriving through the provider. The charts inside follow the provider, but the dashboard frame does not: with cyanotype, the charts turned blue and the dashboard background stayed cream. It is a library bug, filed as <a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/17" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">issue #17</a>, and it will be fixed in a coming version of the package. Until then, pass both values to the dashboard.</li>
+</ul>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The incidents</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/incidents/page.tsx</code> is a server component, with its title and its heading:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import type { Metadata } from &#x27;next&#x27;;
+import { Incidents } from &#x27;./incidents&#x27;;
+
+export const metadata: Metadata = { title: &#x27;Incidents&#x27; };
+
+export default function IncidentsPage() {
+  return (
+    &lt;&gt;
+      &lt;h1&gt;Incidents&lt;/h1&gt;
+      &lt;Incidents /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/incidents/incidents.tsx</code> is the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Incidents</code> component from <a data-accent-color="" href="/blog/silverpoint_serie_17" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 17</a> with three changes: the first line, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&#x27;use client&#x27;</code>; the path of the data, which now lives in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lib/</code>; and the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">stack</code> class on the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">section</code>. The start of the file looks like this:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&#x27;use client&#x27;;
+
+import { useState } from &#x27;react&#x27;;
+import { uiSortRows } from &#x27;@silverpoint/core/ui&#x27;;
+import { SpButton } from &#x27;@silverpoint/react/ui/button&#x27;;
+import { SpModal } from &#x27;@silverpoint/react/ui/modal&#x27;;
+import { SpPagination } from &#x27;@silverpoint/react/ui/pagination&#x27;;
+import { SpSelect } from &#x27;@silverpoint/react/ui/select&#x27;;
+import { SpTable } from &#x27;@silverpoint/react/ui/table&#x27;;
+import { SpToast, SpToaster } from &#x27;@silverpoint/react/ui/toast&#x27;;
+import { COLUMNS, INCIDENTS, PAGE_SIZE } from &#x27;@/lib/incidents&#x27;;</code></pre>
+<p class="rt-Text css-56tzch">The rest is the same: the sortable table, pagination five at a time, the modal with its native button as trigger, and the toast.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The settings</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/settings/page.tsx</code> renders the two blocks, side by side on a wide screen:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import type { Metadata } from &#x27;next&#x27;;
+import { AlertRuleForm } from &#x27;./alert-rule-form&#x27;;
+import { ThemeForm } from &#x27;./theme-form&#x27;;
+
+export const metadata: Metadata = { title: &#x27;Settings&#x27; };
+
+export default function SettingsPage() {
+  return (
+    &lt;&gt;
+      &lt;h1&gt;Settings&lt;/h1&gt;
+      &lt;div className=&quot;settings&quot;&gt;
+        &lt;section className=&quot;stack&quot;&gt;
+          &lt;h2&gt;Theme&lt;/h2&gt;
+          &lt;ThemeForm /&gt;
+        &lt;/section&gt;
+        &lt;section className=&quot;stack&quot;&gt;
+          &lt;h2&gt;Alert rule&lt;/h2&gt;
+          &lt;AlertRuleForm /&gt;
+        &lt;/section&gt;
+      &lt;/div&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/settings/theme-form.tsx</code> changes the theme. It has no save button: each change applies at once.</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&#x27;use client&#x27;;
+
+import { PALETTE_NAMES } from &#x27;@silverpoint/core/palettes&#x27;;
+import { SpSegmented } from &#x27;@silverpoint/react/ui/segmented&#x27;;
+import { SpSelect } from &#x27;@silverpoint/react/ui/select&#x27;;
+import { useSettings } from &#x27;../settings-provider&#x27;;
+
+const GROUNDS = [
+  { key: &#x27;silverpoint&#x27;, label: &#x27;Silverpoint&#x27; },
+  { key: &#x27;cyanotype&#x27;, label: &#x27;Cyanotype&#x27; },
+];
+
+export function ThemeForm() {
+  const { settings, update } = useSettings();
+
+  return (
+    &lt;&gt;
+      &lt;SpSegmented
+        label=&quot;Ground&quot;
+        name=&quot;ground&quot;
+        items={GROUNDS}
+        value={settings.ground}
+        onChange={(ground) =&gt; update({ ground: ground === &#x27;cyanotype&#x27; ? &#x27;cyanotype&#x27; : &#x27;silverpoint&#x27; })}
+      /&gt;
+      &lt;SpSelect
+        label=&quot;Palette&quot;
+        items={PALETTE_NAMES}
+        value={settings.palette}
+        onChange={(palette) =&gt; update({ palette })}
+        disabled={settings.ground === &#x27;cyanotype&#x27;}
+      /&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">PALETTE_NAMES</code> are the names of the six palettes, from <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">silverpoint</code> to <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">indigo</code>. When you pick one, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">update</code> stores it, the provider receives the new palette and everything below it is repainted: the charts, the dashboard, the table, the buttons and the page background. When the palette changes, the data is not drawn again: only the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">--sp-*</code> properties change.</p>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/settings/alert-rule-form.tsx</code> is the form from article 16. Its fields start from the saved rule and, on submit, store it in the settings:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&#x27;use client&#x27;;
+
+import { useState, type FormEvent } from &#x27;react&#x27;;
+import { SpButton } from &#x27;@silverpoint/react/ui/button&#x27;;
+import { SpRadioGroup } from &#x27;@silverpoint/react/ui/radio-group&#x27;;
+import { SpSegmented } from &#x27;@silverpoint/react/ui/segmented&#x27;;
+import { SpSlider } from &#x27;@silverpoint/react/ui/slider&#x27;;
+import { SpSwitch } from &#x27;@silverpoint/react/ui/switch&#x27;;
+import { SpTextarea } from &#x27;@silverpoint/react/ui/textarea&#x27;;
+import { describeRule } from &#x27;@/lib/rule&#x27;;
+import { useSettings } from &#x27;../settings-provider&#x27;;
+
+const METRICS = [
+  { key: &#x27;errors&#x27;, label: &#x27;Errors&#x27; },
+  { key: &#x27;hits&#x27;, label: &#x27;Hits&#x27; },
+];
+
+const CHANNELS = [
+  { key: &#x27;email&#x27;, label: &#x27;Email&#x27; },
+  { key: &#x27;chat&#x27;, label: &#x27;Chat&#x27; },
+  { key: &#x27;sms&#x27;, label: &#x27;SMS&#x27;, disabled: true },
+];
+
+export function AlertRuleForm() {
+  const { settings, update } = useSettings();
+  const [metric, setMetric] = useState(settings.rule.metric);
+  const [threshold, setThreshold] = useState(settings.rule.threshold);
+  const [channel, setChannel] = useState(settings.rule.channel);
+  const [active, setActive] = useState(settings.rule.active);
+
+  function save(event: FormEvent&lt;HTMLFormElement&gt;) {
+    event.preventDefault();
+    const notes = String(new FormData(event.currentTarget).get(&#x27;notes&#x27;) ?? &#x27;&#x27;);
+    update({ rule: { metric, threshold, channel, active, notes } });
+  }
+
+  return (
+    &lt;form onSubmit={save}&gt;
+      &lt;SpSegmented label=&quot;Metric&quot; name=&quot;metric&quot; items={METRICS} value={metric} onChange={setMetric} /&gt;
+      &lt;SpSlider
+        label=&quot;Threshold&quot;
+        name=&quot;threshold&quot;
+        min={0}
+        max={50}
+        step={5}
+        marks={[0, 25, 50]}
+        value={threshold}
+        onChange={setThreshold}
+      /&gt;
+      &lt;SpRadioGroup
+        label=&quot;Notify by&quot;
+        name=&quot;channel&quot;
+        items={CHANNELS}
+        orientation=&quot;horizontal&quot;
+        value={channel}
+        onChange={setChannel}
+      /&gt;
+      &lt;SpSwitch label=&quot;Active&quot; name=&quot;active&quot; checked={active} onChange={setActive} /&gt;
+      &lt;SpTextarea
+        label=&quot;Notes&quot;
+        placeholder=&quot;Notes for the on-call team&quot;
+        name=&quot;notes&quot;
+        rows={2}
+        maxLength={200}
+        showCount
+        defaultValue={settings.rule.notes}
+      /&gt;
+      &lt;SpButton type=&quot;submit&quot; variant=&quot;primary&quot;&gt;
+        Save rule
+      &lt;/SpButton&gt;
+      &lt;p role=&quot;status&quot;&gt;Saved rule: {describeRule(settings.rule)}&lt;/p&gt;
+    &lt;/form&gt;
+  );
+}</code></pre>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">What Next.js keeps when you navigate</h2>
+<p class="rt-Text css-56tzch">The template turns on <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">cacheComponents</code>. With that option, Next.js does not unmount the page you leave: it hides it with React&#x27;s <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;Activity&gt;</code> component and keeps its state and its HTML. It does this for the last three routes visited, which in this application is all of them.</p>
+<p class="rt-Text css-56tzch">I checked it in the production build:</p>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08">I acknowledged INC-1038, sorted by minutes, went through the other two pages and came back: the table was still sorted by minutes and INC-1038 was still <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">acknowledged</code>.</li>
+<li class="css-jzlc08">While the overview is hidden, React unmounts its effects, so the interval stops. Coming back after 6.5 seconds, the footer still said &quot;Updated at 01:00&quot;, and 2 seconds later it moved to &quot;Updated at 02:00&quot;: the window carries on from where it stopped, with no jumps.</li>
+<li class="css-jzlc08">In development, when you leave the overview, each hidden chart warns in the console with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP003</code>: &quot;the container measures 0 px; the render is deferred&quot;. That is what an element with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">display: none</code> measures. When you come back, the charts draw again at their size. In production no warning appears. The warning is unnecessary, and it is open as <a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/22" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint#22</a>. It will be fixed in a coming version of the package.</li>
+</ul>
+<p class="rt-Text css-56tzch">That is why keeping the rule in the settings is not essential with three routes: the form would also be kept while hidden. But an application with more pages loses the oldest ones, and the settings should live somewhere that does not depend on that.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Run, build and deploy</h2>
+<p class="rt-Text css-56tzch">In development:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npm run dev</code></pre>
+<p class="rt-Text css-56tzch">The application runs at <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">http://localhost:3000</code>. For the production build:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npm run build
+npm run start</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">npm run build</code> compiled in 7.6 seconds and marked all four routes as static:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">Route (app)
+┌ ○ /
+├ ○ /_not-found
+├ ○ /incidents
+└ ○ /settings
+
+
+○  (Static)  prerendered as static content</code></pre>
+<p class="rt-Text css-56tzch">All four are generated as HTML at build time. There is nothing to compute per request: the data is fixed and the live data is generated in the browser.</p>
+<p class="rt-Text css-56tzch">To deploy on <a data-accent-color="" href="https://vercel.com/" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Vercel</a>, push the project to a Git repository and import it from <a data-accent-color="" href="https://vercel.com/new" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">vercel.com/new</a>. Vercel recognises Next.js and uses <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">next build</code> with no configuration. You can also deploy from the project folder with its command line, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">npx vercel</code>. The static pages are served from Vercel&#x27;s network, and each push to the repository creates a new deployment with its own address. There are no environment variables to set. I did not deploy it; I tested it with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">npm run start</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">The checks</h2>
+<p class="rt-Text css-56tzch">I tested the application with Playwright and Chrome, first against <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">npm run dev</code> and then against the production build, with 29 checks. All of them passed in both cases. The main ones:</p>
+<table><thead><tr><th>What</th><th>How</th><th>Result</th></tr></thead><tbody><tr><td>The dashboard</td><td>Wait for the six <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">.sp-root</code> with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-status=&quot;ready&quot;</code></td><td>All six ready, also in the HTML without JavaScript</td></tr><tr><td>Live data</td><td>Read the traffic footer, wait 4.5 s and read it again</td><td>&quot;Updated at 23:00&quot; becomes &quot;Updated at 01:00&quot;</td></tr><tr><td>The link</td><td>Move the pointer over the error bars</td><td>The hour is marked in the traffic and in the two indicators</td></tr><tr><td>The readout</td><td>Move the pointer over the traffic</td><td>&quot;14:00, 59k hits&quot;; on leaving, &quot;Point at an hour&quot;</td></tr><tr><td>The download</td><td>Click &quot;Download SVG&quot;</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hits-per-hour.svg</code>, with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;style&gt;&lt;![CDATA[</code> and the ground; opened on its own in Chrome, it looks the same as on the page</td></tr><tr><td>The table</td><td>Click the &quot;Minutes&quot; header</td><td>The first row changes from INC-1042 to INC-1041</td></tr><tr><td>The modal and the toast</td><td>Pick INC-1038 and click &quot;Acknowledge&quot;</td><td>The modal closes and &quot;INC-1038 no longer pages the on-call team.&quot; appears</td></tr><tr><td>The form</td><td>Pick Hits, turn Active off, write a note and save</td><td>&quot;Saved rule: hits ≥ 10, by email, paused. Notes: Page the database team&quot;, unchanged when you come back to the page</td></tr><tr><td>Cyanotype</td><td>Pick it in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/settings</code> and go back to the overview</td><td>The page and dashboard background becomes <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">rgb(27, 63, 107)</code>, the six charts carry <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-ground-cyanotype</code> and the table writes in white</td></tr><tr><td>A palette</td><td>Go back to Silverpoint and pick <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sanguine</code></td><td>The background becomes <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">rgb(242, 232, 220)</code>, the charts carry <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">--sp-ink: #8A3A24</code>, and so does the downloaded SVG</td></tr><tr><td>The console</td><td>Collect errors and warnings</td><td>In production, none. In development, only <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP016</code> and <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP003</code>, both explained above</td></tr></tbody></table>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">npx tsc --noEmit</code> and the production build, which checks the types, passed too.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">What it costs</h2>
+<p class="rt-Text css-56tzch">I measured the production build with gzip:</p>
+<table><thead><tr><th>Route</th><th>HTML</th><th>JavaScript</th><th>CSS</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/</code></td><td>78.4 kB (11.8 kB with gzip)</td><td>995.2 kB (309.7 kB with gzip)</td><td>150.0 kB (15.3 kB with gzip)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/incidents</code></td><td>18.8 kB (3.9 kB with gzip)</td><td>987.1 kB (307.9 kB with gzip)</td><td>150.0 kB (15.3 kB with gzip)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/settings</code></td><td>18.4 kB (3.8 kB with gzip)</td><td>985.3 kB (307.1 kB with gzip)</td><td>150.0 kB (15.3 kB with gzip)</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">The HTML of <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">/</code> is heavier because it carries the six charts drawn. The six charts were ready 25 ms after navigation started, median of three loads on my machine and on localhost: they arrive in the HTML.</p>
+<p class="rt-Text css-56tzch">The JavaScript is almost the same on the three routes, and part of it is due to <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SilverpointProvider</code>. The provider is only exported from the general entry, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/react</code>, which contains every chart. <a data-accent-color="" href="/blog/silverpoint_serie_20" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Article 20</a> measured that Vite drops the charts you do not use in production. Turbopack does not do it with this entry: I built the same application with the provider replaced by a component that only returns its children, and the JavaScript went down from 1025 kB to 762 kB, about 80 kB less with gzip. Since the provider is in the shared layout, that weight goes on every route. It is open as <a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/21" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint#21</a>. It will be fixed in a coming version of the package.</p>
+<p class="rt-Text css-56tzch">The UI components stylesheet, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ui.css</code>, is most of the CSS.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Common problems</h2>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Can&#x27;t resolve &#x27;@silverpoint/grounds/styles.css&#x27;</code> with <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code>.</strong> Turbopack does not apply the query to the package path. Use the path relative to <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">node_modules</code> and the rule in <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">next.config.ts</code>.</li>
+<li class="css-jzlc08"><strong>A chart does not change with the theme.</strong> It is a server component, which does not read the context. Move the chart to a client component.</li>
+<li class="css-jzlc08"><strong>The dashboard frame does not change with the theme.</strong> Pass <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ground</code> and <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">palette</code> to the <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dashboard</code> (<a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/17" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">issue #17</a>).</li>
+<li class="css-jzlc08"><strong>The dashboard has two columns on a wide screen.</strong> A rule in your CSS on <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">section</code> gives it a maximum width: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dashboard</code> is a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">section</code>.</li>
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP003</code> warnings when changing page in development.</strong> They are the charts of the hidden page. They draw again when you come back (<a data-accent-color="" href="https://github.com/ecrespo/silverpoint/issues/22" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint#22</a>).</li>
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">useSettings() needs a &lt;SettingsProvider&gt; above it</code>.</strong> The component renders outside <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SettingsProvider</code>. Everything that uses <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">useSettings()</code> has to be inside a page or the shared layout, under <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/layout.tsx</code>.</li>
+</ul>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">What comes next</h2>
+<p class="rt-Text css-56tzch"><a data-accent-color="" href="/blog/silverpoint_serie_24" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Article 24</a> builds the same application in Vue, with Vite and vue-router. The pages, the data and the checks are the same, so that <a data-accent-color="" href="/blog/silverpoint_serie_27" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">article 27</a> can compare the four versions.</p></div></article></div></main><footer class="mt-auto w-full bg-[#DFF1EC] border-t border-[#5C7B71]/60"><div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 px-4 md:px-8 lg:px-16 py-3"><div class="flex flex-wrap items-center gap-x-4 gap-y-1"><span class="font-semibold text-[#1F3D36]">Ernesto Crespo</span><a aria-label="Send an e-mail to ecrespo@gmail.com" class="flex items-center gap-1.5 text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" href="mailto:ecrespo@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg><span>ecrespo@gmail.com</span></a></div><p class="text-sm text-gray-700"><span>Built with </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://www.python.org" target="_blank">Python</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://reflex.dev" target="_blank">Reflex</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://pypi.org/project/reflex-silverpoint-react/" target="_blank">reflex-silverpoint-react</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://tailwindcss.com" target="_blank">Tailwind CSS</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://docs.astral.sh/uv/" target="_blank">uv</a><span> · hosted on </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://vercel.com" target="_blank">Vercel</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://railway.com" target="_blank">Railway</a></p><nav aria-label="Social networks" class="flex items-center gap-4"><a aria-label="Medium (opens in a new tab)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Medium" href="https://seraph13.medium.com/" target="_blank"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"></path></svg></a><a aria-label="LinkedIn (opens in a new tab)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="LinkedIn" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg></a><a aria-label="Twitter (opens in a new tab)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Twitter" href="https://twitter.com/_seraph1" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg></a><a aria-label="GitHub (opens in a new tab)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitHub" href="https://github.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg></a><a aria-label="GitLab (opens in a new tab)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitLab" href="https://gitlab.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"></path></svg></a><a aria-label="Blog (opens in a new tab)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Blog" href="https://www.seraph.to/blog" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></nav></div><div class="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs text-gray-600 px-4 md:px-8 lg:px-16 py-2 border-t border-[#5C7B71]/40"><span>© 2026 Ernesto Crespo. All rights reserved.</span><span>Source code under the <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume/blob/main/LICENSE" target="_blank">Apache 2.0 License</a> · <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume" target="_blank">View the source</a></span></div></footer></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a aria-label="Built with Reflex" href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><span class="css-vq6poo">Built with Reflex</span></div></a></div><script>((storageKey, restoreKey) => {
+		if (!window.history.state || !window.history.state.key) {
+			let key = Math.random().toString(32).slice(2);
+			window.history.replaceState({ key }, "");
+		}
+		try {
+			let storedY = JSON.parse(sessionStorage.getItem(storageKey) || "{}")[restoreKey || window.history.state.key];
+			if (typeof storedY === "number") window.scrollTo(0, storedY);
+		} catch (error) {
+			console.error(error);
+			sessionStorage.removeItem(storageKey);
+		}
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-01a3b3b4.js";
+import * as route0 from "/assets/root-BNrRPRpZ.js";
+import * as route1 from "/assets/_blog_._silverpoint_serie_23_._index-CaBqrAEe.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[silverpoint_serie_23]._index":route1};
+
+import("/assets/entry.client-CQq5RwJx.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>
