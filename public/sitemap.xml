@@ -49,6 +49,36 @@
     <loc>http://localhost:3000/es/blog/tags</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/blog/silverpoint_serie_7</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/silverpoint_serie_7</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/blog/silverpoint_serie_6</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/silverpoint_serie_6</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/blog/silverpoint_serie_5</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/silverpoint_serie_5</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/blog/silverpoint_serie_4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/silverpoint_serie_4</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/blog/silverpoint_serie_3</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/silverpoint_serie_3</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/silverpoint_serie_2</loc>
   </url>
   <url>
