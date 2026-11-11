@@ -1,0 +1,520 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/silverpoint-serie-18.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="preload"/><title>Blog | Silverpoint, artículo 18: exportar un gráfico a SVG</title><meta content="Cómo sacar un gráfico de silverpoint de la página como un archivo SVG: el manejador con toSVGString(), un botón de descarga, qué contiene el SVG, por qué hay que añadirle la hoja de estilos del estilo base para que se vea fuera de la aplicación, y el mismo botón en React, Vue, Angular y Reflex." name="description"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-18.png" property="og:image"/><meta content="article" property="og:type"/><meta content="Ernesto Crespo" property="og:site_name"/><meta content="Silverpoint, artículo 18: exportar un gráfico a SVG" property="og:title"/><meta content="https://www.seraph.to/es/blog/silverpoint_serie_18" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="Silverpoint, artículo 18: exportar un gráfico a SVG" name="twitter:title"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-18.png" name="twitter:image"/><meta content="Cómo sacar un gráfico de silverpoint de la página como un archivo SVG: el manejador con toSVGString(), un botón de descarga, qué contiene el SVG, por qué hay que añadirle la hoja de estilos del estilo base para que se vea fuera de la aplicación, y el mismo botón en React, Vue, Angular y Reflex." property="og:description"/><meta content="Cómo sacar un gráfico de silverpoint de la página como un archivo SVG: el manejador con toSVGString(), un botón de descarga, qué contiene el SVG, por qué hay que añadirle la hoja de estilos del estilo base para que se vea fuera de la aplicación, y el mismo botón en React, Vue, Angular y Reflex." name="twitter:description"/><link rel="modulepreload" href="/assets/manifest-79bae7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-Bgm5wmoK.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D_wAYqau.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BtA91MnZ.js"/><link rel="modulepreload" href="/assets/_es_._blog_._silverpoint_serie_18_._index-BQS0QZ0-.js"/><link rel="modulepreload" href="/assets/rss-p44Mj3iQ.js"/><link rel="modulepreload" href="/assets/one-dark-B4TnxH60.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || 'light';
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            body, .radix-themes {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --default-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --heading-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+            }
+            /* TimelineJS sets its own sans fonts; icons keep the tl-icons font. */
+            .tl-timeline :is(h1, h2, h3, h4, h5, h6, p, a, span, div, blockquote):not([class*="tl-icon"]),
+            .sp-timeline .tl-timeline h3.tl-headline-date {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif !important;
+            }
+            /* silverpoint's skin sets its display font on the slide arrows too,
+               which turns the tl-icons glyphs into empty boxes. */
+            .sp-timeline .tl-timeline div.tl-slidenav-icon {
+                font-family: 'tl-icons' !important;
+            }
+            /* silverpoint 0.8.0: the charts' screen-reader table and SpTable's
+               wrapper share the class `sp-table`, whose `th, td { text-align: right }`
+               then right-aligns every SpTable cell and defeats `align: "start"`. */
+            .sp-ui-table :is(th, td):not([data-align='end'], [data-align='center']) {
+                text-align: start;
+            }
+            /* Tags keep their hand-drawn frame but drop the hatched tone. */
+            .sp-tag > [part="sp-tone"] {
+                display: none;
+            }
+            /* Blog posts (`.post-content`): the site's inks on the cream page,
+               EB Garamond for prose, a monospace only for code. rx.markdown renders
+               Radix Themes elements (rt-Text, rt-Link, rt-Code) and the code
+               highlighter writes its colours inline, hence the specificity and the
+               few !important. Inks: theme.SITE_PALETTE. */
+            .post-content {
+                --post-ink: #1F3D36;
+                --post-muted: #3E6A5E;
+                --post-accent: #2F6F86;
+                --post-green: #2C6355;
+                --post-rule: #5C7B71;
+                --post-mint: #DFF1EC;
+                --post-paper: #FBF8EF;
+                color: var(--post-ink);
+                font-size: 1.125rem;
+                line-height: 1.75;
+                overflow-wrap: anywhere;
+            }
+            .post-content .prose {
+                max-width: none;
+            }
+            .post-content :is(h1, h2, h3, h4, h5, h6) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                color: var(--post-ink);
+                line-height: 1.25;
+                letter-spacing: normal;
+            }
+            .post-content h1 { font-size: 1.875rem; font-weight: 700; margin: 2.25rem 0 1rem; }
+            .post-content h2 {
+                font-size: 1.5rem; font-weight: 600; margin: 2rem 0 0.75rem;
+                padding-bottom: 0.35rem; border-bottom: 1px solid rgba(92, 123, 113, 0.35);
+            }
+            .post-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+            .post-content :is(h4, h5, h6) {
+                font-size: 1.1rem; font-weight: 600; font-style: italic; margin: 1.25rem 0 0.5rem;
+            }
+            .post-content :is(p, li, td, th, .rt-Text) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                font-size: 1.125rem;
+                line-height: 1.75;
+                color: var(--post-ink);
+            }
+            .post-content p { margin: 0 0 1.1rem; }
+            .post-content :is(strong, b) { font-weight: 600; color: var(--post-ink); }
+            .post-content :is(a, .rt-Link) {
+                color: var(--post-accent);
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+                text-decoration-color: rgba(47, 111, 134, 0.45);
+                transition: color 0.15s, text-decoration-color 0.15s;
+            }
+            .post-content :is(a, .rt-Link):hover {
+                color: var(--post-green);
+                text-decoration-color: currentColor;
+            }
+            .post-content :is(ul, ol) { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+            .post-content ul { list-style: disc; }
+            .post-content ol { list-style: decimal; }
+            .post-content li { margin: 0.3rem 0; padding-left: 0.25rem; }
+            .post-content li::marker { color: var(--post-green); }
+            .post-content li > :is(p, .rt-Text) { margin: 0; }
+            /* Inline code: a mint chip in the ink, without the backticks. */
+            .post-content :not(pre) > code,
+            .post-content .rt-Code {
+                font-family: 'Fira Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+                font-size: 0.8em;
+                font-weight: 400;
+                color: var(--post-ink);
+                background: var(--post-mint);
+                border: 1px solid rgba(92, 123, 113, 0.3);
+                border-radius: 3px;
+                padding: 0.05em 0.35em;
+            }
+            .post-content code::before,
+            .post-content code::after {
+                content: none !important;
+            }
+            /* Code blocks: paper with a hairline frame, like the site's cards. */
+            .post-content pre {
+                background: var(--post-paper) !important;
+                border: 1px solid var(--post-rule);
+                border-left: 3px solid var(--post-green);
+                border-radius: 4px !important;
+                padding: 1rem 1.25rem !important;
+                margin: 1.25rem 0 1.5rem !important;
+                font-size: 0.875rem;
+                line-height: 1.6 !important;
+                overflow-x: auto;
+            }
+            .post-content pre code {
+                background: transparent !important;
+                border: 0;
+                padding: 0;
+                font-size: inherit;
+                white-space: pre !important;
+            }
+            .post-content blockquote {
+                margin: 1.25rem 0;
+                padding: 0.5rem 1.25rem;
+                border-left: 3px solid var(--post-green);
+                background: rgba(223, 241, 236, 0.45);
+                color: var(--post-muted);
+                font-style: italic;
+            }
+            .post-content blockquote :is(p, .rt-Text) { color: var(--post-muted); margin: 0.25rem 0; }
+            .post-content img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+                background: #FFFFFF;
+            }
+            .post-content iframe {
+                display: block;
+                max-width: 100%;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+            }
+            .post-content table {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                border-collapse: collapse;
+                margin: 1.25rem 0 1.5rem;
+            }
+            .post-content :is(th, td) {
+                border: 1px solid rgba(92, 123, 113, 0.45);
+                padding: 0.4rem 0.75rem;
+                text-align: left;
+                vertical-align: top;
+                font-size: 1rem;
+            }
+            .post-content th { background: var(--post-mint); font-weight: 600; }
+            .post-content tr:nth-child(even) td { background: rgba(251, 248, 239, 0.7); }
+            .post-content hr {
+                border: 0;
+                border-top: 1px solid rgba(92, 123, 113, 0.45);
+                margin: 2rem 0;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/createLucideIcon-Be6mvhFH.css"/><link rel="stylesheet" href="/assets/rss-DuxHUQw5.css"/><link rel="stylesheet" href="/assets/one-dark-DEcVZfaU.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false" data-react-aria-top-layer="true"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen bg-[#f5f5dc]" lang="es"><div class="md:hidden"><dialog class="sp-ui sp-drawer sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="2" id="mobile-sidebar--dialog" aria-label="Perfil" data-state="closed" data-side="start" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-drawer-extent:15rem"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-overlay-header"><button type="button" class="sp-ui-icon-button" aria-label="Close"><svg part="sp-mark" data-glyph="cross" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5,4.5L11.5,11.5M11.5,4.5L4.5,11.5"></path></svg></button></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-overlay-body"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><style data-emotion="css 1qt3stu">.css-1qt3stu{hreflang:en;}</style><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_18" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></div></dialog></div><aside class="hidden md:flex w-60 min-h-screen bg-[#DFF1EC] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-[#5C7B71]/60"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_18" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"><nav class="w-full h-14 bg-[#DFF1EC] flex items-center flex-shrink-0 z-20 sticky top-0 border-b border-[#5C7B71]/60"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><div class="md:hidden flex-shrink-0"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" type="button" aria-label="Abrir el menú del perfil" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Menú</span></button></div><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es" data-discover="true">Inicio</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/resume" data-discover="true">Currículum</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/portfolio" data-discover="true">Portafolio</a><a aria-current="page" class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap underline decoration-2 text-[#2F6F86]" href="/es/blog" data-discover="true">Blog</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/dev-dashboard-stats" data-discover="true">Estadísticas de desarrollo</a><span aria-hidden="true" class="h-5 w-px bg-[#5C7B71]/50 flex-shrink-0"></span><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/archives" data-discover="true">Archivo</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/categories" data-discover="true">Categorías</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/tags" data-discover="true">Etiquetas</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/feed.xml" data-discover="true">Atom</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><div class="mb-6"><a class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" href="/es/blog" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">← Volver al blog</span></a></div><header class="mb-8 pb-6 border-b border-[#5C7B71]/40"><h1 class="text-3xl md:text-4xl font-bold text-[#1F3D36] leading-tight mb-4">Silverpoint, artículo 18: exportar un gráfico a SVG</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-[#3E6A5E]">11 de noviembre de 2026</span><span class="text-[#5C7B71] mx-2"> • </span><span class="sp-ui sp-tag sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" data-tone="2" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span part="sp-tone" data-tone="2" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label sp-ui-plate">Tutorial Silverpoint</span></span><span class="text-[#5C7B71] mx-2"> • </span><span class="text-[#3E6A5E] inline-flex gap-1">Por<span class="text-[#1F3D36] font-medium">Ernesto Crespo</span></span></div></header><article class="post-content" lang="es"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Un gráfico del panel de operaciones vive dentro de la página. A veces hay que sacarlo: pegarlo en un informe, en una presentación o en un correo. Este artículo de la serie sobre <style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" href="https://github.com/ecrespo/silverpoint" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint</a> añade al gráfico de tráfico un botón que lo descarga como un archivo SVG.</p>
+<p class="rt-Text css-56tzch">Cada gráfico es ya un SVG, así que exportarlo no exige dibujarlo otra vez. Lo que hay que saber es qué lleva ese SVG y qué no lleva, porque fuera de la aplicación no tiene la hoja de estilos de la página.</p>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h2 class="rt-Heading rt-r-size-5 css-jzlc08">El manejador del gráfico</h2>
+<p class="rt-Text css-56tzch">Cada gráfico expone un manejador con dos métodos:</p>
+<table><thead><tr><th>Método</th><th>Qué devuelve</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code></td><td>El SVG del gráfico tal como está dibujado, como texto</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">getGeometry()</code></td><td>La geometría del dibujo: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">viewBox</code>, trazos, textos y áreas activas</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">La forma de los objetos que devuelve <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">getGeometry()</code> es interna: la especificación de la librería avisa de que puede cambiar en una versión menor. Para exportar basta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code>.</p>
+<p class="rt-Text css-56tzch">Cómo se llega al manejador depende del framework:</p>
+<table><thead><tr><th>Framework</th><th>Cómo se obtiene</th></tr></thead><tbody><tr><td>React</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ref</code> con el tipo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ChartHandle</code></td></tr><tr><td>Vue</td><td>Una referencia de plantilla, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">InstanceType&lt;typeof SpLineChart&gt;</code></td></tr><tr><td>Angular</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">viewChild.required&lt;SpLineChart&gt;(&#x27;chart&#x27;)</code>; el componente tiene los dos métodos</td></tr><tr><td>Reflex</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">get_svg</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">download_svg</code>, que lo llaman en el navegador</td></tr></tbody></table>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Un botón de descarga en React</h2>
+<p class="rt-Text css-56tzch">El punto de partida es la aplicación de React del <a data-accent-color="" href="/es/blog/silverpoint_serie_3" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 03</a>, con las filas por hora en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/traffic.ts</code>. Una función descarga un texto como archivo: crea un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Blob</code>, le da una URL temporal y hace clic en un enlace con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">download</code>. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/download.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">export function downloadSvg(svg: string, filename: string) {
+  const url = URL.createObjectURL(new Blob([svg], { type: &#x27;image/svg+xml&#x27; }));
+  const link = document.createElement(&#x27;a&#x27;);
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}</code></pre>
+<p class="rt-Text css-56tzch">Y la página, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/App.tsx</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { useRef } from &#x27;react&#x27;;
+import { LineChart, type ChartHandle } from &#x27;@silverpoint/react/line-chart&#x27;;
+import { downloadSvg } from &#x27;./download&#x27;;
+import { traffic } from &#x27;./traffic&#x27;;
+
+export default function App() {
+  const chart = useRef&lt;ChartHandle&gt;(null);
+
+  const exportChart = () =&gt; {
+    const svg = chart.current?.toSVGString();
+    if (svg) downloadSvg(svg, &#x27;hits-per-hour.svg&#x27;);
+  };
+
+  return (
+    &lt;main style={{ maxWidth: 640 }}&gt;
+      &lt;LineChart
+        ref={chart}
+        id=&quot;hits&quot;
+        data={traffic}
+        xKey=&quot;hour&quot;
+        valueKey=&quot;hits&quot;
+        title=&quot;Hits per hour&quot;
+        badge=&quot;Today&quot;
+        height={200}
+      /&gt;
+      &lt;button type=&quot;button&quot; onClick={exportChart}&gt;
+        Download SVG
+      &lt;/button&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ref={chart}</code> deja el manejador en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">chart.current</code>. Al pulsar «Download SVG», el navegador guarda <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hits-per-hour.svg</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">El problema: el archivo sale negro</h2>
+<p class="rt-Text css-56tzch">Abre ese archivo en el navegador, sin la aplicación, y verás un bloque negro con letras de sistema. A la izquierda de la imagen está ese archivo; a la derecha, el mismo después del arreglo de la sección siguiente:</p>
+<img src="/blog/images/silverpoint-serie-18.png" alt="El SVG exportado abierto solo: a la izquierda tal como sale de toSVGString(), relleno de negro; a la derecha con la hoja de estilos del estilo base dentro, igual que en la página"/>
+<p class="rt-Text css-56tzch">La razón está en lo que contiene. El SVG no lleva colores: cada trazo tiene un atributo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">part</code> y los colores salen de la hoja de estilos del estilo base, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/grounds/styles.css</code>, a través de variables CSS. En la página esa hoja está cargada. Fuera de ella, el SVG cae en los valores por defecto del navegador: relleno negro y la fuente del sistema.</p>
+<p class="rt-Text css-56tzch">La documentación de la exportación y la de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">download_svg</code> en Reflex dicen que el SVG lleva sus propios colores. Con silverpoint 0.9.2 no es así: lo comprobé en los cuatro frameworks, y el archivo sale igual de negro en todos.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">El arreglo: la hoja de estilos dentro del SVG</h2>
+<p class="rt-Text css-56tzch">La hoja de estilos del estilo base está preparada para esto: sus reglas también se aplican a un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;svg&gt;</code> suelto, sin la página alrededor. Basta con meterla dentro del propio SVG, justo después de la etiqueta de apertura. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/standalone.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import groundCss from &#x27;@silverpoint/grounds/styles.css?raw&#x27;;
+
+export function standaloneSvg(svg: string): string {
+  const open = svg.indexOf(&#x27;&gt;&#x27;) + 1;
+  return `${svg.slice(0, open)}&lt;style&gt;&lt;![CDATA[${groundCss}]]&gt;&lt;/style&gt;${svg.slice(open)}`;
+}</code></pre>
+<p class="rt-Text css-56tzch">Dos detalles:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code></strong> es la forma de Vite de importar un archivo como texto. La hoja ocupa unos 11,7 kB y queda dentro del bundle de la aplicación.</li>
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;![CDATA[…]]&gt;</code></strong> es obligatorio. La hoja tiene un comentario que contiene <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;svg&gt;</code>, y sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">CDATA</code> el archivo deja de ser XML válido: el navegador muestra un error en lugar del gráfico.</li>
+</ul>
+<p class="rt-Text css-56tzch">La función de descarga pasa por <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">standaloneSvg</code> antes de crear el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Blob</code>. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/download.ts</code> queda así:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { standaloneSvg } from &#x27;./standalone&#x27;;
+
+export function downloadSvg(svg: string, filename: string) {
+  const file = new Blob([standaloneSvg(svg)], { type: &#x27;image/svg+xml&#x27; });
+  const url = URL.createObjectURL(file);
+  const link = document.createElement(&#x27;a&#x27;);
+  link.href = url;
+  link.download = filename;
+  link.click();
+  URL.revokeObjectURL(url);
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">App.tsx</code> no cambia. Ahora el archivo descargado, abierto solo, se ve como la mitad derecha de la imagen. Es lo mismo que hace la herramienta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">render_chart</code> del servidor MCP de silverpoint, que veremos en el artículo 28: pone la hoja del estilo base en la raíz del <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;svg&gt;</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Qué contiene el SVG</h2>
+<p class="rt-Text css-56tzch">Estas son las partes del archivo, abierto en un editor:</p>
+<table><thead><tr><th>Parte</th><th>Qué es</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;svg viewBox width height&gt;</code></td><td>El tamaño medido en la página: 640 × 260 px aquí, 200 de área de dibujo más la tarjeta</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">class</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-substrate</code></td><td>El estilo base y el sustrato, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-ground-silverpoint</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">cream</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">role=&quot;img&quot;</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">aria-labelledby</code></td><td>El nombre accesible, que apunta a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;title&gt;</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;desc&gt;</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;title&gt;</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;desc&gt;</code></td><td>El título y la descripción que el gráfico genera con sus datos</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;defs&gt;</code></td><td>Los patrones del tramado</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;path part data-role&gt;</code></td><td>Los trazos: el marco, la cuadrícula, la línea y sus puntos</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;text part&gt;</code></td><td>Los textos: título, etiqueta y marcas de los ejes</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;style&gt;</code></td><td>La hoja del estilo base, después del arreglo</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Es la tarjeta completa, con el título, la etiqueta «Today» y el marco.</p>
+<p class="rt-Text css-56tzch">Y esto es lo que no lleva:</p>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong>La tabla de datos.</strong> La tabla oculta para lectores de pantalla está fuera del SVG. El archivo conserva el nombre y la descripción.</li>
+<li class="css-jzlc08"><strong>La fuente.</strong> Las letras piden EB Garamond. Si el equipo que abre el archivo no la tiene, usa la siguiente de la lista: Iowan Old Style o Georgia.</li>
+<li class="css-jzlc08"><strong>La animación de entrada.</strong> Va en la hoja de estilos, así que el archivo la repite al abrirse. Si haces una captura nada más abrirlo, puede salir a medio dibujar.</li>
+</ul>
+<p class="rt-Text css-56tzch">Una paleta propia sí viaja. Si el gráfico tiene <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">palette</code>, o la recibe del proveedor, el SVG la escribe como variables en el atributo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">style</code> de la raíz, y la hoja del estilo base las usa.</p>
+<p class="rt-Text css-56tzch">El tamaño del archivo es el del gráfico en la página. Si quieres otro tamaño en el archivo, fija <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">height</code> en el gráfico. Con el arreglo, el archivo de este ejemplo pasa de 4,5 kB a 15,3 kB.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">En Vue</h2>
+<p class="rt-Text css-56tzch">El mismo botón, con una referencia de plantilla. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/standalone.ts</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/download.ts</code> son los de React. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/App.vue</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&lt;script setup lang=&quot;ts&quot;&gt;
+import { ref } from &#x27;vue&#x27;;
+import { SpLineChart } from &#x27;@silverpoint/vue/line-chart&#x27;;
+import { downloadSvg } from &#x27;./download&#x27;;
+import { traffic } from &#x27;./traffic&#x27;;
+
+const chart = ref&lt;InstanceType&lt;typeof SpLineChart&gt;&gt;();
+
+function exportChart() {
+  const svg = chart.value?.toSVGString();
+  if (svg) downloadSvg(svg, &#x27;hits-per-hour.svg&#x27;);
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;main style=&quot;max-width: 640px&quot;&gt;
+    &lt;SpLineChart
+      ref=&quot;chart&quot;
+      id=&quot;hits&quot;
+      :data=&quot;traffic&quot;
+      x-key=&quot;hour&quot;
+      value-key=&quot;hits&quot;
+      title=&quot;Hits per hour&quot;
+      badge=&quot;Today&quot;
+      :height=&quot;200&quot;
+    /&gt;
+    &lt;button type=&quot;button&quot; @click=&quot;exportChart&quot;&gt;Download SVG&lt;/button&gt;
+  &lt;/main&gt;
+&lt;/template&gt;</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ref=&quot;chart&quot;</code> enlaza la referencia <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">chart</code> con el componente, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">InstanceType&lt;typeof SpLineChart&gt;</code> le da el tipo con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">En Angular</h2>
+<p class="rt-Text css-56tzch">Angular no entiende <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code>. Su forma de importar un archivo como texto es el atributo de importación <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">loader: &#x27;text&#x27;</code>. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/standalone.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import groundCss from &#x27;@silverpoint/grounds/styles.css&#x27; with { loader: &#x27;text&#x27; };
+
+export function standaloneSvg(svg: string): string {
+  const open = svg.indexOf(&#x27;&gt;&#x27;) + 1;
+  return `${svg.slice(0, open)}&lt;style&gt;&lt;![CDATA[${groundCss}]]&gt;&lt;/style&gt;${svg.slice(open)}`;
+}</code></pre>
+<p class="rt-Text css-56tzch">TypeScript no sabe qué tipo tiene un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">.css</code> importado así, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ng build</code> falla con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">TS2307</code>. Lo resuelve una declaración, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/text-imports.d.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">declare module &#x27;*.css&#x27; {
+  const text: string;
+  export default text;
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/download.ts</code> es el de React. Y el componente, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/app.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Component, viewChild } from &#x27;@angular/core&#x27;;
+import { SpLineChart } from &#x27;@silverpoint/angular/line-chart&#x27;;
+import { downloadSvg } from &#x27;./download&#x27;;
+import { traffic } from &#x27;./traffic&#x27;;
+
+@Component({
+  selector: &#x27;app-root&#x27;,
+  imports: [SpLineChart],
+  template: `
+    &lt;main style=&quot;max-width: 640px&quot;&gt;
+      &lt;sp-line-chart
+        #chart
+        id=&quot;hits&quot;
+        [data]=&quot;traffic&quot;
+        xKey=&quot;hour&quot;
+        valueKey=&quot;hits&quot;
+        title=&quot;Hits per hour&quot;
+        badge=&quot;Today&quot;
+        [height]=&quot;200&quot;
+      /&gt;
+      &lt;button type=&quot;button&quot; (click)=&quot;exportChart()&quot;&gt;Download SVG&lt;/button&gt;
+    &lt;/main&gt;
+  `,
+})
+export class App {
+  protected readonly traffic = traffic;
+  private readonly chart = viewChild.required&lt;SpLineChart&gt;(&#x27;chart&#x27;);
+
+  protected exportChart() {
+    downloadSvg(this.chart().toSVGString(), &#x27;hits-per-hour.svg&#x27;);
+  }
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">#chart</code> marca el gráfico, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">viewChild.required</code> lo devuelve como <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SpLineChart</code>, el componente con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">getGeometry()</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">En Reflex</h2>
+<p class="rt-Text css-56tzch">Reflex trae dos ayudas para esto en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">reflex_silverpoint_react</code>:</p>
+<table><thead><tr><th>Función</th><th>Qué hace</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">download_svg(id, filename)</code></td><td>Llama a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code> en el navegador y descarga el archivo</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">get_svg(id, handler)</code></td><td>Llama a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code> y envía el texto a un evento del backend</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Las dos buscan el gráfico por su <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code>, así que el gráfico necesita uno. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">download_svg</code> es lo más corto:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import reflex as rx
+from reflex_silverpoint_react import download_svg, line_chart
+
+from .traffic import TRAFFIC
+
+
+def index() -&gt; rx.Component:
+    return rx.box(
+        line_chart(
+            id=&quot;hits&quot;,
+            data=TRAFFIC,
+            x_key=&quot;hour&quot;,
+            value_key=&quot;hits&quot;,
+            title=&quot;Hits per hour&quot;,
+            badge=&quot;Today&quot;,
+            height=200,
+        ),
+        rx.el.button(
+            &quot;Download SVG&quot;,
+            type=&quot;button&quot;,
+            on_click=download_svg(&quot;hits&quot;, &quot;hits-per-hour.svg&quot;),
+        ),
+        max_width=&quot;640px&quot;,
+        padding=&quot;32px&quot;,
+    )
+
+
+app = rx.App()
+app.add_page(index)</code></pre>
+<p class="rt-Text css-56tzch">Descarga el mismo SVG que los otros tres, sin la hoja de estilos: también sale negro fuera de la aplicación. Para añadirla, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">get_svg</code> manda el SVG al backend, que la inserta y devuelve el archivo con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">rx.download</code>. La hoja va copiada en el proyecto, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data/silverpoint-grounds.css</code>, desde <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">.web/node_modules/@silverpoint/grounds/dist/styles.css</code>. Cópiala otra vez cuando actualices el paquete. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops_panel/ops_panel.py</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from pathlib import Path
+
+import reflex as rx
+from reflex_silverpoint_react import get_svg, line_chart
+
+from .traffic import TRAFFIC
+
+GROUND_CSS = Path(&quot;data/silverpoint-grounds.css&quot;)
+
+
+class ExportState(rx.State):
+    @rx.event
+    def save_svg(self, svg: str | None):
+        if not svg:
+            return
+        css = GROUND_CSS.read_text()
+        start = svg.index(&quot;&gt;&quot;) + 1
+        standalone = f&quot;{svg[:start]}&lt;style&gt;&lt;![CDATA[{css}]]&gt;&lt;/style&gt;{svg[start:]}&quot;
+        return rx.download(data=standalone, filename=&quot;hits-per-hour.svg&quot;)
+
+
+def index() -&gt; rx.Component:
+    return rx.box(
+        line_chart(
+            id=&quot;hits&quot;,
+            data=TRAFFIC,
+            x_key=&quot;hour&quot;,
+            value_key=&quot;hits&quot;,
+            title=&quot;Hits per hour&quot;,
+            badge=&quot;Today&quot;,
+            height=200,
+        ),
+        rx.el.button(
+            &quot;Download SVG&quot;,
+            type=&quot;button&quot;,
+            on_click=get_svg(&quot;hits&quot;, ExportState.save_svg),
+        ),
+        max_width=&quot;640px&quot;,
+        padding=&quot;32px&quot;,
+    )
+
+
+app = rx.App()
+app.add_page(index)</code></pre>
+<p class="rt-Text css-56tzch">El SVG viaja al backend y vuelve, unos 4,5 kB de ida y 15 kB de vuelta. Para un botón de descarga no importa.</p>
+<p class="rt-Text css-56tzch">Una diferencia de tamaño: en Reflex el gráfico mide 576 px de ancho, porque <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">max_width=&quot;640px&quot;</code> incluye los 32 px de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">padding</code> a cada lado. El archivo sale de 576 × 260.</p>
+<p class="rt-Text css-56tzch">Los cuatro archivos se comprobaron con Chrome sin interfaz: React, Vue y Angular descargan exactamente los mismos bytes, y el de Reflex es el mismo gráfico a 576 px. Abiertos solos, sin la hoja se ven negros y con ella se ven como en la página.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Sin navegador</h2>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code> necesita el gráfico montado en una página. Para generar SVG en un servidor o en un script hay dos caminos: los gráficos de servidor de React, que son el tema del artículo siguiente, y la herramienta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">render_chart</code> del servidor MCP. Por dentro, los adaptadores usan funciones del paquete <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/grounds</code> que también funcionan sin DOM, pero la especificación no las incluye en la API pública: pueden cambiar sin aviso.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Problemas comunes</h2>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong>El archivo se ve negro.</strong> Le falta la hoja de estilos del estilo base. Añádela con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">standaloneSvg</code>.</li>
+<li class="css-jzlc08"><strong>El navegador muestra un error de XML al abrirlo.</strong> La hoja está dentro de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;style&gt;</code> sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">CDATA</code>.</li>
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString</code> es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">undefined</code>.</strong> El manejador aún no existe: el gráfico no se ha montado, o en Reflex el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">get_svg</code> no coincide con el del gráfico.</li>
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">TS2307</code> en Angular.</strong> Falta la declaración de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/text-imports.d.ts</code>.</li>
+<li class="css-jzlc08"><strong>El texto cambia de forma en otro equipo.</strong> El SVG no lleva la fuente. Si la forma de las letras importa, convierte el archivo a PNG o PDF en un equipo que tenga EB Garamond.</li>
+</ul>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que viene</h2>
+<p class="rt-Text css-56tzch">El <a data-accent-color="" href="/es/blog/silverpoint_serie_19" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 19</a> lleva el dibujo al servidor: los gráficos de servidor de React, el render en Vue y Angular, y por qué el mismo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> da el mismo dibujo en el servidor y en el navegador.</p>
+<p class="rt-Text css-56tzch">La <a data-accent-color="" href="https://silverpointweb.vercel.app/docs/export" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">guía de exportación</a> de la documentación describe el manejador de cada framework.</p></div></article></div></main><footer class="mt-auto w-full bg-[#DFF1EC] border-t border-[#5C7B71]/60"><div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 px-4 md:px-8 lg:px-16 py-3"><div class="flex flex-wrap items-center gap-x-4 gap-y-1"><span class="font-semibold text-[#1F3D36]">Ernesto Crespo</span><a aria-label="Enviar un correo a ecrespo@gmail.com" class="flex items-center gap-1.5 text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" href="mailto:ecrespo@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg><span>ecrespo@gmail.com</span></a></div><p class="text-sm text-gray-700"><span>Hecho con </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://www.python.org" target="_blank">Python</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://reflex.dev" target="_blank">Reflex</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://pypi.org/project/reflex-silverpoint-react/" target="_blank">reflex-silverpoint-react</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://tailwindcss.com" target="_blank">Tailwind CSS</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://docs.astral.sh/uv/" target="_blank">uv</a><span> · alojado en </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://vercel.com" target="_blank">Vercel</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://railway.com" target="_blank">Railway</a></p><nav aria-label="Redes sociales" class="flex items-center gap-4"><a aria-label="Medium (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Medium" href="https://seraph13.medium.com/" target="_blank"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"></path></svg></a><a aria-label="LinkedIn (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="LinkedIn" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg></a><a aria-label="Twitter (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Twitter" href="https://twitter.com/_seraph1" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg></a><a aria-label="GitHub (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitHub" href="https://github.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg></a><a aria-label="GitLab (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitLab" href="https://gitlab.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"></path></svg></a><a aria-label="Blog (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Blog" href="https://www.seraph.to/blog" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></nav></div><div class="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs text-gray-600 px-4 md:px-8 lg:px-16 py-2 border-t border-[#5C7B71]/40"><span>© 2026 Ernesto Crespo. Todos los derechos reservados.</span><span>Código fuente bajo la <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume/blob/main/LICENSE" target="_blank">licencia Apache 2.0</a> · <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume" target="_blank">Ver el código</a></span></div></footer></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a aria-label="Built with Reflex" href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><span class="css-vq6poo">Built with Reflex</span></div></a></div><script>((storageKey, restoreKey) => {
+		if (!window.history.state || !window.history.state.key) {
+			let key = Math.random().toString(32).slice(2);
+			window.history.replaceState({ key }, "");
+		}
+		try {
+			let storedY = JSON.parse(sessionStorage.getItem(storageKey) || "{}")[restoreKey || window.history.state.key];
+			if (typeof storedY === "number") window.scrollTo(0, storedY);
+		} catch (error) {
+			console.error(error);
+			sessionStorage.removeItem(storageKey);
+		}
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-79bae7fa.js";
+import * as route0 from "/assets/root-Bgm5wmoK.js";
+import * as route1 from "/assets/_es_._blog_._silverpoint_serie_18_._index-BQS0QZ0-.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[es].[blog].[silverpoint_serie_18]._index":route1};
+
+import("/assets/entry.client-CQq5RwJx.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

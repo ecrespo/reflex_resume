@@ -1,0 +1,539 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/silverpoint-serie-19.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="preload"/><title>Blog | Silverpoint, artículo 19: render en servidor y determinismo</title><meta content="Por qué un gráfico de silverpoint dibujado a mano sale igual en el servidor y en el navegador: la semilla que sale del id, los gráficos de servidor de React en Next.js, el render con Vue y Angular, lo que exporta Reflex, y los errores que rompen el determinismo." name="description"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-19.png" property="og:image"/><meta content="article" property="og:type"/><meta content="Ernesto Crespo" property="og:site_name"/><meta content="Silverpoint, artículo 19: render en servidor y determinismo" property="og:title"/><meta content="https://www.seraph.to/es/blog/silverpoint_serie_19" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="Silverpoint, artículo 19: render en servidor y determinismo" name="twitter:title"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-19.png" name="twitter:image"/><meta content="Por qué un gráfico de silverpoint dibujado a mano sale igual en el servidor y en el navegador: la semilla que sale del id, los gráficos de servidor de React en Next.js, el render con Vue y Angular, lo que exporta Reflex, y los errores que rompen el determinismo." property="og:description"/><meta content="Por qué un gráfico de silverpoint dibujado a mano sale igual en el servidor y en el navegador: la semilla que sale del id, los gráficos de servidor de React en Next.js, el render con Vue y Angular, lo que exporta Reflex, y los errores que rompen el determinismo." name="twitter:description"/><link rel="modulepreload" href="/assets/manifest-79bae7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-Bgm5wmoK.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D_wAYqau.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BtA91MnZ.js"/><link rel="modulepreload" href="/assets/_es_._blog_._silverpoint_serie_19_._index-CwTQRRIe.js"/><link rel="modulepreload" href="/assets/rss-p44Mj3iQ.js"/><link rel="modulepreload" href="/assets/one-dark-B4TnxH60.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || 'light';
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            body, .radix-themes {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --default-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --heading-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+            }
+            /* TimelineJS sets its own sans fonts; icons keep the tl-icons font. */
+            .tl-timeline :is(h1, h2, h3, h4, h5, h6, p, a, span, div, blockquote):not([class*="tl-icon"]),
+            .sp-timeline .tl-timeline h3.tl-headline-date {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif !important;
+            }
+            /* silverpoint's skin sets its display font on the slide arrows too,
+               which turns the tl-icons glyphs into empty boxes. */
+            .sp-timeline .tl-timeline div.tl-slidenav-icon {
+                font-family: 'tl-icons' !important;
+            }
+            /* silverpoint 0.8.0: the charts' screen-reader table and SpTable's
+               wrapper share the class `sp-table`, whose `th, td { text-align: right }`
+               then right-aligns every SpTable cell and defeats `align: "start"`. */
+            .sp-ui-table :is(th, td):not([data-align='end'], [data-align='center']) {
+                text-align: start;
+            }
+            /* Tags keep their hand-drawn frame but drop the hatched tone. */
+            .sp-tag > [part="sp-tone"] {
+                display: none;
+            }
+            /* Blog posts (`.post-content`): the site's inks on the cream page,
+               EB Garamond for prose, a monospace only for code. rx.markdown renders
+               Radix Themes elements (rt-Text, rt-Link, rt-Code) and the code
+               highlighter writes its colours inline, hence the specificity and the
+               few !important. Inks: theme.SITE_PALETTE. */
+            .post-content {
+                --post-ink: #1F3D36;
+                --post-muted: #3E6A5E;
+                --post-accent: #2F6F86;
+                --post-green: #2C6355;
+                --post-rule: #5C7B71;
+                --post-mint: #DFF1EC;
+                --post-paper: #FBF8EF;
+                color: var(--post-ink);
+                font-size: 1.125rem;
+                line-height: 1.75;
+                overflow-wrap: anywhere;
+            }
+            .post-content .prose {
+                max-width: none;
+            }
+            .post-content :is(h1, h2, h3, h4, h5, h6) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                color: var(--post-ink);
+                line-height: 1.25;
+                letter-spacing: normal;
+            }
+            .post-content h1 { font-size: 1.875rem; font-weight: 700; margin: 2.25rem 0 1rem; }
+            .post-content h2 {
+                font-size: 1.5rem; font-weight: 600; margin: 2rem 0 0.75rem;
+                padding-bottom: 0.35rem; border-bottom: 1px solid rgba(92, 123, 113, 0.35);
+            }
+            .post-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+            .post-content :is(h4, h5, h6) {
+                font-size: 1.1rem; font-weight: 600; font-style: italic; margin: 1.25rem 0 0.5rem;
+            }
+            .post-content :is(p, li, td, th, .rt-Text) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                font-size: 1.125rem;
+                line-height: 1.75;
+                color: var(--post-ink);
+            }
+            .post-content p { margin: 0 0 1.1rem; }
+            .post-content :is(strong, b) { font-weight: 600; color: var(--post-ink); }
+            .post-content :is(a, .rt-Link) {
+                color: var(--post-accent);
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+                text-decoration-color: rgba(47, 111, 134, 0.45);
+                transition: color 0.15s, text-decoration-color 0.15s;
+            }
+            .post-content :is(a, .rt-Link):hover {
+                color: var(--post-green);
+                text-decoration-color: currentColor;
+            }
+            .post-content :is(ul, ol) { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+            .post-content ul { list-style: disc; }
+            .post-content ol { list-style: decimal; }
+            .post-content li { margin: 0.3rem 0; padding-left: 0.25rem; }
+            .post-content li::marker { color: var(--post-green); }
+            .post-content li > :is(p, .rt-Text) { margin: 0; }
+            /* Inline code: a mint chip in the ink, without the backticks. */
+            .post-content :not(pre) > code,
+            .post-content .rt-Code {
+                font-family: 'Fira Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+                font-size: 0.8em;
+                font-weight: 400;
+                color: var(--post-ink);
+                background: var(--post-mint);
+                border: 1px solid rgba(92, 123, 113, 0.3);
+                border-radius: 3px;
+                padding: 0.05em 0.35em;
+            }
+            .post-content code::before,
+            .post-content code::after {
+                content: none !important;
+            }
+            /* Code blocks: paper with a hairline frame, like the site's cards. */
+            .post-content pre {
+                background: var(--post-paper) !important;
+                border: 1px solid var(--post-rule);
+                border-left: 3px solid var(--post-green);
+                border-radius: 4px !important;
+                padding: 1rem 1.25rem !important;
+                margin: 1.25rem 0 1.5rem !important;
+                font-size: 0.875rem;
+                line-height: 1.6 !important;
+                overflow-x: auto;
+            }
+            .post-content pre code {
+                background: transparent !important;
+                border: 0;
+                padding: 0;
+                font-size: inherit;
+                white-space: pre !important;
+            }
+            .post-content blockquote {
+                margin: 1.25rem 0;
+                padding: 0.5rem 1.25rem;
+                border-left: 3px solid var(--post-green);
+                background: rgba(223, 241, 236, 0.45);
+                color: var(--post-muted);
+                font-style: italic;
+            }
+            .post-content blockquote :is(p, .rt-Text) { color: var(--post-muted); margin: 0.25rem 0; }
+            .post-content img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+                background: #FFFFFF;
+            }
+            .post-content iframe {
+                display: block;
+                max-width: 100%;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+            }
+            .post-content table {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                border-collapse: collapse;
+                margin: 1.25rem 0 1.5rem;
+            }
+            .post-content :is(th, td) {
+                border: 1px solid rgba(92, 123, 113, 0.45);
+                padding: 0.4rem 0.75rem;
+                text-align: left;
+                vertical-align: top;
+                font-size: 1rem;
+            }
+            .post-content th { background: var(--post-mint); font-weight: 600; }
+            .post-content tr:nth-child(even) td { background: rgba(251, 248, 239, 0.7); }
+            .post-content hr {
+                border: 0;
+                border-top: 1px solid rgba(92, 123, 113, 0.45);
+                margin: 2rem 0;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/createLucideIcon-Be6mvhFH.css"/><link rel="stylesheet" href="/assets/rss-DuxHUQw5.css"/><link rel="stylesheet" href="/assets/one-dark-DEcVZfaU.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false" data-react-aria-top-layer="true"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen bg-[#f5f5dc]" lang="es"><div class="md:hidden"><dialog class="sp-ui sp-drawer sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="2" id="mobile-sidebar--dialog" aria-label="Perfil" data-state="closed" data-side="start" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-drawer-extent:15rem"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-overlay-header"><button type="button" class="sp-ui-icon-button" aria-label="Close"><svg part="sp-mark" data-glyph="cross" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5,4.5L11.5,11.5M11.5,4.5L4.5,11.5"></path></svg></button></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-overlay-body"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><style data-emotion="css 1qt3stu">.css-1qt3stu{hreflang:en;}</style><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_19" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></div></dialog></div><aside class="hidden md:flex w-60 min-h-screen bg-[#DFF1EC] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-[#5C7B71]/60"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_19" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"><nav class="w-full h-14 bg-[#DFF1EC] flex items-center flex-shrink-0 z-20 sticky top-0 border-b border-[#5C7B71]/60"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><div class="md:hidden flex-shrink-0"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" type="button" aria-label="Abrir el menú del perfil" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Menú</span></button></div><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es" data-discover="true">Inicio</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/resume" data-discover="true">Currículum</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/portfolio" data-discover="true">Portafolio</a><a aria-current="page" class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap underline decoration-2 text-[#2F6F86]" href="/es/blog" data-discover="true">Blog</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/dev-dashboard-stats" data-discover="true">Estadísticas de desarrollo</a><span aria-hidden="true" class="h-5 w-px bg-[#5C7B71]/50 flex-shrink-0"></span><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/archives" data-discover="true">Archivo</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/categories" data-discover="true">Categorías</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/tags" data-discover="true">Etiquetas</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/feed.xml" data-discover="true">Atom</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><div class="mb-6"><a class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" href="/es/blog" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">← Volver al blog</span></a></div><header class="mb-8 pb-6 border-b border-[#5C7B71]/40"><h1 class="text-3xl md:text-4xl font-bold text-[#1F3D36] leading-tight mb-4">Silverpoint, artículo 19: render en servidor y determinismo</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-[#3E6A5E]">11 de noviembre de 2026</span><span class="text-[#5C7B71] mx-2"> • </span><span class="sp-ui sp-tag sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" data-tone="2" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span part="sp-tone" data-tone="2" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label sp-ui-plate">Tutorial Silverpoint</span></span><span class="text-[#5C7B71] mx-2"> • </span><span class="text-[#3E6A5E] inline-flex gap-1">Por<span class="text-[#1F3D36] font-medium">Ernesto Crespo</span></span></div></header><article class="post-content" lang="es"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Un gráfico de silverpoint parece dibujado a mano: las líneas tiemblan un poco y el marco no es un rectángulo perfecto. Si ese temblor fuera aleatorio, el servidor dibujaría un gráfico y el navegador otro, y la página mostraría un salto al cargar o un error de hidratación.</p>
+<p class="rt-Text css-56tzch">Este artículo de la serie sobre <style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" href="https://github.com/ecrespo/silverpoint" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint</a> explica por qué no pasa, y cómo renderizar el panel de operaciones en el servidor con Next.js, Vue y Angular. También qué hace Reflex.</p>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h2 class="rt-Heading rt-r-size-5 css-jzlc08">El temblor sale de una semilla</h2>
+<p class="rt-Text css-56tzch">El trazo a mano no usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Math.random()</code>. Sale de una semilla, y la semilla sale del <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> del gráfico. El <a data-accent-color="" href="/es/blog/silverpoint_serie_7" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 07</a> lo presentó entre las props comunes:</p>
+<table><thead><tr><th>Prop</th><th>Qué hace</th><th>Por defecto</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code></td><td>Un identificador estable</td><td>Uno generado de forma determinista</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">seed</code></td><td>La semilla del trazo a mano</td><td>Derivada de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code></td></tr></tbody></table>
+<p class="rt-Text css-56tzch">La especificación de la librería lo fija con cuatro reglas:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<li class="css-jzlc08">La semilla se deriva del <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> de forma estable.</li>
+<li class="css-jzlc08">El código que dibuja no puede llamar a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Math.random()</code> ni a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Date.now()</code>. Una comprobación en la integración continua lo impide.</li>
+<li class="css-jzlc08">Las mismas entradas dan el mismo SVG, byte a byte.</li>
+<li class="css-jzlc08">Las coordenadas se redondean a dos decimales, para que dos motores de JavaScript no difieran en el último dígito.</li>
+</ul>
+<p class="rt-Text css-56tzch">La consecuencia es la que importa aquí: <strong>el mismo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code>, con los mismos datos y el mismo tamaño, da los mismos trazos en el servidor y en el navegador</strong>, y en cada ejecución. El servidor manda un SVG, el navegador dibuja otro idéntico encima y no hay nada que corregir.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Los gráficos de servidor de React</h2>
+<p class="rt-Text css-56tzch">En React, cada gráfico tiene dos entradas:</p>
+<table><thead><tr><th>Entrada</th><th>Qué es</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/react/line-chart</code></td><td>El componente de cliente: mide su contenedor, responde al puntero y al teclado</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/react/server/line-chart</code></td><td>Un componente de servidor: SVG puro, sin JavaScript en el navegador</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">El de servidor no mide nada, porque en el servidor no hay contenedor. Por eso necesita tres props que el de cliente no exige: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">height</code>. Si falta alguna, el gráfico avisa con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP002</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP003</code>. Tampoco acepta eventos: no hay JavaScript que los escuche.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Un gráfico de servidor en Next.js</h2>
+<p class="rt-Text css-56tzch">Una aplicación nueva de Next.js con el App Router:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npx create-next-app@latest ops-panel
+cd ops-panel
+npm install @silverpoint/react @silverpoint/grounds @silverpoint/fonts</code></pre>
+<p class="rt-Text css-56tzch">Las filas por hora del <a data-accent-color="" href="/es/blog/silverpoint_serie_3" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 03</a> van en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/traffic.ts</code>. Las hojas de estilos se cargan una vez, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/layout.tsx</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import type { Metadata } from &#x27;next&#x27;;
+import &#x27;@silverpoint/fonts/fonts.css&#x27;;
+import &#x27;@silverpoint/grounds/styles.css&#x27;;
+import &#x27;./globals.css&#x27;;
+
+export const metadata: Metadata = {
+  title: &#x27;Operations panel&#x27;,
+};
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
+  return (
+    &lt;html lang=&quot;en&quot;&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/globals.css</code> deja el fondo y el margen:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">body {
+  margin: 0;
+  padding: 32px;
+  background: #f4f1ea;
+}</code></pre>
+<p class="rt-Text css-56tzch">Y la página, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/page.tsx</code>, que es un componente de servidor:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { LineChart } from &#x27;@silverpoint/react/server/line-chart&#x27;;
+import { traffic } from &#x27;./traffic&#x27;;
+
+export default function Page() {
+  return (
+    &lt;main&gt;
+      &lt;LineChart
+        id=&quot;hits&quot;
+        width={640}
+        height={200}
+        data={traffic}
+        xKey=&quot;hour&quot;
+        valueKey=&quot;hits&quot;
+        title=&quot;Hits per hour&quot;
+        badge=&quot;Today&quot;
+      /&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch">Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">npm run build</code>, Next.js trata la página como estática y guarda su HTML. Ese HTML ya contiene el gráfico entero: el SVG con sus trazos, la tabla de datos oculta y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-status=&quot;ready&quot;</code>. La página no carga en el navegador ni una línea de JavaScript de silverpoint.</p>
+<p class="rt-Text css-56tzch">Comparé el SVG de esa página con el que exporta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">toSVGString()</code> en el navegador, con la aplicación de Vite del <a data-accent-color="" href="/es/blog/silverpoint_serie_18" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 18</a> y el mismo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code>, ancho y alto. Son idénticos, byte a byte: Node y Chrome dibujan los mismos trazos.</p>
+<img src="/blog/images/silverpoint-serie-19.png" alt="El panel de operaciones renderizado en el servidor por Next.js con el Dashboard de servidor: el tráfico por hora en dos columnas y los errores por hora en una"/>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Un panel en el servidor</h2>
+<p class="rt-Text css-56tzch">El <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dashboard</code> del <a data-accent-color="" href="/es/blog/silverpoint_serie_13" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 13</a> también tiene su entrada de servidor, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/react/server/dashboard</code>. Las filas ganan el campo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">errors</code>, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/ops.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">export type HourlyOps = {
+  hour: string;
+  hits: number;
+  errors: number;
+};
+
+export const ops: HourlyOps[] = [
+  { hour: &#x27;00&#x27;, hits: 18, errors: 2 },
+  { hour: &#x27;01&#x27;, hits: 14, errors: 1 },
+  { hour: &#x27;02&#x27;, hits: 11, errors: 1 },
+  { hour: &#x27;03&#x27;, hits: 9, errors: 0 },
+  { hour: &#x27;04&#x27;, hits: 11, errors: 1 },
+  { hour: &#x27;05&#x27;, hits: 16, errors: 1 },
+  { hour: &#x27;06&#x27;, hits: 24, errors: 2 },
+  { hour: &#x27;07&#x27;, hits: 33, errors: 4 },
+  { hour: &#x27;08&#x27;, hits: 42, errors: 6 },
+  { hour: &#x27;09&#x27;, hits: 51, errors: 7 },
+  { hour: &#x27;10&#x27;, hits: 58, errors: 9 },
+  { hour: &#x27;11&#x27;, hits: 62, errors: 8 },
+  { hour: &#x27;12&#x27;, hits: 64, errors: 11 },
+  { hour: &#x27;13&#x27;, hits: 61, errors: 9 },
+  { hour: &#x27;14&#x27;, hits: 59, errors: 7 },
+  { hour: &#x27;15&#x27;, hits: 58, errors: 6 },
+  { hour: &#x27;16&#x27;, hits: 57, errors: 6 },
+  { hour: &#x27;17&#x27;, hits: 52, errors: 5 },
+  { hour: &#x27;18&#x27;, hits: 47, errors: 4 },
+  { hour: &#x27;19&#x27;, hits: 41, errors: 4 },
+  { hour: &#x27;20&#x27;, hits: 30, errors: 3 },
+  { hour: &#x27;21&#x27;, hits: 26, errors: 2 },
+  { hour: &#x27;22&#x27;, hits: 22, errors: 2 },
+  { hour: &#x27;23&#x27;, hits: 20, errors: 2 },
+];</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/panel/page.tsx</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { BarChart } from &#x27;@silverpoint/react/server/bar-chart&#x27;;
+import { Dashboard, DashboardCell, type DashboardLayout } from &#x27;@silverpoint/react/server/dashboard&#x27;;
+import { LineChart } from &#x27;@silverpoint/react/server/line-chart&#x27;;
+import { ops } from &#x27;../ops&#x27;;
+
+const layout: DashboardLayout = {
+  columns: { sm: 1, md: 2, lg: 3 },
+  cells: [{ id: &#x27;hits&#x27;, colSpan: { md: 2, lg: 2 } }, { id: &#x27;errors&#x27; }],
+};
+
+export default function PanelPage() {
+  return (
+    &lt;Dashboard id=&quot;ops&quot; title=&quot;Operations&quot; layout={layout} ssrWidth={1200}&gt;
+      &lt;DashboardCell cell=&quot;hits&quot;&gt;
+        &lt;LineChart data={ops} xKey=&quot;hour&quot; valueKey=&quot;hits&quot; title=&quot;Hits per hour&quot; /&gt;
+      &lt;/DashboardCell&gt;
+      &lt;DashboardCell cell=&quot;errors&quot;&gt;
+        &lt;BarChart data={ops} xKey=&quot;hour&quot; valueKey=&quot;errors&quot; title=&quot;Errors per hour&quot; /&gt;
+      &lt;/DashboardCell&gt;
+    &lt;/Dashboard&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch">Aquí los gráficos no llevan <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code> ni <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">height</code>. Los da el panel: cada gráfico recibe el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> de su celda, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops--hits</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops--errors</code>, y el tamaño de la celda. Es la imagen de arriba.</p>
+<p class="rt-Text css-56tzch">El servidor no conoce el ancho de la ventana, así que el panel supone uno: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ssrWidth</code>, 1200 px por defecto. Con 1200 px el panel está en el tamaño <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lg</code>, de tres columnas, y el servidor dibuja el tráfico a 794,67 px y los errores a 389,33 px.</p>
+<p class="rt-Text css-56tzch">Un panel de servidor no tiene <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">link</code>: los gráficos enlazados necesitan JavaScript en el navegador. Si quieres enlazarlos, usa el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dashboard</code> de cliente.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Gráficos de cliente en Next.js</h2>
+<p class="rt-Text css-56tzch">Un gráfico interactivo es un componente de cliente. Va en su propio archivo con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&#x27;use client&#x27;</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/live/hits-chart.tsx</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&#x27;use client&#x27;;
+
+import { useState } from &#x27;react&#x27;;
+import type { ActiveItem } from &#x27;@silverpoint/core&#x27;;
+import { LineChart } from &#x27;@silverpoint/react/line-chart&#x27;;
+import { traffic } from &#x27;../traffic&#x27;;
+
+export function HitsChart() {
+  const [active, setActive] = useState&lt;ActiveItem | null&gt;(null);
+
+  return (
+    &lt;&gt;
+      &lt;LineChart
+        id=&quot;hits&quot;
+        data={traffic}
+        xKey=&quot;hour&quot;
+        valueKey=&quot;hits&quot;
+        title=&quot;Hits per hour&quot;
+        badge=&quot;Today&quot;
+        height={200}
+        onActiveChange={setActive}
+      /&gt;
+      &lt;p&gt;{active ? `${String(active.datum.hour)}:00, ${active.value}k hits` : &#x27;Point at an hour&#x27;}&lt;/p&gt;
+    &lt;/&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch">Y la página que lo usa, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">app/live/page.tsx</code>, sigue siendo de servidor:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { HitsChart } from &#x27;./hits-chart&#x27;;
+
+export default function LivePage() {
+  return (
+    &lt;main style={{ maxWidth: 640 }}&gt;
+      &lt;HitsChart /&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch">Next.js también renderiza este gráfico en el servidor, pero sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code> no sabe su tamaño. El HTML lleva un hueco con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-status=&quot;deferred&quot;</code> y un SVG vacío. En el navegador, el gráfico mide su contenedor y dibuja: 640 × 260 px, sin errores en la consola, y al pasar el puntero el texto cambia a «11:00, 62k hits».</p>
+<p class="rt-Text css-56tzch">Si quieres el dibujo en el HTML también en un gráfico de cliente, dale <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code>. Con los dos fijos, los trazos del servidor y los del navegador coinciden.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que rompe el determinismo</h2>
+<p class="rt-Text css-56tzch">Probé tres variantes del gráfico de cliente con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">next dev</code>:</p>
+<table><thead><tr><th><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code></th><th>Resultado</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id=&quot;hits&quot;</code></td><td>Los mismos trazos en el servidor y en el navegador, sin avisos</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id={`hits-${Math.random().toString(36).slice(2)}`}</code></td><td>Next.js avisa de un valor inestable de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Math.random()</code> y React, de atributos que no coinciden al hidratar; 6 de los 9 trazos cambian</td></tr><tr><td>Sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code></td><td>El gráfico usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">useId</code> de React y genera el mismo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> en los dos lados</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Math.random()</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Date.now()</code> da una semilla distinta en cada render: el servidor y el navegador dibujan dos gráficos distintos. El aviso de React lo dice claro: esas diferencias no se corrigen, y la página queda con atributos de un render y de otro mezclados.</p>
+<p class="rt-Text css-56tzch">Sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> funciona, pero el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> generado depende de la posición del gráfico en el árbol de componentes. Si mueves el gráfico, cambia su dibujo. Un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> explícito y estable es lo más seguro.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">En Vue</h2>
+<p class="rt-Text css-56tzch">Vue renderiza en el servidor con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">createSSRApp</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">renderToString</code>. Sobre la aplicación de Vite del <a data-accent-color="" href="/es/blog/silverpoint_serie_4" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 04</a>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/App.vue</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&lt;script setup lang=&quot;ts&quot;&gt;
+import { SpLineChart } from &#x27;@silverpoint/vue/line-chart&#x27;;
+import { traffic } from &#x27;./traffic&#x27;;
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;main style=&quot;max-width: 640px&quot;&gt;
+    &lt;SpLineChart
+      id=&quot;hits&quot;
+      :width=&quot;640&quot;
+      :data=&quot;traffic&quot;
+      x-key=&quot;hour&quot;
+      value-key=&quot;hits&quot;
+      title=&quot;Hits per hour&quot;
+      badge=&quot;Today&quot;
+      :height=&quot;200&quot;
+    /&gt;
+  &lt;/main&gt;
+&lt;/template&gt;</code></pre>
+<p class="rt-Text css-56tzch">La entrada del servidor, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/entry-server.ts</code>, instala el proveedor con el idioma de los números, como en el <a data-accent-color="" href="/es/blog/silverpoint_serie_9" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 09</a>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { createSSRApp } from &#x27;vue&#x27;;
+import { renderToString } from &#x27;vue/server-renderer&#x27;;
+import { provideSilverpoint } from &#x27;@silverpoint/vue&#x27;;
+import App from &#x27;./App.vue&#x27;;
+
+export function render(): Promise&lt;string&gt; {
+  return renderToString(createSSRApp(App).use(provideSilverpoint({ locale: &#x27;en&#x27; })));
+}</code></pre>
+<p class="rt-Text css-56tzch">Para probarla, Vite la compila para Node y un script la ejecuta. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">render.mjs</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { render } from &#x27;./dist-server/entry-server.js&#x27;;
+
+console.log(await render());</code></pre>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npx vite build --ssr src/entry-server.ts --outDir dist-server
+node render.mjs</code></pre>
+<p class="rt-Text css-56tzch">Sale el HTML del gráfico con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-status=&quot;ready&quot;</code> y un SVG de 640 × 260 px. Sus trazos son los mismos que los del gráfico de React del servidor y que los del navegador. Dos ejecuciones dan exactamente el mismo HTML.</p>
+<p class="rt-Text css-56tzch">Como en React, sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code> el gráfico sale en el estado <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">deferred</code>, sin trazos, y se dibuja al montarse en el navegador. Nuxt usa este mismo mecanismo, pero la documentación de silverpoint no lo da como integración comprobada.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">En Angular</h2>
+<p class="rt-Text css-56tzch">En Angular no hay nada específico de silverpoint. Sobre la aplicación del <a data-accent-color="" href="/es/blog/silverpoint_serie_5" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 05</a>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npx ng add @angular/ssr</code></pre>
+<p class="rt-Text css-56tzch">El comando crea <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/server.ts</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/main.server.ts</code>, pone <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&quot;outputMode&quot;: &quot;server&quot;</code> en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">angular.json</code> y añade <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">provideClientHydration()</code> a la configuración. Por defecto, todas las rutas se prerenderizan al compilar. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/app.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Component } from &#x27;@angular/core&#x27;;
+import { SpLineChart } from &#x27;@silverpoint/angular/line-chart&#x27;;
+import { traffic } from &#x27;./traffic&#x27;;
+
+@Component({
+  selector: &#x27;app-root&#x27;,
+  imports: [SpLineChart],
+  template: `
+    &lt;main style=&quot;max-width: 640px&quot;&gt;
+      &lt;sp-line-chart
+        id=&quot;hits&quot;
+        [width]=&quot;640&quot;
+        [data]=&quot;traffic&quot;
+        xKey=&quot;hour&quot;
+        valueKey=&quot;hits&quot;
+        title=&quot;Hits per hour&quot;
+        badge=&quot;Today&quot;
+        [height]=&quot;200&quot;
+      /&gt;
+    &lt;/main&gt;
+  `,
+})
+export class App {
+  protected readonly traffic = traffic;
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ng build</code> prerenderiza la ruta y deja el HTML en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">dist/ops-panel/browser/index.html</code>. El gráfico va dentro, listo, con los mismos trazos que en React y Vue. Sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[width]</code>, sale <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">deferred</code>, como en los otros dos.</p>
+<p class="rt-Text css-56tzch">En Angular, un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> escrito como atributo también queda en el elemento <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp-line-chart</code>. Los elementos internos del gráfico llevan el <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> con un sufijo, como <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hits-title</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hits-desc</code>, así que no se repiten.</p>
+<p class="rt-Text css-56tzch">Para servirlo:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">NG_ALLOWED_HOSTS=localhost node dist/ops-panel/server/server.mjs</code></pre>
+<p class="rt-Text css-56tzch">Sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">NG_ALLOWED_HOSTS</code>, el servidor de Angular responde con un error 400 a <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">localhost</code>: solo atiende a los nombres de servidor que conoce, como protección. En producción, pon tu dominio. En el navegador, la página hidrata con el gráfico listo y sin errores en la consola.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">En Reflex</h2>
+<p class="rt-Text css-56tzch">Reflex compila las páginas a una aplicación de React, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">reflex export --frontend-only</code> genera una versión estática: este blog se publica así. La documentación de silverpoint dice que en Reflex los gráficos se dibujan en el cliente. La exportación, sin embargo, prerenderiza cada página a HTML, y el gráfico se comporta como un gráfico de cliente de React en Next.js.</p>
+<p class="rt-Text css-56tzch">Con el gráfico del <a data-accent-color="" href="/es/blog/silverpoint_serie_6" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 06</a>, sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code>, el HTML exportado lleva el gráfico en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">deferred</code> y un SVG vacío. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops_panel/ops_panel.py</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import reflex as rx
+from reflex_silverpoint_react import line_chart
+
+from .traffic import TRAFFIC
+
+
+def index() -&gt; rx.Component:
+    return rx.box(
+        line_chart(
+            id=&quot;hits&quot;,
+            width=640,
+            data=TRAFFIC,
+            x_key=&quot;hour&quot;,
+            value_key=&quot;hits&quot;,
+            title=&quot;Hits per hour&quot;,
+            badge=&quot;Today&quot;,
+            height=200,
+        ),
+        max_width=&quot;704px&quot;,
+        padding=&quot;32px&quot;,
+    )
+
+
+app = rx.App()
+app.add_page(index)</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">max_width</code> pasa a 704 px para que quepan los 640 px del gráfico y los 32 px de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">padding</code> a cada lado. El <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">index.html</code> exportado ya contiene el gráfico listo, con los mismos trazos que en React, Vue y Angular. Servido como archivos estáticos, sin backend, el gráfico se ve igual. La consola solo se queja de que no puede abrir el WebSocket del backend, lo esperado sin él.</p>
+<p class="rt-Text css-56tzch">En Reflex el determinismo también se nota fuera del primer render: un gráfico que se vuelve a montar con los mismos datos se dibuja igual, porque su <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> no cambia.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Problemas comunes</h2>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP002</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP003</code> en un gráfico de servidor.</strong> Le falta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">height</code>. Dentro de un <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Dashboard</code> de servidor, los pone el panel.</li>
+<li class="css-jzlc08"><strong>Un aviso de hidratación en Next.js.</strong> Algo del <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> cambia entre el servidor y el navegador: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Math.random()</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">Date.now()</code> o un dato que solo existe en uno de los dos.</li>
+<li class="css-jzlc08"><strong>El HTML tiene <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data-status=&quot;deferred&quot;</code> y ningún trazo.</strong> El gráfico no tenía <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code> en el servidor. Es correcto: se dibuja en el navegador. Si lo quieres en el HTML, fija <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code>.</li>
+<li class="css-jzlc08"><strong>Un 400 al servir Angular en local.</strong> Falta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">NG_ALLOWED_HOSTS</code>.</li>
+<li class="css-jzlc08"><strong>El panel de servidor se dibuja a otro ancho.</strong> Usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ssrWidth</code>, no el ancho real de la ventana.</li>
+</ul>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que viene</h2>
+<p class="rt-Text css-56tzch">El <a data-accent-color="" href="/es/blog/silverpoint_serie_20" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">artículo 20</a> alimenta el panel con datos en vivo y se ocupa del rendimiento.</p>
+<p class="rt-Text css-56tzch">La <a data-accent-color="" href="https://silverpointweb.vercel.app/docs/ssr" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">guía de render en servidor</a> de la documentación resume el caso de cada framework.</p></div></article></div></main><footer class="mt-auto w-full bg-[#DFF1EC] border-t border-[#5C7B71]/60"><div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 px-4 md:px-8 lg:px-16 py-3"><div class="flex flex-wrap items-center gap-x-4 gap-y-1"><span class="font-semibold text-[#1F3D36]">Ernesto Crespo</span><a aria-label="Enviar un correo a ecrespo@gmail.com" class="flex items-center gap-1.5 text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" href="mailto:ecrespo@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg><span>ecrespo@gmail.com</span></a></div><p class="text-sm text-gray-700"><span>Hecho con </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://www.python.org" target="_blank">Python</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://reflex.dev" target="_blank">Reflex</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://pypi.org/project/reflex-silverpoint-react/" target="_blank">reflex-silverpoint-react</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://tailwindcss.com" target="_blank">Tailwind CSS</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://docs.astral.sh/uv/" target="_blank">uv</a><span> · alojado en </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://vercel.com" target="_blank">Vercel</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://railway.com" target="_blank">Railway</a></p><nav aria-label="Redes sociales" class="flex items-center gap-4"><a aria-label="Medium (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Medium" href="https://seraph13.medium.com/" target="_blank"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"></path></svg></a><a aria-label="LinkedIn (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="LinkedIn" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg></a><a aria-label="Twitter (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Twitter" href="https://twitter.com/_seraph1" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg></a><a aria-label="GitHub (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitHub" href="https://github.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg></a><a aria-label="GitLab (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitLab" href="https://gitlab.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"></path></svg></a><a aria-label="Blog (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Blog" href="https://www.seraph.to/blog" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></nav></div><div class="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs text-gray-600 px-4 md:px-8 lg:px-16 py-2 border-t border-[#5C7B71]/40"><span>© 2026 Ernesto Crespo. Todos los derechos reservados.</span><span>Código fuente bajo la <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume/blob/main/LICENSE" target="_blank">licencia Apache 2.0</a> · <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume" target="_blank">Ver el código</a></span></div></footer></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a aria-label="Built with Reflex" href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><span class="css-vq6poo">Built with Reflex</span></div></a></div><script>((storageKey, restoreKey) => {
+		if (!window.history.state || !window.history.state.key) {
+			let key = Math.random().toString(32).slice(2);
+			window.history.replaceState({ key }, "");
+		}
+		try {
+			let storedY = JSON.parse(sessionStorage.getItem(storageKey) || "{}")[restoreKey || window.history.state.key];
+			if (typeof storedY === "number") window.scrollTo(0, storedY);
+		} catch (error) {
+			console.error(error);
+			sessionStorage.removeItem(storageKey);
+		}
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-79bae7fa.js";
+import * as route0 from "/assets/root-Bgm5wmoK.js";
+import * as route1 from "/assets/_es_._blog_._silverpoint_serie_19_._index-CwTQRRIe.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[es].[blog].[silverpoint_serie_19]._index":route1};
+
+import("/assets/entry.client-CQq5RwJx.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>

@@ -1,0 +1,560 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/silverpoint-serie-22.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="preload"/><title>Blog | Silverpoint, artículo 22: presentaciones en Markdown con gráficos vivos</title><meta content="SpDeck y @silverpoint/marp en React, Vue, Angular y Reflex: una presentación escrita en Markdown con la sintaxis de Marp, con gráficos de silverpoint vivos en bloques de código, directivas, teclado, fragmentos, eventos de página, los límites SP026 a SP029 y la línea de comandos de Marp." name="description"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-22.png" property="og:image"/><meta content="article" property="og:type"/><meta content="Ernesto Crespo" property="og:site_name"/><meta content="Silverpoint, artículo 22: presentaciones en Markdown con gráficos vivos" property="og:title"/><meta content="https://www.seraph.to/es/blog/silverpoint_serie_22" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="Silverpoint, artículo 22: presentaciones en Markdown con gráficos vivos" name="twitter:title"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-22.png" name="twitter:image"/><meta content="SpDeck y @silverpoint/marp en React, Vue, Angular y Reflex: una presentación escrita en Markdown con la sintaxis de Marp, con gráficos de silverpoint vivos en bloques de código, directivas, teclado, fragmentos, eventos de página, los límites SP026 a SP029 y la línea de comandos de Marp." property="og:description"/><meta content="SpDeck y @silverpoint/marp en React, Vue, Angular y Reflex: una presentación escrita en Markdown con la sintaxis de Marp, con gráficos de silverpoint vivos en bloques de código, directivas, teclado, fragmentos, eventos de página, los límites SP026 a SP029 y la línea de comandos de Marp." name="twitter:description"/><link rel="modulepreload" href="/assets/manifest-79bae7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-Bgm5wmoK.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D_wAYqau.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BtA91MnZ.js"/><link rel="modulepreload" href="/assets/_es_._blog_._silverpoint_serie_22_._index-DF7AFVJo.js"/><link rel="modulepreload" href="/assets/rss-p44Mj3iQ.js"/><link rel="modulepreload" href="/assets/one-dark-B4TnxH60.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || 'light';
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            body, .radix-themes {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --default-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --heading-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+            }
+            /* TimelineJS sets its own sans fonts; icons keep the tl-icons font. */
+            .tl-timeline :is(h1, h2, h3, h4, h5, h6, p, a, span, div, blockquote):not([class*="tl-icon"]),
+            .sp-timeline .tl-timeline h3.tl-headline-date {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif !important;
+            }
+            /* silverpoint's skin sets its display font on the slide arrows too,
+               which turns the tl-icons glyphs into empty boxes. */
+            .sp-timeline .tl-timeline div.tl-slidenav-icon {
+                font-family: 'tl-icons' !important;
+            }
+            /* silverpoint 0.8.0: the charts' screen-reader table and SpTable's
+               wrapper share the class `sp-table`, whose `th, td { text-align: right }`
+               then right-aligns every SpTable cell and defeats `align: "start"`. */
+            .sp-ui-table :is(th, td):not([data-align='end'], [data-align='center']) {
+                text-align: start;
+            }
+            /* Tags keep their hand-drawn frame but drop the hatched tone. */
+            .sp-tag > [part="sp-tone"] {
+                display: none;
+            }
+            /* Blog posts (`.post-content`): the site's inks on the cream page,
+               EB Garamond for prose, a monospace only for code. rx.markdown renders
+               Radix Themes elements (rt-Text, rt-Link, rt-Code) and the code
+               highlighter writes its colours inline, hence the specificity and the
+               few !important. Inks: theme.SITE_PALETTE. */
+            .post-content {
+                --post-ink: #1F3D36;
+                --post-muted: #3E6A5E;
+                --post-accent: #2F6F86;
+                --post-green: #2C6355;
+                --post-rule: #5C7B71;
+                --post-mint: #DFF1EC;
+                --post-paper: #FBF8EF;
+                color: var(--post-ink);
+                font-size: 1.125rem;
+                line-height: 1.75;
+                overflow-wrap: anywhere;
+            }
+            .post-content .prose {
+                max-width: none;
+            }
+            .post-content :is(h1, h2, h3, h4, h5, h6) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                color: var(--post-ink);
+                line-height: 1.25;
+                letter-spacing: normal;
+            }
+            .post-content h1 { font-size: 1.875rem; font-weight: 700; margin: 2.25rem 0 1rem; }
+            .post-content h2 {
+                font-size: 1.5rem; font-weight: 600; margin: 2rem 0 0.75rem;
+                padding-bottom: 0.35rem; border-bottom: 1px solid rgba(92, 123, 113, 0.35);
+            }
+            .post-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+            .post-content :is(h4, h5, h6) {
+                font-size: 1.1rem; font-weight: 600; font-style: italic; margin: 1.25rem 0 0.5rem;
+            }
+            .post-content :is(p, li, td, th, .rt-Text) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                font-size: 1.125rem;
+                line-height: 1.75;
+                color: var(--post-ink);
+            }
+            .post-content p { margin: 0 0 1.1rem; }
+            .post-content :is(strong, b) { font-weight: 600; color: var(--post-ink); }
+            .post-content :is(a, .rt-Link) {
+                color: var(--post-accent);
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+                text-decoration-color: rgba(47, 111, 134, 0.45);
+                transition: color 0.15s, text-decoration-color 0.15s;
+            }
+            .post-content :is(a, .rt-Link):hover {
+                color: var(--post-green);
+                text-decoration-color: currentColor;
+            }
+            .post-content :is(ul, ol) { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+            .post-content ul { list-style: disc; }
+            .post-content ol { list-style: decimal; }
+            .post-content li { margin: 0.3rem 0; padding-left: 0.25rem; }
+            .post-content li::marker { color: var(--post-green); }
+            .post-content li > :is(p, .rt-Text) { margin: 0; }
+            /* Inline code: a mint chip in the ink, without the backticks. */
+            .post-content :not(pre) > code,
+            .post-content .rt-Code {
+                font-family: 'Fira Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+                font-size: 0.8em;
+                font-weight: 400;
+                color: var(--post-ink);
+                background: var(--post-mint);
+                border: 1px solid rgba(92, 123, 113, 0.3);
+                border-radius: 3px;
+                padding: 0.05em 0.35em;
+            }
+            .post-content code::before,
+            .post-content code::after {
+                content: none !important;
+            }
+            /* Code blocks: paper with a hairline frame, like the site's cards. */
+            .post-content pre {
+                background: var(--post-paper) !important;
+                border: 1px solid var(--post-rule);
+                border-left: 3px solid var(--post-green);
+                border-radius: 4px !important;
+                padding: 1rem 1.25rem !important;
+                margin: 1.25rem 0 1.5rem !important;
+                font-size: 0.875rem;
+                line-height: 1.6 !important;
+                overflow-x: auto;
+            }
+            .post-content pre code {
+                background: transparent !important;
+                border: 0;
+                padding: 0;
+                font-size: inherit;
+                white-space: pre !important;
+            }
+            .post-content blockquote {
+                margin: 1.25rem 0;
+                padding: 0.5rem 1.25rem;
+                border-left: 3px solid var(--post-green);
+                background: rgba(223, 241, 236, 0.45);
+                color: var(--post-muted);
+                font-style: italic;
+            }
+            .post-content blockquote :is(p, .rt-Text) { color: var(--post-muted); margin: 0.25rem 0; }
+            .post-content img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+                background: #FFFFFF;
+            }
+            .post-content iframe {
+                display: block;
+                max-width: 100%;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+            }
+            .post-content table {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                border-collapse: collapse;
+                margin: 1.25rem 0 1.5rem;
+            }
+            .post-content :is(th, td) {
+                border: 1px solid rgba(92, 123, 113, 0.45);
+                padding: 0.4rem 0.75rem;
+                text-align: left;
+                vertical-align: top;
+                font-size: 1rem;
+            }
+            .post-content th { background: var(--post-mint); font-weight: 600; }
+            .post-content tr:nth-child(even) td { background: rgba(251, 248, 239, 0.7); }
+            .post-content hr {
+                border: 0;
+                border-top: 1px solid rgba(92, 123, 113, 0.45);
+                margin: 2rem 0;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-CqOvOnPK.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/createLucideIcon-Be6mvhFH.css"/><link rel="stylesheet" href="/assets/rss-DuxHUQw5.css"/><link rel="stylesheet" href="/assets/one-dark-DEcVZfaU.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false" data-react-aria-top-layer="true"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen bg-[#f5f5dc]" lang="es"><div class="md:hidden"><dialog class="sp-ui sp-drawer sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="2" id="mobile-sidebar--dialog" aria-label="Perfil" data-state="closed" data-side="start" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-drawer-extent:15rem"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-overlay-header"><button type="button" class="sp-ui-icon-button" aria-label="Close"><svg part="sp-mark" data-glyph="cross" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5,4.5L11.5,11.5M11.5,4.5L4.5,11.5"></path></svg></button></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-overlay-body"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><style data-emotion="css 1qt3stu">.css-1qt3stu{hreflang:en;}</style><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_22" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></div></dialog></div><aside class="hidden md:flex w-60 min-h-screen bg-[#DFF1EC] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-[#5C7B71]/60"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_22" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"><nav class="w-full h-14 bg-[#DFF1EC] flex items-center flex-shrink-0 z-20 sticky top-0 border-b border-[#5C7B71]/60"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><div class="md:hidden flex-shrink-0"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" type="button" aria-label="Abrir el menú del perfil" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Menú</span></button></div><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es" data-discover="true">Inicio</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/resume" data-discover="true">Currículum</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/portfolio" data-discover="true">Portafolio</a><a aria-current="page" class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap underline decoration-2 text-[#2F6F86]" href="/es/blog" data-discover="true">Blog</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/dev-dashboard-stats" data-discover="true">Estadísticas de desarrollo</a><span aria-hidden="true" class="h-5 w-px bg-[#5C7B71]/50 flex-shrink-0"></span><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/archives" data-discover="true">Archivo</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/categories" data-discover="true">Categorías</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/tags" data-discover="true">Etiquetas</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/feed.xml" data-discover="true">Atom</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><div class="mb-6"><a class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" href="/es/blog" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">← Volver al blog</span></a></div><header class="mb-8 pb-6 border-b border-[#5C7B71]/40"><h1 class="text-3xl md:text-4xl font-bold text-[#1F3D36] leading-tight mb-4">Silverpoint, artículo 22: presentaciones en Markdown con gráficos vivos</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-[#3E6A5E]">11 de noviembre de 2026</span><span class="text-[#5C7B71] mx-2"> • </span><span class="sp-ui sp-tag sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" data-tone="2" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span part="sp-tone" data-tone="2" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label sp-ui-plate">Tutorial Silverpoint</span></span><span class="text-[#5C7B71] mx-2"> • </span><span class="text-[#3E6A5E] inline-flex gap-1">Por<span class="text-[#1F3D36] font-medium">Ernesto Crespo</span></span></div></header><article class="post-content" lang="es"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">El panel de operaciones de la serie sobre <style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" href="https://github.com/ecrespo/silverpoint" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint</a> ya tiene gráficos, un panel, componentes y una línea de tiempo. Falta contarlo en la reunión de los lunes. Este último artículo del nivel 3 hace la revisión semanal de operaciones como una presentación escrita en Markdown, con los gráficos del panel dentro.</p>
+<p class="rt-Text css-56tzch">La sintaxis es la de <a data-accent-color="" href="https://marp.app/" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">Marp</a>: diapositivas separadas por <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">---</code>, directivas en comentarios HTML. silverpoint añade un tipo de bloque de código, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">silverpoint</code>, que se convierte en un gráfico vivo: con su descripción emergente, su tabla accesible y el entintado del estilo base.</p>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que vas a construir</h2>
+<p class="rt-Text css-56tzch">Una presentación de cuatro diapositivas: la portada, el tráfico por hora como gráfico de línea, una lista de lo que pasó en la semana y las ventas por canal como gráfico de anillo, esta última en cianotipia. Debajo, un texto dice en qué diapositiva estás.</p>
+<img src="/blog/images/silverpoint-serie-22.png" alt="La diapositiva Traffic de la revisión semanal: el gráfico de visitas por hora dentro de la diapositiva, el pie «Weekly operations review», el número 2/4 y los controles de la presentación"/>
+<p class="rt-Text css-56tzch">Las flechas del teclado pasan las diapositivas, y la dirección de la página guarda la diapositiva actual, como <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">#2</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que necesitas</h2>
+<p class="rt-Text css-56tzch">El proyecto de tu framework de los artículos 03 a 06. Los datos de los gráficos van dentro del Markdown, así que no hace falta el archivo de visitas.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">1. Instalar @silverpoint/marp</h2>
+<p class="rt-Text css-56tzch">El motor de las presentaciones está en su propio paquete, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/marp</code>, que trae Marpit, el núcleo de Marp. Es una dependencia opcional de los adaptadores. En React, Vue y Angular:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npm install @silverpoint/marp@^0.9.2</code></pre>
+<p class="rt-Text css-56tzch">En Reflex no hace falta: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sp_deck</code> lo instala y añade sus hojas de estilo.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">2. Las hojas de estilo</h2>
+<p class="rt-Text css-56tzch">Cuatro, en este orden: las fuentes, el estilo base, los componentes de interfaz y la de las presentaciones, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/marp/deck.css</code>.</p>
+<p class="rt-Text css-56tzch">En React, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/main.tsx</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { StrictMode } from &#x27;react&#x27;;
+import { createRoot } from &#x27;react-dom/client&#x27;;
+import &#x27;@silverpoint/fonts/fonts.css&#x27;;
+import &#x27;@silverpoint/grounds/styles.css&#x27;;
+import &#x27;@silverpoint/grounds/ui.css&#x27;;
+import &#x27;@silverpoint/marp/deck.css&#x27;;
+import &#x27;./index.css&#x27;;
+import App from &#x27;./App.tsx&#x27;;
+
+createRoot(document.getElementById(&#x27;root&#x27;)!).render(
+  &lt;StrictMode&gt;
+    &lt;App /&gt;
+  &lt;/StrictMode&gt;,
+);</code></pre>
+<p class="rt-Text css-56tzch">En Vue, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/main.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { createApp } from &#x27;vue&#x27;;
+import &#x27;@silverpoint/fonts/fonts.css&#x27;;
+import &#x27;@silverpoint/grounds/styles.css&#x27;;
+import &#x27;@silverpoint/grounds/ui.css&#x27;;
+import &#x27;@silverpoint/marp/deck.css&#x27;;
+import &#x27;./style.css&#x27;;
+import App from &#x27;./App.vue&#x27;;
+
+createApp(App).mount(&#x27;#app&#x27;);</code></pre>
+<p class="rt-Text css-56tzch">En Angular, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/styles.css</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">@import &#x27;@silverpoint/fonts/fonts.css&#x27;;
+@import &#x27;@silverpoint/grounds/styles.css&#x27;;
+@import &#x27;@silverpoint/grounds/ui.css&#x27;;
+@import &#x27;@silverpoint/marp/deck.css&#x27;;
+
+body {
+  margin: 0;
+  padding: 32px;
+  background: #f4f1ea;
+}</code></pre>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">3. La presentación en Markdown</h2>
+<p class="rt-Text css-56tzch">Crea <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/review.md</code> en React y Vue, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/review.md</code> en Angular u <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops_panel/review.md</code> en Reflex. Es el mismo archivo en los cuatro:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">---
+paginate: true
+footer: Weekly operations review
+---
+
+&lt;!-- _class: lead --&gt;
+
+# Weekly operations review
+
+The web service, week 45.
+
+---
+
+## Traffic
+
+```silverpoint
+{
+  &quot;chart&quot;: &quot;line-chart&quot;,
+  &quot;data&quot;: [
+    {&quot;hour&quot;: &quot;00&quot;, &quot;hits&quot;: 18},
+    {&quot;hour&quot;: &quot;01&quot;, &quot;hits&quot;: 14},
+    {&quot;hour&quot;: &quot;02&quot;, &quot;hits&quot;: 11},
+    {&quot;hour&quot;: &quot;03&quot;, &quot;hits&quot;: 9},
+    {&quot;hour&quot;: &quot;04&quot;, &quot;hits&quot;: 11},
+    {&quot;hour&quot;: &quot;05&quot;, &quot;hits&quot;: 16},
+    {&quot;hour&quot;: &quot;06&quot;, &quot;hits&quot;: 24},
+    {&quot;hour&quot;: &quot;07&quot;, &quot;hits&quot;: 33},
+    {&quot;hour&quot;: &quot;08&quot;, &quot;hits&quot;: 42},
+    {&quot;hour&quot;: &quot;09&quot;, &quot;hits&quot;: 51},
+    {&quot;hour&quot;: &quot;10&quot;, &quot;hits&quot;: 58},
+    {&quot;hour&quot;: &quot;11&quot;, &quot;hits&quot;: 62},
+    {&quot;hour&quot;: &quot;12&quot;, &quot;hits&quot;: 64},
+    {&quot;hour&quot;: &quot;13&quot;, &quot;hits&quot;: 61},
+    {&quot;hour&quot;: &quot;14&quot;, &quot;hits&quot;: 59},
+    {&quot;hour&quot;: &quot;15&quot;, &quot;hits&quot;: 58},
+    {&quot;hour&quot;: &quot;16&quot;, &quot;hits&quot;: 57},
+    {&quot;hour&quot;: &quot;17&quot;, &quot;hits&quot;: 52},
+    {&quot;hour&quot;: &quot;18&quot;, &quot;hits&quot;: 47},
+    {&quot;hour&quot;: &quot;19&quot;, &quot;hits&quot;: 41},
+    {&quot;hour&quot;: &quot;20&quot;, &quot;hits&quot;: 30},
+    {&quot;hour&quot;: &quot;21&quot;, &quot;hits&quot;: 26},
+    {&quot;hour&quot;: &quot;22&quot;, &quot;hits&quot;: 22},
+    {&quot;hour&quot;: &quot;23&quot;, &quot;hits&quot;: 20}
+  ],
+  &quot;props&quot;: {&quot;xKey&quot;: &quot;hour&quot;, &quot;valueKey&quot;: &quot;hits&quot;, &quot;title&quot;: &quot;Hits per hour&quot;, &quot;unit&quot;: &quot;thousands&quot;},
+  &quot;height&quot;: 360
+}
+```
+
+---
+
+## What happened
+
+* Release 2.2 put a CDN in front of the API
+* Errors peaked at 12:00, with 11 in the hour
+* Search stayed under its latency budget
+
+&lt;!-- Pause on the CDN: it explains the lower p95. --&gt;
+
+---
+
+&lt;!-- _ground: cyanotype --&gt;
+
+## Sales by channel
+
+```silverpoint
+{
+  &quot;chart&quot;: &quot;donut-chart&quot;,
+  &quot;data&quot;: [
+    {&quot;channel&quot;: &quot;Web&quot;, &quot;sales&quot;: 46},
+    {&quot;channel&quot;: &quot;App&quot;, &quot;sales&quot;: 31},
+    {&quot;channel&quot;: &quot;Partners&quot;, &quot;sales&quot;: 15},
+    {&quot;channel&quot;: &quot;Phone&quot;, &quot;sales&quot;: 8}
+  ],
+  &quot;props&quot;: {&quot;nameKey&quot;: &quot;channel&quot;, &quot;valueKey&quot;: &quot;sales&quot;, &quot;title&quot;: &quot;Sales by channel&quot;, &quot;centerLabel&quot;: &quot;thousand EUR&quot;},
+  &quot;height&quot;: 360
+}
+```</code></pre>
+<p class="rt-Text css-56tzch">Lo que hay en él:</p>
+<table><thead><tr><th>Elemento</th><th>Qué hace</th></tr></thead><tbody><tr><td>El bloque inicial entre <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">---</code></td><td>Las directivas globales: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">paginate</code> numera las diapositivas y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">footer</code> pone el pie en todas</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">---</code></td><td>Separa dos diapositivas</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;!-- _class: lead --&gt;</code></td><td>Una directiva de una sola diapositiva: el guion bajo la limita a esa. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lead</code> centra la portada</td></tr><tr><td>Un bloque de código <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">silverpoint</code></td><td>Un gráfico vivo: un objeto JSON con el gráfico, sus filas y sus props</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;!-- Pause on the CDN… --&gt;</code></td><td>Un comentario que no es una directiva es una nota del presentador</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;!-- _ground: cyanotype --&gt;</code></td><td>Cambia el estilo base solo en esa diapositiva</td></tr></tbody></table>
+<h3 class="rt-Heading rt-r-size-4 css-jzlc08">Las directivas</h3>
+<p class="rt-Text css-56tzch">silverpoint añade tres directivas a las de Marpit: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ground</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">substrate</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">mode</code>, con sus formas de una sola diapositiva, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">_ground</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">_substrate</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">_mode</code>. Las de Marpit también funcionan: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">theme</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">class</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">paginate</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">header</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">footer</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">backgroundColor</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">backgroundImage</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">color</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">size</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">headingDivider</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lang</code>.</p>
+<p class="rt-Text css-56tzch">Las clases de diapositiva son cuatro: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lead</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">invert</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">plate</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hatched</code>.</p>
+<p class="rt-Text css-56tzch">El HTML del Markdown nunca se dibuja: los comentarios se leen como directivas o notas, y el resto del HTML se ignora.</p>
+<h3 class="rt-Heading rt-r-size-4 css-jzlc08">Los bloques de gráfico</h3>
+<table><thead><tr><th>Clave</th><th>Qué es</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">chart</code></td><td>El gráfico, por su nombre en el catálogo: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">line-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">donut-chart</code>…</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">data</code></td><td>Las filas</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">props</code></td><td>Las props del gráfico, con sus nombres de React: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">xKey</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">valueKey</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">nameKey</code>…</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">width</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">height</code></td><td>El tamaño; el alto es 360 por defecto</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code></td><td>El identificador del gráfico; por defecto, el de la presentación, la diapositiva y el orden del gráfico</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ground</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">substrate</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">mode</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">palette</code></td><td>El estilo de ese gráfico; si no los pones, hereda los de su diapositiva</td></tr></tbody></table>
+<h3 class="rt-Heading rt-r-size-4 css-jzlc08">Los fragmentos</h3>
+<p class="rt-Text css-56tzch">Cada elemento de una lista es un fragmento. Al llegar a la diapositiva What happened, la lista está oculta, y cada pulsación de la flecha muestra un elemento. Con los tres a la vista, la siguiente pulsación pasa a la diapositiva siguiente.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">4. En React</h2>
+<p class="rt-Text css-56tzch">Vite carga el Markdown como texto con el sufijo <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">?raw</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { useState } from &#x27;react&#x27;;
+import { SpDeck } from &#x27;@silverpoint/react/deck&#x27;;
+import markdown from &#x27;./review.md?raw&#x27;;
+
+export default function App() {
+  const [page, setPage] = useState(1);
+  const [total, setTotal] = useState(0);
+
+  return (
+    &lt;main style={{ maxWidth: 960 }}&gt;
+      &lt;SpDeck
+        markdown={markdown}
+        page={page}
+        onPageChange={(change) =&gt; {
+          setPage(change.page);
+          setTotal(change.total);
+        }}
+        onReady={(ready) =&gt; setTotal(ready.total)}
+        hash={true}
+      /&gt;
+      &lt;p&gt;
+        Slide {page} of {total}
+      &lt;/p&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">page</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onPageChange</code> hacen de la página un estado controlado: el componente avisa del cambio y tú decides la página. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onPageChange</code> recibe <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">{ page, total }</code>, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onReady</code> recibe <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">{ total }</code> cuando la presentación está lista. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hash</code>, la dirección de la página lleva el número de la diapositiva.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">5. En Vue</h2>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&lt;script setup lang=&quot;ts&quot;&gt;
+import { ref } from &#x27;vue&#x27;;
+import { SpDeck } from &#x27;@silverpoint/vue/deck&#x27;;
+import markdown from &#x27;./review.md?raw&#x27;;
+
+const page = ref(1);
+const total = ref(0);
+
+function onReady(ready: { total: number }) {
+  total.value = ready.total;
+}
+&lt;/script&gt;
+
+&lt;template&gt;
+  &lt;main style=&quot;max-width: 960px&quot;&gt;
+    &lt;SpDeck :markdown=&quot;markdown&quot; v-model:page=&quot;page&quot; :hash=&quot;true&quot; @ready=&quot;onReady&quot; /&gt;
+    &lt;p&gt;Slide {{ page }} of {{ total }}&lt;/p&gt;
+  &lt;/main&gt;
+&lt;/template&gt;</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">v-model:page</code> hace lo mismo que <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">page</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onPageChange</code> en React. Los demás eventos son emisiones: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@page-change</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@fragment-change</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@ready</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">6. En Angular</h2>
+<p class="rt-Text css-56tzch">Angular no carga Markdown por defecto. En <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">angular.json</code>, dentro de las <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">options</code> de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">build</code>, dile que cargue los <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">.md</code> como texto:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">&quot;loader&quot;: {
+  &quot;.md&quot;: &quot;text&quot;
+},
+&quot;allowedCommonJsDependencies&quot;: [
+  &quot;@marp-team/marpit&quot;
+]</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">allowedCommonJsDependencies</code> calla el aviso de que Marpit no es un módulo ESM. Para que TypeScript acepte la importación, crea <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/markdown.d.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">declare module &#x27;*.md&#x27; {
+  const markdown: string;
+  export default markdown;
+}</code></pre>
+<p class="rt-Text css-56tzch">Y el componente, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/app/app.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { Component, signal } from &#x27;@angular/core&#x27;;
+import { SpDeckComponent } from &#x27;@silverpoint/angular/deck&#x27;;
+import markdown from &#x27;./review.md&#x27;;
+
+@Component({
+  selector: &#x27;app-root&#x27;,
+  imports: [SpDeckComponent],
+  template: `
+    &lt;main style=&quot;max-width: 960px&quot;&gt;
+      @defer {
+        &lt;sp-deck
+          [markdown]=&quot;markdown&quot;
+          [page]=&quot;page()&quot;
+          (pageChange)=&quot;page.set($event.page)&quot;
+          (ready)=&quot;total.set($event.total)&quot;
+          [hash]=&quot;true&quot;
+        /&gt;
+      } @placeholder {
+        &lt;p&gt;Loading the deck…&lt;/p&gt;
+      }
+      &lt;p&gt;Slide {{ page() }} of {{ total() }}&lt;/p&gt;
+    &lt;/main&gt;
+  `,
+})
+export class App {
+  protected readonly markdown = markdown;
+  protected readonly page = signal(1);
+  protected readonly total = signal(0);
+}</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">(pageChange)</code> recibe <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">{ page, total }</code>, como en React y Vue. El bloque <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@defer</code> no es obligatorio, pero hace falta con el presupuesto por defecto de Angular: sin él, el motor de las presentaciones va en el paquete inicial, que pasa de 1 MB y la compilación de producción falla. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@defer</code>, el paquete inicial se queda en 420 kB y la presentación se carga aparte.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">7. En Reflex</h2>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from pathlib import Path
+
+import reflex as rx
+from reflex_silverpoint_react import sp_deck
+
+MARKDOWN = Path(__file__).with_name(&quot;review.md&quot;).read_text()
+
+
+class DeckState(rx.State):
+    page: int = 1
+    total: int = 0
+
+    @rx.event
+    def set_page(self, page: int, total: int):
+        self.page = page
+        self.total = total
+
+    @rx.event
+    def set_total(self, total: int):
+        self.total = total
+
+
+def index() -&gt; rx.Component:
+    return rx.box(
+        sp_deck(
+            MARKDOWN,
+            page=DeckState.page,
+            on_page_change=DeckState.set_page,
+            on_ready=DeckState.set_total,
+            hash=True,
+        ),
+        rx.text(&quot;Slide &quot;, DeckState.page, &quot; of &quot;, DeckState.total),
+        max_width=&quot;960px&quot;,
+        padding=&quot;32px&quot;,
+    )
+
+
+app = rx.App()
+app.add_page(index)</code></pre>
+<p class="rt-Text css-56tzch">El Markdown se lee una vez, al importar el módulo. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">on_page_change</code> llama al backend con la página y el total, y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">on_ready</code> con el total. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hash=True</code>, la página vive también en la dirección, como en los otros tres.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">El teclado</h2>
+<p class="rt-Text css-56tzch">Con el foco en la presentación:</p>
+<table><thead><tr><th>Teclas</th><th>Qué hacen</th></tr></thead><tbody><tr><td>Flecha derecha, flecha abajo, Av Pág, Espacio, Intro</td><td>El paso siguiente: un fragmento o la diapositiva siguiente</td></tr><tr><td>Flecha izquierda, flecha arriba, Re Pág, Mayús + Espacio</td><td>El paso anterior</td></tr><tr><td>Inicio, Fin</td><td>La primera y la última diapositiva</td></tr><tr><td>o</td><td>La vista general de todas las diapositivas</td></tr><tr><td>f</td><td>Pantalla completa</td></tr><tr><td>n</td><td>Las notas del presentador</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Las teclas que se escriben en un campo de formulario no mueven la presentación. En pantallas táctiles, deslizar el dedo en horizontal también pasa las diapositivas.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Los eventos</h2>
+<table><thead><tr><th>Evento</th><th>Qué lleva</th><th>React</th><th>Vue</th><th>Angular</th><th>Reflex</th></tr></thead><tbody><tr><td>Cambio de página</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">page</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">total</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onPageChange</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">v-model:page</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@page-change</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">(pageChange)</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">on_page_change</code></td></tr><tr><td>Cambio de fragmento</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">page</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">step</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">steps</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onFragmentChange</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@fragment-change</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">(fragmentChange)</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">on_fragment_change</code></td></tr><tr><td>Lista</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">total</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">onReady</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@ready</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">(ready)</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">on_ready</code></td></tr></tbody></table>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Los límites y los avisos</h2>
+<table><thead><tr><th>Código</th><th>Cuándo</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP026</code></td><td>Un bloque de gráfico no es válido: su JSON, su gráfico, una prop, un tamaño o un error del gráfico. La diapositiva muestra el error en su lugar</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP027</code></td><td>Una directiva tiene un valor desconocido. Se mantiene el heredado</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP028</code></td><td>La página está fuera de la presentación. Se ajusta a la más cercana</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP029</code></td><td>El Markdown supera un límite: 512 KB, 300 diapositivas o 60 bloques de gráfico. Se dibuja hasta el límite</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Con el servidor MCP de silverpoint conectado, la herramienta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">validate_deck</code> revisa el Markdown antes de abrirlo. Con un estilo base que no existe, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">_ground: sepia</code>, y una prop que el gráfico de línea no declara, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">colour</code>, devolvió dos avisos:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<li class="css-jzlc08"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP027</code>: «Slide 2: ground &quot;sepia&quot; is not a registered ground; the inherited value holds.»</li>
+<li class="css-jzlc08"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP026</code>: «Chart fence on slide 2: line-chart does not declare &quot;colour&quot;.»</li>
+</ul>
+<p class="rt-Text css-56tzch">Con la presentación de este artículo, no devuelve ninguno. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">render_deck</code> devuelve la presentación como un documento HTML independiente.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Marp CLI</h2>
+<p class="rt-Text css-56tzch">La misma presentación se puede convertir sin aplicación, con la línea de comandos de Marp y el motor de silverpoint. Los fondos y los gráficos salen como SVG estático:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">npx @marp-team/marp-cli --engine @silverpoint/marp/cli review.md</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/marp</code> trae también el tema como hoja de estilo, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/marp/theme.css</code>, para Marp CLI con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">--theme</code> o para la extensión de Marp para VS Code. Con el tema solo, sin el motor, la presentación pierde los fondos generados y los bloques <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">silverpoint</code> se ven como código.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">El tamaño</h2>
+<p class="rt-Text css-56tzch">El motor de las presentaciones incluye Marpit y su intérprete de Markdown. En React, la compilación da un paquete de 856 kB, 272 kB comprimido, y Vite avisa de que pasa de 500 kB. En Vue, 651 kB, 210 kB comprimido. Los gráficos de los bloques se cargan aparte, cada uno en su fragmento, solo si la presentación los usa. Si la presentación no está en la primera página de tu aplicación, cárgala con una importación dinámica, como hace <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@defer</code> en Angular.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Problemas comunes</h2>
+<ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong>La compilación no encuentra <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/marp</code>.</strong> No está instalado: es una dependencia opcional.</li>
+<li class="css-jzlc08"><strong>Un bloque de gráfico se ve como código.</strong> El bloque no se llama <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">silverpoint</code>, o estás usando el tema de Marp sin el motor de silverpoint.</li>
+<li class="css-jzlc08"><strong>En lugar del gráfico aparece un error y la consola muestra <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP026</code>.</strong> El JSON del bloque no es válido o tiene una prop que el gráfico no declara. <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">validate_deck</code> dice cuál.</li>
+<li class="css-jzlc08"><strong>Una directiva no hace nada y la consola muestra <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SP027</code>.</strong> Su valor no existe: usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">silverpoint</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">cyanotype</code>, uno de sus sustratos, e <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ink</code> o <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">precision</code>.</li>
+<li class="css-jzlc08"><strong>Las flechas no pasan las diapositivas.</strong> El foco no está en la presentación: haz clic en ella primero.</li>
+<li class="css-jzlc08"><strong>La compilación de Angular falla por el presupuesto.</strong> Usa <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@defer</code> o sube el presupuesto en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">angular.json</code>.</li>
+</ul>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que viene</h2>
+<p class="rt-Text css-56tzch">Con este artículo termina el nivel 3. El panel ya es una aplicación: componentes de interfaz, exportación, render en servidor, datos en vivo, una línea de tiempo y una presentación.</p>
+<p class="rt-Text css-56tzch">El nivel 4 junta todo en un proyecto final. Empieza por el artículo 23: el panel de operaciones completo en React con Next.js.</p></div></article></div></main><footer class="mt-auto w-full bg-[#DFF1EC] border-t border-[#5C7B71]/60"><div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 px-4 md:px-8 lg:px-16 py-3"><div class="flex flex-wrap items-center gap-x-4 gap-y-1"><span class="font-semibold text-[#1F3D36]">Ernesto Crespo</span><a aria-label="Enviar un correo a ecrespo@gmail.com" class="flex items-center gap-1.5 text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" href="mailto:ecrespo@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg><span>ecrespo@gmail.com</span></a></div><p class="text-sm text-gray-700"><span>Hecho con </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://www.python.org" target="_blank">Python</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://reflex.dev" target="_blank">Reflex</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://pypi.org/project/reflex-silverpoint-react/" target="_blank">reflex-silverpoint-react</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://tailwindcss.com" target="_blank">Tailwind CSS</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://docs.astral.sh/uv/" target="_blank">uv</a><span> · alojado en </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://vercel.com" target="_blank">Vercel</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://railway.com" target="_blank">Railway</a></p><nav aria-label="Redes sociales" class="flex items-center gap-4"><a aria-label="Medium (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Medium" href="https://seraph13.medium.com/" target="_blank"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"></path></svg></a><a aria-label="LinkedIn (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="LinkedIn" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg></a><a aria-label="Twitter (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Twitter" href="https://twitter.com/_seraph1" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg></a><a aria-label="GitHub (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitHub" href="https://github.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg></a><a aria-label="GitLab (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitLab" href="https://gitlab.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"></path></svg></a><a aria-label="Blog (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Blog" href="https://www.seraph.to/blog" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></nav></div><div class="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs text-gray-600 px-4 md:px-8 lg:px-16 py-2 border-t border-[#5C7B71]/40"><span>© 2026 Ernesto Crespo. Todos los derechos reservados.</span><span>Código fuente bajo la <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume/blob/main/LICENSE" target="_blank">licencia Apache 2.0</a> · <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume" target="_blank">Ver el código</a></span></div></footer></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a aria-label="Built with Reflex" href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><span class="css-vq6poo">Built with Reflex</span></div></a></div><script>((storageKey, restoreKey) => {
+		if (!window.history.state || !window.history.state.key) {
+			let key = Math.random().toString(32).slice(2);
+			window.history.replaceState({ key }, "");
+		}
+		try {
+			let storedY = JSON.parse(sessionStorage.getItem(storageKey) || "{}")[restoreKey || window.history.state.key];
+			if (typeof storedY === "number") window.scrollTo(0, storedY);
+		} catch (error) {
+			console.error(error);
+			sessionStorage.removeItem(storageKey);
+		}
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-79bae7fa.js";
+import * as route0 from "/assets/root-Bgm5wmoK.js";
+import * as route1 from "/assets/_es_._blog_._silverpoint_serie_22_._index-DF7AFVJo.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[es].[blog].[silverpoint_serie_22]._index":route1};
+
+import("/assets/entry.client-CQq5RwJx.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>
