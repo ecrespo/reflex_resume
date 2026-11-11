@@ -276,7 +276,7 @@ export default function App() {
 
 Tres decisiones de esta versión:
 
-* **Los datos se adaptan antes de llegar al gráfico.** La función `toHourly` convierte cada fila de la API en una fila del gráfico: la hora sale de la marca de tiempo y las peticiones pasan a miles. El gráfico no sabe nada de la API, y `src/traffic.ts` se queda solo con el tipo.
+* **Los datos se adaptan antes de llegar al gráfico.** La función `toHourly` convierte cada fila de la API en una fila del gráfico: la hora sale de la marca de tiempo y las peticiones pasan a miles. El gráfico no sabe nada de la API, y de `src/traffic.ts` solo se usa el tipo.
 * **Mientras no hay datos, no hay gráfico.** El componente muestra «Loading…» hasta que llega la respuesta. No le pases un array vacío: un gráfico con `data={[]}` dibuja su estado vacío, «No data», y no los datos de demostración.
 * **El gráfico se redibuja solo.** Cuando `setTraffic` cambia el estado, React vuelve a renderizar y silverpoint dibuja las nuevas filas. Si mañana cargas los datos cada minuto, no hay que hacer nada más.
 

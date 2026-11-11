@@ -276,7 +276,7 @@ export default function App() {
 
 Three decisions in this version:
 
-* **The data is adapted before it reaches the chart.** The `toHourly` function turns each API row into a chart row: the hour comes from the timestamp and the requests become thousands. The chart knows nothing about the API, and `src/traffic.ts` keeps only the type.
+* **The data is adapted before it reaches the chart.** The `toHourly` function turns each API row into a chart row: the hour comes from the timestamp and the requests become thousands. The chart knows nothing about the API, and only the type of `src/traffic.ts` is used.
 * **While there is no data, there is no chart.** The component shows "Loading…" until the response arrives. Do not pass it an empty array: a chart with `data={[]}` draws its empty state, "No data", not the demo data.
 * **The chart redraws on its own.** When `setTraffic` changes the state, React renders again and silverpoint draws the new rows. If tomorrow you load the data every minute, there is nothing else to do.
 
