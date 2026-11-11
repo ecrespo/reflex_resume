@@ -62,12 +62,19 @@ def split(text: str) -> tuple[dict[str, str], str]:
 
 def parts(body: str) -> tuple[list[str], str]:
     """Fenced code blocks (with their fence lines) and the prose outside them."""
-    blocks, prose, current, fenced = [], [], [], False
+    blocks, prose, current, fenced, opener = [], [], [], False, ""
     for line in body.splitlines():
-        if not fenced and OPEN_FENCE.match(line):
+        if not fenced and (match := OPEN_FENCE.match(line)):
             current.append(line.rstrip())
-            fenced = True
-        elif fenced and CLOSE_FENCE.match(line):
+            fenced, opener = True, match.group(1)
+        elif (
+            fenced
+            and (match := CLOSE_FENCE.match(line))
+            # A closing fence uses the opener's character, at least as many times:
+            # ```` can wrap a block that contains ``` fences.
+            and match.group(1)[0] == opener[0]
+            and len(match.group(1)) >= len(opener)
+        ):
             current.append(line.rstrip())
             blocks.append("\n".join(current))
             current, fenced = [], False
