@@ -1,0 +1,448 @@
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/silverpoint-serie-8.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-Dg19giuA.css" rel="preload"/><title>Blog | Silverpoint, artículo 08: cómo elegir el gráfico, las familias del catálogo</title><meta content="Un método en dos pasos para elegir entre los 60 gráficos de silverpoint: la forma de los datos y lo que el lector tiene que ver. Las nueve familias del catálogo y tres decisiones del panel de operaciones, con código en React y Reflex." name="description"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-8.png" property="og:image"/><meta content="article" property="og:type"/><meta content="Ernesto Crespo" property="og:site_name"/><meta content="Silverpoint, artículo 08: cómo elegir el gráfico, las familias del catálogo" property="og:title"/><meta content="https://www.seraph.to/es/blog/silverpoint_serie_8" property="og:url"/><meta content="summary_large_image" name="twitter:card"/><meta content="Silverpoint, artículo 08: cómo elegir el gráfico, las familias del catálogo" name="twitter:title"/><meta content="https://www.seraph.to/blog/images/silverpoint-serie-8.png" name="twitter:image"/><meta content="Un método en dos pasos para elegir entre los 60 gráficos de silverpoint: la forma de los datos y lo que el lector tiene que ver. Las nueve familias del catálogo y tres decisiones del panel de operaciones, con código en React y Reflex." property="og:description"/><meta content="Un método en dos pasos para elegir entre los 60 gráficos de silverpoint: la forma de los datos y lo que el lector tiene que ver. Las nueve familias del catálogo y tres decisiones del panel de operaciones, con código en React y Reflex." name="twitter:description"/><link rel="modulepreload" href="/assets/manifest-7f1303a4.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-Bj8irF5o.js"/><link rel="modulepreload" href="/assets/createLucideIcon-Q_xpsHbt.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-D_Atnr3z.js"/><link rel="modulepreload" href="/assets/_es_._blog_._silverpoint_serie_8_._index-DFMdmiF7.js"/><link rel="modulepreload" href="/assets/rss-DTSP7l0u.js"/><link rel="modulepreload" href="/assets/one-dark-CYtS0G8s.js"/><script>
+// Only run in browser environment, not during SSR
+if (typeof document !== 'undefined') {
+    try {
+        const theme = localStorage.getItem("theme") || 'light';
+        const systemPreference = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        const resolvedTheme = theme === "system" ? systemPreference : theme;
+
+        // Apply theme immediately - blocks until complete
+        // Use classList to avoid overwriting other classes
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(resolvedTheme);
+        document.documentElement.style.colorScheme = resolvedTheme;
+
+    } catch (e) {
+        // Fallback to system preference on any error (resolve "system" to actual theme)
+        const fallbackTheme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+        document.documentElement.classList.remove("light", "dark");
+        document.documentElement.classList.add(fallbackTheme);
+        document.documentElement.style.colorScheme = fallbackTheme;
+    }
+}
+</script><link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..700;1,400..700&amp;display=swap" rel="stylesheet"/><style>
+            html {
+                scroll-behavior: smooth;
+            }
+            body, .radix-themes {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --default-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                --heading-font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+            }
+            /* TimelineJS sets its own sans fonts; icons keep the tl-icons font. */
+            .tl-timeline :is(h1, h2, h3, h4, h5, h6, p, a, span, div, blockquote):not([class*="tl-icon"]),
+            .sp-timeline .tl-timeline h3.tl-headline-date {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif !important;
+            }
+            /* silverpoint's skin sets its display font on the slide arrows too,
+               which turns the tl-icons glyphs into empty boxes. */
+            .sp-timeline .tl-timeline div.tl-slidenav-icon {
+                font-family: 'tl-icons' !important;
+            }
+            /* silverpoint 0.8.0: the charts' screen-reader table and SpTable's
+               wrapper share the class `sp-table`, whose `th, td { text-align: right }`
+               then right-aligns every SpTable cell and defeats `align: "start"`. */
+            .sp-ui-table :is(th, td):not([data-align='end'], [data-align='center']) {
+                text-align: start;
+            }
+            /* Tags keep their hand-drawn frame but drop the hatched tone. */
+            .sp-tag > [part="sp-tone"] {
+                display: none;
+            }
+            /* Blog posts (`.post-content`): the site's inks on the cream page,
+               EB Garamond for prose, a monospace only for code. rx.markdown renders
+               Radix Themes elements (rt-Text, rt-Link, rt-Code) and the code
+               highlighter writes its colours inline, hence the specificity and the
+               few !important. Inks: theme.SITE_PALETTE. */
+            .post-content {
+                --post-ink: #1F3D36;
+                --post-muted: #3E6A5E;
+                --post-accent: #2F6F86;
+                --post-green: #2C6355;
+                --post-rule: #5C7B71;
+                --post-mint: #DFF1EC;
+                --post-paper: #FBF8EF;
+                color: var(--post-ink);
+                font-size: 1.125rem;
+                line-height: 1.75;
+                overflow-wrap: anywhere;
+            }
+            .post-content .prose {
+                max-width: none;
+            }
+            .post-content :is(h1, h2, h3, h4, h5, h6) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                color: var(--post-ink);
+                line-height: 1.25;
+                letter-spacing: normal;
+            }
+            .post-content h1 { font-size: 1.875rem; font-weight: 700; margin: 2.25rem 0 1rem; }
+            .post-content h2 {
+                font-size: 1.5rem; font-weight: 600; margin: 2rem 0 0.75rem;
+                padding-bottom: 0.35rem; border-bottom: 1px solid rgba(92, 123, 113, 0.35);
+            }
+            .post-content h3 { font-size: 1.25rem; font-weight: 600; margin: 1.5rem 0 0.5rem; }
+            .post-content :is(h4, h5, h6) {
+                font-size: 1.1rem; font-weight: 600; font-style: italic; margin: 1.25rem 0 0.5rem;
+            }
+            .post-content :is(p, li, td, th, .rt-Text) {
+                font-family: 'EB Garamond', 'Iowan Old Style', Georgia, serif;
+                font-size: 1.125rem;
+                line-height: 1.75;
+                color: var(--post-ink);
+            }
+            .post-content p { margin: 0 0 1.1rem; }
+            .post-content :is(strong, b) { font-weight: 600; color: var(--post-ink); }
+            .post-content :is(a, .rt-Link) {
+                color: var(--post-accent);
+                text-decoration: underline;
+                text-decoration-thickness: 1px;
+                text-underline-offset: 3px;
+                text-decoration-color: rgba(47, 111, 134, 0.45);
+                transition: color 0.15s, text-decoration-color 0.15s;
+            }
+            .post-content :is(a, .rt-Link):hover {
+                color: var(--post-green);
+                text-decoration-color: currentColor;
+            }
+            .post-content :is(ul, ol) { margin: 0 0 1.25rem; padding-left: 1.5rem; }
+            .post-content ul { list-style: disc; }
+            .post-content ol { list-style: decimal; }
+            .post-content li { margin: 0.3rem 0; padding-left: 0.25rem; }
+            .post-content li::marker { color: var(--post-green); }
+            .post-content li > :is(p, .rt-Text) { margin: 0; }
+            /* Inline code: a mint chip in the ink, without the backticks. */
+            .post-content :not(pre) > code,
+            .post-content .rt-Code {
+                font-family: 'Fira Code', 'JetBrains Mono', Menlo, Consolas, monospace;
+                font-size: 0.8em;
+                font-weight: 400;
+                color: var(--post-ink);
+                background: var(--post-mint);
+                border: 1px solid rgba(92, 123, 113, 0.3);
+                border-radius: 3px;
+                padding: 0.05em 0.35em;
+            }
+            .post-content code::before,
+            .post-content code::after {
+                content: none !important;
+            }
+            /* Code blocks: paper with a hairline frame, like the site's cards. */
+            .post-content pre {
+                background: var(--post-paper) !important;
+                border: 1px solid var(--post-rule);
+                border-left: 3px solid var(--post-green);
+                border-radius: 4px !important;
+                padding: 1rem 1.25rem !important;
+                margin: 1.25rem 0 1.5rem !important;
+                font-size: 0.875rem;
+                line-height: 1.6 !important;
+                overflow-x: auto;
+            }
+            .post-content pre code {
+                background: transparent !important;
+                border: 0;
+                padding: 0;
+                font-size: inherit;
+                white-space: pre !important;
+            }
+            .post-content blockquote {
+                margin: 1.25rem 0;
+                padding: 0.5rem 1.25rem;
+                border-left: 3px solid var(--post-green);
+                background: rgba(223, 241, 236, 0.45);
+                color: var(--post-muted);
+                font-style: italic;
+            }
+            .post-content blockquote :is(p, .rt-Text) { color: var(--post-muted); margin: 0.25rem 0; }
+            .post-content img {
+                display: block;
+                max-width: 100%;
+                height: auto;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+                background: #FFFFFF;
+            }
+            .post-content iframe {
+                display: block;
+                max-width: 100%;
+                margin: 1.5rem auto;
+                border: 1px solid rgba(92, 123, 113, 0.35);
+                border-radius: 4px;
+            }
+            .post-content table {
+                display: block;
+                max-width: 100%;
+                overflow-x: auto;
+                border-collapse: collapse;
+                margin: 1.25rem 0 1.5rem;
+            }
+            .post-content :is(th, td) {
+                border: 1px solid rgba(92, 123, 113, 0.45);
+                padding: 0.4rem 0.75rem;
+                text-align: left;
+                vertical-align: top;
+                font-size: 1rem;
+            }
+            .post-content th { background: var(--post-mint); font-weight: 600; }
+            .post-content tr:nth-child(even) td { background: rgba(251, 248, 239, 0.7); }
+            .post-content hr {
+                border: 0;
+                border-top: 1px solid rgba(92, 123, 113, 0.45);
+                margin: 2rem 0;
+            }
+            .line-clamp-3 {
+                display: -webkit-box;
+                -webkit-line-clamp: 3;
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+            }
+            </style><link href="/assets/__reflex_global_styles-Dg19giuA.css" rel="stylesheet" type="text/css"/><link rel="stylesheet" href="/assets/createLucideIcon-Be6mvhFH.css"/><link rel="stylesheet" href="/assets/rss-DuxHUQw5.css"/><link rel="stylesheet" href="/assets/one-dark-DEcVZfaU.css"/></head><body><section aria-label="Notifications alt+T" tabindex="-1" aria-live="polite" aria-relevant="additions text" aria-atomic="false" data-react-aria-top-layer="true"></section><div data-is-root-theme="true" data-accent-color="indigo" data-gray-color="slate" data-has-background="true" data-panel-background="translucent" data-radius="medium" data-scaling="100%" class="radix-themes css-0"><style data-emotion="css 17rg0dp">.css-17rg0dp{position:fixed;width:100vw;height:0;}</style><div title="Connection Error: " class="css-17rg0dp"></div><div class="flex min-h-screen bg-[#f5f5dc]" lang="es"><div class="md:hidden"><dialog class="sp-ui sp-drawer sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="2" id="mobile-sidebar--dialog" aria-label="Perfil" data-state="closed" data-side="start" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-drawer-extent:15rem"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-overlay-header"><button type="button" class="sp-ui-icon-button" aria-label="Close"><svg part="sp-mark" data-glyph="cross" viewBox="0 0 16 16" aria-hidden="true"><path d="M4.5,4.5L11.5,11.5M11.5,4.5L4.5,11.5"></path></svg></button></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-overlay-body"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><style data-emotion="css 1qt3stu">.css-1qt3stu{hreflang:en;}</style><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_8" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></div></dialog></div><aside class="hidden md:flex w-60 min-h-screen bg-[#DFF1EC] flex-shrink-0 flex-col fixed left-0 top-0 h-full overflow-y-auto border-r border-[#5C7B71]/60"><div class="flex flex-col items-center pt-6 px-4 w-full pb-4 min-h-full"><div class="mb-4 text-center"><h1 class="text-[1.7rem] font-semibold text-[#1F3D36] mb-0.5 tracking-tight">Ernesto Crespo.</h1><p class="italic text-[#3E6A5E] text-base tracking-wide">Seraph13</p></div><div class="mb-4"><span class="sp-ui sp-avatar sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" data-shape="circle" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E;--sp-ui-avatar-size:96px"><span part="sp-frame" data-kind="round" aria-hidden="true"></span><img class="sp-ui-avatar-image" src="/ec_drawing.jpg" alt="Ernesto Crespo"/></span></div><article class="sp-ui sp-card sp-ground-silverpoint w-full mb-3" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" aria-label="Resumen" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-header"><h2 class="sp-ui-card-title">Resumen</h2></div><span part="sp-rule" aria-hidden="true"></span><div class="sp-ui-card-body"><ul class="list-none m-0 p-0"><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero electricista.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Desarrollador Python.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de IA.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Analista de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero de datos.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Ingeniero cloud de AWS.</span></li><li class="flex items-start mb-1.5 last:mb-0"><span class="text-[#2C6355] text-xl leading-none mr-2 align-middle inline-block">•</span><span class="text-gray-700 font-medium text-sm">Científico de datos.</span></li></ul></div></article><a class="block w-full mb-3 hover:shadow-md transition-shadow rounded-lg" rel="noopener noreferrer" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><section class="sp-ui sp-card sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="card" aria-hidden="true"></span><div class="sp-ui-card-body"><div class="flex items-center gap-2"><div class="rx-Html">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="36" height="36" viewBox="0 0 24 24" fill="#0077b5" aria-hidden="true">
+                        <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                    </svg>
+                </div><div class="flex-1"><p class="font-bold text-gray-900 text-sm mb-0">Ernesto Crespo</p><p class="text-xs text-gray-600 mb-0">Ver el perfil de LinkedIn</p></div></div></div></section></a><div class="w-full px-4"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" type="button" data-variant="default" data-block="true" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Descargar currículum</span></button></div><nav aria-label="Idioma" class="w-full flex justify-end gap-1.5 mt-auto pt-4 px-1"><a aria-label="Leer esta página en English" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-transparent text-[#3E6A5E] hover:border-[#5C7B71]/60 hover:text-[#1F3D36] css-1qt3stu" title="English" href="/blog/silverpoint_serie_8" data-discover="true"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#012169"/>
+            <path d="M0,0 L60,40 M60,0 L0,40" stroke="#fff" stroke-width="8"/>
+            <path d="M0,0 L30,20 M60,0 L30,20 M0,40 L30,20 M60,40 L30,20" stroke="#C8102E" stroke-width="3"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#fff" stroke-width="12"/>
+            <path d="M30,0 V40 M0,20 H60" stroke="#C8102E" stroke-width="7"/>
+        </svg>
+    </div><span class="font-semibold">EN</span></a><span aria-current="true" aria-label="Español (idioma actual)" class="inline-flex items-center gap-1.5 px-1.5 py-1 rounded border text-xs tracking-wide transition-colors border-[#2F6F86] bg-white/70 text-[#1F3D36]" title="Español"><div class="rx-Html flex shadow-sm">
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 60 40" width="27" height="18" aria-hidden="true">
+            <rect width="60" height="40" fill="#AA151B"/>
+            <rect y="10" width="60" height="20" fill="#F1BF00"/>
+        </svg>
+    </div><span class="font-semibold">ES</span></span></nav></div></aside><div class="flex-1 flex flex-col min-w-0 bg-[#f5f5dc] min-h-screen md:ml-60"><nav class="w-full h-14 bg-[#DFF1EC] flex items-center flex-shrink-0 z-20 sticky top-0 border-b border-[#5C7B71]/60"><div class="flex flex-row gap-6 items-center overflow-x-auto w-full px-4 md:px-8 h-full no-scrollbar"><div class="md:hidden flex-shrink-0"><button class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" type="button" aria-label="Abrir el menú del perfil" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">Menú</span></button></div><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es" data-discover="true">Inicio</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/resume" data-discover="true">Currículum</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/portfolio" data-discover="true">Portafolio</a><a aria-current="page" class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap underline decoration-2 text-[#2F6F86]" href="/es/blog" data-discover="true">Blog</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/dev-dashboard-stats" data-discover="true">Estadísticas de desarrollo</a><span aria-hidden="true" class="h-5 w-px bg-[#5C7B71]/50 flex-shrink-0"></span><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/archives" data-discover="true">Archivo</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/categories" data-discover="true">Categorías</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/blog/tags" data-discover="true">Etiquetas</a><a class="[font-variant:small-caps] text-[1.05rem] tracking-wide text-[#1F3D36] hover:text-[#2F6F86] underline-offset-4 decoration-1 decoration-[#2F6F86] hover:underline transition-colors whitespace-nowrap" href="/es/feed.xml" data-discover="true">Atom</a></div></nav><main class="p-4 md:p-8 lg:p-16 w-full"><div class="container mx-auto max-w-4xl"><div class="mb-6"><a class="sp-ui sp-button sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="md" data-frame="0" href="/es/blog" data-variant="default" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label">← Volver al blog</span></a></div><header class="mb-8 pb-6 border-b border-[#5C7B71]/40"><h1 class="text-3xl md:text-4xl font-bold text-[#1F3D36] leading-tight mb-4">Silverpoint, artículo 08: cómo elegir el gráfico, las familias del catálogo</h1><div class="flex items-center flex-wrap text-sm mb-6"><span class="text-[#3E6A5E]">11 de noviembre de 2026</span><span class="text-[#5C7B71] mx-2"> • </span><span class="sp-ui sp-tag sp-ground-silverpoint" data-ground="silverpoint" data-substrate="cream" data-mode="ink" data-size="sm" data-frame="0" data-tone="2" style="--sp-substrate:#FBF8EF;--sp-ink:#2C6355;--sp-ink-secondary:#2F6F86;--sp-heighten:#FFFFFF;--sp-rule:#5C7B71;--sp-grid:#5C7B71;--sp-text:#1F3D36;--sp-text-muted:#3E6A5E"><span part="sp-frame" data-kind="control" aria-hidden="true"></span><span part="sp-tone" data-tone="2" data-kind="control" aria-hidden="true"></span><span class="sp-ui-label sp-ui-plate">Tutorial Silverpoint</span></span><span class="text-[#5C7B71] mx-2"> • </span><span class="text-[#3E6A5E] inline-flex gap-1">Por<span class="text-[#1F3D36] font-medium">Ernesto Crespo</span></span></div></header><article class="post-content" lang="es"><div class="prose prose-lg max-w-none"><style data-emotion="css 56tzch">.css-56tzch{margin-top:1em;margin-bottom:1em;}</style><p class="rt-Text css-56tzch">Con este artículo empieza el nivel 2 de la serie sobre <style data-emotion="css 1macts">.css-1macts:hover{color:var(--accent-8);}</style><a data-accent-color="" href="https://github.com/ecrespo/silverpoint" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">silverpoint</a>: construir un panel con estilo propio e interacción. Antes de dar estilo a un panel hay que decidir qué gráficos lleva, y el catálogo tiene 60.</p>
+<p class="rt-Text css-56tzch">No hace falta conocerlos todos. silverpoint los clasifica con dos preguntas, y con ellas la lista se reduce a dos o tres candidatos. Este artículo explica esas dos preguntas, recorre las nueve familias del catálogo y las aplica a los tres primeros datos del panel de operaciones.</p>
+<style data-emotion="css jzlc08">.css-jzlc08{margin-top:0.5em;margin-bottom:0.5em;}</style><h2 class="rt-Heading rt-r-size-5 css-jzlc08">El método: dos preguntas</h2>
+<p class="rt-Text css-56tzch">La primera pregunta es qué forma tienen las filas. La segunda, qué tiene que ver el lector en ellas. El orden importa: la forma de los datos descarta la mayoría de los gráficos, y la intención elige entre los que quedan.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Paso 1: la forma de los datos</h2>
+<p class="rt-Text css-56tzch">Cada gráfico declara la forma de los datos que dibuja. Son doce:</p>
+<table><thead><tr><th>Forma</th><th>Las filas contienen</th><th>Por ejemplo</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">series</code></td><td>Una fila por punto de un eje ordenado (tiempo, secuencia)</td><td>Visitas por hora</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">categories</code></td><td>Una fila por categoría, con uno o más valores</td><td>Ingresos por región</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">parts</code></td><td>Las partes de un mismo total</td><td>Tráfico por canal</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">matrix</code></td><td>Un valor por cada par de categorías</td><td>Errores por día y hora</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hierarchy</code></td><td>Una fila por nodo, con su <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">id</code> y su <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">parent</code></td><td>Un presupuesto por departamento</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">links</code></td><td>Filas con origen, destino y valor</td><td>Los pasos de un registro</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">points</code></td><td>Dos o más medidas numéricas por fila</td><td>Precio frente a valoración</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">distribution</code></td><td>Muchas observaciones de una misma medida</td><td>Tiempos de respuesta</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">intervals</code></td><td>Un inicio y un fin por fila</td><td>Un calendario de tareas</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">events</code></td><td>Ocurrencias con fecha, o marcas sobre un ciclo</td><td>Commits por día</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">single</code></td><td>Una cifra, quizá con un objetivo</td><td>Los ingresos de este mes</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">field</code></td><td>Una medida o un vector sobre un plano</td><td>Un campo de viento</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">La forma se lee en las filas, no en el tema. Las visitas por hora son una <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">series</code> porque cada fila es un punto de un eje ordenado. Los mismos números agrupados por día de la semana y franja horaria son una <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">matrix</code>.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Paso 2: lo que el lector tiene que ver</h2>
+<p class="rt-Text css-56tzch">La intención es lo que el gráfico tiene que hacer evidente. silverpoint usa catorce:</p>
+<table><thead><tr><th>Intención</th><th>El lector tiene que ver</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">trend</code></td><td>Hacia dónde va un valor</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">change</code></td><td>Cuánto cambió entre dos momentos</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">compare</code></td><td>Qué valor es mayor</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">rank</code></td><td>El orden de las categorías</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">part-to-whole</code></td><td>Cuánto pesa cada parte del total</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">distribution</code></td><td>Cómo se reparten las observaciones</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">correlation</code></td><td>Si dos medidas se mueven juntas</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">flow</code></td><td>Por dónde pasa un volumen</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hierarchy</code></td><td>Qué contiene a qué</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">uncertainty</code></td><td>Cuánto margen tiene una estimación</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">progress</code></td><td>Cuánto falta para un objetivo</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">schedule</code></td><td>Cuándo ocurre cada cosa</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">kpi</code></td><td>Una cifra y su evolución, de un vistazo</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">network</code></td><td>Quién se conecta con quién</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Una misma forma admite varias intenciones. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">categories</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">compare</code> lleva a un gráfico de barras, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">change</code> a un gráfico de pesas y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">progress</code> a un gráfico de bala.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Las nueve familias</h2>
+<p class="rt-Text css-56tzch">Los 60 gráficos se agrupan en nueve familias, por cómo dibujan:</p>
+<table><thead><tr><th>Familia</th><th>Gráficos</th><th>Algunos de ellos</th><th>Formas habituales</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lines</code></td><td>4</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">line-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">step-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sparkline-rows</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">kpi-card</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">series</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">single</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">bars</code></td><td>8</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">bar-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">stacked-bar-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">waterfall-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">funnel-chart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">categories</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">areas</code></td><td>3</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">area-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">range-band-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">stream-chart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">series</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">intervals</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">points-grids</code></td><td>5</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">scatter-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">heatmap-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">activity-grid</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">points</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">matrix</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">events</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">radial</code></td><td>11</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">donut-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">radar-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">gauge-arc</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">parts</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">categories</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">single</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">flows</code></td><td>2</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sankey-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">chord-ring</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">links</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">distributions-comparisons</code></td><td>14</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">histogram-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">box-plot-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">dumbbell-chart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">distribution</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">categories</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">intervals</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hierarchies-dimensions</code></td><td>8</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">squarified-treemap</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sunburst-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">waffle-chart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hierarchy</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">parts</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">matrix</code></td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">fields-networks</code></td><td>5</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">network-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">contour-chart</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">vector-field-chart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">points</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">links</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">field</code></td></tr></tbody></table>
+<p class="rt-Text css-56tzch">La familia es útil para buscar en la documentación y en la <a data-accent-color="" href="https://silverpointweb.vercel.app/gallery" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">galería</a>, pero no para elegir: un gráfico radial y uno de barras pueden responder a la misma pregunta. Para elegir se usan la forma y la intención.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">La tabla de recomendaciones</h2>
+<p class="rt-Text css-56tzch">silverpoint guarda una tabla revisada a mano que cruza cada forma con cada intención y puntúa a los candidatos de 0 a 1. Estas son las combinaciones más frecuentes en un panel:</p>
+<table><thead><tr><th>Forma</th><th>Intención</th><th>El primero</th><th>Las alternativas</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">series</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">trend</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">line-chart</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">area-chart</code> (0,8), <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">step-chart</code> (0,6)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">series</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">kpi</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sparkline-rows</code> (0,85)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">kpi-card</code> (0,75)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">categories</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">compare</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">bar-chart</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">lollipop-chart</code> (0,75), <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">radar-chart</code> (0,5)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">categories</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">change</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">dumbbell-chart</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">slope-chart</code> (0,85), <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">waterfall-chart</code> (0,75)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">parts</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">part-to-whole</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">donut-chart</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">waffle-chart</code> (0,85), <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">treemap-chart</code> (0,7)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">matrix</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">compare</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">heatmap-chart</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">marimekko-chart</code> (0,7)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">distribution</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">compare</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">box-plot-chart</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">violin-chart</code> (0,85), <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ridgeline-chart</code> (0,8)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">intervals</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">uncertainty</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">error-bar-chart</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">range-band-chart</code> (0,85)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">links</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">flow</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sankey-chart</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">chord-ring</code> (0,75)</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">hierarchy</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">part-to-whole</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">squarified-treemap</code> (0,9)</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">sunburst-chart</code> (0,85)</td></tr></tbody></table>
+<p class="rt-Text css-56tzch">La tabla también tiene en cuenta el volumen. Con más de seis partes, el donut pierde 0,3 puntos, porque un anillo no se lee bien con tantos sectores. Con más de doce categorías, el gráfico de piruletas gana 0,2, y el radar, las barras polares y el coxcomb pierden 0,3. Con más de 500 puntos, el gráfico de densidad por celdas gana al de dispersión.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Aplicado al panel de operaciones</h2>
+<p class="rt-Text css-56tzch">El panel de la serie tiene tres datos para empezar. Cada uno pasa por las dos preguntas.</p>
+<p class="rt-Text css-56tzch"><strong>Las visitas por hora.</strong> Una fila por hora, en orden: la forma es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">series</code>. El lector tiene que ver cómo evoluciona el tráfico durante el día: la intención es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">trend</code>. El primero de la tabla es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">line-chart</code>, el gráfico de los artículos 03 a 07.</p>
+<p class="rt-Text css-56tzch"><strong>Los errores por día y franja horaria.</strong> Cada fila es un día de la semana con seis valores, uno por franja de cuatro horas: la forma es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">matrix</code>. El lector tiene que comparar franjas y días para encontrar dónde se concentran los errores: la intención es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">compare</code>. El primero es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">heatmap-chart</code>.</p>
+<p class="rt-Text css-56tzch"><strong>Las ventas por canal.</strong> Cuatro canales que suman un total: la forma es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">parts</code>. El lector tiene que ver cuánto aporta cada canal: la intención es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">part-to-whole</code>. El primero es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">donut-chart</code>, y con cuatro partes no recibe la penalización de los seis sectores.</p>
+<img src="/blog/images/silverpoint-serie-8.png" alt="Los tres gráficos del panel: visitas por hora, errores por día y franja, ventas por canal"/>
+<p class="rt-Text css-56tzch">El gráfico de barras sería la alternativa para las ventas si la pregunta cambiara. Para comparar los canales entre sí, o este mes con el anterior, los datos dejan de ser partes de un total y pasan a ser <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">categories</code> con la intención <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">compare</code>, y ahí el primero es <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">bar-chart</code>. La pregunta decide el gráfico, no los números.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">El código en React</h2>
+<p class="rt-Text css-56tzch">Los datos, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/panel.ts</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">export type HourlyTraffic = { hour: string; hits: number };
+export type DailyErrors = { day: string; values: number[] };
+export type ChannelSales = { channel: string; sales: number };
+
+export const traffic: HourlyTraffic[] = [
+  { hour: &#x27;00&#x27;, hits: 18 }, { hour: &#x27;01&#x27;, hits: 14 }, { hour: &#x27;02&#x27;, hits: 11 },
+  { hour: &#x27;03&#x27;, hits: 9 }, { hour: &#x27;04&#x27;, hits: 11 }, { hour: &#x27;05&#x27;, hits: 16 },
+  { hour: &#x27;06&#x27;, hits: 24 }, { hour: &#x27;07&#x27;, hits: 33 }, { hour: &#x27;08&#x27;, hits: 42 },
+  { hour: &#x27;09&#x27;, hits: 51 }, { hour: &#x27;10&#x27;, hits: 58 }, { hour: &#x27;11&#x27;, hits: 62 },
+  { hour: &#x27;12&#x27;, hits: 64 }, { hour: &#x27;13&#x27;, hits: 61 }, { hour: &#x27;14&#x27;, hits: 59 },
+  { hour: &#x27;15&#x27;, hits: 58 }, { hour: &#x27;16&#x27;, hits: 57 }, { hour: &#x27;17&#x27;, hits: 52 },
+  { hour: &#x27;18&#x27;, hits: 47 }, { hour: &#x27;19&#x27;, hits: 41 }, { hour: &#x27;20&#x27;, hits: 30 },
+  { hour: &#x27;21&#x27;, hits: 26 }, { hour: &#x27;22&#x27;, hits: 22 }, { hour: &#x27;23&#x27;, hits: 20 },
+];
+
+export const errors: DailyErrors[] = [
+  { day: &#x27;Mon&#x27;, values: [3, 5, 31, 38, 22, 8] },
+  { day: &#x27;Tue&#x27;, values: [2, 6, 28, 35, 20, 7] },
+  { day: &#x27;Wed&#x27;, values: [4, 7, 34, 40, 25, 9] },
+  { day: &#x27;Thu&#x27;, values: [3, 5, 29, 36, 21, 8] },
+  { day: &#x27;Fri&#x27;, values: [2, 6, 26, 30, 18, 10] },
+  { day: &#x27;Sat&#x27;, values: [1, 2, 9, 12, 10, 6] },
+  { day: &#x27;Sun&#x27;, values: [1, 1, 7, 10, 8, 5] },
+];
+
+export const blocks = [&#x27;00-04&#x27;, &#x27;04-08&#x27;, &#x27;08-12&#x27;, &#x27;12-16&#x27;, &#x27;16-20&#x27;, &#x27;20-24&#x27;];
+
+export const sales: ChannelSales[] = [
+  { channel: &#x27;Web&#x27;, sales: 46 },
+  { channel: &#x27;App&#x27;, sales: 31 },
+  { channel: &#x27;Partners&#x27;, sales: 15 },
+  { channel: &#x27;Phone&#x27;, sales: 8 },
+];</code></pre>
+<p class="rt-Text css-56tzch">Los tres gráficos, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/App.tsx</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import { DonutChart } from &#x27;@silverpoint/react/donut-chart&#x27;;
+import { HeatmapChart } from &#x27;@silverpoint/react/heatmap-chart&#x27;;
+import { LineChart } from &#x27;@silverpoint/react/line-chart&#x27;;
+import { blocks, errors, sales, traffic } from &#x27;./panel&#x27;;
+
+export default function App() {
+  return (
+    &lt;main className=&quot;panel&quot;&gt;
+      &lt;LineChart
+        data={traffic}
+        xKey=&quot;hour&quot;
+        valueKey=&quot;hits&quot;
+        title=&quot;Hits per hour&quot;
+        footerLeft=&quot;Last 24 hours, in thousands&quot;
+      /&gt;
+      &lt;HeatmapChart
+        data={errors}
+        labelKey=&quot;day&quot;
+        valuesKey=&quot;values&quot;
+        columnLabels={blocks}
+        scaleMax={40}
+        title=&quot;Errors by day and time&quot;
+      /&gt;
+      &lt;DonutChart
+        data={sales}
+        nameKey=&quot;channel&quot;
+        valueKey=&quot;sales&quot;
+        centerLabel=&quot;thousand EUR&quot;
+        title=&quot;Sales by channel&quot;
+      /&gt;
+    &lt;/main&gt;
+  );
+}</code></pre>
+<p class="rt-Text css-56tzch">Y una rejilla para colocarlos, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">src/index.css</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">body {
+  margin: 0;
+  padding: 32px;
+  background: #f4f1ea;
+}
+
+.panel {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 16px;
+}</code></pre>
+<p class="rt-Text css-56tzch">Cada gráfico tiene sus propios accesores, que dependen de su forma:</p>
+<table><thead><tr><th>Gráfico</th><th>Accesores</th><th>Otras props</th></tr></thead><tbody><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">LineChart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">xKey</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">valueKey</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">secondaryKey</code> para una segunda serie punteada</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">HeatmapChart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">labelKey</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">valuesKey</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">columnLabels</code>, los nombres de las columnas; <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">scaleMax</code>, el valor del tono más oscuro</td></tr><tr><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">DonutChart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">nameKey</code>, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">valueKey</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">centerValue</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">centerLabel</code>, el centro del anillo; <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">legend</code></td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Dos detalles de esta versión:</p>
+<style data-emotion="css 1usfqyd">.css-1usfqyd{list-style-type:disc;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ul class="css-1usfqyd">
+<li class="css-jzlc08"><strong><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">scaleMax</code> del mapa de calor vale 100 por defecto.</strong> Los errores no pasan de 40, así que con el valor por defecto todas las celdas quedarían en los tonos claros. Con <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">scaleMax={40}</code>, la celda de 40 recibe el tramado más denso.</li>
+<li class="css-jzlc08"><strong>El centro del donut muestra el total.</strong> Sin <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">centerValue</code>, el anillo escribe la suma de las partes, 100, y la leyenda da el porcentaje de cada canal.</li>
+</ul>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">El código en Reflex</h2>
+<p class="rt-Text css-56tzch">Los datos, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops_panel/panel.py</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">TRAFFIC = [
+    {&quot;hour&quot;: &quot;00&quot;, &quot;hits&quot;: 18}, {&quot;hour&quot;: &quot;01&quot;, &quot;hits&quot;: 14}, {&quot;hour&quot;: &quot;02&quot;, &quot;hits&quot;: 11},
+    {&quot;hour&quot;: &quot;03&quot;, &quot;hits&quot;: 9}, {&quot;hour&quot;: &quot;04&quot;, &quot;hits&quot;: 11}, {&quot;hour&quot;: &quot;05&quot;, &quot;hits&quot;: 16},
+    {&quot;hour&quot;: &quot;06&quot;, &quot;hits&quot;: 24}, {&quot;hour&quot;: &quot;07&quot;, &quot;hits&quot;: 33}, {&quot;hour&quot;: &quot;08&quot;, &quot;hits&quot;: 42},
+    {&quot;hour&quot;: &quot;09&quot;, &quot;hits&quot;: 51}, {&quot;hour&quot;: &quot;10&quot;, &quot;hits&quot;: 58}, {&quot;hour&quot;: &quot;11&quot;, &quot;hits&quot;: 62},
+    {&quot;hour&quot;: &quot;12&quot;, &quot;hits&quot;: 64}, {&quot;hour&quot;: &quot;13&quot;, &quot;hits&quot;: 61}, {&quot;hour&quot;: &quot;14&quot;, &quot;hits&quot;: 59},
+    {&quot;hour&quot;: &quot;15&quot;, &quot;hits&quot;: 58}, {&quot;hour&quot;: &quot;16&quot;, &quot;hits&quot;: 57}, {&quot;hour&quot;: &quot;17&quot;, &quot;hits&quot;: 52},
+    {&quot;hour&quot;: &quot;18&quot;, &quot;hits&quot;: 47}, {&quot;hour&quot;: &quot;19&quot;, &quot;hits&quot;: 41}, {&quot;hour&quot;: &quot;20&quot;, &quot;hits&quot;: 30},
+    {&quot;hour&quot;: &quot;21&quot;, &quot;hits&quot;: 26}, {&quot;hour&quot;: &quot;22&quot;, &quot;hits&quot;: 22}, {&quot;hour&quot;: &quot;23&quot;, &quot;hits&quot;: 20},
+]
+
+ERRORS = [
+    {&quot;day&quot;: &quot;Mon&quot;, &quot;values&quot;: [3, 5, 31, 38, 22, 8]},
+    {&quot;day&quot;: &quot;Tue&quot;, &quot;values&quot;: [2, 6, 28, 35, 20, 7]},
+    {&quot;day&quot;: &quot;Wed&quot;, &quot;values&quot;: [4, 7, 34, 40, 25, 9]},
+    {&quot;day&quot;: &quot;Thu&quot;, &quot;values&quot;: [3, 5, 29, 36, 21, 8]},
+    {&quot;day&quot;: &quot;Fri&quot;, &quot;values&quot;: [2, 6, 26, 30, 18, 10]},
+    {&quot;day&quot;: &quot;Sat&quot;, &quot;values&quot;: [1, 2, 9, 12, 10, 6]},
+    {&quot;day&quot;: &quot;Sun&quot;, &quot;values&quot;: [1, 1, 7, 10, 8, 5]},
+]
+
+BLOCKS = [&quot;00-04&quot;, &quot;04-08&quot;, &quot;08-12&quot;, &quot;12-16&quot;, &quot;16-20&quot;, &quot;20-24&quot;]
+
+SALES = [
+    {&quot;channel&quot;: &quot;Web&quot;, &quot;sales&quot;: 46},
+    {&quot;channel&quot;: &quot;App&quot;, &quot;sales&quot;: 31},
+    {&quot;channel&quot;: &quot;Partners&quot;, &quot;sales&quot;: 15},
+    {&quot;channel&quot;: &quot;Phone&quot;, &quot;sales&quot;: 8},
+]</code></pre>
+<p class="rt-Text css-56tzch">La página, en <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">ops_panel/ops_panel.py</code>:</p>
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">import reflex as rx
+from reflex_silverpoint_react import donut_chart, heatmap_chart, line_chart
+
+from .panel import BLOCKS, ERRORS, SALES, TRAFFIC
+
+
+def index() -&gt; rx.Component:
+    return rx.grid(
+        line_chart(
+            data=TRAFFIC,
+            x_key=&quot;hour&quot;,
+            value_key=&quot;hits&quot;,
+            title=&quot;Hits per hour&quot;,
+            footer_left=&quot;Last 24 hours, in thousands&quot;,
+        ),
+        heatmap_chart(
+            data=ERRORS,
+            label_key=&quot;day&quot;,
+            values_key=&quot;values&quot;,
+            column_labels=BLOCKS,
+            scale_max=40,
+            title=&quot;Errors by day and time&quot;,
+        ),
+        donut_chart(
+            data=SALES,
+            name_key=&quot;channel&quot;,
+            value_key=&quot;sales&quot;,
+            center_label=&quot;thousand EUR&quot;,
+            title=&quot;Sales by channel&quot;,
+        ),
+        columns=&quot;3&quot;,
+        gap=&quot;16px&quot;,
+        padding=&quot;32px&quot;,
+    )
+
+
+app = rx.App()
+app.add_page(index)</code></pre>
+<p class="rt-Text css-56tzch"><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">rx.grid</code> reparte el ancho en tres columnas, y cada gráfico toma el de la suya.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">En Vue y en Angular</h2>
+<p class="rt-Text css-56tzch">Los mismos tres gráficos, con los nombres de cada adaptador:</p>
+<table><thead><tr><th>Gráfico</th><th>Vue</th><th>Angular</th></tr></thead><tbody><tr><td>Línea</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SpLineChart</code>, de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/vue/line-chart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;sp-line-chart&gt;</code>, de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/angular/line-chart</code></td></tr><tr><td>Mapa de calor</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SpHeatmapChart</code>, de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/vue/heatmap-chart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;sp-heatmap-chart&gt;</code>, de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/angular/heatmap-chart</code></td></tr><tr><td>Donut</td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">SpDonutChart</code>, de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/vue/donut-chart</code></td><td><code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">&lt;sp-donut-chart&gt;</code>, de <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">@silverpoint/angular/donut-chart</code></td></tr></tbody></table>
+<p class="rt-Text css-56tzch">Las props son las mismas, con la sintaxis del artículo 07: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">:column-labels=&quot;blocks&quot;</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">:scale-max=&quot;40&quot;</code> en Vue, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[columnLabels]=&quot;blocks&quot;</code> y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">[scaleMax]=&quot;40&quot;</code> en Angular.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">La misma tabla, para un asistente de IA</h2>
+<p class="rt-Text css-56tzch">La tabla de recomendaciones no es un modelo: es una lista revisada, y el servidor MCP de silverpoint la expone con la herramienta <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">recommend_chart</code>. Con la forma <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">parts</code>, la intención <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">part-to-whole</code> y cuatro filas, responde lo mismo que este artículo: <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">donut-chart</code> con 0,9, <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">waffle-chart</code> con 0,85 y <code data-accent-color="" class="rt-reset rt-Code rt-variant-soft">treemap-chart</code> con 0,7. El servidor MCP tiene su propio artículo, el 28.</p>
+<h2 class="rt-Heading rt-r-size-5 css-jzlc08">Lo que viene</h2>
+<p class="rt-Text css-56tzch">Ya tienes los tres primeros gráficos del panel y un método para elegir los siguientes. El artículo 09 les da un estilo común: los estilos base, los sustratos y el proveedor que fija el estilo de toda la aplicación en un solo sitio.</p>
+<p class="rt-Text css-56tzch">Los 60 gráficos se pueden ver en vivo en la <a data-accent-color="" href="https://silverpointweb.vercel.app/gallery" class="rt-Text rt-reset rt-Link rt-underline-auto css-1macts">galería</a>.</p></div></article></div></main><footer class="mt-auto w-full bg-[#DFF1EC] border-t border-[#5C7B71]/60"><div class="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-3 px-4 md:px-8 lg:px-16 py-3"><div class="flex flex-wrap items-center gap-x-4 gap-y-1"><span class="font-semibold text-[#1F3D36]">Ernesto Crespo</span><a aria-label="Enviar un correo a ecrespo@gmail.com" class="flex items-center gap-1.5 text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" href="mailto:ecrespo@gmail.com"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-mail" aria-hidden="true"><path d="m22 7-8.991 5.727a2 2 0 0 1-2.009 0L2 7"></path><rect x="2" y="4" width="20" height="16" rx="2"></rect></svg><span>ecrespo@gmail.com</span></a></div><p class="text-sm text-gray-700"><span>Hecho con </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://www.python.org" target="_blank">Python</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://reflex.dev" target="_blank">Reflex</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://pypi.org/project/reflex-silverpoint-react/" target="_blank">reflex-silverpoint-react</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://tailwindcss.com" target="_blank">Tailwind CSS</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://docs.astral.sh/uv/" target="_blank">uv</a><span> · alojado en </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://vercel.com" target="_blank">Vercel</a><span aria-hidden="true"> · </span><a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://railway.com" target="_blank">Railway</a></p><nav aria-label="Redes sociales" class="flex items-center gap-4"><a aria-label="Medium (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Medium" href="https://seraph13.medium.com/" target="_blank"><style data-emotion="css kqzqgg">.css-kqzqgg{fill:currentColor;}</style><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M13.54 12a6.8 6.8 0 01-6.77 6.82A6.8 6.8 0 010 12a6.8 6.8 0 016.77-6.82A6.8 6.8 0 0113.54 12zM20.96 12c0 3.54-1.51 6.42-3.38 6.42-1.87 0-3.39-2.88-3.39-6.42s1.52-6.42 3.39-6.42 3.38 2.88 3.38 6.42M24 12c0 3.17-.53 5.75-1.19 5.75-.66 0-1.19-2.58-1.19-5.75s.53-5.75 1.19-5.75C23.47 6.25 24 8.83 24 12z"></path></svg></a><a aria-label="LinkedIn (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="LinkedIn" href="https://www.linkedin.com/in/ernestocrespo/" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"></path></svg></a><a aria-label="Twitter (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Twitter" href="https://twitter.com/_seraph1" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z"></path></svg></a><a aria-label="GitHub (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitHub" href="https://github.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="M12 .297c-6.63 0-12 5.373-12 12 0 5.303 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.399 3-.405 1.02.006 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 22.092 24 17.592 24 12.297c0-6.627-5.373-12-12-12"></path></svg></a><a aria-label="GitLab (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="GitLab" href="https://gitlab.com/ecrespo" target="_blank"><svg aria-hidden="true" height="18" viewBox="0 0 24 24" width="18" class="css-kqzqgg"><path d="m23.6004 9.5927-.0337-.0862L20.3.9814a.851.851 0 0 0-.3362-.405.8748.8748 0 0 0-.9997.0539.8748.8748 0 0 0-.29.4399l-2.2055 6.748H7.5375l-2.2057-6.748a.8573.8573 0 0 0-.29-.4412.8748.8748 0 0 0-.9997-.0537.8585.8585 0 0 0-.3362.4049L.4332 9.5015l-.0325.0862a6.0657 6.0657 0 0 0 2.0119 7.0105l.0113.0087.03.0213 4.976 3.7264 2.462 1.8633 1.4995 1.1321a1.0085 1.0085 0 0 0 1.2197 0l1.4995-1.1321 2.4619-1.8633 5.006-3.7489.0125-.01a6.0682 6.0682 0 0 0 2.0094-7.003z"></path></svg></a><a aria-label="Blog (se abre en una pestaña nueva)" class="text-[#2F6F86] hover:text-[#1F3D36] transition-colors" rel="noopener noreferrer" title="Blog" href="https://www.seraph.to/blog" target="_blank"><svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-rss" aria-hidden="true"><path d="M4 11a9 9 0 0 1 9 9"></path><path d="M4 4a16 16 0 0 1 16 16"></path><circle cx="5" cy="19" r="1"></circle></svg></a></nav></div><div class="flex flex-col sm:flex-row sm:justify-between gap-1 text-xs text-gray-600 px-4 md:px-8 lg:px-16 py-2 border-t border-[#5C7B71]/40"><span>© 2026 Ernesto Crespo. Todos los derechos reservados.</span><span>Código fuente bajo la <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume/blob/main/LICENSE" target="_blank">licencia Apache 2.0</a> · <a class="text-[#2F6F86] hover:text-[#1F3D36] hover:underline underline-offset-4" rel="noopener noreferrer" href="https://github.com/ecrespo/reflex_resume" target="_blank">Ver el código</a></span></div></footer></div></div><style data-emotion="css 1qwptgo">.css-1qwptgo{position:fixed;bottom:1rem;right:1rem;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;gap:0.375rem;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;width:auto;border-radius:0.5rem;color:#E5E7EB;border:1px solid #27282B;background-color:#151618;padding:0.375rem;-webkit-transition:background-color 0.2s ease-in-out;transition:background-color 0.2s ease-in-out;box-shadow:0 1px 2px 0 rgba(0, 0, 0, 0.05);z-index:9998;cursor:pointer;align:center;text-align:center;}</style><a aria-label="Built with Reflex" href="https://reflex.dev" target="_blank" class="css-1qwptgo"><style data-emotion="css 1wzg22f">.css-1wzg22f{fill:white;view-box:0 0 16 16;}</style><svg height="16" width="16" xmlns="http://www.w3.org/2000/svg" class="css-1wzg22f"><style data-emotion="css bnqfad">.css-bnqfad{fill:#6E56CF;}</style><rect height="16" rx="2" width="16" class="css-bnqfad"></rect><style data-emotion="css j4aqsr">.css-j4aqsr{fill:white;}</style><path d="M10 9V13H12V9H10Z" class="css-j4aqsr"></path><path d="M4 3V13H6V9H10V7H6V5H10V7H12V3H4Z" class="css-j4aqsr"></path></svg><style data-emotion="css 1v8fzbk">@media screen and (min-width: 0){.css-1v8fzbk{display:none;}}@media screen and (min-width: 30em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 48em){.css-1v8fzbk{display:none;}}@media screen and (min-width: 62em){.css-1v8fzbk{display:block;}}</style><div class="css-1v8fzbk"><style data-emotion="css vq6poo">.css-vq6poo{color:var(--slate-1);font-weight:600;font-family:'Instrument Sans',sans-serif;--default-font-family:'Instrument Sans',sans-serif;font-size:0.875rem;line-height:1rem;letter-spacing:-0.00656rem;}</style><span class="css-vq6poo">Built with Reflex</span></div></a></div><script>((storageKey, restoreKey) => {
+		if (!window.history.state || !window.history.state.key) {
+			let key = Math.random().toString(32).slice(2);
+			window.history.replaceState({ key }, "");
+		}
+		try {
+			let storedY = JSON.parse(sessionStorage.getItem(storageKey) || "{}")[restoreKey || window.history.state.key];
+			if (typeof storedY === "number") window.scrollTo(0, storedY);
+		} catch (error) {
+			console.error(error);
+			sessionStorage.removeItem(storageKey);
+		}
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-7f1303a4.js";
+import * as route0 from "/assets/root-Bj8irF5o.js";
+import * as route1 from "/assets/_es_._blog_._silverpoint_serie_8_._index-DFMdmiF7.js";
+  
+  window.__reactRouterRouteModules = {"root":route0,"routes/[es].[blog].[silverpoint_serie_8]._index":route1};
+
+import("/assets/entry.client-CQq5RwJx.js");</script><!--$?--><template id="B:0"></template><!--/$--><script id="_R_">requestAnimationFrame(function(){$RT=performance.now()});</script><div hidden id="S:0"><script>window.__reactRouterContext.streamController.enqueue("[{\"_1\":2,\"_3\":-5,\"_4\":-5},\"loaderData\",{},\"actionData\",\"errors\"]\n");</script><!--$?--><template id="B:1"></template><!--/$--></div><script>$RB=[];$RV=function(a){$RT=performance.now();for(var b=0;b<a.length;b+=2){var c=a[b],e=a[b+1];null!==e.parentNode&&e.parentNode.removeChild(e);var f=c.parentNode;if(f){var g=c.previousSibling,h=0;do{if(c&&8===c.nodeType){var d=c.data;if("/$"===d||"/&"===d)if(0===h)break;else h--;else"$"!==d&&"$?"!==d&&"$~"!==d&&"$!"!==d&&"&"!==d||h++}d=c.nextSibling;f.removeChild(c);c=d}while(c);for(;e.firstChild;)f.insertBefore(e.firstChild,c);g.data="$";g._reactRetry&&requestAnimationFrame(g._reactRetry)}}a.length=0};
+$RC=function(a,b){if(b=document.getElementById(b))(a=document.getElementById(a))?(a.previousSibling.data="$~",$RB.push(a,b),2===$RB.length&&("number"!==typeof $RT?requestAnimationFrame($RV.bind(null,$RB)):(a=performance.now(),setTimeout($RV.bind(null,$RB),2300>a&&2E3<a?2300-a:$RT+300-a)))):b.parentNode.removeChild(b)};$RC("B:0","S:0")</script><div hidden id="S:1"><script>window.__reactRouterContext.streamController.close();</script></div><script>$RC("B:1","S:1")</script></body></html>
