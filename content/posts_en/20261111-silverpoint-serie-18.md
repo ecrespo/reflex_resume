@@ -218,6 +218,16 @@ declare module '*.css' {
 }
 ```
 
+With that `ng build` works, but `ng serve` does not: its development server prebundles `@silverpoint/grounds`, and the page stays blank with "does not provide an export named 'default'" in the console. Turning prebundling off in `angular.json`, under `projects` → `architect` → `serve`, avoids it:
+
+```json
+"options": {
+  "prebundle": false
+}
+```
+
+It is a bug open as [silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19). It will be fixed in a coming version of the package.
+
 `src/app/download.ts` is the React one. And the component, `src/app/app.ts`:
 
 ```ts
@@ -365,6 +375,7 @@ The four files were checked with headless Chrome: React, Vue and Angular downloa
 * **The browser shows an XML error when opening it.** The stylesheet is inside `<style>` without `CDATA`.
 * **`toSVGString` is `undefined`.** The handle does not exist yet: the chart has not mounted, or in Reflex the `id` in `get_svg` does not match the chart's.
 * **`TS2307` in Angular.** The declaration in `src/text-imports.d.ts` is missing.
+* **With `ng serve`, the page stays blank.** `"prebundle": false` is missing in `angular.json` ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)).
 * **The lettering changes shape on another computer.** The SVG does not carry the font. If the shape of the letters matters, convert the file to PNG or PDF on a computer that has EB Garamond.
 
 ## What comes next

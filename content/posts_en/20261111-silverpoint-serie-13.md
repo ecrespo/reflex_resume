@@ -215,6 +215,8 @@ If the panel and its children do not match, the panel keeps working but warns in
 
 The panel also hands out the style, as article 12 announced. `ground`, `substrate`, `mode`, `locale` and `palette` set on `Dashboard` pass to all its charts. Each field is resolved in the order from [article 09](/blog/silverpoint_serie_9), and the first one that declares it wins: the chart's own prop, the dashboard that holds it, the nearest provider and the library's default value. With `substrate="green"` on the panel and `substrate="ochre"` on the errors per hour, five charts are drawn in green and one in ochre.
 
+The other way round does not work the same: the dashboard's own frame, with its background and its title, does not read the provider. If the application sets `ground` or `palette` on the provider, its charts receive them, but the dashboard's frame keeps the default ground. Pass the dashboard the same values as the provider. It is a bug open as [silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17); it will be fixed in a coming version of the package.
+
 ## Linked charts
 
 With `link={{ key: 'hour' }}`, exploring one chart marks in the others the items with the same `hour` value. That is what the image shows: the pointer is on hour 11 of the traffic, and hour 11 is marked in the error bars and in the curves of the two indicators, whose rows also have `hour`.
