@@ -40,15 +40,15 @@ Sin `data`, el gráfico dibuja su conjunto de demostración, y con un array vac�
 | Prop | Valores | Por defecto |
 |---|---|---|
 | `ground` | `silverpoint`, `cyanotype` | `silverpoint`, o el del proveedor de la aplicación |
-| `substrate` | `cream`, `green`, `blue`, `ochre` en `silverpoint`; `prussian` en `cyanotype` | El primero del ground |
+| `substrate` | `cream`, `green`, `blue`, `ochre` en `silverpoint`; `prussian` en `cyanotype` | El primero del estilo base |
 | `mode` | `ink`, `precision` | `ink` |
-| `palette` | Un objeto con los colores que sustituyes | Los del ground |
+| `palette` | Un objeto con los colores que sustituyes | Los del estilo base |
 
-El ground y el sustrato son las ideas del artículo 01: el conjunto de decisiones de dibujo y el papel preparado. `mode="precision"` desactiva el entintado a mano y deja los trazos exactos. Las paletas y su comprobación de contraste tienen su propio artículo.
+El estilo base y el sustrato son las ideas de los artículos 01 y 02: el conjunto de decisiones de dibujo y el papel preparado. `mode="precision"` desactiva el entintado a mano y deja los trazos exactos. Las paletas y su comprobación de contraste tienen su propio artículo.
 
 ![El mismo gráfico con los cuatro sustratos de silverpoint, sin tarjeta y en cianotipia](./images/silverpoint-serie-7.png)
 
-Es el mismo gráfico seis veces. Arriba y a la izquierda abajo, los cuatro sustratos del ground `silverpoint`. En el centro abajo, con `chrome="bare"`. A la derecha abajo, con `ground="cyanotype"`: líneas blancas sobre azul de Prusia.
+Es el mismo gráfico seis veces. Arriba y a la izquierda abajo, los cuatro sustratos del estilo base `silverpoint`. En el centro abajo, con `chrome="bare"`. A la derecha abajo, con `ground="cyanotype"`: líneas blancas sobre azul de Prusia.
 
 ## El tamaño y la tarjeta
 

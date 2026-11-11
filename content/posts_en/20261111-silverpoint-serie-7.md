@@ -44,7 +44,7 @@ Without `data`, the chart draws its demo set, and with an empty array it draws i
 | `mode` | `ink`, `precision` | `ink` |
 | `palette` | An object with the colours you replace | The ground's |
 
-The ground and the substrate are the ideas from article 01: the set of drawing decisions and the prepared paper. `mode="precision"` turns off the hand inking and leaves the strokes exact. Palettes and their contrast check have their own article.
+The ground and the substrate are the ideas from articles 01 and 02: the set of drawing decisions and the prepared paper. `mode="precision"` turns off the hand inking and leaves the strokes exact. Palettes and their contrast check have their own article.
 
 ![The same chart on the four silverpoint substrates, without a card and in cyanotype](./images/silverpoint-serie-7.png)
 
