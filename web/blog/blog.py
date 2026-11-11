@@ -1,5 +1,7 @@
 """Blog pages - using static route generation like Reflex official blog."""
 
+import re
+
 import reflex as rx
 from reflex_silverpoint_react import sp_button, sp_card, sp_pagination, sp_tag
 
@@ -10,6 +12,11 @@ from web.i18n import LANGS, localize, t
 from web.states.blog_state import BlogState
 
 MAIN_PADDING_CLASS = "p-4 md:p-8 lg:p-16 w-full"
+# Link previews (LinkedIn, X, Facebook) need absolute URLs.
+SITE = "https://www.seraph.to"
+# The preview image of a post that has no image of its own.
+DEFAULT_PREVIEW_IMAGE = f"{SITE}/ec.jpg"
+FIRST_IMAGE = re.compile(r"!\[[^\]]*\]\(\s*\./images/([^)\s]+)")
 META_SEPARATOR = "text-[#5C7B71] mx-2"
 
 
@@ -172,6 +179,33 @@ def create_post_page(post_data: dict, lang: str = "en") -> rx.Component:
     )
 
 
+def post_preview(post_data: dict, route: str) -> dict:
+    """The `add_page` arguments that give a post its link preview.
+
+    The description is the post's `Summary`, the image is the first image of its
+    body (the author's photo when it has none), and the Open Graph and Twitter
+    card tags repeat both with the title and the page's absolute URL.
+    """
+    title, summary = post_data["title"], post_data["summary"]
+    found = FIRST_IMAGE.search(post_data["content"])
+    image = f"{SITE}/blog/images/{found[1]}" if found else DEFAULT_PREVIEW_IMAGE
+    meta = [
+        {"property": "og:type", "content": "article"},
+        {"property": "og:site_name", "content": "Ernesto Crespo"},
+        {"property": "og:title", "content": title},
+        {"property": "og:url", "content": f"{SITE}{route}"},
+        {"name": "twitter:card", "content": "summary_large_image" if found else "summary"},
+        {"name": "twitter:title", "content": title},
+        {"name": "twitter:image", "content": image},
+    ]
+    if summary:
+        meta += [
+            {"property": "og:description", "content": summary},
+            {"name": "twitter:description", "content": summary},
+        ]
+    return {"description": summary or None, "image": image, "meta": meta}
+
+
 def get_blog_routes():
     """Generate static routes for all blog posts.
 
@@ -192,7 +226,9 @@ def get_blog_routes():
             def make_page(data=post_data, lang=lang):
                 return lambda: create_post_page(data, lang)
 
-            routes.append((route, make_page(), post_data["title"], lang))
+            routes.append(
+                (route, make_page(), post_data["title"], lang, post_preview(post_data, route))
+            )
 
     return routes
 
