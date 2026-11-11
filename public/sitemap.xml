@@ -49,6 +49,18 @@
     <loc>http://localhost:3000/es/blog/tags</loc>
   </url>
   <url>
+    <loc>http://localhost:3000/blog/silverpoint_serie_2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/silverpoint_serie_2</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/blog/silverpoint_serie_1</loc>
+  </url>
+  <url>
+    <loc>http://localhost:3000/es/blog/silverpoint_serie_1</loc>
+  </url>
+  <url>
     <loc>http://localhost:3000/blog/silverpoint_serie_0</loc>
   </url>
   <url>
