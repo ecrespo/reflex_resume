@@ -559,7 +559,7 @@ app.add_page(index)
 
 Las filas se definen como tuplas y se convierten en diccionarios con `FIELDS`. `sort_rows` ordena igual que `uiSortRows`, así que la tabla se ve igual que en los otros tres frameworks.
 
-El disparador es un `rx.el.button`. La documentación permite pasar un texto, `trigger="Acknowledge an incident"`, que se convierte en un botón dibujado con `sp_trigger`; en la prueba, con Reflex 0.10.1 y `reflex-silverpoint-react` 0.9.1, la página falló con `SilverpointTrigger is not defined`, igual que con `sp_trigger` explícito.
+El disparador es un `rx.el.button`. La documentación permite pasar un texto, `trigger="Acknowledge an incident"`, que se convierte en un botón dibujado con `sp_trigger`. Pero con Reflex 0.10.1 y `reflex-silverpoint-react` 0.9.1 eso falla cuando la ventana se controla desde el estado, como aquí con `open` y `on_open_change`: la página se rompe con `SilverpointTrigger is not defined`, igual que con `sp_trigger` explícito. Reflex compila el modal en un módulo aparte que no recibe la definición del disparador. Una ventana sin estado acepta el texto sin problema. Es un [error conocido](https://github.com/ecrespo/reflex-silverpoint-react/issues/44) que se corregirá en la próxima versión del paquete; hasta entonces, un `rx.el.button` funciona en los dos casos.
 
 ## El teclado
 
@@ -586,7 +586,7 @@ Con ellos se completa el detalle de una incidencia: `SpDescriptions` para sus ca
 
 * **La tabla no se ordena al pulsar el encabezado.** Es lo esperado: ordena tú en `onSort` y pásale `sortKey` y `sortOrder`.
 * **Las celdas salen alineadas a la derecha.** Es la regla `.sp-table td` de `styles.css` en 0.9.2. Añade `.sp-ui-table td:not([data-align]) { text-align: start; }`.
-* **En Reflex, `SilverpointTrigger is not defined`.** El disparador es un texto o un `sp_trigger`. Usa `rx.el.button`.
+* **En Reflex, `SilverpointTrigger is not defined`.** La ventana se controla desde el estado y su disparador es un texto o un `sp_trigger`. Usa `rx.el.button` hasta la próxima versión del paquete, que lo corrige.
 * **El rótulo del select no se ve.** `label` es el nombre accesible y no se dibuja, como en `SpTextarea`.
 
 ## Lo que viene
