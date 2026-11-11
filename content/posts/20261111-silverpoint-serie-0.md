@@ -14,7 +14,7 @@ Este es el artículo 0. No instala nada ni dibuja nada: explica qué es silverpo
 
 ## Qué es silverpoint
 
-Silverpoint dibuja gráficos con el lenguaje visual de una técnica de dibujo histórica: la punta de plata del Renacimiento. Un sustrato preparado de tono medio, una línea fina, el tono construido con tramado y un realce en blanco reservado para el valor que importa.
+Silverpoint dibuja gráficos con el lenguaje visual de una técnica de dibujo histórica: el Silverpoint del Renacimiento. Un sustrato preparado de tono medio, una línea fina, el tono construido con tramado y un realce en blanco reservado para el valor que importa.
 
 ![Arriba, el estilo de boceto habitual; abajo, tres gráficos de silverpoint](./images/silverpoint-serie-0.png)
 
