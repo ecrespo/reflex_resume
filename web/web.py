@@ -410,5 +410,5 @@ for _route, _page, _title_en, _title_es in _PAGES:
 app.add_page(not_found_page, route="404", title="Page not found | Página no encontrada")
 
 # Register all blog post pages (statically generated - same pattern as Reflex official blog)
-for route, page_fn, title, _post_lang in blog_post_routes:
-    app.add_page(page_fn, route=route, title=f"Blog | {title}")
+for route, page_fn, title, _post_lang, preview in blog_post_routes:
+    app.add_page(page_fn, route=route, title=f"Blog | {title}", **preview)
