@@ -436,4 +436,4 @@ The presentation engine includes Marpit and its Markdown parser. In React, the b
 
 With this article, level 3 ends. The panel is now an application: UI components, export, server rendering, live data, a timeline and a presentation.
 
-Level 4 brings everything together in a final project. It starts with article 23: the complete operations panel in React with Next.js.
+Level 4 brings everything together in a final project. It starts with [article 23](/blog/silverpoint_serie_23): the complete operations panel in React with Next.js.

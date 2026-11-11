@@ -316,6 +316,7 @@ The output lands in `dist/ops-panel/browser`. With this project, the initial bun
 * **The card says "No data".** The name in `xKey` or `valueKey` does not match the fields of the rows. In development, the console shows `SP002` with the name of the field.
 * **The build fails with "Type 'string' is not assignable to type 'number'".** A numeric input is written as an attribute. `height="200"` passes the text `"200"`; the right form is `[height]="200"`.
 * **The page stays blank and the console shows an injection error about `HttpClient`.** `provideHttpClient()` is missing from `src/app/app.config.ts`.
+* **When you rest the pointer on the chart, the browser's own tooltip with the title also appears.** Angular leaves the literal text `title="Hits per hour"` as a `title` attribute of the `sp-line-chart` element. If it bothers you, write it as an expression, `[title]="'Hits per hour'"`. It is a bug open as [silverpoint#18](https://github.com/ecrespo/silverpoint/issues/18); it will be fixed in a coming version of the package.
 
 The `SP0xx` diagnostics only appear in development.
 

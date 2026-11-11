@@ -436,4 +436,4 @@ El motor de las presentaciones incluye Marpit y su intérprete de Markdown. En R
 
 Con este artículo termina el nivel 3. El panel ya es una aplicación: componentes de interfaz, exportación, render en servidor, datos en vivo, una línea de tiempo y una presentación.
 
-El nivel 4 junta todo en un proyecto final. Empieza por el artículo 23: el panel de operaciones completo en React con Next.js.
+El nivel 4 junta todo en un proyecto final. Empieza por el [artículo 23](/blog/silverpoint_serie_23): el panel de operaciones completo en React con Next.js.

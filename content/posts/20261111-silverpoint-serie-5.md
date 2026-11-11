@@ -316,6 +316,7 @@ El resultado queda en `dist/ops-panel/browser`. Con este proyecto, el paquete in
 * **La tarjeta dice «No data».** El nombre de `xKey` o de `valueKey` no coincide con los campos de las filas. En desarrollo, la consola muestra `SP002` con el nombre del campo.
 * **La compilación falla con «Type 'string' is not assignable to type 'number'».** Un input numérico está escrito como atributo. `height="200"` pasa el texto `"200"`; lo correcto es `[height]="200"`.
 * **La página se queda en blanco y la consola muestra un error de inyección sobre `HttpClient`.** Falta `provideHttpClient()` en `src/app/app.config.ts`.
+* **Al dejar el puntero sobre el gráfico aparece también la descripción emergente del navegador con el título.** Angular deja el texto literal `title="Hits per hour"` como atributo `title` del elemento `sp-line-chart`. Si te molesta, escríbelo como expresión, `[title]="'Hits per hour'"`. Es un fallo abierto como [silverpoint#18](https://github.com/ecrespo/silverpoint/issues/18); se corregirá en una próxima versión del paquete.
 
 Los diagnósticos `SP0xx` solo aparecen en desarrollo.
 

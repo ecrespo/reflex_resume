@@ -215,6 +215,8 @@ Si el panel y sus hijos no coinciden, el panel sigue funcionando, pero avisa en 
 
 El panel también reparte el estilo, como anunció el artículo 12. `ground`, `substrate`, `mode`, `locale` y `palette` puestos en `Dashboard` pasan a todos sus gráficos. Cada campo se resuelve en el orden del [artículo 09](/blog/silverpoint_serie_9), y gana el primero que lo declara: la prop del propio gráfico, el panel que lo contiene, el proveedor más cercano y el valor por defecto de la librería. Con `substrate="green"` en el panel y `substrate="ochre"` en los errores por hora, cinco gráficos se dibujan en verde y uno en ocre.
 
+Al revés no funciona igual: el marco del propio panel, con su fondo y su título, no lee el proveedor. Si la aplicación pone `ground` o `palette` en el proveedor, sus gráficos los reciben, pero el marco del panel se queda con el estilo base por defecto. Pásale al panel los mismos valores que al proveedor. Es un fallo abierto como [silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17); se corregirá en una próxima versión del paquete.
+
 ## Gráficos enlazados
 
 Con `link={{ key: 'hour' }}`, explorar un gráfico marca en los demás los elementos con el mismo valor de `hour`. Es lo que muestra la imagen: el puntero está en la hora 11 del tráfico, y la hora 11 se marca en las barras de errores y en las curvas de los dos indicadores, cuyas filas también tienen `hour`.
