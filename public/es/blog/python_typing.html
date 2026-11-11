@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Introducción a anotación y tipos en Python</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-0722b669.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-BzSrTjNp.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D6vy8FRa.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-DKOBwwLH.js"/><link rel="modulepreload" href="/assets/_es_._blog_._python_typing_._index-CzQS_-R1.js"/><link rel="modulepreload" href="/assets/rss-C4YRGlcV.js"/><link rel="modulepreload" href="/assets/one-dark-ZdQz-KOh.js"/><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Introducción a anotación y tipos en Python</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-eb28f7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-NeNU1jXw.js"/><link rel="modulepreload" href="/assets/createLucideIcon-CxmYWa6v.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BKGnH8CN.js"/><link rel="modulepreload" href="/assets/_es_._blog_._python_typing_._index-k6kJsFiV.js"/><link rel="modulepreload" href="/assets/rss-jU042OhM.js"/><link rel="modulepreload" href="/assets/one-dark-jjAfUps6.js"/><script>
 // Only run in browser environment, not during SSR
 if (typeof document !== 'undefined') {
     try {
@@ -244,8 +244,7 @@ if (typeof document !== 'undefined') {
 <p class="rt-Text css-56tzch">Python soporta anotaciones de tipos para variables básicas soportadas por el lenguaje str, int, float, bool y None. Viene incorporada en la librería typing.</p>
 <h3 class="rt-Heading rt-r-size-4 css-jzlc08">Anotación de variables</h3>
 <p class="rt-Text css-56tzch">Se puede indicar el tipo de una variable al usar los dos puntos &quot;:&quot;. Por ejemplo:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from typing import List
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from typing import List
 
 nombre: str = &#x27;Pedro&#x27;
 edad: int = 24
@@ -255,8 +254,7 @@ colegas: List[str] = [&#x27;Jane&#x27;, &#x27;John&#x27;]
 <p class="rt-Text css-56tzch">Se define el tipo y el valor que tendrá esa variable.</p>
 <h3 class="rt-Heading rt-r-size-4 css-jzlc08">Anotación en las funciones</h3>
 <p class="rt-Text css-56tzch">En el caso de las funciones se puede colocar anotaciones en las variables de los argumentos, así como en la salida de la función.</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from typing import Dict, List
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from typing import Dict, List
 import math 
 
 def calc_area_circulo(radio: float) -&gt; float:
@@ -287,8 +285,7 @@ def send_email(
 </ul>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">Any</h4>
 <p class="rt-Text css-56tzch">Una variable tipo Any es compatible con todas los tipos básicos.</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from typing import Any
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from typing import Any
 
 resultado: Any = &quot;Procesado&quot;
 
@@ -303,7 +300,6 @@ estatus = resultado
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">Literal</h4>
 <p class="rt-Text css-56tzch">El tipo literal se usa para indicar que tiene un valor igual a los valores indicados (tipos).</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-
 from typing import Literal
 
 
@@ -327,8 +323,7 @@ crear_usuario(&quot;John&quot;, &quot;Doe&quot;, &quot;hombre&quot;)
 <p class="rt-Text css-56tzch">Se define una lista para el genero de tipo literal, y el tipo es uno de los definidos (hombre, mujer, no especificado).</p>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">Union</h4>
 <p class="rt-Text css-56tzch">Algunas variables a veces necesitan dos tipos básicos.</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from typing import Union
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from typing import Union
 
 
 def get_temperatura() -&gt; Union[int, float]:
@@ -337,8 +332,7 @@ def get_temperatura() -&gt; Union[int, float]:
 <p class="rt-Text css-56tzch">Se define una función que devuelve  entero o flotante, esto se logra usando Union.</p>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">TypedDict</h4>
 <p class="rt-Text css-56tzch">TypedDict permite definir un tipo de dato diccionario.</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from typing import TypedDict, Union
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from typing import TypedDict, Union
 
 
 class Card(TypedDict):
@@ -359,8 +353,7 @@ print(ace_of_spade)
 </code></pre>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">NoReturn</h4>
 <p class="rt-Text css-56tzch">NoReturn es similar to void en otros lenguajes de programación, en mi caso antes usaba None cuando una función no devuelve nada.</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from typing import NoReturn
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from typing import NoReturn
 
 def hola1() -&gt; None:
     print(&quot;Hola Mundo!&quot;)
@@ -372,7 +365,6 @@ def hola2() -&gt; NoReturn:
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">Final</h4>
 <p class="rt-Text css-56tzch">Este tipo de dato se define para no redefinir un valor.</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-
 from typing import Final
 
 
@@ -392,13 +384,11 @@ class UserValidador(Validador):
 </code></pre>
 <h3 class="rt-Heading rt-r-size-4 css-jzlc08">Uso de verificadores de tipo</h3>
 <p class="rt-Text css-56tzch">Uno de los más usados verificadores de tipos es mypy. Se puede instalar usando pip:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-pip install mypy 
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">pip install mypy 
 </code></pre>
 <p class="rt-Text css-56tzch">Para usarlo simplemente se llama a mypy y se le pasa el archivo a verificar.</p>
 <p class="rt-Text css-56tzch">El código a validar se muestra a continuación:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-#!/usr/bin/env python3
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">#!/usr/bin/env python3
 
 from typing import Literal, Dict
 
@@ -423,8 +413,7 @@ crear_usuario(&quot;Jane&quot;, &quot;Doe&quot;, &quot;mujer&quot;)
 crear_usuario(&quot;John&quot;, &quot;Doe&quot;, &quot;x&quot;)
 </code></pre>
 <p class="rt-Text css-56tzch">Este código devolverá error al intentar crear un usuario con genero x.</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-mypy   pruebas_typing.py
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">mypy   pruebas_typing.py
 content/code/pruebas_typing.py:23: error: Argument 3 to &quot;crear_usuario&quot; has incompatible type &quot;Literal[&#x27;x&#x27;]&quot;; expected &quot;Union[Literal[&#x27;hombre&#x27;], Literal[&#x27;mujer&#x27;], Literal[&#x27;no especificado&#x27;]]&quot;
 Found 1 error in 1 file (checked 1 source file)</code></pre>
 <p class="rt-Text css-56tzch">Este es el mensaje de error que devuelve al intentar colocar un valor x en el genero.</p>
@@ -447,9 +436,9 @@ dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
 			console.error(error);
 			sessionStorage.removeItem(storageKey);
 		}
-	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-0722b669.js";
-import * as route0 from "/assets/root-BzSrTjNp.js";
-import * as route1 from "/assets/_es_._blog_._python_typing_._index-CzQS_-R1.js";
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-eb28f7fa.js";
+import * as route0 from "/assets/root-NeNU1jXw.js";
+import * as route1 from "/assets/_es_._blog_._python_typing_._index-k6kJsFiV.js";
   
   window.__reactRouterRouteModules = {"root":route0,"routes/[es].[blog].[python_typing]._index":route1};
 

@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Principios S.O.L.I.D. - 3. Principio de sustitución Liskov. (LSP - Liskov substitution principle)</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-0722b669.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-BzSrTjNp.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D6vy8FRa.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-DKOBwwLH.js"/><link rel="modulepreload" href="/assets/_es_._blog_._python_solid3_._index-DDDyd1XP.js"/><link rel="modulepreload" href="/assets/rss-C4YRGlcV.js"/><link rel="modulepreload" href="/assets/one-dark-ZdQz-KOh.js"/><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Principios S.O.L.I.D. - 3. Principio de sustitución Liskov. (LSP - Liskov substitution principle)</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-eb28f7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-NeNU1jXw.js"/><link rel="modulepreload" href="/assets/createLucideIcon-CxmYWa6v.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BKGnH8CN.js"/><link rel="modulepreload" href="/assets/_es_._blog_._python_solid3_._index-CQCgir7X.js"/><link rel="modulepreload" href="/assets/rss-jU042OhM.js"/><link rel="modulepreload" href="/assets/one-dark-jjAfUps6.js"/><script>
 // Only run in browser environment, not during SSR
 if (typeof document !== 'undefined') {
     try {
@@ -253,8 +253,7 @@ if (typeof document !== 'undefined') {
 <style data-emotion="css 1nbtsq0">.css-1nbtsq0{list-style-type:decimal;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ol class="css-1nbtsq0">
 <li class="css-jzlc08">Del principio de abierto y cerrado se creo una clase abstracta y se crearon diferentes clases que heredan de esa clase abstracta para cada proceso de pago. A continuación el código.</li>
 </ol>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from abc import ABC, abstractmethod
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from abc import ABC, abstractmethod
 
 # La clase Order se mantiene igual:
 
@@ -336,8 +335,7 @@ processor = PaypalPaymentProcessor()
 processor.pay(order, &quot;0372846&quot;)
 </code></pre>
 <p class="rt-Text css-56tzch">La salida es la siguiente:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-210
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">210
 Processing debit payment type
 Verifying security code: 0372846
 
@@ -352,8 +350,7 @@ Verifying security code: 0372846</code></pre>
 <p class="rt-Text css-56tzch">Se tiene un error cuando se creo la clase de proceso de pago de paypal. Para paypal no es necesario un código de seguridad, se necesita un correo electrónico, pero al modificar el método de pago de la clase paypal se estaría violando el principio de sustitución de Liskov.</p>
 <p class="rt-Text css-56tzch">Para solucionarlo, se elimina el argumento del código de seguridad y se coloca al inicializar el método de pago respectivo.</p>
 <p class="rt-Text css-56tzch">A continuación el código:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from abc import ABC, abstractmethod
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from abc import ABC, abstractmethod
 
 class Order:
 
@@ -443,8 +440,7 @@ processor = PaypalPaymentProcessor(&quot;h@h.com&quot;)
 processor.pay(order)
 </code></pre>
 <p class="rt-Text css-56tzch">La salida genera lo siguiente:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-210
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">210
 Processing debit payment type
 Verifying security code: 0372846
 
@@ -460,8 +456,7 @@ Verifying email address: h@h.com</code></pre>
 <li class="css-jzlc08">Generación de código QR.</li>
 </ol>
 <p class="rt-Text css-56tzch">Del artículo sobre el principio de abierto/cerrado se tiene el siguiente código:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from abc import ABC, abstractmethod
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from abc import ABC, abstractmethod
 import qrcode as qrc
 from MyQR import myqr
 
@@ -522,8 +517,7 @@ gen_qr.generate(my_qr,&quot;Hola mundo&quot;,&quot;hola1c.png&quot;)
 gen_qrcode = GenerateQRCode()
 gen_qrcode.generate(my_qr,&quot;Hola mundo&quot;,&quot;hola2c.png&quot;)</code></pre>
 <p class="rt-Text css-56tzch">El cambio que permitirá cumplir con este principio sería el de inicializar las clases con los kwargs en vez de tenerlo en el método de pago.</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from abc import ABC, abstractmethod
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from abc import ABC, abstractmethod
 import qrcode as qrc
 from MyQR import myqr
 
@@ -643,9 +637,9 @@ dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
 			console.error(error);
 			sessionStorage.removeItem(storageKey);
 		}
-	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-0722b669.js";
-import * as route0 from "/assets/root-BzSrTjNp.js";
-import * as route1 from "/assets/_es_._blog_._python_solid3_._index-DDDyd1XP.js";
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-eb28f7fa.js";
+import * as route0 from "/assets/root-NeNU1jXw.js";
+import * as route1 from "/assets/_es_._blog_._python_solid3_._index-CQCgir7X.js";
   
   window.__reactRouterRouteModules = {"root":route0,"routes/[es].[blog].[python_solid3]._index":route1};
 

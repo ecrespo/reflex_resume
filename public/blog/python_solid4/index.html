@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | S.O.L.I.D. Principles - 4. Interface segregation principle (ISP)</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-0722b669.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-BzSrTjNp.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D6vy8FRa.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-DKOBwwLH.js"/><link rel="modulepreload" href="/assets/_blog_._python_solid4_._index-Ch-EQgxc.js"/><link rel="modulepreload" href="/assets/rss-C4YRGlcV.js"/><link rel="modulepreload" href="/assets/one-dark-ZdQz-KOh.js"/><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | S.O.L.I.D. Principles - 4. Interface segregation principle (ISP)</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-eb28f7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-NeNU1jXw.js"/><link rel="modulepreload" href="/assets/createLucideIcon-CxmYWa6v.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BKGnH8CN.js"/><link rel="modulepreload" href="/assets/_blog_._python_solid4_._index-COsMvBAq.js"/><link rel="modulepreload" href="/assets/rss-jU042OhM.js"/><link rel="modulepreload" href="/assets/one-dark-jjAfUps6.js"/><script>
 // Only run in browser environment, not during SSR
 if (typeof document !== 'undefined') {
     try {
@@ -254,8 +254,7 @@ if (typeof document !== 'undefined') {
 <style data-emotion="css 1nbtsq0">.css-1nbtsq0{list-style-type:decimal;margin-top:1em;margin-bottom:1em;margin-left:1.5rem;direction:column;}</style><ol class="css-1nbtsq0">
 <li class="css-jzlc08">From the Liskov substitution principle we have the payment processing code. Here is the code.</li>
 </ol>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from abc import ABC, abstractmethod
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from abc import ABC, abstractmethod
 
 # La clase Order se mantiene igual así que en el siguiente código no se mostrará.
 class Order:
@@ -346,8 +345,7 @@ processor = PaypalPaymentProcessor(&quot;h@h.com&quot;)
 processor.pay(order)
 </code></pre>
 <p class="rt-Text css-56tzch">The output is the following:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-210
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">210
 Processing debit payment type
 Verifying security code: 0372846
 
@@ -362,8 +360,7 @@ Verifying email address: h@h.com</code></pre>
 <h3 class="rt-Heading rt-r-size-4 css-jzlc08">First improvement</h3>
 <p class="rt-Text css-56tzch">To comply with the segregation principle, the improvement is made in the abstract class: instead of having a single method (pay), it now also has one for authentication via SMS.</p>
 <p class="rt-Text css-56tzch">Here is the code:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-from abc import ABC, abstractmethod
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">from abc import ABC, abstractmethod
 
 
 # La clase abstracta de procesamiento de pago
@@ -439,8 +436,7 @@ class PaypalPaymentProcessor(PaymentProcessor):
 <h3 class="rt-Heading rt-r-size-4 css-jzlc08">Second improvement</h3>
 <p class="rt-Text css-56tzch">To fix the violation of the Liskov substitution principle, 2 abstract classes will be created, one for authentication via SMS
 and another one to validate the ones that do not use SMS.</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-# Clase abstracta procesador de pago que ahora sólo tiene el método pay
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap"># Clase abstracta procesador de pago que ahora sólo tiene el método pay
 class PaymentProcessor(ABC):
     @abstractmethod
     def pay(self,order):
@@ -515,8 +511,7 @@ class PaypalPaymentProcessor(PaymentProcessor_SMS):
 <p class="rt-Text css-56tzch">Now the different classes have only the methods they need, well separated, complying with the segregation
 principle.</p>
 <p class="rt-Text css-56tzch">There is another solution, which uses composition: the SMSAuth class is created, which will have the SMS code verification method and whether it is authorized. The abstract payment processing class will only have the pay method,</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-class SMSAuth:
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">class SMSAuth:
     authorized = False
 
     def verify_code(self,code):
@@ -617,8 +612,7 @@ processor = PaypalPaymentProcessor(&quot;h@h.com&quot;,authorizer)
 # Se realiza el pago de la orden.
 processor.pay(order)</code></pre>
 <p class="rt-Text css-56tzch">The output of this execution is the following:</p>
-<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">
-210
+<pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">210
 Verifying code 454545
 Processing debit payment type
 Verifying security code: 0372846
@@ -696,9 +690,9 @@ address: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
 			console.error(error);
 			sessionStorage.removeItem(storageKey);
 		}
-	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-0722b669.js";
-import * as route0 from "/assets/root-BzSrTjNp.js";
-import * as route1 from "/assets/_blog_._python_solid4_._index-Ch-EQgxc.js";
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-eb28f7fa.js";
+import * as route0 from "/assets/root-NeNU1jXw.js";
+import * as route1 from "/assets/_blog_._python_solid4_._index-COsMvBAq.js";
   
   window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[python_solid4]._index":route1};
 

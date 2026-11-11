@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/generargraficosanimadosdeburbujaalogapminerconpython-1.png"/><link rel="preload" as="image" href="/blog/images/generargraficosanimadosdeburbujaalogapminerconpython-2.gif"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Generating animated bubble charts Gapminder-style with Python</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-0722b669.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-BzSrTjNp.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D6vy8FRa.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-DKOBwwLH.js"/><link rel="modulepreload" href="/assets/_blog_._generargraficosanimadosdeburbujaalogapminerconpython_._index-BQQrtMJc.js"/><link rel="modulepreload" href="/assets/rss-C4YRGlcV.js"/><link rel="modulepreload" href="/assets/one-dark-ZdQz-KOh.js"/><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/generargraficosanimadosdeburbujaalogapminerconpython-1.png"/><link rel="preload" as="image" href="/blog/images/generargraficosanimadosdeburbujaalogapminerconpython-2.gif"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Generating animated bubble charts Gapminder-style with Python</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-eb28f7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-NeNU1jXw.js"/><link rel="modulepreload" href="/assets/createLucideIcon-CxmYWa6v.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BKGnH8CN.js"/><link rel="modulepreload" href="/assets/_blog_._generargraficosanimadosdeburbujaalogapminerconpython_._index-wfdU_hxF.js"/><link rel="modulepreload" href="/assets/rss-jU042OhM.js"/><link rel="modulepreload" href="/assets/one-dark-jjAfUps6.js"/><script>
 // Only run in browser environment, not during SSR
 if (typeof document !== 'undefined') {
     try {
@@ -259,65 +259,6 @@ data = pd.read_csv(url)</code></pre>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">#Se muestra el data frame
 data.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[3]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">country</th><th style="text-align:center">year</th><th style="text-align:center">pop</th><th style="text-align:center">continent</th><th style="text-align:left">lifeExp</th><th style="text-align:center">gdpPercap</th></tr></thead><tbody><tr><td style="text-align:left">0</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1952</td><td style="text-align:center">8425333.0</td><td style="text-align:center">Asia</td><td style="text-align:left">28.801</td><td style="text-align:center">779.445314</td></tr><tr><td style="text-align:left">1</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1957</td><td style="text-align:center">9240934.0</td><td style="text-align:center">Asia</td><td style="text-align:left">30.332</td><td style="text-align:center">820.853030</td></tr><tr><td style="text-align:left">2</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1962</td><td style="text-align:center">10267083.0</td><td style="text-align:center">Asia</td><td style="text-align:left">31.997</td><td style="text-align:center">853.100710</td></tr><tr><td style="text-align:left">3</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1967</td><td style="text-align:center">11537966.0</td><td style="text-align:center">Asia</td><td style="text-align:left">34.020</td><td style="text-align:center">836.197138</td></tr><tr><td style="text-align:left">4</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1972</td><td style="text-align:center">13079460.0</td><td style="text-align:center">Asia</td><td style="text-align:left">36.088</td><td style="text-align:center">739.981106</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">It has the columns country, year, population, continent, life expectancy and GDP per capita
 In [4]:</p>
@@ -340,65 +281,6 @@ In [5]:</p>
 data[&#x27;continent&#x27;]=pd.Categorical(data[&#x27;continent&#x27;])
 data.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[5]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">country</th><th style="text-align:center">year</th><th style="text-align:center">pop</th><th style="text-align:center">continent</th><th style="text-align:left">lifeExp</th><th style="text-align:center">gdpPercap</th></tr></thead><tbody><tr><td style="text-align:left">0</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1952</td><td style="text-align:center">8425333.0</td><td style="text-align:center">Asia</td><td style="text-align:left">28.801</td><td style="text-align:center">779.445314</td></tr><tr><td style="text-align:left">1</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1957</td><td style="text-align:center">9240934.0</td><td style="text-align:center">Asia</td><td style="text-align:left">30.332</td><td style="text-align:center">820.853030</td></tr><tr><td style="text-align:left">2</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1962</td><td style="text-align:center">10267083.0</td><td style="text-align:center">Asia</td><td style="text-align:left">31.997</td><td style="text-align:center">853.100710</td></tr><tr><td style="text-align:left">3</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1967</td><td style="text-align:center">11537966.0</td><td style="text-align:center">Asia</td><td style="text-align:left">34.020</td><td style="text-align:center">836.197138</td></tr><tr><td style="text-align:left">4</td><td style="text-align:center">Afghanistan</td><td style="text-align:center">1972</td><td style="text-align:center">13079460.0</td><td style="text-align:center">Asia</td><td style="text-align:left">36.088</td><td style="text-align:center">739.981106</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [6]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">#Se vuelve a revisar los tipos de las columnas y ahora se tiene que contienen es categoria
@@ -460,9 +342,9 @@ address: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
 			console.error(error);
 			sessionStorage.removeItem(storageKey);
 		}
-	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-0722b669.js";
-import * as route0 from "/assets/root-BzSrTjNp.js";
-import * as route1 from "/assets/_blog_._generargraficosanimadosdeburbujaalogapminerconpython_._index-BQQrtMJc.js";
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-eb28f7fa.js";
+import * as route0 from "/assets/root-NeNU1jXw.js";
+import * as route1 from "/assets/_blog_._generargraficosanimadosdeburbujaalogapminerconpython_._index-wfdU_hxF.js";
   
   window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[generargraficosanimadosdeburbujaalogapminerconpython]._index":route1};
 

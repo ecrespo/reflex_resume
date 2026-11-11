@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-1.png"/><link rel="preload" as="image" href="/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-3.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Visualizing pokemon statistics using plotly (radar chart)</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-0722b669.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-BzSrTjNp.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D6vy8FRa.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-DKOBwwLH.js"/><link rel="modulepreload" href="/assets/_blog_._visualizandoestadisticasdepokemonusandoplotlygraficaderadar_._index-DT9RKI7S.js"/><link rel="modulepreload" href="/assets/rss-C4YRGlcV.js"/><link rel="modulepreload" href="/assets/one-dark-ZdQz-KOh.js"/><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-1.png"/><link rel="preload" as="image" href="/blog/images/visualizandoestadisticasdepokemonusandoplotlygraficaderadar-3.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Visualizing pokemon statistics using plotly (radar chart)</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-eb28f7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-NeNU1jXw.js"/><link rel="modulepreload" href="/assets/createLucideIcon-CxmYWa6v.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BKGnH8CN.js"/><link rel="modulepreload" href="/assets/_blog_._visualizandoestadisticasdepokemonusandoplotlygraficaderadar_._index-B-Cao-cY.js"/><link rel="modulepreload" href="/assets/rss-jU042OhM.js"/><link rel="modulepreload" href="/assets/one-dark-jjAfUps6.js"/><script>
 // Only run in browser environment, not during SSR
 if (typeof document !== 'undefined') {
     try {
@@ -282,107 +282,6 @@ Se muestra las 5 primeras filas de datos</code></pre>
 <p class="rt-Text css-56tzch">In [3]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">df.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[3]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:center"></th><th style="text-align:center">#</th><th style="text-align:center">Name</th><th style="text-align:left">Type 1</th><th style="text-align:center">Type 2</th><th style="text-align:center">Total</th><th style="text-align:left">HP</th><th style="text-align:center">Attack</th><th style="text-align:center">Defense</th><th style="text-align:center">Sp. Atk</th><th style="text-align:center">Sp. Def</th><th style="text-align:center">Speed</th><th style="text-align:center">Generation</th><th style="text-align:center">Legendary</th></tr></thead><tbody><tr><td style="text-align:center">0</td><td style="text-align:center">1</td><td style="text-align:center">Bulbasaur</td><td style="text-align:left">Grass</td><td style="text-align:center">Poison</td><td style="text-align:center">318</td><td style="text-align:left">45</td><td style="text-align:center">49</td><td style="text-align:center">49</td><td style="text-align:center">65</td><td style="text-align:center">65</td><td style="text-align:center">45</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr><tr><td style="text-align:center">1</td><td style="text-align:center">2</td><td style="text-align:center">Ivysaur</td><td style="text-align:left">Grass</td><td style="text-align:center">Poison</td><td style="text-align:center">405</td><td style="text-align:left">60</td><td style="text-align:center">62</td><td style="text-align:center">63</td><td style="text-align:center">80</td><td style="text-align:center">80</td><td style="text-align:center">60</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr><tr><td style="text-align:center">2</td><td style="text-align:center">3</td><td style="text-align:center">Venusaur</td><td style="text-align:left">Grass</td><td style="text-align:center">Poison</td><td style="text-align:center">525</td><td style="text-align:left">80</td><td style="text-align:center">82</td><td style="text-align:center">83</td><td style="text-align:center">100</td><td style="text-align:center">100</td><td style="text-align:center">80</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr><tr><td style="text-align:center">3</td><td style="text-align:center">3</td><td style="text-align:center">VenusaurMega Venusaur</td><td style="text-align:left">Grass</td><td style="text-align:center">Poison</td><td style="text-align:center">625</td><td style="text-align:left">80</td><td style="text-align:center">100</td><td style="text-align:center">123</td><td style="text-align:center">122</td><td style="text-align:center">120</td><td style="text-align:center">80</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr><tr><td style="text-align:center">4</td><td style="text-align:center">4</td><td style="text-align:center">Charmander</td><td style="text-align:left">Fire</td><td style="text-align:center">NaN</td><td style="text-align:center">309</td><td style="text-align:left">39</td><td style="text-align:center">52</td><td style="text-align:center">43</td><td style="text-align:center">60</td><td style="text-align:center">50</td><td style="text-align:center">65</td><td style="text-align:center">1</td><td style="text-align:center">False</td></tr></tbody></table>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">The data type of each column in the dataframe is shown.</h4>
 <p class="rt-Text css-56tzch">In [4]:</p>
@@ -501,9 +400,9 @@ address: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
 			console.error(error);
 			sessionStorage.removeItem(storageKey);
 		}
-	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-0722b669.js";
-import * as route0 from "/assets/root-BzSrTjNp.js";
-import * as route1 from "/assets/_blog_._visualizandoestadisticasdepokemonusandoplotlygraficaderadar_._index-DT9RKI7S.js";
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-eb28f7fa.js";
+import * as route0 from "/assets/root-NeNU1jXw.js";
+import * as route1 from "/assets/_blog_._visualizandoestadisticasdepokemonusandoplotlygraficaderadar_._index-B-Cao-cY.js";
   
   window.__reactRouterRouteModules = {"root":route0,"routes/[blog].[visualizandoestadisticasdepokemonusandoplotlygraficaderadar]._index":route1};
 

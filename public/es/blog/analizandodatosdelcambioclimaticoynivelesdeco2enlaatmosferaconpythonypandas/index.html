@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-9.png"/><link rel="preload" as="image" href="/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-10.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Analizando datos del cambio climático y niveles de CO2 en la atmosfera con Python y pandas.</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-0722b669.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-BzSrTjNp.js"/><link rel="modulepreload" href="/assets/createLucideIcon-D6vy8FRa.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-DKOBwwLH.js"/><link rel="modulepreload" href="/assets/_es_._blog_._analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas_._index-B4tFU4nT.js"/><link rel="modulepreload" href="/assets/rss-C4YRGlcV.js"/><link rel="modulepreload" href="/assets/one-dark-ZdQz-KOh.js"/><script>
+<!DOCTYPE html><html lang="en"><head><meta charSet="utf-8"/><meta content="width=device-width, initial-scale=1" name="viewport"/><link rel="preload" as="image" href="/ec_drawing.jpg"/><link rel="preload" as="image" href="/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-9.png"/><link rel="preload" as="image" href="/blog/images/analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas-10.png"/><link rel="preload" as="image" href="/blog/images/17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV.png"/><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link as="style" href="/assets/__reflex_global_styles-CYjpERqU.css" rel="preload"/><title>Blog | Analizando datos del cambio climático y niveles de CO2 en la atmosfera con Python y pandas.</title><meta content="favicon.ico" property="og:image"/><link rel="modulepreload" href="/assets/manifest-eb28f7fa.js"/><link rel="modulepreload" href="/assets/entry.client-CQq5RwJx.js"/><link rel="modulepreload" href="/assets/errorBoundaries-Dt_DLUVF.js"/><link rel="modulepreload" href="/assets/react-dom-CaCw9fyO.js"/><link rel="modulepreload" href="/assets/root-NeNU1jXw.js"/><link rel="modulepreload" href="/assets/createLucideIcon-CxmYWa6v.js"/><link rel="modulepreload" href="/assets/reflex-env-DmQ1m_by.js"/><link rel="modulepreload" href="/assets/code-BKGnH8CN.js"/><link rel="modulepreload" href="/assets/_es_._blog_._analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas_._index-cO5a1RoR.js"/><link rel="modulepreload" href="/assets/rss-jU042OhM.js"/><link rel="modulepreload" href="/assets/one-dark-jjAfUps6.js"/><script>
 // Only run in browser environment, not during SSR
 if (typeof document !== 'undefined') {
     try {
@@ -289,53 +289,6 @@ co2_ppm = pd.read_csv(&quot;./datos/archive.csv&quot;)</code></pre>
 <p class="rt-Text css-56tzch">In [3]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_pais.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[3]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">Average Temperature</th><th style="text-align:center">Average Temperature Uncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">0</td><td style="text-align:center">1743-11-01</td><td style="text-align:center">4.384</td><td style="text-align:center">2.294</td><td style="text-align:left">Åland</td></tr><tr><td style="text-align:left">1</td><td style="text-align:center">1743-12-01</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:left">Åland</td></tr><tr><td style="text-align:left">2</td><td style="text-align:center">1744-01-01</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:left">Åland</td></tr><tr><td style="text-align:left">3</td><td style="text-align:center">1744-02-01</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:left">Åland</td></tr><tr><td style="text-align:left">4</td><td style="text-align:center">1744-03-01</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:left">Åland</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">Como se puede observar, se tiene la fecha, la temperatura promedio, la temperatura promedio de incertidumbre y país.
 In [4]:</p>
@@ -354,96 +307,11 @@ memory usage: 17.6+ MB</code></pre>
 <p class="rt-Text css-56tzch">In [5]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_vzla.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[5]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">Average Temperature</th><th style="text-align:center">Average Temperature Uncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">562339</td><td style="text-align:center">1824-01-01</td><td style="text-align:center">24.613</td><td style="text-align:center">0.824</td><td style="text-align:left">Venezuela</td></tr><tr><td style="text-align:left">562340</td><td style="text-align:center">1824-02-01</td><td style="text-align:center">24.670</td><td style="text-align:center">2.017</td><td style="text-align:left">Venezuela</td></tr><tr><td style="text-align:left">562341</td><td style="text-align:center">1824-03-01</td><td style="text-align:center">25.527</td><td style="text-align:center">1.065</td><td style="text-align:left">Venezuela</td></tr><tr><td style="text-align:left">562342</td><td style="text-align:center">1824-04-01</td><td style="text-align:center">25.732</td><td style="text-align:center">1.771</td><td style="text-align:left">Venezuela</td></tr><tr><td style="text-align:left">562343</td><td style="text-align:center">1824-05-01</td><td style="text-align:center">24.999</td><td style="text-align:center">1.157</td><td style="text-align:left">Venezuela</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">Se tiene la misma información anterior pero sólo de Venezuela.
 In [6]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_vzla.describe().T</code></pre>
 <p class="rt-Text css-56tzch">Out[6]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">2086.0</td><td style="text-align:center">25.025686</td><td style="text-align:center">0.703189</td><td style="text-align:left">22.777</td><td style="text-align:left">24.52325</td><td style="text-align:center">24.9825</td><td style="text-align:center">25.49525</td><td style="text-align:center">27.807</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">2086.0</td><td style="text-align:center">0.586000</td><td style="text-align:center">0.398460</td><td style="text-align:left">0.084</td><td style="text-align:left">0.31000</td><td style="text-align:center">0.4540</td><td style="text-align:center">0.76000</td><td style="text-align:center">4.120</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">Se tienen 2086 datos, los cuales la temperatura promedio es 25.025 grados, y la incertidumbre es de 0.586, la desviación de la temperatura promedio es de 0.703, y de la incertidumbre es de 0.398, la mínima temperatura fue de 22.77, la máxima de 27.807.
 In [7]:</p>
@@ -458,478 +326,46 @@ Argentina
 In [8]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_arg.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[8]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">Average Temperature</th><th style="text-align:center">Average Temperature Uncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">25466</td><td style="text-align:center">1855-05-01</td><td style="text-align:center">10.745</td><td style="text-align:center">1.499</td><td style="text-align:left">Argentina</td></tr><tr><td style="text-align:left">25467</td><td style="text-align:center">1855-06-01</td><td style="text-align:center">6.995</td><td style="text-align:center">2.073</td><td style="text-align:left">Argentina</td></tr><tr><td style="text-align:left">25468</td><td style="text-align:center">1855-07-01</td><td style="text-align:center">6.901</td><td style="text-align:center">1.568</td><td style="text-align:left">Argentina</td></tr><tr><td style="text-align:left">25469</td><td style="text-align:center">1855-08-01</td><td style="text-align:center">9.097</td><td style="text-align:center">1.412</td><td style="text-align:left">Argentina</td></tr><tr><td style="text-align:left">25470</td><td style="text-align:center">1855-09-01</td><td style="text-align:center">11.316</td><td style="text-align:center">1.384</td><td style="text-align:left">Argentina</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [9]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_arg.describe().T</code></pre>
 <p class="rt-Text css-56tzch">Out[9]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">1900.0</td><td style="text-align:center">14.621194</td><td style="text-align:center">4.846885</td><td style="text-align:left">4.796</td><td style="text-align:left">10.13225</td><td style="text-align:center">14.6305</td><td style="text-align:center">19.27875</td><td style="text-align:center">23.290</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">1900.0</td><td style="text-align:center">0.527338</td><td style="text-align:center">0.465652</td><td style="text-align:left">0.083</td><td style="text-align:left">0.20900</td><td style="text-align:center">0.3035</td><td style="text-align:center">0.74525</td><td style="text-align:center">2.974</td></tr></tbody></table>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">Brasil</h4>
 <p class="rt-Text css-56tzch">In [10]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_brasil.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[10]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">Average Temperature</th><th style="text-align:center">Average Temperature Uncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">77110</td><td style="text-align:center">1832-01-01</td><td style="text-align:center">24.935</td><td style="text-align:center">1.372</td><td style="text-align:left">Brazil</td></tr><tr><td style="text-align:left">77111</td><td style="text-align:center">1832-02-01</td><td style="text-align:center">24.505</td><td style="text-align:center">1.953</td><td style="text-align:left">Brazil</td></tr><tr><td style="text-align:left">77112</td><td style="text-align:center">1832-03-01</td><td style="text-align:center">24.617</td><td style="text-align:center">1.359</td><td style="text-align:left">Brazil</td></tr><tr><td style="text-align:left">77113</td><td style="text-align:center">1832-04-01</td><td style="text-align:center">23.990</td><td style="text-align:center">2.013</td><td style="text-align:left">Brazil</td></tr><tr><td style="text-align:left">77114</td><td style="text-align:center">1832-05-01</td><td style="text-align:center">23.124</td><td style="text-align:center">1.592</td><td style="text-align:left">Brazil</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [11]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_brasil.describe().T</code></pre>
 <p class="rt-Text css-56tzch">Out[11]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">2164.0</td><td style="text-align:center">24.699256</td><td style="text-align:center">0.978787</td><td style="text-align:left">21.797</td><td style="text-align:left">24.02250</td><td style="text-align:center">24.8295</td><td style="text-align:center">25.44975</td><td style="text-align:center">27.151</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">2164.0</td><td style="text-align:center">0.572940</td><td style="text-align:center">0.411794</td><td style="text-align:left">0.060</td><td style="text-align:left">0.24375</td><td style="text-align:center">0.4160</td><td style="text-align:center">0.84000</td><td style="text-align:center">3.353</td></tr></tbody></table>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">Chile</h4>
 <p class="rt-Text css-56tzch">In [12]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_chile.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[12]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">108248</td><td style="text-align:center">1855-05-01</td><td style="text-align:center">7.152</td><td style="text-align:center">1.296</td><td style="text-align:left">Chile</td></tr><tr><td style="text-align:left">108249</td><td style="text-align:center">1855-06-01</td><td style="text-align:center">4.257</td><td style="text-align:center">1.641</td><td style="text-align:left">Chile</td></tr><tr><td style="text-align:left">108250</td><td style="text-align:center">1855-07-01</td><td style="text-align:center">4.113</td><td style="text-align:center">1.313</td><td style="text-align:left">Chile</td></tr><tr><td style="text-align:left">108251</td><td style="text-align:center">1855-08-01</td><td style="text-align:center">5.508</td><td style="text-align:center">1.168</td><td style="text-align:left">Chile</td></tr><tr><td style="text-align:left">108252</td><td style="text-align:center">1855-09-01</td><td style="text-align:center">6.684</td><td style="text-align:center">1.153</td><td style="text-align:left">Chile</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [13]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_chile.describe().T</code></pre>
 <p class="rt-Text css-56tzch">Out[13]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">1900.0</td><td style="text-align:center">9.383474</td><td style="text-align:center">3.179081</td><td style="text-align:left">3.206</td><td style="text-align:left">6.502</td><td style="text-align:center">9.3815</td><td style="text-align:center">12.37775</td><td style="text-align:center">15.493</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">1900.0</td><td style="text-align:center">0.572654</td><td style="text-align:center">0.418011</td><td style="text-align:left">0.114</td><td style="text-align:left">0.281</td><td style="text-align:center">0.3825</td><td style="text-align:center">0.80300</td><td style="text-align:center">2.408</td></tr></tbody></table>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">Mexico</h4>
 <p class="rt-Text css-56tzch">In [14]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_mexico.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[14]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">338438</td><td style="text-align:center">1835-01-01</td><td style="text-align:center">15.810</td><td style="text-align:center">1.484</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338438</td><td style="text-align:center">1835-01-01</td><td style="text-align:center">15.810</td><td style="text-align:center">1.484</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338439</td><td style="text-align:center">1835-02-01</td><td style="text-align:center">14.911</td><td style="text-align:center">1.579</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338440</td><td style="text-align:center">1835-03-01</td><td style="text-align:center">16.826</td><td style="text-align:center">1.858</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338441</td><td style="text-align:center">1835-04-01</td><td style="text-align:center">19.925</td><td style="text-align:center">1.966</td><td style="text-align:left">Mexico</td></tr><tr><td style="text-align:left">338442</td><td style="text-align:center">1835-05-01</td><td style="text-align:center">22.037</td><td style="text-align:center">1.609</td><td style="text-align:left">Mexico</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [15]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_mexico.describe().T</code></pre>
 <p class="rt-Text css-56tzch">Out[15]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">2145.0</td><td style="text-align:center">20.567558</td><td style="text-align:center">3.753343</td><td style="text-align:left">12.064</td><td style="text-align:left">17.109</td><td style="text-align:center">21.050</td><td style="text-align:center">24.164</td><td style="text-align:center">26.926</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">2145.0</td><td style="text-align:center">0.638233</td><td style="text-align:center">0.547605</td><td style="text-align:left">0.091</td><td style="text-align:left">0.226</td><td style="text-align:center">0.398</td><td style="text-align:center">0.970</td><td style="text-align:center">3.699</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">####Canadá
 In [16]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_canada.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[16]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">ID</th><th style="text-align:center">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:left">Country</th></tr></thead><tbody><tr><td style="text-align:left">97255</td><td style="text-align:center">1768-09-01</td><td style="text-align:center">5.257</td><td style="text-align:center">3.107</td><td style="text-align:left">Canada</td></tr><tr><td style="text-align:left">97256</td><td style="text-align:center">1768-10-01</td><td style="text-align:center">-3.393</td><td style="text-align:center">2.981</td><td style="text-align:left">Canada</td></tr><tr><td style="text-align:left">97257</td><td style="text-align:center">1768-11-01</td><td style="text-align:center">-12.829</td><td style="text-align:center">3.967</td><td style="text-align:left">Canada</td></tr><tr><td style="text-align:left">97258</td><td style="text-align:center">1768-12-01</td><td style="text-align:center">-20.582</td><td style="text-align:center">4.622</td><td style="text-align:left">Canada</td></tr><tr><td style="text-align:left">97259</td><td style="text-align:center">1769-01-01</td><td style="text-align:center">-24.756</td><td style="text-align:center">4.722</td><td style="text-align:left">Canada</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [17]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">data_canada.describe().T</code></pre>
 <p class="rt-Text css-56tzch">Out[17]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">count</th><th style="text-align:center">mean</th><th style="text-align:center">std</th><th style="text-align:left">min</th><th style="text-align:left">25%</th><th style="text-align:center">50%</th><th style="text-align:center">75%</th><th style="text-align:center">max</th></tr></thead><tbody><tr><td style="text-align:left">AverageTemperature</td><td style="text-align:center">2504.0</td><td style="text-align:center">-5.216659</td><td style="text-align:center">12.878074</td><td style="text-align:left">-28.736</td><td style="text-align:left">-17.7025</td><td style="text-align:center">-4.7285</td><td style="text-align:center">7.41275</td><td style="text-align:center">14.796</td></tr><tr><td style="text-align:left">AverageTemperatureUncertainty</td><td style="text-align:center">2504.0</td><td style="text-align:center">1.256211</td><td style="text-align:center">1.046127</td><td style="text-align:left">0.123</td><td style="text-align:left">0.2870</td><td style="text-align:center">0.8980</td><td style="text-align:center">2.12025</td><td style="text-align:center">5.275</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">Se nota que las variaciones de la temperatura promedio de incertidumbre es mayor en Brasil, Venezuela, Mexico y Canadá en ese orden, con respecto a Chile y Argentina.</p>
 <h4 class="rt-Heading rt-r-size-3 css-jzlc08">Incremento anual de la temperatura promedio global</h4>
@@ -958,92 +394,10 @@ annual_mean_vzla[&quot;Anomaly&quot;] = annual_mean_vzla[&quot;AverageTemperatur
 <p class="rt-Text css-56tzch">In [21]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_vzla.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[21]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1824</td><td style="text-align:center">24.896545</td><td style="text-align:center">1.516091</td><td style="text-align:center">-0.420966</td></tr><tr><td style="text-align:left">1825</td><td style="text-align:center">25.071583</td><td style="text-align:center">1.552083</td><td style="text-align:center">-0.245928</td></tr><tr><td style="text-align:left">1826</td><td style="text-align:center">24.871900</td><td style="text-align:center">1.440800</td><td style="text-align:center">-0.445611</td></tr><tr><td style="text-align:left">1827</td><td style="text-align:center">25.156273</td><td style="text-align:center">1.474182</td><td style="text-align:center">-0.161238</td></tr><tr><td style="text-align:left">1828</td><td style="text-align:center">24.751818</td><td style="text-align:center">1.516727</td><td style="text-align:center">-0.565693</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [22]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_vzla.tail()</code></pre>
 <p class="rt-Text css-56tzch">Out[22]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">26.084917</td><td style="text-align:center">0.353917</td><td style="text-align:center">0.767406</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">26.150250</td><td style="text-align:center">0.341333</td><td style="text-align:center">0.832739</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">25.677333</td><td style="text-align:center">0.336750</td><td style="text-align:center">0.359822</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">25.688583</td><td style="text-align:center">0.401417</td><td style="text-align:center">0.371072</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">25.912875</td><td style="text-align:center">0.484500</td><td style="text-align:center">0.595364</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">El último registro es del año 2013, el cual el incremento fue de 0.595 grados, hubo un pico en el año 2010 de 0.8332 grados.
 In [23]:</p>
@@ -1065,92 +419,10 @@ annual_mean_arg[&quot;Anomaly&quot;] = annual_mean_arg[&quot;AverageTemperature&
 <p class="rt-Text css-56tzch">In [25]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_arg.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[25]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1855</td><td style="text-align:center">11.729250</td><td style="text-align:center">1.711875</td><td style="text-align:center">-3.090742</td></tr><tr><td style="text-align:left">1856</td><td style="text-align:center">13.998750</td><td style="text-align:center">1.553167</td><td style="text-align:center">-0.821242</td></tr><tr><td style="text-align:left">1857</td><td style="text-align:center">14.221083</td><td style="text-align:center">1.993417</td><td style="text-align:center">-0.598908</td></tr><tr><td style="text-align:left">1858</td><td style="text-align:center">14.015667</td><td style="text-align:center">1.770750</td><td style="text-align:center">-0.804325</td></tr><tr><td style="text-align:left">1859</td><td style="text-align:center">14.414583</td><td style="text-align:center">1.635583</td><td style="text-align:center">-0.405408</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [26]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_arg.tail()</code></pre>
 <p class="rt-Text css-56tzch">Out[26]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">15.534417</td><td style="text-align:center">0.215750</td><td style="text-align:center">0.714425</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">15.078833</td><td style="text-align:center">0.218917</td><td style="text-align:center">0.258842</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">15.339667</td><td style="text-align:center">0.219833</td><td style="text-align:center">0.519675</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">15.689000</td><td style="text-align:center">0.265750</td><td style="text-align:center">0.869008</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">14.457125</td><td style="text-align:center">0.276500</td><td style="text-align:center">-0.362867</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [27]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">plt.figure()
@@ -1172,92 +444,10 @@ annual_mean_brasil[&quot;Anomaly&quot;] = annual_mean_brasil[&quot;AverageTemper
 <p class="rt-Text css-56tzch">In [29]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_brasil.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[29]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1832</td><td style="text-align:center">23.858583</td><td style="text-align:center">1.734500</td><td style="text-align:center">-1.072247</td></tr><tr><td style="text-align:left">1833</td><td style="text-align:center">24.517833</td><td style="text-align:center">1.450083</td><td style="text-align:center">-0.412997</td></tr><tr><td style="text-align:left">1834</td><td style="text-align:center">24.346750</td><td style="text-align:center">1.498083</td><td style="text-align:center">-0.584081</td></tr><tr><td style="text-align:left">1835</td><td style="text-align:center">23.537500</td><td style="text-align:center">1.298583</td><td style="text-align:center">-1.393331</td></tr><tr><td style="text-align:left">1836</td><td style="text-align:center">23.921167</td><td style="text-align:center">1.426083</td><td style="text-align:center">-1.009664</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [30]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_brasil.tail()</code></pre>
 <p class="rt-Text css-56tzch">Out[30]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">25.600583</td><td style="text-align:center">0.185667</td><td style="text-align:center">0.669753</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">25.812417</td><td style="text-align:center">0.158000</td><td style="text-align:center">0.881586</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">25.428917</td><td style="text-align:center">0.204833</td><td style="text-align:center">0.498086</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">25.717083</td><td style="text-align:center">0.231000</td><td style="text-align:center">0.786253</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">25.348125</td><td style="text-align:center">0.262250</td><td style="text-align:center">0.417294</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [31]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">plt.figure()
@@ -1279,92 +469,10 @@ annual_mean_chile[&quot;Anomaly&quot;] = annual_mean_chile[&quot;AverageTemperat
 <p class="rt-Text css-56tzch">In [33]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_chile.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[33]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1855</td><td style="text-align:center">7.070125</td><td style="text-align:center">1.424125</td><td style="text-align:center">-2.510742</td></tr><tr><td style="text-align:left">1856</td><td style="text-align:center">8.664083</td><td style="text-align:center">1.319250</td><td style="text-align:center">-0.916783</td></tr><tr><td style="text-align:left">1857</td><td style="text-align:center">8.645917</td><td style="text-align:center">1.439250</td><td style="text-align:center">-0.934950</td></tr><tr><td style="text-align:left">1858</td><td style="text-align:center">8.810250</td><td style="text-align:center">1.428333</td><td style="text-align:center">-0.770617</td></tr><tr><td style="text-align:left">1859</td><td style="text-align:center">9.245583</td><td style="text-align:center">1.376917</td><td style="text-align:center">-0.335283</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [34]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_chile.tail()</code></pre>
 <p class="rt-Text css-56tzch">Out[34]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">9.994417</td><td style="text-align:center">0.281917</td><td style="text-align:center">0.413550</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">9.712833</td><td style="text-align:center">0.340000</td><td style="text-align:center">0.131967</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">10.032250</td><td style="text-align:center">0.322250</td><td style="text-align:center">0.451383</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">10.272583</td><td style="text-align:center">0.384583</td><td style="text-align:center">0.691717</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">9.877375</td><td style="text-align:center">0.393875</td><td style="text-align:center">0.296508</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [35]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">plt.figure()
@@ -1386,92 +494,10 @@ annual_mean_mexico[&quot;Anomaly&quot;] = annual_mean_mexico[&quot;AverageTemper
 <p class="rt-Text css-56tzch">In [37]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_mexico.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[37]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1835</td><td style="text-align:center">18.993250</td><td style="text-align:center">1.684083</td><td style="text-align:center">-1.745911</td></tr><tr><td style="text-align:left">1836</td><td style="text-align:center">19.587167</td><td style="text-align:center">1.695333</td><td style="text-align:center">-1.151994</td></tr><tr><td style="text-align:left">1837</td><td style="text-align:center">19.671083</td><td style="text-align:center">1.647667</td><td style="text-align:center">-1.068078</td></tr><tr><td style="text-align:left">1838</td><td style="text-align:center">19.337000</td><td style="text-align:center">1.862417</td><td style="text-align:center">-1.402161</td></tr><tr><td style="text-align:left">1839</td><td style="text-align:center">19.785833</td><td style="text-align:center">1.603000</td><td style="text-align:center">-0.953328</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [38]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_mexico.tail()</code></pre>
 <p class="rt-Text css-56tzch">Out[38]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">21.546083</td><td style="text-align:center">0.205917</td><td style="text-align:center">0.806922</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">20.852917</td><td style="text-align:center">0.217750</td><td style="text-align:center">0.113756</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">21.599333</td><td style="text-align:center">0.245333</td><td style="text-align:center">0.860172</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">21.652417</td><td style="text-align:center">0.324500</td><td style="text-align:center">0.913256</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">22.219222</td><td style="text-align:center">0.365111</td><td style="text-align:center">1.480061</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [39]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">plt.figure()
@@ -1495,92 +521,10 @@ annual_mean_canada[&quot;Anomaly&quot;] = annual_mean_canada[&quot;AverageTemper
 <p class="rt-Text css-56tzch">In [41]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_canada.head()</code></pre>
 <p class="rt-Text css-56tzch">Out[41]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">1768</td><td style="text-align:center">-7.886750</td><td style="text-align:center">3.66925</td><td style="text-align:center">-2.969253</td></tr><tr><td style="text-align:left">1769</td><td style="text-align:center">-3.427875</td><td style="text-align:center">3.50550</td><td style="text-align:center">1.489622</td></tr><tr><td style="text-align:left">1770</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td></tr><tr><td style="text-align:left">1771</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td></tr><tr><td style="text-align:left">1772</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td><td style="text-align:center">NaN</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [42]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">annual_mean_canada.tail()</code></pre>
 <p class="rt-Text css-56tzch">Out[42]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left">dt</th><th style="text-align:center">AverageTemperature</th><th style="text-align:center">AverageTemperatureUncertainty</th><th style="text-align:center">Anomaly</th></tr></thead><tbody><tr><td style="text-align:left">2009</td><td style="text-align:center">-4.135083</td><td style="text-align:center">0.231833</td><td style="text-align:center">0.782414</td></tr><tr><td style="text-align:left">2010</td><td style="text-align:center">-1.887917</td><td style="text-align:center">0.218583</td><td style="text-align:center">3.029581</td></tr><tr><td style="text-align:left">2011</td><td style="text-align:center">-3.557083</td><td style="text-align:center">0.232583</td><td style="text-align:center">1.360414</td></tr><tr><td style="text-align:left">2012</td><td style="text-align:center">-3.176833</td><td style="text-align:center">0.300083</td><td style="text-align:center">1.740664</td></tr><tr><td style="text-align:left">2013</td><td style="text-align:center">-1.640667</td><td style="text-align:center">0.533667</td><td style="text-align:center">3.276831</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [43]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">plt.figure()
@@ -1613,35 +557,6 @@ plt.show()
 annual_co2_temp = annual_co2_temp[[&quot;LandAndOceanAverageTemperature&quot;, &quot;Anomaly&quot;, &quot;Carbon Dioxide (ppm)&quot;]].copy()
 annual_co2_temp.corr()</code></pre>
 <p class="rt-Text css-56tzch">Out[45]:</p>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 <table><thead><tr><th style="text-align:left"></th><th style="text-align:center">LandAndOceanAverageTemperature</th><th style="text-align:center">Anomaly</th><th style="text-align:left">Carbon Dioxide (ppm)</th></tr></thead><tbody><tr><td style="text-align:left">LandAndOceanAverageTemperature</td><td style="text-align:center">1.000000</td><td style="text-align:center">1.000000</td><td style="text-align:left">0.923603</td></tr><tr><td style="text-align:left">Anomaly</td><td style="text-align:center">1.000000</td><td style="text-align:center">1.000000</td><td style="text-align:left">0.923603</td></tr><tr><td style="text-align:left">Carbon Dioxide (ppm)</td><td style="text-align:center">0.923603</td><td style="text-align:center">0.923603</td><td style="text-align:left">1.000000</td></tr></tbody></table>
 <p class="rt-Text css-56tzch">In [46]:</p>
 <pre class="css-56tzch" style="background:hsl(230, 1%, 98%);color:hsl(230, 8%, 24%);font-family:&quot;Fira Code&quot;, &quot;Fira Mono&quot;, Menlo, Consolas, &quot;DejaVu Sans Mono&quot;, monospace;direction:ltr;text-align:left;white-space:pre;word-spacing:normal;word-break:normal;line-height:1.5;-moz-tab-size:2;-o-tab-size:2;tab-size:2;-webkit-hyphens:none;-moz-hyphens:none;-ms-hyphens:none;hyphens:none;padding:1em;margin:0.5em 0;overflow:auto;border-radius:0.3em;margin-top:1em;margin-bottom:1em"><code style="white-space:pre-wrap">sns.heatmap(annual_co2_temp.corr())</code></pre>
@@ -1676,9 +591,9 @@ dirección: 17MtNybhdkA9GV3UNS6BTwPcuhjXoPrSzV</p>
 			console.error(error);
 			sessionStorage.removeItem(storageKey);
 		}
-	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-0722b669.js";
-import * as route0 from "/assets/root-BzSrTjNp.js";
-import * as route1 from "/assets/_es_._blog_._analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas_._index-B4tFU4nT.js";
+	})("react-router-scroll-positions", null)</script><script>window.__reactRouterContext = {"basename":"/","future":{"unstable_enableNodeReadableStream":false,"unstable_optimizeDeps":true},"routeDiscovery":{"mode":"initial"},"ssr":false,"isSpaMode":false};window.__reactRouterContext.stream = new ReadableStream({start(controller){window.__reactRouterContext.streamController = controller;}}).pipeThrough(new TextEncoderStream());</script><script type="module" async="">import "/assets/manifest-eb28f7fa.js";
+import * as route0 from "/assets/root-NeNU1jXw.js";
+import * as route1 from "/assets/_es_._blog_._analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas_._index-cO5a1RoR.js";
   
   window.__reactRouterRouteModules = {"root":route0,"routes/[es].[blog].[analizandodatosdelcambioclimaticoynivelesdeco2enlaatmosferaconpythonypandas]._index":route1};
 
