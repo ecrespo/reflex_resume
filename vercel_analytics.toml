@@ -1,0 +1,17 @@
+# Vercel Web Analytics (reflex-vercel-analytics), read when the app is
+# compiled. The frontend is the static export Vercel serves from `public/`, so
+# the default script (/_vercel/insights/script.js) and endpoints of that
+# deployment apply: no DSN or script URL needed. Web Analytics has to be
+# enabled for the project in the Vercel dashboard (Project > Analytics).
+# Any field can be overridden with a VERCEL_ANALYTICS_<FIELD> env variable.
+
+enabled = true
+# Debug script (console only, nothing sent) under `reflex run`; production
+# script from `reflex export` / `--env prod`.
+mode = "auto"
+debug = true
+# One page view per React Router navigation, reported with its route.
+track_page_views = true
+# The site uses no query strings worth keeping; drop them from reported URLs.
+include_search = false
+respect_do_not_track = false

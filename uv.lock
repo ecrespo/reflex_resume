@@ -948,6 +948,7 @@ dependencies = [
     { name = "reflex" },
     { name = "reflex-google-analytics-reactjs" },
     { name = "reflex-silverpoint-react" },
+    { name = "reflex-vercel-analytics" },
 ]
 
 [package.dev-dependencies]
@@ -964,6 +965,7 @@ requires-dist = [
     { name = "reflex", specifier = ">=0.10.0" },
     { name = "reflex-google-analytics-reactjs", specifier = ">=0.1.0" },
     { name = "reflex-silverpoint-react", specifier = ">=0.10.0" },
+    { name = "reflex-vercel-analytics", specifier = ">=0.1.0" },
 ]
 
 [package.metadata.requires-dev]
@@ -983,6 +985,18 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/49/e4/e6de847d91f9bbe4060f7cc9a9924c425c689692f98b1b2bf50836d38a28/reflex_silverpoint_react-0.10.0.tar.gz", hash = "sha256:93e5e94c14dba5fe2f0298ca18f6a5a53c2d4ae5182ce2d6195d30e12c110c77", size = 137491, upload-time = "2026-11-15T16:13:58.63Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/c1/e7/6ed0ebb84dc4d2e6804f7086b43685875ed67b1620d5c53dd85e3f7c8431/reflex_silverpoint_react-0.10.0-py3-none-any.whl", hash = "sha256:66d2be73295ac183903c2dad994798f0f71cae9bdd2f51e5919ed02c6ea64563", size = 102509, upload-time = "2026-11-15T16:13:56.967Z" },
+]
+
+[[package]]
+name = "reflex-vercel-analytics"
+version = "0.1.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "reflex" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/03/5f/d4b25f7763334b9c914b98a4e9d14074f26a93a3fd389ed4b9e56dd487f5/reflex_vercel_analytics-0.1.0.tar.gz", hash = "sha256:83b831fcb891f8912d78d783af73f49c6ea3e8f7df41f8f5c36a70b30b444130", size = 32910, upload-time = "2026-11-02T22:52:00.618Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/9a/1d/9b03504352a8f930d1e7106b2ec9d1637e25e5dafabcf293c79935abd365/reflex_vercel_analytics-0.1.0-py3-none-any.whl", hash = "sha256:05a77ace9a2792b0434df40b8d78c65a77d6106005af5a498365a67db27efa0a", size = 28105, upload-time = "2026-11-02T22:51:59.169Z" },
 ]
 
 [[package]]
