@@ -1,0 +1,1 @@
+import{J as e,f as t,l as n,u as r}from"./rss-Bi-t7m2Z.js";function i({children:i,dashboardCell:a,...o}){return n(e(o,t(o,a),{text:r(i)}),{slots:{content:i}})}export{i as t};
