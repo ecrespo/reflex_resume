@@ -12,7 +12,7 @@ Un asistente de código que no conoce [silverpoint](https://github.com/ecrespo/s
 
 silverpoint trae dos piezas para evitarlo. Un servidor MCP, `@silverpoint/mcp`, que responde con el catálogo de la versión que describe: qué gráfico usar, qué props tiene, qué código lo dibuja y qué falla en tus props. Y dos habilidades (*skills*) que el asistente lee antes de escribir: `silverpoint` para React, Vue y Angular, y `reflex-silverpoint` para Reflex.
 
-Este artículo las usa para añadir un gráfico al panel de operaciones. Todas las respuestas que aparecen son las que dio el servidor alojado, con silverpoint 0.9.2.
+Este artículo las usa para añadir un gráfico al panel de operaciones. Todas las respuestas que aparecen son las que dio el servidor alojado, con silverpoint 0.10.1.
 
 ## Lo que vas a construir
 
@@ -86,7 +86,7 @@ curl -s https://silverpointweb.vercel.app/mcp \
 La respuesta trae, entre otras cosas, este objeto:
 
 ```json
-{"version":"0.9.2","reflex":{"version":"0.9.1","wraps":"0.9.1","stale":false},"protocol":"2025-11-25"}
+{"version":"0.10.1","reflex":{"version":"0.10.0","wraps":"0.10.0","stale":false},"protocol":"2025-11-25"}
 ```
 
 Cada respuesta del servidor lleva la versión de silverpoint que describe. `reflex` dice qué versión de `reflex-silverpoint-react` conoce el catálogo y qué versión de silverpoint envuelve. Volveremos a `stale` en la sección de las habilidades.
@@ -116,7 +116,7 @@ Ninguna herramienta usa un modelo de lenguaje. `recommend_chart` lee una tabla r
 Un nombre que el catálogo no tiene es un error de la herramienta, con los nombres más cercanos. Con `get_chart` y el slug `bar-chrt`:
 
 ```json
-{"version":"0.9.2","code":"unknown_name","message":"No chart named \"bar-chrt\".","suggestions":["bar-chart","area-chart","radar-chart"]}
+{"version":"0.10.1","code":"unknown_name","message":"No chart named \"bar-chrt\".","suggestions":["bar-chart","area-chart","radar-chart"]}
 ```
 
 ## 3. Los recursos y los prompts
@@ -327,7 +327,7 @@ La respuesta:
 
 ```json
 {
-  "version": "0.9.2",
+  "version": "0.10.1",
   "findings": [
     {
       "pair": "text-muted",
@@ -366,7 +366,7 @@ La respuesta:
 
 ```json
 {
-  "version": "0.9.2",
+  "version": "0.10.1",
   "valid": false,
   "total": 2,
   "diagnostics": [
@@ -414,9 +414,9 @@ En Claude Code, cada una se instala como un plugin que trae la habilidad y conec
 /plugin install reflex-silverpoint@reflex-silverpoint
 ```
 
-La habilidad `silverpoint` describe silverpoint 0.9.2. Su `SKILL.md` da el flujo de trabajo (elegir el gráfico, leer su entrada, escribir el código, comprobarlo) y las reglas que más fallan: las props se llaman igual en los tres frameworks, cada gráfico se importa desde su propia ruta, sin `data` el gráfico dibuja sus filas de demostración y el disparador de una ventana superpuesta es un `<button>` nativo. En `references/` hay una guía por framework, una por familia de gráficos, los componentes, los estilos base y las paletas, el panel, la línea de tiempo, las presentaciones, los diagnósticos y los errores comunes.
+La habilidad `silverpoint` describe silverpoint 0.10.1. Su `SKILL.md` da el flujo de trabajo (elegir el gráfico, leer su entrada, escribir el código, comprobarlo) y las reglas que más fallan: las props se llaman igual en los tres frameworks, cada gráfico se importa desde su propia ruta, sin `data` el gráfico dibuja sus filas de demostración y el disparador de una ventana superpuesta es un `<button>` nativo. En `references/` hay una guía por framework, una por familia de gráficos, los componentes, los estilos base y las paletas, el panel, la línea de tiempo, las presentaciones, los diagnósticos y los errores comunes.
 
-La habilidad `reflex-silverpoint` describe `reflex-silverpoint-react` 0.9.1. Añade lo que solo existe en Python: los constructores en snake_case, los patrones de `rx.State` y los datos que llegan a los manejadores de eventos.
+La habilidad `reflex-silverpoint` describe `reflex-silverpoint-react` 0.10.0. Añade lo que solo existe en Python: los constructores en snake_case, los patrones de `rx.State` y los datos que llegan a los manejadores de eventos.
 
 Las dos se generan, no se escriben a mano. El texto de `silverpoint` sale de sus plantillas y del catálogo del agente, el mismo que lee el servidor; la cabecera de cada referencia dice que se regenera con `pnpm --filter @silverpoint/agent-catalog generate`. La de Reflex sale de `scripts/make_skill.py` y del catálogo del paquete, `reflex-catalog.json`.
 
@@ -426,7 +426,7 @@ Las dos dicen lo mismo: si el servidor está conectado, usa sus herramientas ant
 
 El servidor conoce los nombres de Reflex porque el catálogo de silverpoint incorpora `reflex-catalog.json`. Pero los dos paquetes se publican por separado, y el catálogo puede quedarse con una versión anterior del envoltorio. `get_version` lo dice con `reflex.stale`.
 
-`stale` es `true` cuando el envoltorio envuelve otra línea de versiones: el código compara solo los dos primeros números. Hoy el servidor describe silverpoint 0.9.2 y conoce `reflex-silverpoint-react` 0.9.1, que envuelve 0.9.1. Las dos son de la línea 0.9, así que `stale` es `false`.
+`stale` es `true` cuando el envoltorio envuelve otra línea de versiones: el código compara solo los dos primeros números. Hoy el servidor describe silverpoint 0.10.1 y conoce `reflex-silverpoint-react` 0.10.0, que envuelve 0.10.0. Las dos son de la línea 0.10, así que `stale` es `false`.
 
 La habilidad de Reflex da la regla: si `stale` es `true`, o si `reflex.version` no es la versión que instala tu proyecto, los nombres de Python del servidor describen otra versión, y mandan la habilidad y los archivos `.pyi` del paquete instalado.
 

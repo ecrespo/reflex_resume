@@ -96,7 +96,7 @@ body {
 
 No te saltes `@silverpoint/grounds/ui.css`. Sin ella, la línea de tiempo pierde la tarjeta que la enmarca: la piel la dibuja con las clases de los componentes de interfaz.
 
-La regla del final, que en React y Vue va en `src/index.css` y `src/style.css`, corrige un fallo de la piel en la versión 0.9.2. La piel pone su tipografía también en las flechas de las diapositivas, que son glifos de la fuente de iconos de TimelineJS, `tl-icons`. Sin la regla, las flechas salen como cajas vacías. En React queda así:
+La regla del final, que en React y Vue va en `src/index.css` y `src/style.css`, corrige un fallo de la piel que sigue en la versión 0.10.1. La piel pone su tipografía también en las flechas de las diapositivas, que son glifos de la fuente de iconos de TimelineJS, `tl-icons`. Sin la regla, las flechas salen como cajas vacías. En React queda así:
 
 ```css
 body {

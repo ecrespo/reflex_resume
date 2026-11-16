@@ -96,7 +96,7 @@ body {
 
 Do not skip `@silverpoint/grounds/ui.css`. Without it, the timeline loses the card that frames it: the skin draws it with the UI components' classes.
 
-The rule at the end, which goes in `src/index.css` and `src/style.css` in React and Vue, fixes a bug of the skin in version 0.9.2. The skin also sets its type on the slide arrows, which are glyphs of TimelineJS's icon font, `tl-icons`. Without the rule, the arrows show as empty boxes. In React it reads:
+The rule at the end, which goes in `src/index.css` and `src/style.css` in React and Vue, fixes a bug of the skin that is still in version 0.10.1. The skin also sets its type on the slide arrows, which are glyphs of TimelineJS's icon font, `tl-icons`. Without the rule, the arrows show as empty boxes. In React it reads:
 
 ```css
 body {

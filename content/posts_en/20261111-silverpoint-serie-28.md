@@ -12,7 +12,7 @@ A coding assistant that does not know [silverpoint](https://github.com/ecrespo/s
 
 silverpoint ships two pieces to prevent that. An MCP server, `@silverpoint/mcp`, that answers from the catalog of the version it describes: which chart to use, which props it has, what code draws it and what is wrong with your props. And two skills the assistant reads before it writes: `silverpoint` for React, Vue and Angular, and `reflex-silverpoint` for Reflex.
 
-This article uses them to add a chart to the operations panel. Every answer shown is the one the hosted server gave, with silverpoint 0.9.2.
+This article uses them to add a chart to the operations panel. Every answer shown is the one the hosted server gave, with silverpoint 0.10.1.
 
 ## What you will build
 
@@ -86,7 +86,7 @@ curl -s https://silverpointweb.vercel.app/mcp \
 Among other things, the answer carries this object:
 
 ```json
-{"version":"0.9.2","reflex":{"version":"0.9.1","wraps":"0.9.1","stale":false},"protocol":"2025-11-25"}
+{"version":"0.10.1","reflex":{"version":"0.10.0","wraps":"0.10.0","stale":false},"protocol":"2025-11-25"}
 ```
 
 Every answer from the server carries the silverpoint version it describes. `reflex` says which version of `reflex-silverpoint-react` the catalog knows and which silverpoint version it wraps. We will come back to `stale` in the section on skills.
@@ -116,7 +116,7 @@ No tool uses a language model. `recommend_chart` reads a reviewed table, `valida
 A name the catalog does not hold is a tool error, with the closest names. With `get_chart` and the slug `bar-chrt`:
 
 ```json
-{"version":"0.9.2","code":"unknown_name","message":"No chart named \"bar-chrt\".","suggestions":["bar-chart","area-chart","radar-chart"]}
+{"version":"0.10.1","code":"unknown_name","message":"No chart named \"bar-chrt\".","suggestions":["bar-chart","area-chart","radar-chart"]}
 ```
 
 ## 3. The resources and the prompts
@@ -327,7 +327,7 @@ The answer:
 
 ```json
 {
-  "version": "0.9.2",
+  "version": "0.10.1",
   "findings": [
     {
       "pair": "text-muted",
@@ -366,7 +366,7 @@ La respuesta:
 
 ```json
 {
-  "version": "0.9.2",
+  "version": "0.10.1",
   "valid": false,
   "total": 2,
   "diagnostics": [
@@ -414,9 +414,9 @@ In Claude Code, each one installs as a plugin that brings the skill and connects
 /plugin install reflex-silverpoint@reflex-silverpoint
 ```
 
-The `silverpoint` skill describes silverpoint 0.9.2. Its `SKILL.md` gives the workflow (choose the chart, read its entry, write the code, check it) and the rules that fail most: props have the same names in the three frameworks, each chart is imported from its own path, without `data` a chart draws its demo rows, and an overlay's trigger is a native `<button>`. Under `references/` there is a guide per framework, one per chart family, the components, grounds and palettes, the dashboard, the timeline, decks, the diagnostics and the common pitfalls.
+The `silverpoint` skill describes silverpoint 0.10.1. Its `SKILL.md` gives the workflow (choose the chart, read its entry, write the code, check it) and the rules that fail most: props have the same names in the three frameworks, each chart is imported from its own path, without `data` a chart draws its demo rows, and an overlay's trigger is a native `<button>`. Under `references/` there is a guide per framework, one per chart family, the components, grounds and palettes, the dashboard, the timeline, decks, the diagnostics and the common pitfalls.
 
-The `reflex-silverpoint` skill describes `reflex-silverpoint-react` 0.9.1. It adds what only exists in Python: the snake_case builders, the `rx.State` patterns and the payloads that reach event handlers.
+The `reflex-silverpoint` skill describes `reflex-silverpoint-react` 0.10.0. It adds what only exists in Python: the snake_case builders, the `rx.State` patterns and the payloads that reach event handlers.
 
 Both are generated, not written by hand. The text of `silverpoint` comes from its templates and from the agent catalog, the same one the server reads; the header of each reference says it is regenerated with `pnpm --filter @silverpoint/agent-catalog generate`. The Reflex one comes from `scripts/make_skill.py` and the package's catalog, `reflex-catalog.json`.
 
@@ -426,7 +426,7 @@ Both say the same thing: if the server is connected, use its tools before the fi
 
 The server knows the Reflex names because silverpoint's catalog joins `reflex-catalog.json`. But the two packages are released separately, and the catalog can be left with an older release of the wrapper. `get_version` says so with `reflex.stale`.
 
-`stale` is `true` when the wrapper wraps another release line: the code compares only the first two numbers. Today the server describes silverpoint 0.9.2 and knows `reflex-silverpoint-react` 0.9.1, which wraps 0.9.1. Both are on the 0.9 line, so `stale` is `false`.
+`stale` is `true` when the wrapper wraps another release line: the code compares only the first two numbers. Today the server describes silverpoint 0.10.1 and knows `reflex-silverpoint-react` 0.10.0, which wraps 0.10.0. Both are on the 0.10 line, so `stale` is `false`.
 
 The Reflex skill gives the rule: if `stale` is `true`, or if `reflex.version` is not the version your project installs, the server's Python names describe another release, and the skill and the `.pyi` files of the installed package win.
 

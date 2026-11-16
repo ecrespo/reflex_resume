@@ -38,7 +38,7 @@ Each page brings together earlier articles:
 
 ## What you need
 
-The Angular project from article 05, created with the Angular 22 CLI and with `@silverpoint/angular`, `@silverpoint/grounds` and `@silverpoint/fonts` 0.9.2. The router and reactive forms come with the project.
+The Angular project from article 05, created with the Angular 22 CLI and with `@silverpoint/angular`, `@silverpoint/grounds` and `@silverpoint/fonts` 0.10.1. The router and reactive forms come with the project.
 
 Add the engine as a dependency of your own:
 
@@ -77,8 +77,7 @@ ops-panel
 │   │   └── settings.ts
 │   ├── index.html
 │   ├── main.ts
-│   ├── styles.css
-│   └── text-imports.d.ts
+│   └── styles.css
 ├── tsconfig.app.json
 ├── tsconfig.json
 └── tsconfig.spec.json
@@ -232,7 +231,7 @@ export const appConfig: ApplicationConfig = {
 
 It works because silverpoint's charts and components read the provider inside a `computed`. When `ground` is read, the getter reads `settings.ground()`, and Angular records that dependency. When you change the theme, every chart and every component redraws with the new one.
 
-I checked it by removing every other path: without passing the theme to any chart, the six charts, the table, the buttons and the controls change palette and ground. It is a use of the token that the documentation does not describe, so check it if you update silverpoint.
+I checked it by removing every other path: without passing the theme to any chart, the six charts, the dashboard frame, the table, the buttons and the controls change palette and ground. It is a use of the token that the documentation does not describe, so check it if you update silverpoint.
 
 `SILVERPOINT_CONFIG` is imported from `@silverpoint/angular/env`. It also exists in `@silverpoint/angular`, but that pulls about 42 kB more into the initial bundle, and the CLI warns that it goes over the 500 kB budget.
 
@@ -372,21 +371,17 @@ import { SpButton } from '@silverpoint/angular/ui/button';
 import { blocks, errorsByDay, sales } from '../data/ops';
 import { downloadSvg } from '../export-svg';
 import { LiveFeed } from '../live-feed';
-import { Settings } from '../settings';
 
 @Component({
   selector: 'app-overview',
   imports: [SpBarChart, SpButton, SpDashboard, SpDashboardCell, SpDonutChart, SpHeatmapChart, SpKpiCard, SpLineChart],
   template: `
-    <!-- The dashboard frame reads no provider: it takes the theme as inputs. -->
     <sp-dashboard
       id="ops"
       title="Overview"
       description="Traffic, errors and sales of the web service, updated every 2 seconds."
       [layout]="layout"
       [link]="{ key: 'hour' }"
-      [ground]="settings.ground()"
-      [palette]="settings.palette()"
     >
       <sp-dashboard-cell cell="hits-today">
         <sp-kpi-card title="Hits today" [data]="feed.rows()" valueKey="hits" [value]="feed.hits()" unit="thousand hits" />
@@ -440,7 +435,6 @@ import { Settings } from '../settings';
 })
 export class Overview {
   protected readonly feed = inject(LiveFeed);
-  protected readonly settings = inject(Settings);
   protected readonly errorsByDay = errorsByDay;
   protected readonly blocks = blocks;
   protected readonly sales = sales;
@@ -477,7 +471,7 @@ export class Overview {
 What to know about each part:
 
 * **The dashboard** is the one from article 13, with the same grid. `[link]="{ key: 'hour' }"` links the charts by hour: when you move over an hour of the hits, the same hour is marked in the errors and in the indicators.
-* **The dashboard's theme.** The dashboard's charts follow the provider, but the dashboard frame does not read it: the Angular adapter, like React's, only uses the style the dashboard receives. That is why `[ground]` and `[palette]` go on `sp-dashboard`. Without them, the dashboard's background and borders keep the silverpoint palette ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). It will be fixed in a coming version of the package.
+* **The dashboard's theme.** Since silverpoint 0.10.0, the dashboard frame follows the provider, as its charts do: its background and borders change with the theme without putting `[ground]` or `[palette]` on `sp-dashboard` ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). In 0.9 they kept the silverpoint palette.
 * **The readout** uses the hits chart's `(activeChange)`, as in article 11. `item.datum` is the whole row. Destructuring, `const { hour, hits, errors } = item.datum`, is valid with `noPropertyAccessFromIndexSignature`; with `item.datum.hour`, compilation would fail.
 * **The download.** `viewChild.required` finds the chart marked with `#hits` even inside a dashboard cell, and `toSVGString()` returns its SVG.
 
@@ -485,19 +479,15 @@ The charts have no `id`: inside a dashboard, each cell gives them a stable one, 
 
 ## 7. The SVG export
 
-`src/app/export-svg.ts` joins the two functions from article 18:
+`src/app/export-svg.ts` is the download function from article 18:
 
 ```ts
-import groundCss from '@silverpoint/grounds/styles.css' with { loader: 'text' };
-
-// The SVG with the ground's stylesheet inside, so it looks the same outside the app.
-export function standaloneSvg(svg: string): string {
-  const open = svg.indexOf('>') + 1;
-  return `${svg.slice(0, open)}<style><![CDATA[${groundCss}]]></style>${svg.slice(open)}`;
-}
+import { standaloneSVG } from '@silverpoint/grounds';
+import groundCss from '@silverpoint/grounds/styles-text';
 
 export function downloadSvg(svg: string, filename: string) {
-  const file = new Blob([standaloneSvg(svg)], { type: 'image/svg+xml' });
+  // The SVG with the ground's stylesheet inside, so it looks the same outside the app.
+  const file = new Blob([standaloneSVG(svg, groundCss)], { type: 'image/svg+xml' });
   const url = URL.createObjectURL(file);
   const link = document.createElement('a');
   link.href = url;
@@ -507,36 +497,9 @@ export function downloadSvg(svg: string, filename: string) {
 }
 ```
 
-The SVG carries the ground's stylesheet inside, between `<![CDATA[` and `]]>`, so it looks the same outside the application ([silverpoint#14](https://github.com/ecrespo/silverpoint/issues/14)). TypeScript needs article 18's declaration to import a `.css` as text, `src/text-imports.d.ts`:
+`standaloneSVG` puts the ground's stylesheet inside the SVG, between `<![CDATA[` and `]]>`, so it looks the same outside the application ([silverpoint#14](https://github.com/ecrespo/silverpoint/issues/14)). The stylesheet arrives as text from `@silverpoint/grounds/styles-text`, a plain JavaScript module: no TypeScript declaration is needed and `angular.json` stays untouched, and it works the same with `ng serve` and with `ng build` ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)).
 
-```ts
-declare module '*.css' {
-  const text: string;
-  export default text;
-}
-```
-
-There is a detail article 18 did not run into, because it was checked there with `ng build`. With `ng serve`, the dev server pre-bundles dependencies with Vite, and the import with `loader: 'text'` no longer arrives as text. The page stays blank and the console says that `styles.css` "does not provide an export named 'default'". Excluding `@silverpoint/grounds` from pre-bundling is not enough. You have to turn it off in `angular.json`:
-
-```json
-        "serve": {
-          "builder": "@angular/build:dev-server",
-          "configurations": {
-            "production": {
-              "buildTarget": "ops-panel:build:production"
-            },
-            "development": {
-              "buildTarget": "ops-panel:build:development"
-            }
-          },
-          "defaultConfiguration": "development",
-          "options": {
-            "prebundle": false
-          }
-        },
-```
-
-In this application, the cold start of `ng serve` stayed at about 3.2 seconds.
+Up to 0.9.2 you had to import `styles.css` with `loader: 'text'`, and with `ng serve` that left the page blank unless pre-bundling was turned off with `"prebundle": false`.
 
 ## 8. The Incidents page
 
@@ -599,7 +562,7 @@ export class Incidents {
 }
 ```
 
-The button that opens the modal uses `var(--sp-rule)` and `var(--sp-text)` in its styles, so it also changes with the theme. The fix for the cells' alignment ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)) is in the global styles.
+The button that opens the modal uses `var(--sp-rule)` and `var(--sp-text)` in its styles, so it also changes with the theme.
 
 ## 9. The Settings page
 
@@ -704,13 +667,9 @@ export class AlertRuleForm {
 body {
   margin: 0;
 }
-
-.sp-ui-table td:not([data-align]) {
-  text-align: start;
-}
 ```
 
-The fonts, the charts' stylesheet, the components' one and the fix for the table cells. The rest of the styles go in each component.
+The fonts, the charts' stylesheet and the components' one. The rest of the styles go in each component.
 
 ## Run, build and deploy
 
@@ -753,17 +712,19 @@ I tested the application in Chrome with Playwright, 38 checks, with `ng serve` a
 | Settings | The form saves the rule; SMS is disabled |
 | Theme | Sanguine changes the page background, the components, the six charts and the dashboard frame; cyanotype changes the page, the charts, the table and the buttons; the theme survives a reload |
 
+With silverpoint 0.10.1 I ran the main checks again, in development and in production, and they passed again.
+
 Also, no errors in the console. The first chart was ready 235 ms after the page started loading, and all six at 279 ms (the median of three loads of the production build, on my machine).
 
 Angular 22 creates projects without zone.js: the screen updates on the next frame, not inside the click. A test that reads the page right after a click sees the previous state. My first run failed five checks because of that; a short wait after each action solved it.
 
 ## Common problems
 
-* **With `ng serve`, the page stays blank and the console talks about "export named 'default'".** `"prebundle": false` is missing in `angular.json`. It does not happen with `ng build` ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)). It will be fixed in a coming version of the package.
+* **With `ng serve`, the page stays blank and the console talks about "export named 'default'".** `styles.css` was imported with `loader: 'text'`. Import the stylesheet from `@silverpoint/grounds/styles-text`, which exists since 0.10.0 ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)).
 * **The theme changes the page, but not the charts.** `provideSilverpoint` was used with a fixed object. Register `SILVERPOINT_CONFIG` with getters, as in `app.config.ts`.
-* **The charts change, but the dashboard frame does not.** `[ground]` and `[palette]` are missing on `sp-dashboard`.
+* **The charts change, but the dashboard frame does not.** You have a version before 0.10.0 ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). Update the silverpoint packages.
 * **The CLI warns that the initial bundle is over 500 kB.** `SILVERPOINT_CONFIG` was imported from `@silverpoint/angular`. Import it from `@silverpoint/angular/env`.
-* **When you rest the pointer on a chart, the browser's own tooltip may also appear.** Angular copies attributes with literal text to the element, and `title="Hits per hour"` stays as a `title` attribute of `sp-line-chart`. If it bothers you, write it as an expression, `[title]="'Hits per hour'"`: the chart gets the title and the element does not carry the attribute ([silverpoint#18](https://github.com/ecrespo/silverpoint/issues/18)). It will be fixed in a coming version of the package.
+* **When you rest the pointer on a chart, the browser's own tooltip also appears.** Up to 0.9.2, `title="Hits per hour"` also stayed as a `title` attribute of `sp-line-chart`; 0.10.0 no longer leaves it on the element ([silverpoint#18](https://github.com/ecrespo/silverpoint/issues/18)). In Chrome the tooltip still shows, because it comes from the `<title>` element of the SVG, which is the chart's accessible name. Writing it as `[title]="'Hits per hour'"` does not remove it.
 * **Reloading `/settings` in production, the server answers 404.** The rule that returns `index.html` is missing.
 
 ## What comes next

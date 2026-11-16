@@ -191,12 +191,6 @@ app = rx.App(
             .sp-timeline .tl-timeline div.tl-slidenav-icon {
                 font-family: 'tl-icons' !important;
             }
-            /* silverpoint 0.8.0: the charts' screen-reader table and SpTable's
-               wrapper share the class `sp-table`, whose `th, td { text-align: right }`
-               then right-aligns every SpTable cell and defeats `align: "start"`. */
-            .sp-ui-table :is(th, td):not([data-align='end'], [data-align='center']) {
-                text-align: start;
-            }
             /* Tags keep their hand-drawn frame but drop the hatched tone. */
             .sp-tag > [part="sp-tone"] {
                 display: none;

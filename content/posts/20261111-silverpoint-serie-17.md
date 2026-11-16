@@ -114,7 +114,7 @@ Cada ventana se abre con un `<button type="button">` nativo, que recibe su ARIA 
 | React | La prop `trigger`, `trigger={<button type="button">…</button>}` |
 | Vue | La ranura `#trigger` |
 | Angular | Un `<button type="button" spTrigger>` proyectado; `SpTrigger` se importa del subpath de la ventana |
-| Reflex | `trigger=rx.el.button(…, type="button")` |
+| Reflex | `trigger="…"`, un texto que se dibuja como botón, o `trigger=rx.el.button(…, type="button")` |
 
 En React no pases un `SpButton` como disparador: descarta el ARIA que recibe.
 
@@ -224,13 +224,9 @@ El orden empieza por la hora de apertura, de la más reciente a la más antigua.
 
 El botón `Acknowledge` está deshabilitado hasta que se elige una incidencia. Al reconocerla, la fila pasa a `acknowledged`, el modal se cierra y la notificación se abre.
 
-En `src/index.css`, dos reglas para la tabla y el disparador:
+En `src/index.css`, una regla para el disparador:
 
 ```css
-.sp-ui-table td:not([data-align]) {
-  text-align: start;
-}
-
 button[aria-haspopup='dialog'] {
   padding: 6px 14px;
   border: 1px solid #3b3a36;
@@ -241,7 +237,7 @@ button[aria-haspopup='dialog'] {
 }
 ```
 
-La primera es un arreglo: en 0.9.2, la regla `.sp-table td` de `styles.css`, la de las tablas de datos de los gráficos, alinea a la derecha las celdas de `SpTable`. La segunda dibuja el disparador, que es un botón nativo y sale sin estilo.
+Dibuja el disparador, que es un botón nativo y sale sin estilo. La tabla no necesita ninguna regla: desde la 0.10.0, las celdas de `SpTable` se alinean al inicio. Hasta la 0.9.2 las alineaba a la derecha la regla `.sp-table td` de `styles.css`, la de las tablas de datos de los gráficos ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)).
 
 ## La tabla de incidencias en Vue
 
@@ -414,7 +410,7 @@ export class IncidentsTable {
 }
 ```
 
-`[(current)]`, `[(open)]` y `[(value)]` se unen a signals. El pie del modal es un `<ng-template spFooter>`, y su botón es la directiva `spButton` sobre un `<button>` nativo, como en el artículo 16. Las reglas de `src/styles.css` son las de React.
+`[(current)]`, `[(open)]` y `[(value)]` se unen a signals. El pie del modal es un `<ng-template spFooter>`, y su botón es la directiva `spButton` sobre un `<button>` nativo, como en el artículo 16. La regla de `src/styles.css` es la de React.
 
 ## La tabla de incidencias en Reflex
 
@@ -505,7 +501,7 @@ def incidents_table() -> rx.Component:
                 value=IncidentsState.picked,
                 on_change=IncidentsState.set_picked,
             ),
-            trigger=rx.el.button("Acknowledge an incident", type="button"),
+            trigger="Acknowledge an incident",
             title="Acknowledge an incident",
             description="The on-call team stops being paged for it.",
             footer=sp_button(
@@ -543,15 +539,6 @@ app = rx.App(
     style={
         "background": "#f4f1ea",
         ".sp-table": {"justify_self": "stretch"},
-        ".sp-ui-table td:not([data-align])": {"text_align": "start"},
-        "button[aria-haspopup='dialog']": {
-            "padding": "6px 14px",
-            "border": "1px solid #3b3a36",
-            "border_radius": "2px",
-            "background": "transparent",
-            "font": "inherit",
-            "cursor": "pointer",
-        },
     }
 )
 app.add_page(index)
@@ -559,7 +546,9 @@ app.add_page(index)
 
 Las filas se definen como tuplas y se convierten en diccionarios con `FIELDS`. `sort_rows` ordena igual que `uiSortRows`, así que la tabla se ve igual que en los otros tres frameworks.
 
-El disparador es un `rx.el.button`. La documentación permite pasar un texto, `trigger="Acknowledge an incident"`, que se convierte en un botón dibujado con `sp_trigger`. Pero con Reflex 0.10.1 y `reflex-silverpoint-react` 0.9.1 eso falla cuando la ventana se controla desde el estado, como aquí con `open` y `on_open_change`: la página se rompe con `SilverpointTrigger is not defined`, igual que con `sp_trigger` explícito. Reflex compila el modal en un módulo aparte que no recibe la definición del disparador. Una ventana sin estado acepta el texto sin problema. Es un [error conocido](https://github.com/ecrespo/reflex-silverpoint-react/issues/44) que se corregirá en la próxima versión del paquete; hasta entonces, un `rx.el.button` funciona en los dos casos.
+El disparador es un texto, `trigger="Acknowledge an incident"`, que se convierte en un botón dibujado con `sp_trigger`. Por eso aquí no hace falta la regla del botón de los otros tres. Un `rx.el.button` también sirve.
+
+Hasta `reflex-silverpoint-react` 0.9.1, el texto fallaba cuando la ventana se controla desde el estado, como aquí con `open` y `on_open_change`: la página se rompía con `SilverpointTrigger is not defined`. Reflex compila el modal en un módulo aparte, que no recibía la definición del disparador. La 0.10.0 lo corrigió ([reflex-silverpoint-react#44](https://github.com/ecrespo/reflex-silverpoint-react/issues/44)).
 
 ## El teclado
 
@@ -585,8 +574,8 @@ Con ellos se completa el detalle de una incidencia: `SpDescriptions` para sus ca
 ## Problemas comunes
 
 * **La tabla no se ordena al pulsar el encabezado.** Es lo esperado: ordena tú en `onSort` y pásale `sortKey` y `sortOrder`.
-* **Las celdas salen alineadas a la derecha.** Es la regla `.sp-table td` de `styles.css` en 0.9.2. Añade `.sp-ui-table td:not([data-align]) { text-align: start; }`.
-* **En Reflex, `SilverpointTrigger is not defined`.** La ventana se controla desde el estado y su disparador es un texto o un `sp_trigger`. Usa `rx.el.button` hasta la próxima versión del paquete, que lo corrige.
+* **Las celdas salen alineadas a la derecha.** Tienes una versión anterior a la 0.10.0 ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)). Actualiza los paquetes. Si pasa solo en la compilación de producción de una aplicación de Reflex con varias páginas, mira el [artículo 26](/blog/silverpoint_serie_26).
+* **En Reflex, `SilverpointTrigger is not defined`.** Tienes `reflex-silverpoint-react` anterior a la 0.10.0, la ventana se controla desde el estado y su disparador es un texto o un `sp_trigger`. Actualiza el paquete.
 * **El rótulo del select no se ve.** `label` es el nombre accesible y no se dibuja, como en `SpTextarea`.
 
 ## Lo que viene

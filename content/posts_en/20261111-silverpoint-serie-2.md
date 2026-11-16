@@ -14,7 +14,7 @@ By the end you will know what to install for your framework, which stylesheet to
 
 ## The map
 
-The project is a monorepo with nine npm packages and a separate Python package. All the npm packages are released together with the same version number, 0.9.2 today. This is how they relate:
+The project is a monorepo with nine npm packages and a separate Python package. All the npm packages are released together with the same version number, 0.10.1 today. This is how they relate:
 
 ```text
                       @silverpoint/core
@@ -216,7 +216,7 @@ Names follow a fixed rule. In React, a chart is named as in the catalog (`BarCha
 
 ## Reflex: a single Python package
 
-For Reflex there is a single package, `reflex-silverpoint-react`, published on PyPI with its own version number. Version 0.9.1 wraps `@silverpoint/react` 0.9.1 and requires Reflex 0.10 and Python 3.11 or later.
+For Reflex there is a single package, `reflex-silverpoint-react`, published on PyPI with its own version number. Version 0.10.0 wraps `@silverpoint/react` 0.10.0 and requires Reflex 0.10 and Python 3.11 or later.
 
 ```sh
 pip install reflex-silverpoint-react
