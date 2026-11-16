@@ -23,7 +23,7 @@ Arriba, React con Next.js y Vue. Abajo, Angular y Reflex. Son capturas reales de
 | [23](/blog/silverpoint_serie_23) | React con Next.js 16 | App Router, Turbopack, páginas prerrenderizadas |
 | [24](/blog/silverpoint_serie_24) | Vue 3 | Vite y vue-router |
 | [25](/blog/silverpoint_serie_25) | Angular 22 | CLI, router, componentes independientes y signals |
-| [26](/blog/silverpoint_serie_26) | Reflex 0.10 | Python, con tiempos de respuesta reales medidos por el backend |
+| [26](/blog/silverpoint_serie_26) | Reflex 0.11 | Python, con tiempos de respuesta reales medidos por el backend |
 
 Las tres páginas:
 
@@ -31,7 +31,7 @@ Las tres páginas:
 * **Incidents.** Las 12 incidencias del artículo 17 en una tabla ordenable y paginada, con el modal para confirmarlas y el aviso.
 * **Settings.** El formulario de la regla de alerta del artículo 16 y el tema: una paleta y un interruptor de cianotipia que cambian toda la aplicación.
 
-Las cuatro usan silverpoint 0.9.2, salvo Reflex: reflex-silverpoint-react 0.9.1 trae su propia copia de `@silverpoint/react` 0.9.1.
+Las tres de JavaScript usan silverpoint 0.10.1. Reflex usa reflex-silverpoint-react 0.10.0, que trae su propia copia de `@silverpoint/react` 0.10.0.
 
 ## El mismo panel en cuatro sintaxis
 
@@ -58,8 +58,6 @@ En Vue:
   description="Traffic, errors and sales of the web service today."
   :layout="layout"
   :link="{ key: 'hour' }"
-  :ground="theme.ground"
-  :palette="theme.palette"
 >
 ```
 
@@ -72,8 +70,6 @@ En Angular:
   description="Traffic, errors and sales of the web service, updated every 2 seconds."
   [layout]="layout"
   [link]="{ key: 'hour' }"
-  [ground]="settings.ground()"
-  [palette]="settings.palette()"
 >
 ```
 
@@ -85,11 +81,9 @@ title="Operations",
 description="Traffic, errors and sales of the web service today.",
 layout=LAYOUT,
 link="hour",
-ground=ThemeState.ground,
-palette=ThemeState.palette,
 ```
 
-Las cuatro pasan `ground` y `palette` al panel, además de ponerlos en el proveedor. El marco del panel no lee el proveedor: sus gráficos sí, pero sin esas dos props el fondo y el título del panel se quedan en crema con la cianotipia. Es un fallo abierto como [silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17); se corregirá en una próxima versión del paquete.
+Solo React pasa `ground` y `palette` al panel. Desde la 0.10.0, el marco del panel sigue al proveedor, igual que sus gráficos ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)), así que Vue, Angular y Reflex no le pasan nada. En Next.js los dos valores siguen haciendo falta por otra razón: la vista general está oculta cuando cambias el tema en `/settings`, y sin ellos sus gráficos tardaban unos 2 segundos en tomar el tema nuevo al volver. Lo explica el [artículo 23](/blog/silverpoint_serie_23).
 
 ## Cuánto código
 
@@ -97,9 +91,9 @@ Líneas no vacías que escribí, comentarios incluidos. No cuentan los archivos 
 
 | | React · Next.js | Vue | Angular | Reflex |
 |---|---|---|---|---|
-| Código propio | 514 | 473 | 582 | 609 |
-| Con los datos | 590 | 549 | 658 | 670 |
-| Archivos de código | 16 | 12 | 13 | 10 |
+| Código propio | 494 | 466 | 567 | 609 |
+| Con los datos | 570 | 542 | 643 | 670 |
+| Archivos de código | 15 | 12 | 12 | 10 |
 
 Las cuatro cifras están cerca. Lo que las separa:
 
@@ -107,6 +101,7 @@ Las cuatro cifras están cerca. Lo que las separa:
 * **Angular** escribe la plantilla y los estilos dentro de cada componente, así que sus líneas los incluyen.
 * **Reflex** hace algo más: 46 líneas miden los tiempos de respuesta de tres sitios reales con httpx, y el panel muestra un séptimo gráfico con ellos. Sin eso, queda en unas 560.
 * **React** reparte el código entre componentes de servidor y de cliente. Cada página es un archivo de servidor pequeño que monta un componente de cliente.
+* **Con la 0.10**, las tres de JavaScript perdieron código: ya no hacen falta el código que metía la hoja de estilos en el SVG ni la regla que alineaba la tabla. React bajó de 514 a 494 líneas, Vue de 473 a 466 y Angular de 582 a 567. Reflex se quedó igual: las líneas que ahorró en la descarga las ganó en las reglas de la tabla para la compilación de producción.
 
 ## Las dependencias
 
@@ -125,14 +120,14 @@ Todo el JavaScript de la compilación de producción, comprimido con gzip. Paso 
 
 | | JS (gzip) | CSS (gzip) | Prerrenderizado |
 |---|---|---|---|
-| React · Next.js | 327 kB | 16 kB | Sí, con los gráficos dibujados |
+| React · Next.js | 245 kB | 16 kB | Sí, con los gráficos dibujados |
 | Vue | 97 kB | 16 kB | No |
 | Angular | 161 kB | 15 kB | No |
-| Reflex | 219 kB | 17 kB | Sí, con los gráficos dibujados |
+| Reflex | 221 kB | 17 kB | Sí, con los gráficos dibujados |
 
 Lo que explica las diferencias:
 
-* **Next.js** lleva su propio enrutador y React, y además una parte que no debería: `SilverpointProvider` solo se exporta desde la entrada general de `@silverpoint/react`, que contiene los 60 gráficos, y Turbopack no descarta los que no se usan. Sustituir el proveedor por un componente vacío bajó el JavaScript unos 80 kB con gzip. Es un fallo abierto como [silverpoint#21](https://github.com/ecrespo/silverpoint/issues/21); se corregirá en una próxima versión del paquete.
+* **Next.js** lleva su propio enrutador y React. Con silverpoint 0.9.2 pesaba 327 kB: el proveedor se importaba de la entrada general de `@silverpoint/react`, que contiene los 60 gráficos, y Turbopack no descartaba los que no se usan ([silverpoint#21](https://github.com/ecrespo/silverpoint/issues/21)). Con la 0.10.1 bajó a 245 kB.
 * **Vue** con Vite descarta los gráficos que no usas y separa cada página en su propio archivo. La primera visita a `/` descarga unos 98 kB con el CSS.
 * **Angular** carga cada página aparte con `loadComponent`. La primera visita a `/` descarga unos 157 kB con el CSS.
 * **Reflex** añade su cliente de estado y el socket que lo conecta con el backend.
@@ -154,7 +149,7 @@ En mi equipo, en local, sin limitar la red. Mediana de tres medidas:
 * **Vite** arranca casi al instante porque no compila nada hasta que pides una página. Su primera página tarda algo más.
 * **Reflex** en desarrollo tarda alrededor de 1 s en dibujar. En producción baja a 294 ms.
 
-Las cifras sirven para comparar entre sí, no como promesa: en una red real pesa más el tamaño que el tiempo en local.
+Las cifras sirven para comparar entre sí, no como promesa: en una red real pesa más el tamaño que el tiempo en local. Las medí con silverpoint 0.9.2. Con la 0.10 las repetí, y la diferencia entre versiones quedó dentro del ruido de la medida. La excepción es el arranque de `ng serve`, algo más rápido porque vuelve a preempaquetar las dependencias.
 
 ## Dónde vive el estado
 
@@ -165,7 +160,7 @@ Las cifras sirven para comparar entre sí, no como promesa: en una red real pesa
 | Angular | Servicios raíz con signals | Un servicio raíz | La ventana sigue corriendo |
 | Reflex | El estado en el servidor, por pestaña | Una tarea de fondo | Reflex cancela la tarea y la vuelve a lanzar al volver |
 
-Next.js oculta las páginas que dejas con `display: none`. En desarrollo, sus gráficos miden 0 px y avisan con `SP003` aunque no pasa nada malo. Es un fallo abierto como [silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22); se corregirá en una próxima versión del paquete.
+Next.js oculta las páginas que dejas con `display: none`. Hasta la 0.9.2, en desarrollo sus gráficos medían 0 px y avisaban con `SP003` aunque no pasaba nada malo. Desde la 0.10.0, un gráfico oculto conserva su último ancho y no avisa ([silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22)).
 
 ## El tema en toda la aplicación
 
@@ -184,12 +179,12 @@ Angular es el caso difícil: `provideSilverpoint` recibe un objeto fijo. El art�
 
 | | Lo más fácil | Lo más difícil |
 |---|---|---|
-| React · Next.js | Páginas prerrenderizadas con los gráficos dibujados, y el estado se conserva al navegar | Exportar el SVG: Turbopack no tiene `?raw` y pide una regla con una ruta relativa |
+| React · Next.js | Páginas prerrenderizadas con los gráficos dibujados, y el estado se conserva al navegar | El tema al volver de una página oculta: el panel necesita `ground` y `palette` para que sus gráficos cambien a la vez que el marco |
 | Vue | `v-model` en todos los controles, `aria-current` gratis en `RouterLink` | Pintar la página con la cianotipia, que no tiene paleta propia |
-| Angular | Servicios con signals como almacén, `[(open)]` y `[(value)]` directos a los signals | El tema en el proveedor, y `ng serve` con la hoja de estilos importada como texto |
+| Angular | Servicios con signals como almacén, `[(open)]` y `[(value)]` directos a los signals | El tema en el proveedor: `provideSilverpoint` recibe un objeto fijo |
 | Reflex | Datos reales sin API ni CORS: el backend ya existe | Cada interacción es un viaje al servidor, y `rx.App(style=...)` no se aplica sin `RadixThemesPlugin` |
 
-Dos fallos más de silverpoint aparecieron solo en Angular: el texto literal `title="…"` queda como atributo y el navegador muestra su propia descripción emergente ([silverpoint#18](https://github.com/ecrespo/silverpoint/issues/18)), e importar la hoja de estilos como texto rompe `ng serve` ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)). Los dos se corregirán en una próxima versión del paquete.
+Dos fallos más de silverpoint aparecieron solo en Angular, y la 0.10.0 corrigió los dos. Importar la hoja de estilos como texto rompía `ng serve` ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)); ahora la hoja se importa de `@silverpoint/grounds/styles-text`. Y el texto literal `title="…"` quedaba como atributo del elemento ([silverpoint#18](https://github.com/ecrespo/silverpoint/issues/18)). Ya no queda, aunque en Chrome la descripción emergente sigue saliendo: viene del elemento `<title>` del SVG, que es el nombre accesible del gráfico.
 
 ## Cuál elegir
 

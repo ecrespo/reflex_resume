@@ -20,7 +20,7 @@ Silverpoint draws charts in the visual language of a historical drawing techniqu
 
 What sets it apart from other libraries with a hand-drawn look is where the irregularity lives: only in the ornament. The geometry that encodes the data is exact, and every chart has a `precision` mode that turns the inking off entirely.
 
-In version 0.9.2, the library ships:
+In version 0.10.1, the library ships:
 
 * 60 charts, each importable on its own.
 * 38 UI components (forms, tables, navigation, modals) drawn in the same style.

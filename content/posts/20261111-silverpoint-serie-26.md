@@ -41,8 +41,8 @@ Python 3.13 y `uv`. Las versiones con las que lo probé:
 
 | Paquete | Versión |
 |---|---|
-| `reflex` | 0.10.1 |
-| `reflex-silverpoint-react` | 0.9.1 |
+| `reflex` | 0.11.0 |
+| `reflex-silverpoint-react` | 0.10.0 |
 | `httpx` | 0.28.1 |
 
 Crea el proyecto como en el [artículo 06](/blog/silverpoint_serie_6):
@@ -59,8 +59,8 @@ uv run reflex init
 ```toml
 dependencies = [
     "httpx>=0.28.1",
-    "reflex>=0.10.1",
-    "reflex-silverpoint-react>=0.9.1",
+    "reflex>=0.11.0",
+    "reflex-silverpoint-react>=0.10.0",
 ]
 ```
 
@@ -70,8 +70,6 @@ dependencies = [
 operations/
 ├── assets/
 │   └── operations.css
-├── data/
-│   └── silverpoint-grounds.css
 ├── operations/
 │   ├── __init__.py
 │   ├── data.py
@@ -225,7 +223,7 @@ class ThemeState(rx.State):
 
 | Variable | Para qué |
 |---|---|
-| `ground` | El estilo base del proveedor y del panel |
+| `ground` | El estilo base del proveedor y de la ventana de Incidents |
 | `palette` | Los colores de la paleta; vacío en cianotipia, que trae los suyos |
 | `page` | El fondo y el color del texto de la página |
 
@@ -298,7 +296,6 @@ def advance(rows: list[dict], tick: int) -> list[dict]:
 
 ```python
 import asyncio
-from pathlib import Path
 
 import reflex as rx
 from reflex_silverpoint_react import (
@@ -308,7 +305,7 @@ from reflex_silverpoint_react import (
     dashboard_cell_layout,
     dashboard_layout,
     donut_chart,
-    get_svg,
+    download_svg,
     heatmap_chart,
     kpi_card,
     line_chart,
@@ -320,9 +317,6 @@ from .data import BLOCKS, ERRORS_BY_DAY, HOURLY, SALES
 from .layout import shell
 from .live import advance
 from .probes import latency_rows
-from .theme import ThemeState
-
-GROUND_CSS = Path("data/silverpoint-grounds.css")
 ```
 
 El estado de lo que se mueve. `rows` son las visitas de ejemplo y `latency`, las filas de los tiempos reales:
@@ -354,7 +348,7 @@ class LiveState(rx.State):
 
 La arranca `on_load` de la página Overview. Lo comprobé en el navegador: al ir a Incidents con la barra, Reflex cancela la tarea y no llega ningún mensaje por el websocket durante 6 segundos; al volver, arranca una nueva y la ventana avanza una hora cada 2 segundos, no dos.
 
-La lectura de la hora activa es la del [artículo 11](/blog/silverpoint_serie_11) y la descarga, la del [artículo 18](/blog/silverpoint_serie_18), con la hoja del estilo base dentro de `CDATA` porque el SVG exportado no la incluye ([silverpoint#14](https://github.com/ecrespo/silverpoint/issues/14), se corregirá en una próxima versión del paquete):
+La lectura de la hora activa es la del [artículo 11](/blog/silverpoint_serie_11) y la descarga, la del [artículo 18](/blog/silverpoint_serie_18): `download_svg`, que desde la 0.10.0 mete la hoja de estilos dentro del SVG ([reflex-silverpoint-react#45](https://github.com/ecrespo/reflex-silverpoint-react/issues/45)). No hace falta ningún estado para ella:
 
 ```python
 class ReadoutState(rx.State):
@@ -366,22 +360,9 @@ class ReadoutState(rx.State):
             self.active = ""
         else:
             self.active = f"{item['datum']['hour']}:00, {item['value']} thousand hits"
-
-
-class ExportState(rx.State):
-    @rx.event
-    def save_svg(self, svg: str | None):
-        if not svg:
-            return
-        css = GROUND_CSS.read_text()
-        start = svg.index(">") + 1
-        standalone = f"{svg[:start]}<style><![CDATA[{css}]]></style>{svg[start:]}"
-        return rx.download(data=standalone, filename="hits-per-hour.svg")
 ```
 
-`data/silverpoint-grounds.css` es una copia de `.web/node_modules/@silverpoint/grounds/dist/styles.css`, que aparece tras el primer `reflex run`. Va en `data/` y no en `.web/` porque la lee el backend, y un backend desplegado solo no tiene `.web/`.
-
-El panel es el del artículo 13 con tres cambios: la línea y las barras leen `LiveState.rows`, la línea lleva la descripción emergente y `on_active_change`, y el panel recibe el tema:
+El panel es el del artículo 13 con dos cambios: la línea y las barras leen `LiveState.rows`, y la línea lleva la descripción emergente y `on_active_change`:
 
 ```python
 def panel() -> rx.Component:
@@ -458,12 +439,10 @@ def panel() -> rx.Component:
         description="Traffic, errors and sales of the web service today.",
         layout=LAYOUT,
         link="hour",
-        ground=ThemeState.ground,
-        palette=ThemeState.palette,
     )
 ```
 
-El tercer cambio tiene una razón. El panel no lee el proveedor: su papel, el título y el fondo usan solo sus propias props, porque también se dibuja en componentes de servidor, que no tienen proveedor. Sus gráficos sí siguen al proveedor. Sin `ground` y `palette` en `dashboard`, al elegir la cianotipia los seis gráficos se vuelven azules sobre un marco color crema. Con ellas, el marco cambia con todo lo demás. Es un [error conocido](https://github.com/ecrespo/silverpoint/issues/17) que se corregirá en una próxima versión del paquete.
+El panel no recibe el tema: lo toma del proveedor. Desde la 0.10.0, su papel, su título y su fondo siguen al proveedor igual que sus gráficos ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). Al elegir la cianotipia, el marco y los seis gráficos se vuelven azules a la vez. Hasta la 0.9.1 había que pasar `ground` y `palette` también a `dashboard`.
 
 `link="hour"` une los gráficos por la hora: al señalar las 14:00 en la línea, las barras y las dos tarjetas marcan su punto de las 14:00. La línea avanza mientras tanto; las barras también, porque leen las mismas filas.
 
@@ -499,7 +478,7 @@ def overview() -> rx.Component:
             rx.el.button(
                 "Download SVG",
                 type="button",
-                on_click=get_svg("hits", ExportState.save_svg),
+                on_click=download_svg("hits", "hits-per-hour.svg"),
             ),
             class_name="toolbar",
         ),
@@ -511,14 +490,41 @@ def overview() -> rx.Component:
 
 ## 4. La página Incidents
 
-`operations/incidents.py` es el código del artículo 17 sin cambios: las columnas, `IncidentsState`, la tabla, la paginación, la ventana y el aviso. Solo cambia el final, que mete la sección en `shell`:
+`operations/incidents.py` es el código del artículo 17: las columnas, `IncidentsState`, la tabla, la paginación, la ventana y el aviso. Cambian dos cosas. El final mete la sección en `shell`:
 
 ```python
 def incidents() -> rx.Component:
     return shell("/incidents", incidents_table())
 ```
 
-Siguen valiendo los dos avisos de aquel artículo. El disparador de la ventana es un `rx.el.button`, porque con la ventana controlada desde el estado el texto en `trigger` rompe la página ([reflex-silverpoint-react#44](https://github.com/ecrespo/reflex-silverpoint-react/issues/44)). Y las celdas de la tabla necesitan la regla de `operations.css` que las alinea al inicio ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)). Los dos errores se corregirán en una próxima versión del paquete.
+Y la ventana recibe el tema, con `from .theme import ThemeState` entre las importaciones:
+
+```python
+        sp_modal(
+            sp_select(
+                IncidentsState.open_ids,
+                label="Incident",
+                placeholder="Choose an open incident",
+                value=IncidentsState.picked,
+                on_change=IncidentsState.set_picked,
+            ),
+            trigger="Acknowledge an incident",
+            title="Acknowledge an incident",
+            description="The on-call team stops being paged for it.",
+            footer=sp_button(
+                "Acknowledge",
+                variant="primary",
+                disabled=IncidentsState.picked.is_none(),
+                on_click=IncidentsState.acknowledge,
+            ),
+            open=IncidentsState.open,
+            on_open_change=IncidentsState.set_open,
+            ground=ThemeState.ground,
+            palette=ThemeState.palette,
+        ),
+```
+
+El disparador es un texto, que `sp_modal` convierte en un botón dibujado con `sp_trigger`. Ese botón no lee el proveedor: sin `ground` y `palette` en la ventana, con la cianotipia se queda con el texto oscuro sobre el fondo azul y casi no se ve. Con ellas, el disparador sigue al tema. Hasta la 0.9.1, un texto en `trigger` con la ventana controlada desde el estado rompía la página ([reflex-silverpoint-react#44](https://github.com/ecrespo/reflex-silverpoint-react/issues/44)).
 
 ## 5. La página Settings
 
@@ -578,21 +584,34 @@ app.add_page(incidents, route="/incidents", title="Incidents · Operations")
 app.add_page(settings, route="/settings", title="Settings · Operations")
 ```
 
-Las reglas de estilo van en `assets/operations.css`. Las de la barra y las columnas son de maquetación; estas dos vienen de artículos anteriores:
+Las reglas de estilo van en `assets/operations.css`. Las de la barra y las columnas son de maquetación; estas son las de la tabla y el botón de descarga:
 
 ```css
-/* silverpoint#12: SpTable cells without an align follow the start edge */
-.sp-table {
+/* SpTable fills the width of its section */
+.sp-ui.sp-table {
   justify-self: stretch;
+  margin-top: 0;
+  font-size: 15px;
 }
 
-.sp-ui-table td:not([data-align]) {
+/* In the production build the charts' stylesheet loads after the components' one, and its
+   .sp-table rules, written for the charts' data table, win over SpTable's own */
+.sp-ui .sp-ui-table th {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--sp-ink);
+}
+
+.sp-ui .sp-ui-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--sp-grid);
+}
+
+.sp-ui .sp-ui-table :is(th, td):not([data-align]) {
   text-align: start;
 }
 
-/* Plain buttons: the SVG download and the modal's trigger (reflex-silverpoint-react#44) */
-.toolbar button,
-button[aria-haspopup="dialog"] {
+/* A plain button: the SVG download */
+.toolbar button {
   padding: 6px 14px;
   border: 1px solid currentColor;
   border-radius: 2px;
@@ -603,7 +622,9 @@ button[aria-haspopup="dialog"] {
 }
 ```
 
-Las puse en un archivo por una razón práctica. En el artículo 17 iban en `rx.App(style=...)`. Sin el plugin `RadixThemesPlugin`, en Reflex 0.10.1 esas reglas no llegan a la página: la tabla salía alineada a la derecha. Con `stylesheets` la hoja llega siempre.
+Las reglas de la tabla hacen falta por la compilación de producción. La 0.10.0 corrigió la alineación de las celdas de `sp_table` ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)), y en desarrollo la tabla sale bien sin ninguna regla. Pero la corrección depende de que la hoja de los componentes se cargue después de la de los gráficos. En esta aplicación, con tres páginas, la compilación de producción las enlaza al revés: sin estas reglas, las celdas y los encabezados salían alineados a la derecha, con menos relleno y la letra más pequeña. Con ellas, la tabla mide lo mismo en desarrollo y en producción. En la aplicación de una sola página del artículo 17 no pasa.
+
+Van en un archivo por una razón práctica. En el artículo 17 las reglas iban en `rx.App(style=...)`. Sin el plugin `RadixThemesPlugin`, esas reglas no llegan a la página, tampoco en Reflex 0.11.0. Con `stylesheets` la hoja llega siempre.
 
 ## Ejecutar, compilar y desplegar
 
@@ -641,9 +662,9 @@ Todo el código de este artículo es el del proyecto probado. Con Chrome sin int
 | Hora activa | Al pasar el puntero, la lectura dice «14:00, 59 thousand hits» y la descripción emergente, «14:00 · 59k hits» |
 | Enlace por hora | Las barras dibujan su marca de enlace (`part="linked"`) |
 | Tiempos reales | Tres filas con su lectura, como «154 ms» |
-| Descarga | `hits-per-hour.svg`, unos 15,8 KB, con `<![CDATA[` y las reglas del estilo base |
+| Descarga | `hits-per-hour.svg`, unos 12,4 KB, con un bloque `<![CDATA[` con las reglas de silverpoint de la página; abierto solo, se ve con sus colores |
 | Navegación | Ningún mensaje del websocket en 6 segundos en Incidents; al volver, una hora cada 2 segundos |
-| Incidents | Orden por minutos en los dos sentidos, página 2, reconocer INC-1042 cierra la ventana y abre el aviso, la fila pasa a `acknowledged`, celdas alineadas al inicio |
+| Incidents | Orden por minutos en los dos sentidos, página 2, reconocer INC-1042 cierra la ventana y abre el aviso, la fila pasa a `acknowledged`, celdas y encabezados alineados al inicio en desarrollo y en producción |
 | Formulario | «hits ≥ 15, by chat, paused. Notes: Page the API team» |
 | Tema | Con Sanguine el fondo pasa a `#F2E8DC`; con la cianotipia, a `#1B3F6B`, y el panel de Overview y los componentes de Incidents la siguen |
 | Sesión | Al volver a Settings, el formulario y el interruptor conservan su valor |
@@ -660,18 +681,19 @@ Medidas en mi equipo, para compararlas en el artículo 27:
 | Código escrito | 9 módulos de Python, una hoja CSS y `rxconfig.py`: 670 líneas no vacías; unas 270 son el código de los artículos 13, 16 y 17 sin cambios |
 | Dependencias añadidas | `reflex`, `reflex-silverpoint-react`, `httpx` |
 | `reflex export --frontend-only` | 3,7 s |
-| JavaScript exportado | 16 archivos, 664 KB; 214 KB con gzip |
-| CSS exportado | 4 archivos, 154 KB; 17 KB con gzip |
+| JavaScript exportado | 16 archivos, 669 KB; 216 KB con gzip |
+| CSS exportado | 4 archivos, 155 KB; 17 KB con gzip |
 | Arranque de `reflex run` | 2,7 s hasta que responden frontend y backend; 3,3 s sin `.web/` |
 | Primer gráfico listo | 294 ms en producción, 1.049 ms en desarrollo (mediana de 3) |
 
 ## Problemas comunes
 
-* **El panel se queda color crema con la cianotipia.** Falta pasar `ground` y `palette` a `dashboard`: el panel no lee el proveedor.
+* **El panel se queda color crema con la cianotipia.** Tienes `reflex-silverpoint-react` anterior a la 0.10.0, donde el panel no leía el proveedor. Actualiza el paquete.
+* **El botón que abre la ventana casi no se ve con la cianotipia.** El disparador de texto no lee el proveedor. Pasa `ground` y `palette` a `sp_modal`.
+* **En producción, la tabla sale alineada a la derecha y apretada.** Faltan las reglas de la tabla de `operations.css`. En desarrollo no se nota.
 * **La página no cambia de color.** El proveedor solo da estilo a los componentes de silverpoint. El fondo lo pone `ThemeState.page` en `shell`.
 * **Las reglas de `rx.App(style=...)` no se aplican.** Sin `RadixThemesPlugin` no llegan al navegador. Usa una hoja en `assets/` y `stylesheets`.
 * **Los tiempos de respuesta dicen «No data» al arrancar.** `sparkline_rows` recibió una lista vacía antes de la primera ronda. Pon el gráfico detrás de `rx.cond`.
-* **La descarga falla con `FileNotFoundError`.** Falta `data/silverpoint-grounds.css`, o el backend arranca desde otra carpeta: la ruta es relativa a la raíz del proyecto.
 * **Las peticiones se multiplican.** Hay varios procesos de backend, cada uno con su tarea de vida. Mide desde un solo proceso.
 
 ## Lo que viene

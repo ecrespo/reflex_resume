@@ -114,7 +114,7 @@ Each overlay opens with a native `<button type="button">`, which receives its AR
 | React | The `trigger` prop, `trigger={<button type="button">…</button>}` |
 | Vue | The `#trigger` slot |
 | Angular | A projected `<button type="button" spTrigger>`; `SpTrigger` is imported from the overlay's subpath |
-| Reflex | `trigger=rx.el.button(…, type="button")` |
+| Reflex | `trigger="…"`, a string drawn as a button, or `trigger=rx.el.button(…, type="button")` |
 
 In React, do not pass an `SpButton` as the trigger: it drops the ARIA it is given.
 
@@ -224,13 +224,9 @@ The order starts with the opening time, from the most recent to the oldest. Pres
 
 The `Acknowledge` button is disabled until an incident is chosen. Once it is acknowledged, the row changes to `acknowledged`, the modal closes and the notification opens.
 
-In `src/index.css`, two rules for the table and the trigger:
+In `src/index.css`, one rule for the trigger:
 
 ```css
-.sp-ui-table td:not([data-align]) {
-  text-align: start;
-}
-
 button[aria-haspopup='dialog'] {
   padding: 6px 14px;
   border: 1px solid #3b3a36;
@@ -241,7 +237,7 @@ button[aria-haspopup='dialog'] {
 }
 ```
 
-The first one is a fix: in 0.9.2, the `.sp-table td` rule in `styles.css`, the one for the charts' data tables, aligns the cells of `SpTable` to the right. The second one draws the trigger, which is a native button and comes out unstyled.
+It draws the trigger, which is a native button and comes out unstyled. The table needs no rule: since 0.10.0, the cells of `SpTable` align to the start. Up to 0.9.2 they were aligned to the right by the `.sp-table td` rule in `styles.css`, the one for the charts' data tables ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)).
 
 ## The incidents table in Vue
 
@@ -414,7 +410,7 @@ export class IncidentsTable {
 }
 ```
 
-`[(current)]`, `[(open)]` and `[(value)]` bind to signals. The modal's footer is an `<ng-template spFooter>`, and its button is the `spButton` directive on a native `<button>`, as in article 16. The rules in `src/styles.css` are the React ones.
+`[(current)]`, `[(open)]` and `[(value)]` bind to signals. The modal's footer is an `<ng-template spFooter>`, and its button is the `spButton` directive on a native `<button>`, as in article 16. The rule in `src/styles.css` is the React one.
 
 ## The incidents table in Reflex
 
@@ -505,7 +501,7 @@ def incidents_table() -> rx.Component:
                 value=IncidentsState.picked,
                 on_change=IncidentsState.set_picked,
             ),
-            trigger=rx.el.button("Acknowledge an incident", type="button"),
+            trigger="Acknowledge an incident",
             title="Acknowledge an incident",
             description="The on-call team stops being paged for it.",
             footer=sp_button(
@@ -543,15 +539,6 @@ app = rx.App(
     style={
         "background": "#f4f1ea",
         ".sp-table": {"justify_self": "stretch"},
-        ".sp-ui-table td:not([data-align])": {"text_align": "start"},
-        "button[aria-haspopup='dialog']": {
-            "padding": "6px 14px",
-            "border": "1px solid #3b3a36",
-            "border_radius": "2px",
-            "background": "transparent",
-            "font": "inherit",
-            "cursor": "pointer",
-        },
     }
 )
 app.add_page(index)
@@ -559,7 +546,9 @@ app.add_page(index)
 
 The rows are written as tuples and turned into dictionaries with `FIELDS`. `sort_rows` sorts the same way as `uiSortRows`, so the table looks the same as in the other three frameworks.
 
-The trigger is an `rx.el.button`. The documentation allows a string, `trigger="Acknowledge an incident"`, which becomes a button drawn with `sp_trigger`. But with Reflex 0.10.1 and `reflex-silverpoint-react` 0.9.1 that fails when the overlay is controlled from state, as here with `open` and `on_open_change`: the page breaks with `SilverpointTrigger is not defined`, as it does with an explicit `sp_trigger`. Reflex compiles the modal into a separate module that does not get the trigger's definition. An overlay without state takes the string with no problem. It is a [known bug](https://github.com/ecrespo/reflex-silverpoint-react/issues/44) that will be fixed in the package's next version; until then, an `rx.el.button` works in both cases.
+The trigger is a string, `trigger="Acknowledge an incident"`, which becomes a button drawn with `sp_trigger`. That is why the button rule of the other three is not needed here. An `rx.el.button` works too.
+
+Up to `reflex-silverpoint-react` 0.9.1, the string failed when the overlay is controlled from state, as here with `open` and `on_open_change`: the page broke with `SilverpointTrigger is not defined`. Reflex compiles the modal into a separate module, which did not get the trigger's definition. 0.10.0 fixed it ([reflex-silverpoint-react#44](https://github.com/ecrespo/reflex-silverpoint-react/issues/44)).
 
 ## The keyboard
 
@@ -585,8 +574,8 @@ With them you complete an incident's detail: `SpDescriptions` for its fields, `S
 ## Common problems
 
 * **The table does not sort when the header is pressed.** That is expected: sort in `onSort` and pass it `sortKey` and `sortOrder`.
-* **The cells come out aligned to the right.** It is the `.sp-table td` rule in `styles.css` in 0.9.2. Add `.sp-ui-table td:not([data-align]) { text-align: start; }`.
-* **In Reflex, `SilverpointTrigger is not defined`.** The overlay is controlled from state and its trigger is a string or an `sp_trigger`. Use `rx.el.button` until the package's next version, which fixes it.
+* **The cells come out aligned to the right.** You have a version before 0.10.0 ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)). Update the packages. If it happens only in the production build of a Reflex application with several pages, see [article 26](/blog/silverpoint_serie_26).
+* **In Reflex, `SilverpointTrigger is not defined`.** You have `reflex-silverpoint-react` before 0.10.0, the overlay is controlled from state and its trigger is a string or an `sp_trigger`. Update the package.
 * **The select's label is not shown.** `label` is the accessible name and is not drawn, as in `SpTextarea`.
 
 ## What's next

@@ -29,7 +29,7 @@ Your framework's project from articles 03 to 06. The charts' data goes inside th
 The presentation engine lives in its own package, `@silverpoint/marp`, which brings Marpit, Marp's core. It is an optional peer of the adapters. In React, Vue and Angular:
 
 ```sh
-npm install @silverpoint/marp@^0.9.2
+npm install @silverpoint/marp@^0.10.1
 ```
 
 Reflex does not need this: `sp_deck` installs it and adds its stylesheets.

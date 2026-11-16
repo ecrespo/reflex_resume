@@ -27,7 +27,7 @@ Una barra de navegación con tres enlaces las une. Los ajustes se conservan mien
 ## Lo que necesitas
 
 * Node.js 20.9 o superior, el mínimo de Next.js 16. Lo probé con Node.js 24.
-* Next.js 16.4.6, React 19.3.0 y silverpoint 0.9.2.
+* Next.js 16.4.6, React 19.3.0 y silverpoint 0.10.1.
 
 ## El proyecto
 
@@ -61,9 +61,7 @@ ops-panel/
 │   ├── live.ts                   the rolling window
 │   ├── incidents.ts              the 12 incidents
 │   ├── rule.ts                   the alert rule
-│   ├── download.ts               the SVG download
-│   └── standalone.ts             the stylesheet inside the SVG
-├── raw.d.ts
+│   └── download.ts               the SVG download
 ├── next.config.ts
 ├── package.json
 └── tsconfig.json
@@ -90,7 +88,7 @@ Eso no los deja fuera del HTML. Next.js también renderiza los componentes de cl
 
 ## La configuración
 
-La descarga en SVG del [artículo 18](/blog/silverpoint_serie_18) mete la hoja de estilos del estilo base dentro del archivo. En Vite, la hoja se importaba como texto con `?raw`. Turbopack, el empaquetador de Next.js, no entiende `?raw` por sí solo: hay que decirle qué hacer con una regla en `next.config.ts`:
+`next.config.ts` es el de la plantilla de `create-next-app`, sin cambios:
 
 ```ts
 import type { NextConfig } from 'next';
@@ -98,42 +96,14 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
-  turbopack: {
-    rules: {
-      // Any file imported with `?raw` is loaded as a string, as in Vite.
-      '*': { condition: { query: '?raw' }, type: 'text' },
-    },
-  },
 };
 
 export default nextConfig;
 ```
 
-`cacheComponents` y `partialPrefetching` vienen de la plantilla de `create-next-app`. La regla nueva es `turbopack.rules`: cualquier archivo importado con `?raw` se carga como texto.
+La descarga en SVG del [artículo 18](/blog/silverpoint_serie_18) no necesita nada aquí. `standaloneSVG` recibe la hoja de estilos del estilo base desde `@silverpoint/grounds/styles-text`, un módulo de JavaScript que Turbopack importa sin ninguna regla.
 
-Con la regla, `lib/standalone.ts` es el del artículo 18 con otra ruta:
-
-```ts
-import groundCss from '../node_modules/@silverpoint/grounds/dist/styles.css?raw';
-
-export function standaloneSvg(svg: string): string {
-  const open = svg.indexOf('>') + 1;
-  return `${svg.slice(0, open)}<style><![CDATA[${groundCss}]]></style>${svg.slice(open)}`;
-}
-```
-
-La ruta del paquete, `@silverpoint/grounds/styles.css?raw`, no funciona en Turbopack. La compilación falla con «Module not found: Can't resolve '@silverpoint/grounds/styles.css'», aunque la misma ruta sin `?raw` se resuelve bien en `app/layout.tsx`. Con la ruta relativa al archivo dentro de `node_modules` funciona. Si tu proyecto está en un monorepo con `node_modules` en la raíz, ajusta los `../`.
-
-TypeScript tampoco conoce `?raw`. En Vite lo declaraban los tipos de `vite/client`; aquí lo declara `raw.d.ts`, en la raíz del proyecto:
-
-```ts
-declare module '*?raw' {
-  const content: string;
-  export default content;
-}
-```
-
-El SVG sale sin la hoja de estilos del estilo base porque `toSVGString()` no la incluye. Es un fallo de la librería, registrado en el [issue #14](https://github.com/ecrespo/silverpoint/issues/14), y se corregirá en una próxima versión del paquete.
+Hasta la 0.9.2 había que importar `styles.css` como texto con `?raw`, y en Turbopack eso pedía una regla en `turbopack.rules`, una ruta relativa a `node_modules` y una declaración de tipos. La 0.10.0 lo hizo innecesario ([issue #14](https://github.com/ecrespo/silverpoint/issues/14)).
 
 ## El diseño común
 
@@ -186,13 +156,13 @@ La navegación y `main` son componentes de servidor, pero van dentro de `Setting
 
 import { createContext, useContext, useState, type CSSProperties, type ReactNode } from 'react';
 import type { GroundName, Palette } from '@silverpoint/core';
-import { PALETTES, paletteStyle } from '@silverpoint/core/palettes';
-import { SilverpointProvider } from '@silverpoint/react';
+import { PALETTES, paletteStyle, type PaletteName } from '@silverpoint/core/palettes';
+import { SilverpointProvider } from '@silverpoint/react/provider';
 import { DEFAULT_RULE, type AlertRule } from '@/lib/rule';
 
 export type Settings = {
   ground: GroundName;
-  palette: string;
+  palette: PaletteName;
   rule: AlertRule;
 };
 
@@ -303,10 +273,6 @@ h1 {
   justify-self: stretch;
 }
 
-.sp-ui-table td:not([data-align]) {
-  text-align: start;
-}
-
 button[aria-haspopup='dialog'] {
   padding: 6px 14px;
   border: 1px solid currentColor;
@@ -336,8 +302,6 @@ h2 {
 ```
 
 `.stack` es una columna para el contenido de las incidencias y de cada bloque de ajustes. Al principio era una regla sobre `section`, como en el artículo 17, pero `Dashboard` también es una `section`: con `max-width: 720px` el panel pasaba de cuatro columnas a dos.
-
-La regla `.sp-ui-table td:not([data-align])` alinea a la izquierda las celdas de la tabla. Sin ella, una regla de los gráficos las alinea a la derecha. Es un fallo de la librería, registrado en el [issue #12](https://github.com/ecrespo/silverpoint/issues/12), y se corregirá en una próxima versión del paquete.
 
 ## Los datos en vivo y la regla de alerta
 
@@ -514,7 +478,7 @@ Lo que hace cada parte:
 * **Los gráficos enlazados.** Con `link={{ key: 'hour' }}`, el puntero sobre una hora del tráfico marca la misma hora en los errores y en las curvas de los dos indicadores, y al revés. Los errores por día y las ventas por canal no tienen el campo `hour`: no muestran marca y en desarrollo avisan con `SP016`, como explicaba el artículo 13.
 * **La lectura.** `onActiveChange` del gráfico de tráfico guarda el elemento activo, como en el [artículo 11](/blog/silverpoint_serie_11), y el párrafo escribe «11:00, 62k hits». Solo sigue al gráfico de tráfico: las marcas que pone el enlace no lo cambian. Para seguir el valor enlazado, usa `onLinkChange`, del artículo 13.
 * **La descarga.** `ref` da el manejador del gráfico, y `toSVGString()` el SVG, como en el artículo 18. El archivo lleva la paleta del tema elegido.
-* **El tema del panel.** `ground` y `palette` se pasan al `Dashboard`, además de llegar por el proveedor. Los gráficos de dentro siguen al proveedor, pero el marco del panel no: con la cianotipia, los gráficos se volvían azules y el fondo del panel seguía color crema. Es un fallo de la librería, registrado en el [issue #17](https://github.com/ecrespo/silverpoint/issues/17), y se corregirá en una próxima versión del paquete. Mientras tanto, pasa los dos valores al panel.
+* **El tema del panel.** `ground` y `palette` se pasan al `Dashboard`, además de llegar por el proveedor. Desde la 0.10.0 el marco del panel ya sigue al proveedor ([issue #17](https://github.com/ecrespo/silverpoint/issues/17)), pero en esta aplicación los dos valores siguen haciendo falta. Cuando cambias el tema en `/settings`, la vista general está oculta. Sin ellos, al volver en la versión de producción, el marco tomaba el tema nuevo y los seis gráficos seguían con el anterior hasta la siguiente lectura en vivo, unos 2 segundos después. Con ellos, `Overview` lee los ajustes, se vuelve a dibujar al mostrarse y todo cambia a la vez.
 
 ## Las incidencias
 
@@ -615,7 +579,10 @@ export function ThemeForm() {
         label="Palette"
         items={PALETTE_NAMES}
         value={settings.palette}
-        onChange={(palette) => update({ palette })}
+        onChange={(name) => {
+          const palette = PALETTE_NAMES.find((candidate) => candidate === name);
+          if (palette) update({ palette });
+        }}
         disabled={settings.ground === 'cyanotype'}
       />
     </>
@@ -624,6 +591,8 @@ export function ThemeForm() {
 ```
 
 `PALETTE_NAMES` son los nombres de las seis paletas, de `silverpoint` a `indigo`. Al elegir uno, `update` lo guarda, el proveedor recibe la paleta nueva y todo lo que está debajo se vuelve a pintar: los gráficos, el panel, la tabla, los botones y el fondo de la página. Al cambiar de paleta, los datos no se vuelven a dibujar: solo cambian las propiedades `--sp-*`.
+
+`SpSelect` entrega un `string` en `onChange`, y `palette` es un `PaletteName`, el tipo de los seis nombres desde la 0.10.0 ([issue #20](https://github.com/ecrespo/silverpoint/issues/20)). Por eso el nombre se busca en `PALETTE_NAMES` antes de guardarlo.
 
 `app/settings/alert-rule-form.tsx` es el formulario del artículo 16. Sus campos empiezan con la regla guardada y, al enviar, la guardan en los ajustes:
 
@@ -712,7 +681,7 @@ Lo comprobé en la versión de producción:
 
 * Reconocí INC-1038, ordené por minutos, pasé por las otras dos páginas y volví: la tabla seguía ordenada por minutos e INC-1038 seguía como `acknowledged`.
 * Mientras la vista general está oculta, React desmonta sus efectos, así que el intervalo se detiene. Al volver tras 6,5 segundos, el pie seguía en «Updated at 01:00», y 2 segundos después pasó a «Updated at 02:00»: la ventana sigue desde donde se quedó, sin saltos.
-* En desarrollo, al salir de la vista general, cada gráfico oculto avisa en la consola con `SP003`: «the container measures 0 px; the render is deferred». Es lo que mide un elemento con `display: none`. Al volver, los gráficos se dibujan de nuevo a su tamaño. En producción no aparece ningún aviso. El aviso sobra, y está abierto como [silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22). Se corregirá en una próxima versión del paquete.
+* Al salir de la vista general no aparece ningún aviso en la consola, tampoco en desarrollo. Hasta la 0.9.2, cada gráfico oculto avisaba con `SP003`, porque un elemento con `display: none` mide 0 px. Desde la 0.10.0, un gráfico oculto conserva su último ancho ([silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22)).
 
 Por eso guardar la regla en los ajustes no es imprescindible con tres rutas: el formulario también se conservaría oculto. Pero una aplicación con más páginas pierde las más antiguas, y los ajustes deben vivir en un sitio que no dependa de eso.
 
@@ -764,7 +733,7 @@ Probé la aplicación con Playwright y Chrome, primero contra `npm run dev` y de
 | El formulario | Elegir Hits, desactivar Active, escribir una nota y guardar | «Saved rule: hits ≥ 10, by email, paused. Notes: Page the database team», y sigue igual al volver a la página |
 | La cianotipia | Elegirla en `/settings` y volver a la vista general | El fondo de la página y del panel pasa a `rgb(27, 63, 107)`, los seis gráficos llevan `sp-ground-cyanotype` y la tabla escribe en blanco |
 | Una paleta | Volver a Silverpoint y elegir `sanguine` | El fondo pasa a `rgb(242, 232, 220)`, los gráficos llevan `--sp-ink: #8A3A24`, y el SVG descargado también |
-| La consola | Recoger errores y avisos | En producción, ninguno. En desarrollo, solo `SP016` y `SP003`, los dos explicados arriba |
+| La consola | Recoger errores y avisos | En producción, ninguno. En desarrollo, solo `SP016`, explicado arriba |
 
 También pasaron `npx tsc --noEmit` y la compilación de producción, que comprueba los tipos.
 
@@ -774,23 +743,26 @@ Medí la versión de producción con gzip:
 
 | Ruta | HTML | JavaScript | CSS |
 |---|---|---|---|
-| `/` | 78,4 kB (11,8 kB con gzip) | 995,2 kB (309,7 kB con gzip) | 150,0 kB (15,3 kB con gzip) |
-| `/incidents` | 18,8 kB (3,9 kB con gzip) | 987,1 kB (307,9 kB con gzip) | 150,0 kB (15,3 kB con gzip) |
-| `/settings` | 18,4 kB (3,8 kB con gzip) | 985,3 kB (307,1 kB con gzip) | 150,0 kB (15,3 kB con gzip) |
+| `/` | 77,8 kB (11,7 kB con gzip) | 734,0 kB (230,0 kB con gzip) | 150,0 kB (15,3 kB con gzip) |
+| `/incidents` | 18,2 kB (3,8 kB con gzip) | 694,6 kB (217,3 kB con gzip) | 150,0 kB (15,3 kB con gzip) |
+| `/settings` | 17,8 kB (3,7 kB con gzip) | 692,8 kB (216,6 kB con gzip) | 150,0 kB (15,3 kB con gzip) |
 
 El HTML de `/` pesa más porque trae los seis gráficos dibujados. Los seis gráficos estaban listos 25 ms después de empezar la navegación, en mediana de tres cargas en mi máquina y en local: llegan en el HTML.
 
-El JavaScript es casi igual en las tres rutas, y una parte se debe a `SilverpointProvider`. El proveedor solo se exporta desde la entrada general, `@silverpoint/react`, que contiene todos los gráficos. El [artículo 20](/blog/silverpoint_serie_20) midió que Vite descarta en producción los gráficos que no usas. Turbopack no lo hace con esta entrada: compilé la misma aplicación con el proveedor sustituido por un componente que solo devuelve sus hijos, y el JavaScript bajó de 1025 kB a 762 kB, unos 80 kB menos con gzip. Como el proveedor está en el diseño común, ese peso va en todas las rutas. Está abierto como [silverpoint#21](https://github.com/ecrespo/silverpoint/issues/21). Se corregirá en una próxima versión del paquete.
+El JavaScript es parecido en las tres rutas. Con silverpoint 0.9.2 pesaba más: 995,2 kB en `/` y 1025 kB entre todas las rutas. El proveedor se importaba de la entrada general, `@silverpoint/react`, que contiene todos los gráficos, y Turbopack no descartaba los que la aplicación no usa ([silverpoint#21](https://github.com/ecrespo/silverpoint/issues/21)). Con la 0.10.1, el total es 763,7 kB, 239,7 kB con gzip.
+
+La 0.10.0 añadió además una ruta propia para el proveedor, `@silverpoint/react/provider`, que es la que usa `settings-provider.tsx`. En esta aplicación medí lo mismo importándolo de una ruta o de la otra.
 
 La hoja de los componentes de interfaz, `ui.css`, es la mayor parte del CSS.
 
 ## Problemas comunes
 
-* **`Can't resolve '@silverpoint/grounds/styles.css'` con `?raw`.** Turbopack no aplica la consulta a la ruta del paquete. Usa la ruta relativa a `node_modules` y la regla de `next.config.ts`.
+* **`Can't resolve '@silverpoint/grounds/styles.css'` con `?raw`.** Turbopack no aplica la consulta a la ruta del paquete. Importa la hoja de `@silverpoint/grounds/styles-text`, sin `?raw`.
+* **La compilación falla con `TS7053` en `PALETTES[...]`.** Desde la 0.10.0, `PALETTES` solo acepta los seis nombres de `PaletteName`. Declara `palette` con ese tipo, no como `string`.
 * **Un gráfico no cambia con el tema.** Es un componente de servidor, que no lee el contexto. Pasa el gráfico a un componente de cliente.
-* **El marco del panel no cambia con el tema.** Pasa `ground` y `palette` al `Dashboard` ([issue #17](https://github.com/ecrespo/silverpoint/issues/17)).
+* **Al volver de `/settings`, los gráficos del panel siguen con el tema anterior durante unos segundos.** Faltan `ground` y `palette` en el `Dashboard`. Pásalos desde el componente que lo dibuja, como en `app/overview.tsx`.
 * **El panel tiene dos columnas en una pantalla ancha.** Una regla de tu CSS sobre `section` le pone un ancho máximo: `Dashboard` es una `section`.
-* **Avisos `SP003` al cambiar de página en desarrollo.** Son los gráficos de la página oculta. Se dibujan de nuevo al volver ([silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22)).
+* **Avisos `SP003` al cambiar de página en desarrollo.** Tienes una versión anterior a la 0.10.0, que avisaba por los gráficos de la página oculta ([silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22)).
 * **`useSettings() needs a <SettingsProvider> above it`.** El componente se renderiza fuera de `SettingsProvider`. Todo lo que use `useSettings()` tiene que estar dentro de una página o del diseño común, bajo `app/layout.tsx`.
 
 ## Lo que viene

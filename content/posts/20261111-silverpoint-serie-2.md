@@ -14,7 +14,7 @@ Al terminar sabrás qué instalar para tu framework, qué hoja de estilos import
 
 ## El mapa
 
-El proyecto es un monorepo con nueve paquetes de npm y un paquete de Python aparte. Todos los paquetes de npm salen juntos con el mismo número de versión, hoy la 0.9.2. Así se relacionan:
+El proyecto es un monorepo con nueve paquetes de npm y un paquete de Python aparte. Todos los paquetes de npm salen juntos con el mismo número de versión, hoy la 0.10.1. Así se relacionan:
 
 ```text
                       @silverpoint/core
@@ -216,7 +216,7 @@ Los nombres siguen una regla fija. En React, el gráfico se llama como en el cat
 
 ## Reflex: un solo paquete de Python
 
-Para Reflex hay un único paquete, `reflex-silverpoint-react`, que se publica en PyPI con su propio número de versión. La 0.9.1 envuelve `@silverpoint/react` 0.9.1, requiere Reflex 0.10 y Python 3.11 o posterior.
+Para Reflex hay un único paquete, `reflex-silverpoint-react`, que se publica en PyPI con su propio número de versión. La 0.10.0 envuelve `@silverpoint/react` 0.10.0, requiere Reflex 0.10 y Python 3.11 o posterior.
 
 ```sh
 pip install reflex-silverpoint-react

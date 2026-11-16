@@ -128,7 +128,7 @@ El gráfico lo dibujó la herramienta `render_chart` del artículo 28, con los c
 {"chart":"bar-chart","props":{"xKey":"release","valueKey":"commits","title":"Commits per release","footerLeft":"2026-09-12 to 2026-11-01","footerRight":"249 commits"},"data":[{"release":"0.1.1","commits":82},{"release":"0.2.0","commits":39},{"release":"0.3.0","commits":15},{"release":"0.6.0","commits":12},{"release":"0.7.0","commits":25},{"release":"0.8.0","commits":16},{"release":"0.9.0","commits":53},{"release":"0.9.1","commits":4},{"release":"0.9.2","commits":3}],"width":720,"height":280,"id":"commits","embedFonts":true}
 ```
 
-Las versiones, con la fecha de npm:
+Las versiones, con la fecha de npm. Las dos últimas salieron el 15 de noviembre, después de los números de arriba:
 
 | Versión | Fecha | Qué trajo |
 |---|---|---|
@@ -142,6 +142,8 @@ Las versiones, con la fecha de npm:
 | 0.9.0 | 1 de noviembre | Las presentaciones: `@silverpoint/marp` y `SpDeck` |
 | 0.9.1 | 1 de noviembre | `SpDeck` de React bajo `<StrictMode>` (issues #7 y #8) |
 | 0.9.2 | 1 de noviembre | El catálogo de Reflex con `sp_deck` (issue #10) |
+| 0.10.0 | 15 de noviembre | Los fallos que destapó esta serie (issues #12, #14 y de la #17 a la #22) |
+| 0.10.1 | 15 de noviembre | El catálogo de Reflex de `reflex-silverpoint-react` 0.10.0 |
 
 No hubo 0.4.0 ni 0.5.0. El segundo catálogo se hizo en tres tandas, y se decidió publicarlas juntas como 0.6.0. La 1.0.0 está aparcada a propósito: pondría en vigor la especificación de la API como contrato estable. Su conjunto de cambios espera en `changes/release-1.0.0-changeset.md`.
 
@@ -151,7 +153,7 @@ Desde la 0.1.1, las versiones las publica la CI con *npm Trusted Publishing* y p
 
 Hay dos repositorios más.
 
-[`reflex-silverpoint-react`](https://github.com/ecrespo/reflex-silverpoint-react) empezó el 25 de septiembre y lleva diez versiones, de la 0.1.0 a la 0.9.1. Envuelve los componentes de `@silverpoint/react` como constructores de Python. Tiene una historia curiosa: las paletas, los componentes compuestos y la línea de tiempo se dibujaron primero ahí, en su 0.7, fuera del contrato de paridad. La constitución de silverpoint lo registra como la fuente del inventario de la 0.7.0, donde se reescribieron sobre el núcleo. Desde la 0.7.1 del envoltorio, son los componentes de npm detrás de los constructores.
+[`reflex-silverpoint-react`](https://github.com/ecrespo/reflex-silverpoint-react) empezó el 25 de septiembre y lleva once versiones, de la 0.1.0 a la 0.10.0. Envuelve los componentes de `@silverpoint/react` como constructores de Python. Tiene una historia curiosa: las paletas, los componentes compuestos y la línea de tiempo se dibujaron primero ahí, en su 0.7, fuera del contrato de paridad. La constitución de silverpoint lo registra como la fuente del inventario de la 0.7.0, donde se reescribieron sobre el núcleo. Desde la 0.7.1 del envoltorio, son los componentes de npm detrás de los constructores.
 
 El [sitio de documentación](https://silverpointweb.vercel.app/) está hecho en Reflex con ese mismo envoltorio ([`silverpoint_web`](https://github.com/ecrespo/silverpoint_web)). Es solo frontend: se exporta estático a Vercel, sin backend, y sus controles son componentes de silverpoint. Su `vercel.json` también publica el servidor MCP del artículo 28: reescribe `/mcp` al proyecto de Vercel que lo despliega desde `apps/mcp-vercel`.
 
@@ -178,7 +180,8 @@ El repositorio también guarda lo que salió mal o costó más de lo previsto.
 * **Un campo que ya existía.** `cyanotype` necesitaba un peso de línea por tono. Existía `Stroke.weight`, pero era el de la marca de objetivo del `BulletChart`, y reutilizarlo cambiaba 48 renders canónicos. Se creó un campo aparte.
 * **Publicar también es código.** El publicador de confianza de `@silverpoint/mcp` en npm caducó antes de la 0.9.0, y npm respondió `E404`. La 0.8.0 de ese paquete se había publicado a mano, sin procedencia, porque aún no tenía publicador.
 * **El modo estricto de React.** `SpDeck` quedaba inerte bajo `<StrictMode>`: el doble montaje destruía su controlador. Se arregló en la 0.9.1, el mismo día que la 0.9.0.
-* **Lo que sigue abierto.** La revisión manual con NVDA y VoiceOver de los componentes necesita Windows o macOS y está pendiente. El flujo nocturno está desactivado. Y escribir esta serie destapó cinco issues, de la #12 a la #16, como las celdas de `SpTable` alineadas a la derecha o el SVG exportado sin su hoja de estilos.
+* **Lo que sigue abierto.** La revisión manual con NVDA y VoiceOver de los componentes necesita Windows o macOS y está pendiente. El flujo nocturno está desactivado.
+* **Lo que destapó esta serie.** Escribirla sacó once issues, de la #12 a la #22, como las celdas de `SpTable` alineadas a la derecha o el SVG exportado sin su hoja de estilos. Los de código se corrigieron el 15 de noviembre, en la 0.10.0 de silverpoint y en la 0.10.0 de `reflex-silverpoint-react`. Los dos de documentación, #15 y #16, se corrigieron en el sitio.
 
 ## Fin de la serie
 
