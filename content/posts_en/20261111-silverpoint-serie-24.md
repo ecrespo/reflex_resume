@@ -38,7 +38,7 @@ cd ops-panel
 npm install @silverpoint/vue @silverpoint/grounds @silverpoint/fonts @silverpoint/core vue-router
 ```
 
-The versions I used: Vue 3.5.45, vue-router 5.5.0, Vite 8.3.8 and silverpoint 0.9.2. Pinia is not needed: a `reactive` object in a module is enough as a store.
+The versions I used: Vue 3.5.45, vue-router 5.5.0, Vite 8.3.8 and silverpoint 0.10.1. Pinia is not needed: a `reactive` object in a module is enough as a store.
 
 As in article 04, the example the template brings in `src/` is replaced by the application's files. The full structure:
 
@@ -129,7 +129,7 @@ Overview is imported normally, because it is the first page almost everyone sees
 ```ts
 import { computed, reactive, watch } from 'vue';
 import type { GroundName, Palette } from '@silverpoint/core';
-import { PALETTES, paletteStyle } from '@silverpoint/core/palettes';
+import { PALETTES, paletteStyle, type PaletteName } from '@silverpoint/core/palettes';
 
 export type AlertRule = {
   metric: string;
@@ -140,7 +140,7 @@ export type AlertRule = {
 };
 
 export type Settings = {
-  palette: string;
+  palette: PaletteName;
   cyanotype: boolean;
   rule: AlertRule;
 };
@@ -200,7 +200,7 @@ It has three parts:
 * **Persistence.** `watch` saves it to `localStorage` every time it changes, and `load` restores it at startup. Both calls are wrapped in `try`/`catch`: with storage blocked, the settings last as long as the visit.
 * **The derived values.** `theme` is what the provider of [article 09](/blog/silverpoint_serie_9) receives: the ground and the palette. `shellStyle` is the same `--sp-*` properties as text, for the page.
 
-`PALETTES` is typed as a record from text to palette, so `keyof typeof PALETTES` is `string`, not the six names. That is why `palette` is a `string`, and the list of names comes from `PALETTE_NAMES`.
+Since silverpoint 0.10.0, `PALETTES` is typed with the six palette names, the `PaletteName` type, imported from `@silverpoint/core/palettes`. That is why `palette` is a `PaletteName`: with a `string`, `PALETTES[settings.palette]` does not compile. The list of names comes from `PALETTE_NAMES`.
 
 With cyanotype no palette applies. The six palettes of [article 12](/blog/silverpoint_serie_12) are variations of the `silverpoint` ground: all of them have a light substrate and dark ink. Putting them on Prussian blue would break the contrast.
 
@@ -281,7 +281,7 @@ header small {
 }
 ```
 
-`RouterLink` adds `aria-current="page"` to the current page's link with no code, and the `nav a[aria-current='page']` rule underlines it. The rest of `style.css` lays out the pages and repeats the `SpTable` cell fix of article 17.
+`RouterLink` adds `aria-current="page"` to the current page's link with no code, and the `nav a[aria-current='page']` rule underlines it. The rest of `style.css` lays out the pages.
 
 For cyanotype, `settings.ts` copies five colours of the ground, those in `@silverpoint/grounds/styles.css`, because there is no palette with that name. For the `silverpoint` ground, the chosen palette already brings its substrate.
 
@@ -309,16 +309,15 @@ export function advance(rows: readonly HourRow[], tick: number): HourRow[] {
 }
 ```
 
-The download is that of [article 18](/blog/silverpoint_serie_18), with the ground's stylesheet inside the SVG. `src/lib/svg.ts`:
+The download is that of [article 18](/blog/silverpoint_serie_18): `standaloneSVG` puts the ground's stylesheet inside the SVG. `src/lib/svg.ts`:
 
 ```ts
-import groundCss from '@silverpoint/grounds/styles.css?raw';
+import { standaloneSVG } from '@silverpoint/grounds';
+import groundCss from '@silverpoint/grounds/styles-text';
 
-// The exported SVG does not carry the ground's stylesheet: inline it (article 18).
+// The exported SVG does not carry the ground's stylesheet: standaloneSVG puts it inside (article 18).
 export function downloadSvg(svg: string, filename: string) {
-  const open = svg.indexOf('>') + 1;
-  const standalone = `${svg.slice(0, open)}<style><![CDATA[${groundCss}]]></style>${svg.slice(open)}`;
-  const url = URL.createObjectURL(new Blob([standalone], { type: 'image/svg+xml' }));
+  const url = URL.createObjectURL(new Blob([standaloneSVG(svg, groundCss)], { type: 'image/svg+xml' }));
   const link = document.createElement('a');
   link.href = url;
   link.download = filename;
@@ -341,7 +340,6 @@ import { SpLineChart, type ActiveItem } from '@silverpoint/vue/line-chart';
 import { blocks, errorsByDay, hourly, sales } from '../data/ops';
 import { advance } from '../lib/live';
 import { downloadSvg } from '../lib/svg';
-import { theme } from '../settings';
 
 const layout: DashboardLayout = {
   columns: { sm: 1, md: 2, lg: 4 },
@@ -394,8 +392,6 @@ function exportChart() {
     description="Traffic, errors and sales of the web service today."
     :layout="layout"
     :link="{ key: 'hour' }"
-    :ground="theme.ground"
-    :palette="theme.palette"
   >
     <SpDashboardCell cell="hits-today">
       <SpKpiCard title="Hits today" :data="rows" value-key="hits" :value="hitsToday" unit="thousand hits" :delta="4.2" />
@@ -447,7 +443,7 @@ function exportChart() {
 What is new compared with the source articles:
 
 * **The indicators follow the live data.** "Hits today" and "Errors today" add up the 24-hour window. On load they give 886 and 103, the figures of article 13, and they change with each new reading. The error bars also use `rows`, so the link by `hour` keeps working while the window moves.
-* **The dashboard receives the theme.** `SpDashboard` does not read the provider, the same as in React; the documentation says otherwise, and it is open as [silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17). Its charts do read it, but the dashboard's frame, with its background and its title, stayed cream under cyanotype. That is why it receives `:ground` and `:palette` from the same `theme`.
+* **The dashboard follows the provider.** Since silverpoint 0.10.0, `SpDashboard` takes the ground and the palette from the provider, as its charts do. The dashboard's frame, with its background and its title, changes with the theme without passing it `:ground` or `:palette` ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). In 0.9 it stayed cream under cyanotype.
 * **The readout and the download, outside the dashboard.** `@active-change` keeps the active item of the traffic, as in [article 11](/blog/silverpoint_serie_11), and the button calls `toSVGString()` through `ref="chart"`.
 
 The timer is created in `onMounted` and cleared in `onUnmounted`. When you go to another page, the window stops moving; when you come back, it starts again from the day's data. If you want it to keep running across pages, move `rows` and the timer to a module, like the store.
@@ -587,7 +583,7 @@ What the build produced:
 
 | File | Size | Gzipped |
 |---|---|---|
-| `index-*.js`: the application, the router, Overview and its six charts | 238.3 kB | 82.7 kB |
+| `index-*.js`: the application, the router, Overview and its six charts | 238.6 kB | 82.8 kB |
 | `chunk-*.js`: shared pieces of the interface components | 25.8 kB | 9.6 kB |
 | `IncidentsView-*.js` | 6.6 kB | 2.6 kB |
 | `SettingsView-*.js` | 5.3 kB | 1.8 kB |
@@ -625,9 +621,9 @@ With the application on the development server and then with the production buil
 
 ## Common problems
 
-* **The dashboard frame does not change theme.** `SpDashboard` does not read the provider. Pass it `:ground` and `:palette` as well as placing it inside `SilverpointProvider` ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). It will be fixed in a coming version of the package.
+* **The dashboard frame does not change theme.** You have a version before 0.10.0, in which `SpDashboard` did not read the provider ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). Update the silverpoint packages.
 * **The page background stays cream with cyanotype.** The provider only paints silverpoint. Put the `--sp-*` properties on an element of your own with `paletteStyle` and use them in your CSS.
-* **TypeScript accepts any palette name.** `PALETTES` is a text record, and `PALETTES['blue']` returns `undefined` with no error. Offer only the names in `PALETTE_NAMES` ([silverpoint#20](https://github.com/ecrespo/silverpoint/issues/20)). It will be fixed in a coming version of the package.
+* **`npm run build` fails with `TS7053` on `PALETTES[...]`.** Since 0.10.0, `PALETTES` only accepts the six names of `PaletteName`, and `PALETTES['blue']` is a compile error. Declare the name as `PaletteName`, not as `string` ([silverpoint#20](https://github.com/ecrespo/silverpoint/issues/20)).
 * **Reloading at `/incidents` gives a 404 on the server.** The rewrite to `index.html` for the browser history is missing.
 * **The live data starts again when you come back to Overview.** The timer lives in the page. If it has to keep going across pages, take it to a module.
 

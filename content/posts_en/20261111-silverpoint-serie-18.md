@@ -93,33 +93,18 @@ Open that file in the browser, without the application, and you will see a black
 
 The reason is in what it contains. The SVG carries no colours: every stroke has a `part` attribute and the colours come from the ground's stylesheet, `@silverpoint/grounds/styles.css`, through CSS variables. On the page that stylesheet is loaded. Outside it, the SVG falls back to the browser's defaults: black fill and the system font.
 
-The export documentation and the `download_svg` documentation in Reflex say that the SVG carries its own colours. With silverpoint 0.9.2 it does not: I checked it in the four frameworks, and the file comes out just as black in all of them.
+`toSVGString()` returns that markup as it is, without the stylesheet, in React, Vue and Angular: I checked it in the three with silverpoint 0.10.1, and the file comes out just as black in all of them. It is so on purpose, because it is the chart's canonical markup. What changed in 0.10.0 is that the library now ships the function that adds the stylesheet ([silverpoint#14](https://github.com/ecrespo/silverpoint/issues/14)).
 
 ## The fix: the stylesheet inside the SVG
 
-The ground's stylesheet is prepared for this: its rules also apply to a standalone `<svg>`, with no page around it. All it takes is putting it inside the SVG itself, right after the opening tag. `src/standalone.ts`:
+The ground's stylesheet is prepared for this: its rules also apply to a standalone `<svg>`, with no page around it. All it takes is putting it inside the SVG itself, right after the opening tag. Since 0.10.0, `standaloneSVG`, from `@silverpoint/grounds`, does it. The download function calls it before creating the `Blob`. `src/download.ts` ends up like this:
 
 ```ts
-import groundCss from '@silverpoint/grounds/styles.css?raw';
-
-export function standaloneSvg(svg: string): string {
-  const open = svg.indexOf('>') + 1;
-  return `${svg.slice(0, open)}<style><![CDATA[${groundCss}]]></style>${svg.slice(open)}`;
-}
-```
-
-Two details:
-
-* **`?raw`** is Vite's way of importing a file as text. The stylesheet takes about 11.7 kB and ends up inside the application's bundle.
-* **`<![CDATA[…]]>`** is required. The stylesheet has a comment that contains `<svg>`, and without `CDATA` the file stops being valid XML: the browser shows an error instead of the chart.
-
-The download function goes through `standaloneSvg` before creating the `Blob`. `src/download.ts` ends up like this:
-
-```ts
-import { standaloneSvg } from './standalone';
+import { standaloneSVG } from '@silverpoint/grounds';
+import groundCss from '@silverpoint/grounds/styles-text';
 
 export function downloadSvg(svg: string, filename: string) {
-  const file = new Blob([standaloneSvg(svg)], { type: 'image/svg+xml' });
+  const file = new Blob([standaloneSVG(svg, groundCss)], { type: 'image/svg+xml' });
   const url = URL.createObjectURL(file);
   const link = document.createElement('a');
   link.href = url;
@@ -128,6 +113,11 @@ export function downloadSvg(svg: string, filename: string) {
   URL.revokeObjectURL(url);
 }
 ```
+
+Two details:
+
+* **`@silverpoint/grounds/styles-text`** is the `styles.css` stylesheet as a JavaScript module that exports its text. It is imported the same way in any bundler, with no `?raw` and no configuration. The stylesheet takes about 11.7 kB and ends up inside the application's bundle.
+* **`<![CDATA[…]]>`** is required, and `standaloneSVG` writes it. The stylesheet has a comment that contains `<svg>`, and without `CDATA` the file stops being valid XML: the browser shows an error instead of the chart.
 
 `App.tsx` does not change. Now the downloaded file, opened on its own, looks like the right half of the image. It is the same thing the `render_chart` tool of the silverpoint MCP server does, which we will see in article 28: it puts the ground's stylesheet on the root `<svg>`.
 
@@ -144,7 +134,7 @@ These are the parts of the file, opened in an editor:
 | `<defs>` | The hatching patterns |
 | `<path part data-role>` | The strokes: the frame, the grid, the line and its points |
 | `<text part>` | The text: title, badge and axis ticks |
-| `<style>` | The ground's stylesheet, after the fix |
+| `<style>` | The ground's stylesheet, added by `standaloneSVG` |
 
 It is the whole card, with the title, the "Today" badge and the frame.
 
@@ -156,11 +146,11 @@ And this is what it does not carry:
 
 A palette of your own does travel. If the chart has `palette`, or gets one from the provider, the SVG writes it as variables in the root's `style` attribute, and the ground's stylesheet uses them.
 
-The file's size is the chart's size on the page. If you want another size in the file, set `width` and `height` on the chart. With the fix, this example's file goes from 4.5 kB to 15.3 kB.
+The file's size is the chart's size on the page. If you want another size in the file, set `width` and `height` on the chart. With the fix, this example's file goes from 4.5 kB to 16.2 kB.
 
 ## In Vue
 
-The same button, with a template ref. `src/standalone.ts` and `src/download.ts` are the React ones. `src/App.vue`:
+The same button, with a template ref. `src/download.ts` is the React one. `src/App.vue`:
 
 ```vue
 <script setup lang="ts">
@@ -198,37 +188,9 @@ function exportChart() {
 
 ## In Angular
 
-Angular does not understand `?raw`. Its way of importing a file as text is the `loader: 'text'` import attribute. `src/app/standalone.ts`:
+`src/app/download.ts` is the React one, unchanged. `@silverpoint/grounds/styles-text` is a plain JavaScript module: Angular imports it with no import attributes, no TypeScript declarations and no change to `angular.json`, with `ng serve` and with `ng build` alike.
 
-```ts
-import groundCss from '@silverpoint/grounds/styles.css' with { loader: 'text' };
-
-export function standaloneSvg(svg: string): string {
-  const open = svg.indexOf('>') + 1;
-  return `${svg.slice(0, open)}<style><![CDATA[${groundCss}]]></style>${svg.slice(open)}`;
-}
-```
-
-TypeScript does not know what type a `.css` imported this way has, and `ng build` fails with `TS2307`. A declaration fixes it, `src/text-imports.d.ts`:
-
-```ts
-declare module '*.css' {
-  const text: string;
-  export default text;
-}
-```
-
-With that `ng build` works, but `ng serve` does not: its development server prebundles `@silverpoint/grounds`, and the page stays blank with "does not provide an export named 'default'" in the console. Turning prebundling off in `angular.json`, under `projects` → `architect` → `serve`, avoids it:
-
-```json
-"options": {
-  "prebundle": false
-}
-```
-
-It is a bug open as [silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19). It will be fixed in a coming version of the package.
-
-`src/app/download.ts` is the React one. And the component, `src/app/app.ts`:
+Up to 0.9.2 you had to import `styles.css` with `loader: 'text'`, declare its type and turn off the prebundling of `ng serve`, which left the page blank ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)). And the component, `src/app/app.ts`:
 
 ```ts
 import { Component, viewChild } from '@angular/core';
@@ -310,60 +272,13 @@ app = rx.App()
 app.add_page(index)
 ```
 
-It downloads the same SVG as the other three, without the stylesheet: it also comes out black outside the application. To add it, `get_svg` sends the SVG to the backend, which inserts it and returns the file with `rx.download`. The stylesheet is copied into the project, at `data/silverpoint-grounds.css`, from `.web/node_modules/@silverpoint/grounds/dist/styles.css`. Copy it again when you upgrade the package. `ops_panel/ops_panel.py`:
+Since `reflex-silverpoint-react` 0.10.0, `download_svg` delivers the complete file: it puts inside the SVG, in `CDATA`, the silverpoint rules the page has, and the file shows its colours outside the application ([reflex-silverpoint-react#45](https://github.com/ecrespo/reflex-silverpoint-react/issues/45)). Nothing goes through the backend. `get_svg` hands that same SVG to an event, for when you want to do something with it in Python.
 
-```python
-from pathlib import Path
-
-import reflex as rx
-from reflex_silverpoint_react import get_svg, line_chart
-
-from .traffic import TRAFFIC
-
-GROUND_CSS = Path("data/silverpoint-grounds.css")
-
-
-class ExportState(rx.State):
-    @rx.event
-    def save_svg(self, svg: str | None):
-        if not svg:
-            return
-        css = GROUND_CSS.read_text()
-        start = svg.index(">") + 1
-        standalone = f"{svg[:start]}<style><![CDATA[{css}]]></style>{svg[start:]}"
-        return rx.download(data=standalone, filename="hits-per-hour.svg")
-
-
-def index() -> rx.Component:
-    return rx.box(
-        line_chart(
-            id="hits",
-            data=TRAFFIC,
-            x_key="hour",
-            value_key="hits",
-            title="Hits per hour",
-            badge="Today",
-            height=200,
-        ),
-        rx.el.button(
-            "Download SVG",
-            type="button",
-            on_click=get_svg("hits", ExportState.save_svg),
-        ),
-        max_width="640px",
-        padding="32px",
-    )
-
-
-app = rx.App()
-app.add_page(index)
-```
-
-The SVG travels to the backend and back, about 4.5 kB there and 15 kB back. For a download button it does not matter.
+Up to 0.9.1, the file came out without the stylesheet, black as in the other three, and you had to send it to the backend with `get_svg` to insert it.
 
 One size difference: in Reflex the chart is 576 px wide, because `max_width="640px"` includes the 32 px of `padding` on each side. The file comes out at 576 × 260.
 
-The four files were checked with headless Chrome: React, Vue and Angular download exactly the same bytes, and the Reflex one is the same chart at 576 px. Opened on their own, without the stylesheet they look black and with it they look as they do on the page.
+The four files were checked with headless Chrome: React, Vue and Angular download exactly the same bytes, and the Reflex one is the same chart at 576 px, with the rules taken from the page. Opened on their own, they look as they do on the page; without the stylesheet, they look black.
 
 ## Without a browser
 
@@ -371,11 +286,10 @@ The four files were checked with headless Chrome: React, Vue and Angular downloa
 
 ## Common problems
 
-* **The file looks black.** It is missing the ground's stylesheet. Add it with `standaloneSvg`.
-* **The browser shows an XML error when opening it.** The stylesheet is inside `<style>` without `CDATA`.
+* **The file looks black.** It is missing the ground's stylesheet. Add it with `standaloneSVG`.
+* **The browser shows an XML error when opening it.** The stylesheet is inside `<style>` without `CDATA`. `standaloneSVG` already writes it.
 * **`toSVGString` is `undefined`.** The handle does not exist yet: the chart has not mounted, or in Reflex the `id` in `get_svg` does not match the chart's.
-* **`TS2307` in Angular.** The declaration in `src/text-imports.d.ts` is missing.
-* **With `ng serve`, the page stays blank.** `"prebundle": false` is missing in `angular.json` ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)).
+* **`TS2307` in Angular, or a blank page with `ng serve`.** `styles.css` was imported with `loader: 'text'`. Import the stylesheet from `@silverpoint/grounds/styles-text` ([silverpoint#19](https://github.com/ecrespo/silverpoint/issues/19)).
 * **The lettering changes shape on another computer.** The SVG does not carry the font. If the shape of the letters matters, convert the file to PNG or PDF on a computer that has EB Garamond.
 
 ## What comes next

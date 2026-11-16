@@ -20,7 +20,7 @@ Silverpoint dibuja gráficos con el lenguaje visual de una técnica de dibujo hi
 
 Lo que la distingue de otras librerías de aspecto «dibujado a mano» es dónde vive la irregularidad: solo en el ornamento. La geometría que representa el dato es exacta, y cada gráfico tiene un modo `precision` que apaga el entintado por completo.
 
-En su versión 0.9.2, la librería trae:
+En su versión 0.10.1, la librería trae:
 
 * 60 gráficos, cada uno importable por separado.
 * 38 componentes de interfaz (formularios, tablas, navegación, modales) dibujados en el mismo estilo.

@@ -215,7 +215,7 @@ Si el panel y sus hijos no coinciden, el panel sigue funcionando, pero avisa en 
 
 El panel también reparte el estilo, como anunció el artículo 12. `ground`, `substrate`, `mode`, `locale` y `palette` puestos en `Dashboard` pasan a todos sus gráficos. Cada campo se resuelve en el orden del [artículo 09](/blog/silverpoint_serie_9), y gana el primero que lo declara: la prop del propio gráfico, el panel que lo contiene, el proveedor más cercano y el valor por defecto de la librería. Con `substrate="green"` en el panel y `substrate="ochre"` en los errores por hora, cinco gráficos se dibujan en verde y uno en ocre.
 
-Al revés no funciona igual: el marco del propio panel, con su fondo y su título, no lee el proveedor. Si la aplicación pone `ground` o `palette` en el proveedor, sus gráficos los reciben, pero el marco del panel se queda con el estilo base por defecto. Pásale al panel los mismos valores que al proveedor. Es un fallo abierto como [silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17); se corregirá en una próxima versión del paquete.
+El marco del propio panel, con su fondo y su título, sigue la misma regla desde silverpoint 0.10.0: donde el panel no declara `ground`, `substrate` o `palette`, toma los del proveedor, igual que sus gráficos. Hasta la 0.9.2 el marco no leía el proveedor y se quedaba con el estilo base por defecto ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). El panel de servidor, `@silverpoint/react/server/dashboard`, sigue sin leerlo: allí no hay proveedor.
 
 ## Gráficos enlazados
 

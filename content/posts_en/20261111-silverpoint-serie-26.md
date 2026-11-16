@@ -41,8 +41,8 @@ Python 3.13 and `uv`. The versions I tested it with:
 
 | Package | Version |
 |---|---|
-| `reflex` | 0.10.1 |
-| `reflex-silverpoint-react` | 0.9.1 |
+| `reflex` | 0.11.0 |
+| `reflex-silverpoint-react` | 0.10.0 |
 | `httpx` | 0.28.1 |
 
 Create the project as in [article 06](/blog/silverpoint_serie_6):
@@ -59,8 +59,8 @@ uv run reflex init
 ```toml
 dependencies = [
     "httpx>=0.28.1",
-    "reflex>=0.10.1",
-    "reflex-silverpoint-react>=0.9.1",
+    "reflex>=0.11.0",
+    "reflex-silverpoint-react>=0.10.0",
 ]
 ```
 
@@ -70,8 +70,6 @@ dependencies = [
 operations/
 ├── assets/
 │   └── operations.css
-├── data/
-│   └── silverpoint-grounds.css
 ├── operations/
 │   ├── __init__.py
 │   ├── data.py
@@ -225,7 +223,7 @@ class ThemeState(rx.State):
 
 | Variable | What for |
 |---|---|
-| `ground` | The ground of the provider and of the dashboard |
+| `ground` | The ground of the provider and of the dialog in Incidents |
 | `palette` | The palette's colours; empty in cyanotype, which brings its own |
 | `page` | The page's background and text colour |
 
@@ -298,7 +296,6 @@ def advance(rows: list[dict], tick: int) -> list[dict]:
 
 ```python
 import asyncio
-from pathlib import Path
 
 import reflex as rx
 from reflex_silverpoint_react import (
@@ -308,7 +305,7 @@ from reflex_silverpoint_react import (
     dashboard_cell_layout,
     dashboard_layout,
     donut_chart,
-    get_svg,
+    download_svg,
     heatmap_chart,
     kpi_card,
     line_chart,
@@ -320,9 +317,6 @@ from .data import BLOCKS, ERRORS_BY_DAY, HOURLY, SALES
 from .layout import shell
 from .live import advance
 from .probes import latency_rows
-from .theme import ThemeState
-
-GROUND_CSS = Path("data/silverpoint-grounds.css")
 ```
 
 The state of what moves. `rows` are the sample hits and `latency`, the rows of the real times:
@@ -354,7 +348,7 @@ class LiveState(rx.State):
 
 The Overview page's `on_load` starts it. I checked it in the browser: when going to Incidents with the bar, Reflex cancels the task and no message arrives over the websocket for 6 seconds; when coming back, a new one starts and the window advances one hour every 2 seconds, not two.
 
-The readout of the active hour is the one from [article 11](/blog/silverpoint_serie_11) and the download, the one from [article 18](/blog/silverpoint_serie_18), with the ground's stylesheet inside `CDATA` because the exported SVG does not include it ([silverpoint#14](https://github.com/ecrespo/silverpoint/issues/14), it will be fixed in a coming version of the package):
+The readout of the active hour is the one from [article 11](/blog/silverpoint_serie_11) and the download, the one from [article 18](/blog/silverpoint_serie_18): `download_svg`, which since 0.10.0 puts the stylesheet inside the SVG ([reflex-silverpoint-react#45](https://github.com/ecrespo/reflex-silverpoint-react/issues/45)). It needs no state:
 
 ```python
 class ReadoutState(rx.State):
@@ -366,22 +360,9 @@ class ReadoutState(rx.State):
             self.active = ""
         else:
             self.active = f"{item['datum']['hour']}:00, {item['value']} thousand hits"
-
-
-class ExportState(rx.State):
-    @rx.event
-    def save_svg(self, svg: str | None):
-        if not svg:
-            return
-        css = GROUND_CSS.read_text()
-        start = svg.index(">") + 1
-        standalone = f"{svg[:start]}<style><![CDATA[{css}]]></style>{svg[start:]}"
-        return rx.download(data=standalone, filename="hits-per-hour.svg")
 ```
 
-`data/silverpoint-grounds.css` is a copy of `.web/node_modules/@silverpoint/grounds/dist/styles.css`, which appears after the first `reflex run`. It goes in `data/` and not in `.web/` because the backend reads it, and a backend deployed on its own has no `.web/`.
-
-The dashboard is the one from article 13 with three changes: the line and the bars read `LiveState.rows`, the line carries the tooltip and `on_active_change`, and the dashboard receives the theme:
+The dashboard is the one from article 13 with two changes: the line and the bars read `LiveState.rows`, and the line carries the tooltip and `on_active_change`:
 
 ```python
 def panel() -> rx.Component:
@@ -458,12 +439,10 @@ def panel() -> rx.Component:
         description="Traffic, errors and sales of the web service today.",
         layout=LAYOUT,
         link="hour",
-        ground=ThemeState.ground,
-        palette=ThemeState.palette,
     )
 ```
 
-The third change has a reason. The dashboard does not read the provider: its paper, title and background use only its own props, because it is also drawn in server components, which have no provider. Its charts do follow the provider. Without `ground` and `palette` on `dashboard`, choosing cyanotype turns the six charts blue on a cream frame. With them, the frame changes with everything else. It is a [known bug](https://github.com/ecrespo/silverpoint/issues/17) that will be fixed in a coming version of the package.
+The dashboard does not receive the theme: it takes it from the provider. Since 0.10.0, its paper, its title and its background follow the provider as its charts do ([silverpoint#17](https://github.com/ecrespo/silverpoint/issues/17)). Choosing cyanotype turns the frame and the six charts blue at once. Up to 0.9.1 you also had to pass `ground` and `palette` to `dashboard`.
 
 `link="hour"` links the charts by hour: when you point at 14:00 on the line, the bars and the two cards mark their 14:00 point. The line advances meanwhile; so do the bars, because they read the same rows.
 
@@ -499,7 +478,7 @@ def overview() -> rx.Component:
             rx.el.button(
                 "Download SVG",
                 type="button",
-                on_click=get_svg("hits", ExportState.save_svg),
+                on_click=download_svg("hits", "hits-per-hour.svg"),
             ),
             class_name="toolbar",
         ),
@@ -511,14 +490,41 @@ def overview() -> rx.Component:
 
 ## 4. The Incidents page
 
-`operations/incidents.py` is the code from article 17 unchanged: the columns, `IncidentsState`, the table, the pagination, the dialog and the toast. Only the end changes, which puts the section inside `shell`:
+`operations/incidents.py` is the code from article 17: the columns, `IncidentsState`, the table, the pagination, the dialog and the toast. Two things change. The end puts the section inside `shell`:
 
 ```python
 def incidents() -> rx.Component:
     return shell("/incidents", incidents_table())
 ```
 
-Both warnings from that article still apply. The dialog's trigger is an `rx.el.button`, because with the dialog controlled from the state a text in `trigger` breaks the page ([reflex-silverpoint-react#44](https://github.com/ecrespo/reflex-silverpoint-react/issues/44)). And the table's cells need the rule in `operations.css` that aligns them to the start ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)). Both bugs will be fixed in a coming version of the package.
+And the dialog receives the theme, with `from .theme import ThemeState` among the imports:
+
+```python
+        sp_modal(
+            sp_select(
+                IncidentsState.open_ids,
+                label="Incident",
+                placeholder="Choose an open incident",
+                value=IncidentsState.picked,
+                on_change=IncidentsState.set_picked,
+            ),
+            trigger="Acknowledge an incident",
+            title="Acknowledge an incident",
+            description="The on-call team stops being paged for it.",
+            footer=sp_button(
+                "Acknowledge",
+                variant="primary",
+                disabled=IncidentsState.picked.is_none(),
+                on_click=IncidentsState.acknowledge,
+            ),
+            open=IncidentsState.open,
+            on_open_change=IncidentsState.set_open,
+            ground=ThemeState.ground,
+            palette=ThemeState.palette,
+        ),
+```
+
+The trigger is a text, which `sp_modal` turns into a button drawn with `sp_trigger`. That button does not read the provider: without `ground` and `palette` on the dialog, with cyanotype it keeps its dark text on the blue background and can hardly be seen. With them, the trigger follows the theme. Up to 0.9.1, a text in `trigger` with the dialog controlled from the state broke the page ([reflex-silverpoint-react#44](https://github.com/ecrespo/reflex-silverpoint-react/issues/44)).
 
 ## 5. The Settings page
 
@@ -578,21 +584,34 @@ app.add_page(incidents, route="/incidents", title="Incidents · Operations")
 app.add_page(settings, route="/settings", title="Settings · Operations")
 ```
 
-The style rules go in `assets/operations.css`. Those for the bar and the columns are layout; these two come from earlier articles:
+The style rules go in `assets/operations.css`. Those for the bar and the columns are layout; these are the ones for the table and the download button:
 
 ```css
-/* silverpoint#12: SpTable cells without an align follow the start edge */
-.sp-table {
+/* SpTable fills the width of its section */
+.sp-ui.sp-table {
   justify-self: stretch;
+  margin-top: 0;
+  font-size: 15px;
 }
 
-.sp-ui-table td:not([data-align]) {
+/* In the production build the charts' stylesheet loads after the components' one, and its
+   .sp-table rules, written for the charts' data table, win over SpTable's own */
+.sp-ui .sp-ui-table th {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--sp-ink);
+}
+
+.sp-ui .sp-ui-table td {
+  padding: 8px 14px;
+  border-bottom: 1px solid var(--sp-grid);
+}
+
+.sp-ui .sp-ui-table :is(th, td):not([data-align]) {
   text-align: start;
 }
 
-/* Plain buttons: the SVG download and the modal's trigger (reflex-silverpoint-react#44) */
-.toolbar button,
-button[aria-haspopup="dialog"] {
+/* A plain button: the SVG download */
+.toolbar button {
   padding: 6px 14px;
   border: 1px solid currentColor;
   border-radius: 2px;
@@ -603,7 +622,9 @@ button[aria-haspopup="dialog"] {
 }
 ```
 
-I put them in a file for a practical reason. In article 17 they went in `rx.App(style=...)`. Without the `RadixThemesPlugin` plugin, in Reflex 0.10.1 those rules do not reach the page: the table came out right-aligned. With `stylesheets` the stylesheet always arrives.
+The table rules are needed because of the production build. 0.10.0 fixed the alignment of `sp_table` cells ([silverpoint#12](https://github.com/ecrespo/silverpoint/issues/12)), and in development the table looks right with no rule. But the fix depends on the components' stylesheet loading after the charts' one. In this application, with three pages, the production build links them the other way round: without these rules, the cells and the headers came out right-aligned, with less padding and smaller type. With them, the table measures the same in development and in production. It does not happen in the single-page application of article 17.
+
+They go in a file for a practical reason. In article 17 the rules went in `rx.App(style=...)`. Without the `RadixThemesPlugin` plugin, those rules do not reach the page, not in Reflex 0.11.0 either. With `stylesheets` the stylesheet always arrives.
 
 ## Run, build and deploy
 
@@ -641,9 +662,9 @@ All the code in this article is the tested project's. With headless Chrome, from
 | Active hour | On hover, the readout says «14:00, 59 thousand hits» and the tooltip, «14:00 · 59k hits» |
 | Link by hour | The bars draw their link mark (`part="linked"`) |
 | Real times | Three rows with their reading, such as «154 ms» |
-| Download | `hits-per-hour.svg`, about 15.8 KB, with `<![CDATA[` and the ground's rules |
+| Download | `hits-per-hour.svg`, about 12.4 KB, with one `<![CDATA[` block holding the page's silverpoint rules; opened alone, it shows its colours |
 | Navigation | No websocket message for 6 seconds on Incidents; on returning, one hour every 2 seconds |
-| Incidents | Sorting by minutes both ways, page 2, acknowledging INC-1042 closes the dialog and opens the toast, the row becomes `acknowledged`, cells aligned to the start |
+| Incidents | Sorting by minutes both ways, page 2, acknowledging INC-1042 closes the dialog and opens the toast, the row becomes `acknowledged`, cells and headers aligned to the start in development and in production |
 | Form | «hits ≥ 15, by chat, paused. Notes: Page the API team» |
 | Theme | With Sanguine the background becomes `#F2E8DC`; with cyanotype, `#1B3F6B`, and the Overview dashboard and the Incidents components follow it |
 | Session | On returning to Settings, the form and the switch keep their value |
@@ -660,18 +681,19 @@ Measured on my machine, to compare them in article 27:
 | Code written | 9 Python modules, one CSS sheet and `rxconfig.py`: 670 non-blank lines; about 270 are the code from articles 13, 16 and 17 unchanged |
 | Dependencies added | `reflex`, `reflex-silverpoint-react`, `httpx` |
 | `reflex export --frontend-only` | 3.7 s |
-| Exported JavaScript | 16 files, 664 KB; 214 KB with gzip |
-| Exported CSS | 4 files, 154 KB; 17 KB with gzip |
+| Exported JavaScript | 16 files, 669 KB; 216 KB with gzip |
+| Exported CSS | 4 files, 155 KB; 17 KB with gzip |
 | Start of `reflex run` | 2.7 s until frontend and backend answer; 3.3 s without `.web/` |
 | First chart ready | 294 ms in production, 1,049 ms in development (median of 3) |
 
 ## Common problems
 
-* **The dashboard stays cream with cyanotype.** You need to pass `ground` and `palette` to `dashboard`: the dashboard does not read the provider.
+* **The dashboard stays cream with cyanotype.** You have `reflex-silverpoint-react` before 0.10.0, where the dashboard did not read the provider. Update the package.
+* **The button that opens the dialog can hardly be seen with cyanotype.** The text trigger does not read the provider. Pass `ground` and `palette` to `sp_modal`.
+* **In production, the table comes out right-aligned and cramped.** The table rules of `operations.css` are missing. In development it does not show.
 * **The page does not change colour.** The provider only styles silverpoint's components. The background comes from `ThemeState.page` in `shell`.
 * **The rules in `rx.App(style=...)` are not applied.** Without `RadixThemesPlugin` they do not reach the browser. Use a stylesheet in `assets/` and `stylesheets`.
 * **The response times say «No data» at startup.** `sparkline_rows` got an empty list before the first round. Put the chart behind `rx.cond`.
-* **The download fails with `FileNotFoundError`.** `data/silverpoint-grounds.css` is missing, or the backend starts from another folder: the path is relative to the project's root.
 * **The requests multiply.** There are several backend processes, each with its own lifespan task. Measure from a single process.
 
 ## What comes next

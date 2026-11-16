@@ -27,7 +27,7 @@ A navigation bar with three links ties them together. The settings last for the 
 ## What you need
 
 * Node.js 20.9 or later, the minimum for Next.js 16. I tested it with Node.js 24.
-* Next.js 16.4.6, React 19.3.0 and silverpoint 0.9.2.
+* Next.js 16.4.6, React 19.3.0 and silverpoint 0.10.1.
 
 ## The project
 
@@ -61,9 +61,7 @@ ops-panel/
 │   ├── live.ts                   the rolling window
 │   ├── incidents.ts              the 12 incidents
 │   ├── rule.ts                   the alert rule
-│   ├── download.ts               the SVG download
-│   └── standalone.ts             the stylesheet inside the SVG
-├── raw.d.ts
+│   └── download.ts               the SVG download
 ├── next.config.ts
 ├── package.json
 └── tsconfig.json
@@ -90,7 +88,7 @@ That does not leave them out of the HTML. Next.js also renders client components
 
 ## The configuration
 
-The SVG download from [article 18](/blog/silverpoint_serie_18) puts the ground's stylesheet inside the file. In Vite the stylesheet was imported as text with `?raw`. Turbopack, the Next.js bundler, does not understand `?raw` on its own: you tell it what to do with a rule in `next.config.ts`:
+`next.config.ts` is the one from the `create-next-app` template, unchanged:
 
 ```ts
 import type { NextConfig } from 'next';
@@ -98,42 +96,14 @@ import type { NextConfig } from 'next';
 const nextConfig: NextConfig = {
   cacheComponents: true,
   partialPrefetching: true,
-  turbopack: {
-    rules: {
-      // Any file imported with `?raw` is loaded as a string, as in Vite.
-      '*': { condition: { query: '?raw' }, type: 'text' },
-    },
-  },
 };
 
 export default nextConfig;
 ```
 
-`cacheComponents` and `partialPrefetching` come from the `create-next-app` template. The new rule is `turbopack.rules`: any file imported with `?raw` is loaded as text.
+The SVG download from [article 18](/blog/silverpoint_serie_18) needs nothing here. `standaloneSVG` receives the ground's stylesheet from `@silverpoint/grounds/styles-text`, a JavaScript module that Turbopack imports with no rule.
 
-With the rule, `lib/standalone.ts` is the one from article 18 with a different path:
-
-```ts
-import groundCss from '../node_modules/@silverpoint/grounds/dist/styles.css?raw';
-
-export function standaloneSvg(svg: string): string {
-  const open = svg.indexOf('>') + 1;
-  return `${svg.slice(0, open)}<style><![CDATA[${groundCss}]]></style>${svg.slice(open)}`;
-}
-```
-
-The package path, `@silverpoint/grounds/styles.css?raw`, does not work in Turbopack. The build fails with "Module not found: Can't resolve '@silverpoint/grounds/styles.css'", even though the same path without `?raw` resolves fine in `app/layout.tsx`. The path relative to the file inside `node_modules` works. If your project is in a monorepo with `node_modules` at the root, adjust the `../`.
-
-TypeScript does not know `?raw` either. In Vite it was declared by the `vite/client` types; here `raw.d.ts`, at the project root, declares it:
-
-```ts
-declare module '*?raw' {
-  const content: string;
-  export default content;
-}
-```
-
-The SVG comes out without the ground's stylesheet because `toSVGString()` does not include it. It is a library bug, filed as [issue #14](https://github.com/ecrespo/silverpoint/issues/14), and it will be fixed in a coming version of the package.
+Up to 0.9.2 you had to import `styles.css` as text with `?raw`, and in Turbopack that needed a rule in `turbopack.rules`, a path relative to `node_modules` and a type declaration. 0.10.0 made it unnecessary ([issue #14](https://github.com/ecrespo/silverpoint/issues/14)).
 
 ## The shared layout
 
@@ -186,13 +156,13 @@ The navigation and `main` are server components, but they sit inside `SettingsPr
 
 import { createContext, useContext, useState, type CSSProperties, type ReactNode } from 'react';
 import type { GroundName, Palette } from '@silverpoint/core';
-import { PALETTES, paletteStyle } from '@silverpoint/core/palettes';
-import { SilverpointProvider } from '@silverpoint/react';
+import { PALETTES, paletteStyle, type PaletteName } from '@silverpoint/core/palettes';
+import { SilverpointProvider } from '@silverpoint/react/provider';
 import { DEFAULT_RULE, type AlertRule } from '@/lib/rule';
 
 export type Settings = {
   ground: GroundName;
-  palette: string;
+  palette: PaletteName;
   rule: AlertRule;
 };
 
@@ -303,10 +273,6 @@ h1 {
   justify-self: stretch;
 }
 
-.sp-ui-table td:not([data-align]) {
-  text-align: start;
-}
-
 button[aria-haspopup='dialog'] {
   padding: 6px 14px;
   border: 1px solid currentColor;
@@ -336,8 +302,6 @@ h2 {
 ```
 
 `.stack` is a column for the incidents content and for each settings block. At first it was a rule on `section`, as in article 17, but `Dashboard` is a `section` too: with `max-width: 720px` the dashboard went from four columns to two.
-
-The `.sp-ui-table td:not([data-align])` rule aligns the table cells to the left. Without it, a chart rule aligns them to the right. It is a library bug, filed as [issue #12](https://github.com/ecrespo/silverpoint/issues/12), and it will be fixed in a coming version of the package.
 
 ## Live data and the alert rule
 
@@ -514,7 +478,7 @@ What each part does:
 * **Linked charts.** With `link={{ key: 'hour' }}`, the pointer on an hour of the traffic marks the same hour in the errors and in the curves of the two indicators, and the other way round. Errors per day and sales by channel do not have the `hour` field: they show no mark and in development warn with `SP016`, as article 13 explained.
 * **The readout.** The traffic chart's `onActiveChange` stores the active item, as in [article 11](/blog/silverpoint_serie_11), and the paragraph writes "11:00, 62k hits". It only follows the traffic chart: the marks the link adds do not change it. To follow the linked value, use `onLinkChange`, from article 13.
 * **The download.** `ref` gives the chart's handle, and `toSVGString()` the SVG, as in article 18. The file carries the palette of the chosen theme.
-* **The dashboard theme.** `ground` and `palette` are passed to the `Dashboard`, on top of arriving through the provider. The charts inside follow the provider, but the dashboard frame does not: with cyanotype, the charts turned blue and the dashboard background stayed cream. It is a library bug, filed as [issue #17](https://github.com/ecrespo/silverpoint/issues/17), and it will be fixed in a coming version of the package. Until then, pass both values to the dashboard.
+* **The dashboard theme.** `ground` and `palette` are passed to the `Dashboard`, on top of arriving through the provider. Since 0.10.0 the dashboard frame follows the provider ([issue #17](https://github.com/ecrespo/silverpoint/issues/17)), but in this application both values are still needed. When you change the theme in `/settings`, the overview is hidden. Without them, on coming back in the production build, the frame took the new theme and the six charts kept the old one until the next live reading, about 2 seconds later. With them, `Overview` reads the settings, renders again when it is shown and everything changes at once.
 
 ## The incidents
 
@@ -615,7 +579,10 @@ export function ThemeForm() {
         label="Palette"
         items={PALETTE_NAMES}
         value={settings.palette}
-        onChange={(palette) => update({ palette })}
+        onChange={(name) => {
+          const palette = PALETTE_NAMES.find((candidate) => candidate === name);
+          if (palette) update({ palette });
+        }}
         disabled={settings.ground === 'cyanotype'}
       />
     </>
@@ -624,6 +591,8 @@ export function ThemeForm() {
 ```
 
 `PALETTE_NAMES` are the names of the six palettes, from `silverpoint` to `indigo`. When you pick one, `update` stores it, the provider receives the new palette and everything below it is repainted: the charts, the dashboard, the table, the buttons and the page background. When the palette changes, the data is not drawn again: only the `--sp-*` properties change.
+
+`SpSelect` hands a `string` to `onChange`, and `palette` is a `PaletteName`, the type of the six names since 0.10.0 ([issue #20](https://github.com/ecrespo/silverpoint/issues/20)). That is why the name is looked up in `PALETTE_NAMES` before it is stored.
 
 `app/settings/alert-rule-form.tsx` is the form from article 16. Its fields start from the saved rule and, on submit, store it in the settings:
 
@@ -712,7 +681,7 @@ I checked it in the production build:
 
 * I acknowledged INC-1038, sorted by minutes, went through the other two pages and came back: the table was still sorted by minutes and INC-1038 was still `acknowledged`.
 * While the overview is hidden, React unmounts its effects, so the interval stops. Coming back after 6.5 seconds, the footer still said "Updated at 01:00", and 2 seconds later it moved to "Updated at 02:00": the window carries on from where it stopped, with no jumps.
-* In development, when you leave the overview, each hidden chart warns in the console with `SP003`: "the container measures 0 px; the render is deferred". That is what an element with `display: none` measures. When you come back, the charts draw again at their size. In production no warning appears. The warning is unnecessary, and it is open as [silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22). It will be fixed in a coming version of the package.
+* When you leave the overview no warning appears in the console, not even in development. Up to 0.9.2, each hidden chart warned with `SP003`, because an element with `display: none` measures 0 px. Since 0.10.0, a hidden chart keeps its last width ([silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22)).
 
 That is why keeping the rule in the settings is not essential with three routes: the form would also be kept while hidden. But an application with more pages loses the oldest ones, and the settings should live somewhere that does not depend on that.
 
@@ -764,7 +733,7 @@ I tested the application with Playwright and Chrome, first against `npm run dev`
 | The form | Pick Hits, turn Active off, write a note and save | "Saved rule: hits ≥ 10, by email, paused. Notes: Page the database team", unchanged when you come back to the page |
 | Cyanotype | Pick it in `/settings` and go back to the overview | The page and dashboard background becomes `rgb(27, 63, 107)`, the six charts carry `sp-ground-cyanotype` and the table writes in white |
 | A palette | Go back to Silverpoint and pick `sanguine` | The background becomes `rgb(242, 232, 220)`, the charts carry `--sp-ink: #8A3A24`, and so does the downloaded SVG |
-| The console | Collect errors and warnings | In production, none. In development, only `SP016` and `SP003`, both explained above |
+| The console | Collect errors and warnings | In production, none. In development, only `SP016`, explained above |
 
 `npx tsc --noEmit` and the production build, which checks the types, passed too.
 
@@ -774,23 +743,26 @@ I measured the production build with gzip:
 
 | Route | HTML | JavaScript | CSS |
 |---|---|---|---|
-| `/` | 78.4 kB (11.8 kB with gzip) | 995.2 kB (309.7 kB with gzip) | 150.0 kB (15.3 kB with gzip) |
-| `/incidents` | 18.8 kB (3.9 kB with gzip) | 987.1 kB (307.9 kB with gzip) | 150.0 kB (15.3 kB with gzip) |
-| `/settings` | 18.4 kB (3.8 kB with gzip) | 985.3 kB (307.1 kB with gzip) | 150.0 kB (15.3 kB with gzip) |
+| `/` | 77.8 kB (11.7 kB with gzip) | 734.0 kB (230.0 kB with gzip) | 150.0 kB (15.3 kB with gzip) |
+| `/incidents` | 18.2 kB (3.8 kB with gzip) | 694.6 kB (217.3 kB with gzip) | 150.0 kB (15.3 kB with gzip) |
+| `/settings` | 17.8 kB (3.7 kB with gzip) | 692.8 kB (216.6 kB with gzip) | 150.0 kB (15.3 kB with gzip) |
 
 The HTML of `/` is heavier because it carries the six charts drawn. The six charts were ready 25 ms after navigation started, median of three loads on my machine and on localhost: they arrive in the HTML.
 
-The JavaScript is almost the same on the three routes, and part of it is due to `SilverpointProvider`. The provider is only exported from the general entry, `@silverpoint/react`, which contains every chart. [Article 20](/blog/silverpoint_serie_20) measured that Vite drops the charts you do not use in production. Turbopack does not do it with this entry: I built the same application with the provider replaced by a component that only returns its children, and the JavaScript went down from 1025 kB to 762 kB, about 80 kB less with gzip. Since the provider is in the shared layout, that weight goes on every route. It is open as [silverpoint#21](https://github.com/ecrespo/silverpoint/issues/21). It will be fixed in a coming version of the package.
+The JavaScript is similar on the three routes. With silverpoint 0.9.2 it weighed more: 995.2 kB on `/` and 1025 kB across all routes. The provider was imported from the general entry, `@silverpoint/react`, which contains every chart, and Turbopack did not drop the ones the application does not use ([silverpoint#21](https://github.com/ecrespo/silverpoint/issues/21)). With 0.10.1, the total is 763.7 kB, 239.7 kB with gzip.
+
+0.10.0 also added a path of its own for the provider, `@silverpoint/react/provider`, which is the one `settings-provider.tsx` uses. In this application I measured the same importing it from either path.
 
 The UI components stylesheet, `ui.css`, is most of the CSS.
 
 ## Common problems
 
-* **`Can't resolve '@silverpoint/grounds/styles.css'` with `?raw`.** Turbopack does not apply the query to the package path. Use the path relative to `node_modules` and the rule in `next.config.ts`.
+* **`Can't resolve '@silverpoint/grounds/styles.css'` with `?raw`.** Turbopack does not apply the query to the package path. Import the stylesheet from `@silverpoint/grounds/styles-text`, without `?raw`.
+* **The build fails with `TS7053` on `PALETTES[...]`.** Since 0.10.0, `PALETTES` only accepts the six names of `PaletteName`. Declare `palette` with that type, not as `string`.
 * **A chart does not change with the theme.** It is a server component, which does not read the context. Move the chart to a client component.
-* **The dashboard frame does not change with the theme.** Pass `ground` and `palette` to the `Dashboard` ([issue #17](https://github.com/ecrespo/silverpoint/issues/17)).
+* **On coming back from `/settings`, the dashboard's charts keep the old theme for a few seconds.** `ground` and `palette` are missing on the `Dashboard`. Pass them from the component that renders it, as in `app/overview.tsx`.
 * **The dashboard has two columns on a wide screen.** A rule in your CSS on `section` gives it a maximum width: `Dashboard` is a `section`.
-* **`SP003` warnings when changing page in development.** They are the charts of the hidden page. They draw again when you come back ([silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22)).
+* **`SP003` warnings when changing page in development.** You have a version before 0.10.0, which warned about the charts of the hidden page ([silverpoint#22](https://github.com/ecrespo/silverpoint/issues/22)).
 * **`useSettings() needs a <SettingsProvider> above it`.** The component renders outside `SettingsProvider`. Everything that uses `useSettings()` has to be inside a page or the shared layout, under `app/layout.tsx`.
 
 ## What comes next

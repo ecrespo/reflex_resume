@@ -29,7 +29,7 @@ El proyecto de tu framework de los artículos 03 a 06. Los datos de los gráfico
 El motor de las presentaciones está en su propio paquete, `@silverpoint/marp`, que trae Marpit, el núcleo de Marp. Es una dependencia opcional de los adaptadores. En React, Vue y Angular:
 
 ```sh
-npm install @silverpoint/marp@^0.9.2
+npm install @silverpoint/marp@^0.10.1
 ```
 
 En Reflex no hace falta: `sp_deck` lo instala y añade sus hojas de estilo.
